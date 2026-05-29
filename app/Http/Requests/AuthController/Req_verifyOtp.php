@@ -23,7 +23,7 @@ class Req_verifyOtp extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email', 'max:75', 'exists:otps,email'],
+            'email' => ['required', 'string', 'email', 'max:75'],
             'otp_code' => ['required'],
         ];
     }

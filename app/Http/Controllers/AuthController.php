@@ -2,19 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\En_OTP_Type;
 use App\Http\Requests\AuthController\Req_forgotPassword;
 use App\Http\Requests\AuthController\Req_Login;
 use App\Http\Requests\AuthController\Req_Register;
 use App\Http\Requests\AuthController\Req_resetPassword;
 use App\Http\Requests\AuthController\Req_verifyOtp;
 use App\Services\Serv_Otp;
-use DB;
-use Illuminate\Support\Facades\Hash;
-use App\Mail\SendOtpMail;
-use App\Models\Otp;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Mail;
 use App\services\Serv_User;
 use App\DTOs\Dto_User;
 class AuthController extends Controller

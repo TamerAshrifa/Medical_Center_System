@@ -26,13 +26,13 @@ class Repo_User implements Repo_interface_User
             'role' => $role,
         ]);
     }
-    public function findByEmailOrUsername(string $email_or_username): User
+    public function findByEmailOrUsername(string $email_or_username)
     {
         return User::where('email', $email_or_username)
             ->orWhere('username', $email_or_username)
             ->first();
     }
-    public function findByEmail(string $email): User
+    public function findByEmail(string $email)
     {
         return User::where('email', $email)->first();
     }
@@ -42,6 +42,6 @@ class Repo_User implements Repo_interface_User
     }
     public function deleteAllTokensOfUser(string $email): void
     {
-        User::where('email', $email)->tokens()->delete();
+        User::where('email', $email)->first()->tokens()->delete();
     }
 }

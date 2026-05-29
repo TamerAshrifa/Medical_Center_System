@@ -97,7 +97,7 @@ class Serv_Otp
         ) {
             return response()->json([
                 'result' => 'Fail',
-                'message' => 'Invalid OTP-Code'
+                'message' => 'Invalid email or OTP-Code'
             ], 400);
         }
 
@@ -105,7 +105,7 @@ class Serv_Otp
             $otpRecord->delete();
 
             $user = User::where('email', $email)->first();
-            $this->sendOtpToUser($email, $user->id, En_OTP_Type::REGISTER_VERIFY);
+            $this->sendOtpToUser($email, $user->id, $otpRecord->type);
 
             return response()->json([
                 'result' => 'Fail',

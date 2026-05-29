@@ -88,12 +88,12 @@ class Serv_User
     {
         return DB::transaction(
             function () use ($data) {
-                $resetTokenRecord = $this->repo_User->findByEmail($data['email']);
+                $resetTokenRecord = $this->repo_ResetPasswordToken->findByEmail($data['email']);
 
-                if ($resetTokenRecord->token != $data['reset_token']) {
+                if ($resetTokenRecord == null || $resetTokenRecord->token != $data['reset_token']) {
                     return response()->json([
                         'result' => 'Fail',
-                        'message' => 'Invalid reset-token',
+                        'message' => 'Invalid email or reset-token',
                     ], 400);
                 }
 
