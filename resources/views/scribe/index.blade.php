@@ -105,7 +105,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: May 28, 2026</li>
+        <li>Last updated: May 29, 2026</li>
     </ul>
 </div>
 
@@ -160,7 +160,7 @@ from the nav menu at the top left on mobile).</code></pre>
     --form "gender="\
     --form "username=hdtqtqxbajwbpilpm"\
     --form "password_confirmation=consequatur"\
-    --form "photo=@C:\Users\USER\AppData\Local\Temp\php57BC.tmp" </code></pre></div>
+    --form "photo=@C:\Users\USER\AppData\Local\Temp\phpC6A9.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -393,7 +393,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php57BC.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\phpC6A9.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>password_confirmation</code></b>&nbsp;&nbsp;
@@ -464,22 +464,7 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;result&quot;: &quot;Success&quot;,
     &quot;message&quot;: &quot;Email verified successfully&quot;,
-    &quot;token&quot;: &quot;5|9cc4ues9eb6rAXxanCXiPxICZcUFK6PgMl7IxcXXf287c850&quot;,
-    &quot;data&quot;: {
-        &quot;id&quot;: 40,
-        &quot;first_name&quot;: &quot;vmq&quot;,
-        &quot;last_name&quot;: &quot;eop&quot;,
-        &quot;email&quot;: &quot;tamrashryft2@gmail.com&quot;,
-        &quot;email_verified_at&quot;: &quot;2026-05-28T18:31:51.000000Z&quot;,
-        &quot;phone&quot;: &quot;+96399999&quot;,
-        &quot;date_of_birth&quot;: &quot;2004-06-13T21:00:00.000000Z&quot;,
-        &quot;gender&quot;: true,
-        &quot;photo&quot;: null,
-        &quot;username&quot;: &quot;hdtqtqxbajwbpilpm1&quot;,
-        &quot;role&quot;: &quot;patient&quot;,
-        &quot;created_at&quot;: &quot;2026-05-28 21:30:52&quot;,
-        &quot;updated_at&quot;: null
-    }
+    &quot;token&quot;: &quot;5|9cc4ues9eb6rAXxanCXiPxICZcUFK6PgMl7IxcXXf287c850&quot;
 }</code>
  </pre>
             <blockquote>
@@ -1013,22 +998,7 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;result&quot;: &quot;Success&quot;,
     &quot;message&quot;: &quot;Your password was updated successfully&quot;,
-    &quot;token&quot;: &quot;6|1rbJvOIdEoHxeSKIiT6L66vnQqvBrtXFIRaxDJApa25692ae&quot;,
-    &quot;data&quot;: {
-        &quot;id&quot;: 40,
-        &quot;first_name&quot;: &quot;vmq&quot;,
-        &quot;last_name&quot;: &quot;eop&quot;,
-        &quot;email&quot;: &quot;tamrashryft2@gmail.com&quot;,
-        &quot;email_verified_at&quot;: &quot;2026-05-28T18:31:51.000000Z&quot;,
-        &quot;phone&quot;: &quot;+96399999&quot;,
-        &quot;date_of_birth&quot;: &quot;2004-06-13T21:00:00.000000Z&quot;,
-        &quot;gender&quot;: true,
-        &quot;photo&quot;: null,
-        &quot;username&quot;: &quot;hdtqtqxbajwbpilpm1&quot;,
-        &quot;role&quot;: &quot;patient&quot;,
-        &quot;created_at&quot;: &quot;2026-05-28 21:30:52&quot;,
-        &quot;updated_at&quot;: null
-    }
+    &quot;token&quot;: &quot;6|1rbJvOIdEoHxeSKIiT6L66vnQqvBrtXFIRaxDJApa25692ae&quot;
 }</code>
  </pre>
             <blockquote>

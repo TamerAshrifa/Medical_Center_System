@@ -211,7 +211,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: "{\r\n    \"result\": \"Success\",\r\n    \"message\": \"Email verified successfully\",\r\n    \"token\": \"5|9cc4ues9eb6rAXxanCXiPxICZcUFK6PgMl7IxcXXf287c850\",\r\n    \"data\": {\r\n        \"id\": 40,\r\n        \"first_name\": \"vmq\",\r\n        \"last_name\": \"eop\",\r\n        \"email\": \"tamrashryft2@gmail.com\",\r\n        \"email_verified_at\": \"2026-05-28T18:31:51.000000Z\",\r\n        \"phone\": \"+96399999\",\r\n        \"date_of_birth\": \"2004-06-13T21:00:00.000000Z\",\r\n        \"gender\": true,\r\n        \"photo\": null,\r\n        \"username\": \"hdtqtqxbajwbpilpm1\",\r\n        \"role\": \"patient\",\r\n        \"created_at\": \"2026-05-28 21:30:52\",\r\n        \"updated_at\": null\r\n    }\r\n}"
+        content: "{\r\n    \"result\": \"Success\",\r\n    \"message\": \"Email verified successfully\",\r\n    \"token\": \"5|9cc4ues9eb6rAXxanCXiPxICZcUFK6PgMl7IxcXXf287c850\"\r\n}"
         headers: []
         description: ''
       -
@@ -454,7 +454,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: "{\r\n    \"result\": \"Success\",\r\n    \"message\": \"Your password was updated successfully\",\r\n    \"token\": \"6|1rbJvOIdEoHxeSKIiT6L66vnQqvBrtXFIRaxDJApa25692ae\",\r\n    \"data\": {\r\n        \"id\": 40,\r\n        \"first_name\": \"vmq\",\r\n        \"last_name\": \"eop\",\r\n        \"email\": \"tamrashryft2@gmail.com\",\r\n        \"email_verified_at\": \"2026-05-28T18:31:51.000000Z\",\r\n        \"phone\": \"+96399999\",\r\n        \"date_of_birth\": \"2004-06-13T21:00:00.000000Z\",\r\n        \"gender\": true,\r\n        \"photo\": null,\r\n        \"username\": \"hdtqtqxbajwbpilpm1\",\r\n        \"role\": \"patient\",\r\n        \"created_at\": \"2026-05-28 21:30:52\",\r\n        \"updated_at\": null\r\n    }\r\n}"
+        content: "{\r\n    \"result\": \"Success\",\r\n    \"message\": \"Your password was updated successfully\",\r\n    \"token\": \"6|1rbJvOIdEoHxeSKIiT6L66vnQqvBrtXFIRaxDJApa25692ae\"\r\n}"
         headers: []
         description: ''
       -
