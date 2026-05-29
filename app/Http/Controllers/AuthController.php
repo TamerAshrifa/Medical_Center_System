@@ -153,7 +153,7 @@ class AuthController extends Controller
             'result' => 'Success',
             'message' => 'Email verified successfully',
             'token' => $user->createToken('auth_token')->plainTextToken,
-            'data' => $user,
+            // 'data' => $user,
         ]);
     }
 
@@ -274,7 +274,7 @@ class AuthController extends Controller
                     'result' => 'Success',
                     'message' => 'Your password was updated successfully',
                     'token' => $user->createToken('auth_token')->plainTextToken,
-                    'data' => $user,
+                    // 'data' => $user,
                 ]);
             }
         );
