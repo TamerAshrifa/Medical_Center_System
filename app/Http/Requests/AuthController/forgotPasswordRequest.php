@@ -5,7 +5,7 @@ namespace App\Http\Requests\AuthController;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class Req_Login extends FormRequest
+class forgotPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,7 @@ class Req_Login extends FormRequest
     public function rules(): array
     {
         return [
-            'email_or_username' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string', 'min:8'],
+            "email" => ['required', 'string', 'email', 'max:75'],
         ];
     }
 }

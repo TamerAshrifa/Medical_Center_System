@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum En_AppointmentStatus: string
+enum AppointmentStatusEnum: string
 {
     case PENDING = 'pending';
     case CANCELLED = 'cancelled';

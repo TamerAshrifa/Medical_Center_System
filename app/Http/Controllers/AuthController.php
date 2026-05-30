@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AuthController\Req_forgotPassword;
-use App\Http\Requests\AuthController\Req_Login;
-use App\Http\Requests\AuthController\Req_Register;
-use App\Http\Requests\AuthController\Req_resetPassword;
-use App\Http\Requests\AuthController\Req_verifyOtp;
-use App\Services\Serv_Otp;
-use App\services\Serv_User;
-use App\DTOs\Dto_User;
+use App\GeneralClasses\Enums\ServiceResponseEnum;
+use App\Http\Requests\AuthController\forgotPasswordRequest;
+use App\Http\Requests\AuthController\loginRequest;
+use App\Http\Requests\AuthController\registerRequest;
+use App\Http\Requests\AuthController\resetPasswordRequest;
+use App\Http\Requests\AuthController\verifyOtpRequest;
+use App\Services\OtpService;
+use App\services\AuthService;
+use App\DTOs\UserDTO;
 class AuthController extends Controller
 {
-    public function __construct(protected Serv_User $serv_User, protected Serv_Otp $serv_Otp)
+    public function __construct(protected AuthService $userService, protected OtpService $otpService)
     {
     }
 
@@ -24,9 +25,14 @@ class AuthController extends Controller
      * @bodyParam phone string required Must be a valid phone number. Example: +963999999999
      * @responseFile 201 storage/responses/AuthController/register_201_Created.json
      */
-    public function register(Req_Register $request)
+    public function register(registerRequest $request)
     {
-        return $this->serv_User->registerUser(Dto_User::fromRequest($request->validated()));
+        $response = $this->userService->registerUser(UserDTO::fromRequest($request->validated()));
+
+        return response()->json([
+            'result' => $response->result,
+            'message' => $response->message,
+        ], $response->statusCode);
     }
 
     /**
@@ -38,22 +44,38 @@ class AuthController extends Controller
      * @responseFile 400 storage/responses/AuthController/verifyOtp_400_3_Bad_Reqeust.json
      * @group Authentication APIs
      */
-    public function verifyOtp(Req_verifyOtp $request)
+    public function verifyOtp(verifyOtpRequest $request)
     {
-        return $this->serv_Otp->verifyOtp($request->email, $request->otp_code);
+        $response = $this->otpService->verifyOtp($request->email, $request->otp_code);
+
+        if ($response->result == ServiceResponseEnum::SUCCESS)
+            return response()->json([
+                'result' => $response->result,
+                'message' => $response->message,
+                'token_or_reset_token' => $response->data,
+            ], $response->statusCode);
+
+        return response()->json([
+            'result' => $response->result,
+            'message' => $response->message,
+        ], $response->statusCode);
     }
 
     /**
      * @unauthenticated
-     * @bodyParam password_confirmation string required Must be as same as the entered password.
      * @responseFile 200 storage/responses/AuthController/login_200_OK.json
      * @responseFile 401 storage/responses/AuthController/login_401_Unauthorized.json
      * @responseFile 403 storage/responses/AuthController/login_403_Forbidden.json
      * @group Authentication APIs
      */
-    public function login(Req_Login $request)
+    public function login(loginRequest $request)
     {
-        return $this->serv_User->loginUser($request->email_or_username, $request->password);
+        $response = $this->userService->loginUser($request->email_or_username, $request->password);
+
+        return response()->json([
+            'result' => $response->result,
+            'message' => $response->message,
+        ], $response->statusCode);
     }
 
     /**
@@ -61,9 +83,14 @@ class AuthController extends Controller
      * @responseFile 200 storage/responses/AuthController/forgotPassword_200_OK.json
      * @group Authentication APIs
      */
-    public function forgotPassword(Req_forgotPassword $request)
+    public function forgotPassword(forgotPasswordRequest $request)
     {
-        return $this->serv_User->forgotPassword($request->email);
+        $response = $this->userService->forgotPassword($request->email);
+
+        return response()->json([
+            'result' => $response->result,
+            'message' => $response->message,
+        ], $response->statusCode);
     }
 
     /**
@@ -74,9 +101,19 @@ class AuthController extends Controller
      * @responseFile 400 storage/responses/AuthController/resetPassword_400_2_Bad_Request.json
      * @group Authentication APIs
      */
-    public function resetPassword(Req_resetPassword $request)
+    public function resetPassword(resetPasswordRequest $request)
     {
-        return $this->serv_User->resetPassword($request->validated());
+        $response = $this->userService->resetPassword($request->validated());
+        if ($response->result == ServiceResponseEnum::SUCCESS)
+            return response()->json([
+                'result' => $response->result,
+                'message' => $response->message,
+                'token' => $response->data,
+            ], $response->statusCode);
+        return response()->json([
+            'result' => $response->result,
+            'message' => $response->message,
+        ], $response->statusCode);
     }
 
     /**
@@ -85,6 +122,10 @@ class AuthController extends Controller
      */
     public function logout()//Request $request)
     {
-        return $this->serv_User->logout();
+        $response = $this->userService->logout();
+        return response()->json([
+            'result' => $response->result,
+            'message' => $response->message,
+        ], $response->statusCode);
     }
 }

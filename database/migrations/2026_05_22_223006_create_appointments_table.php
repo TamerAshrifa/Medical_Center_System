@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\En_AppointmentStatus;
+use App\Enums\AppointmentStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->foreignId('doctor_id')->constrained()->restrictOnDelete();
             $table->dateTime('datetime');
             $table->unique('doctor_id', 'datetime');
-            $table->enum('column_name', array_column(En_AppointmentStatus::cases(), 'value'))->default(En_AppointmentStatus::PENDING);
+            $table->enum('column_name', array_column(AppointmentStatusEnum::cases(), 'value'))->default(AppointmentStatusEnum::PENDING);
             $table->timestamps();
         });
     }

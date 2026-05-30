@@ -2,7 +2,7 @@
 
 namespace App\DTOs;
 
-class Dto_User
+class UserDTO
 {
      public function __construct(
           public string $first_name,
@@ -13,7 +13,7 @@ class Dto_User
           public $date_of_birth,
           public bool $gender,
           public string $username,
-          public ?string $photo,
+          public $photo,
      ) {
      }
      public static function fromRequest(array $request): self

@@ -11,13 +11,11 @@ class WorkSchedule extends Model
     ];
     protected function casts(): array
     {
-
         return [
             'effective_from_date' => 'date',
             'effective_to_date' => 'date',
         ];
     }
-
     public function dayWorkTimes()
     {
         return $this->hasMany(DayWorkTime::class, 'work_schedule_id');

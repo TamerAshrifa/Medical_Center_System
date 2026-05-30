@@ -2,15 +2,14 @@
 
 namespace App\Repositories;
 
-use App\Enums\En_Role;
+use App\Enums\UserRoleEnum;
 use App\Models\User;
-use App\DTOs\Dto_User;
-use App\Repositories\Interfaces\Repo_interface_User;
-use Illuminate\Support\Facades\Hash;
+use App\DTOs\UserDTO;
+use App\Repositories\Interfaces\UserRepositoryInterface;
 
-class Repo_User implements Repo_interface_User
+class UserRepository implements UserRepositoryInterface
 {
-    public function create(Dto_User $dtoUser, En_Role $role = En_Role::PATIENT, $email_verified_at = null): User
+    public function create(UserDTO $dtoUser, UserRoleEnum $role = UserRoleEnum::PATIENT, $email_verified_at = null): User
     {
         return User::create([
             'first_name' => $dtoUser->first_name,
@@ -42,6 +41,8 @@ class Repo_User implements Repo_interface_User
     }
     public function deleteAllTokensOfUser(string $email): void
     {
-        User::where('email', $email)->first()->tokens()->delete();
+        $user = User::where('email', $email)->first();
+        if ($user != null)
+            $user->tokens()->delete();
     }
 }

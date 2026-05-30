@@ -4,7 +4,7 @@ namespace App\Http\Requests\AuthController;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Req_Register extends FormRequest
+class registerRequest extends FormRequest
 {
     public function authorize(): bool
     {

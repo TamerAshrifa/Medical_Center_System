@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\En_Role;
+use App\Enums\UserRoleEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->boolean('gender');
             $table->string('photo')->nullable();
             $table->string('username')->unique();
-            $table->enum('role', array_column(En_Role::cases(), 'value'))->default(En_Role::PATIENT);
+            $table->enum('role', array_column(UserRoleEnum::cases(), 'value'))->default(UserRoleEnum::PATIENT);
             $table->rememberToken();
             $table->timestamps();
         });

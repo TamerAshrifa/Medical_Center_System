@@ -5,7 +5,7 @@ namespace App\Http\Requests\AuthController;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class Req_verifyOtp extends FormRequest
+class resetPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,9 @@ class Req_verifyOtp extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email', 'max:75'],
-            'otp_code' => ['required'],
+            "email" => ['required', 'string', 'email', 'max:75', 'exists:users,email'],
+            "reset_token" => ['required'],
+            "new_password" => ['required', 'string', 'min:8', 'confirmed'],
         ];
     }
 }

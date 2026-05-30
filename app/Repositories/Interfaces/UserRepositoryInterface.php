@@ -2,14 +2,14 @@
 
 namespace App\Repositories\Interfaces;
 
-use App\Enums\En_Role;
-use app\DTOs\Dto_User;
+use App\Enums\UserRoleEnum;
+use App\DTOs\UserDTO;
 use App\Models\User;
 
 
-interface Repo_interface_User
+interface UserRepositoryInterface
 {
-    public function create(Dto_User $dtoUser, En_Role $role = En_Role::PATIENT, $email_verified_at = null): User;
+    public function create(UserDTO $dtoUser, UserRoleEnum $role = UserRoleEnum::PATIENT, $email_verified_at = null): User;
     public function findByEmailOrUsername(string $email_or_username);
     public function findByEmail(string $email);
     public function resetPassword(string $email, string $newPassword): void;

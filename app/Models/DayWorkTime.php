@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class DayWorkTime extends Model
 {
-
+    protected $guarded = [
+        "id",
+    ];
 
     public function weekDay()
     {

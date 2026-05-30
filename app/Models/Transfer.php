@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transfer extends Model
 {
+    protected $guarded = [
+        "id",
+    ];
     public function referringDoctor()
     {
         return $this->belongsTo(Doctor::class, 'referring_doctor_id');

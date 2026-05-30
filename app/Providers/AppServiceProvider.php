@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Repositories\Interfaces\Repo_interface_ResetPasswordToken;
-use App\Repositories\Interfaces\Repo_interface_User;
-use App\Repositories\Repo_ResetPasswordToken;
-use App\Repositories\Repo_User;
+use App\Repositories\Interfaces\ResetPasswordTokenRepositoryInterface;
+use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Repositories\ResetPasswordTokenRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,13 +16,13 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(
-            Repo_interface_User::class,
-            Repo_User::class
+            UserRepositoryInterface::class,
+            UserRepository::class
         );
 
         $this->app->bind(
-            Repo_interface_ResetPasswordToken::class,
-            Repo_ResetPasswordToken::class
+            ResetPasswordTokenRepositoryInterface::class,
+            ResetPasswordTokenRepository::class
         );
     }
 

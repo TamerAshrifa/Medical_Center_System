@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\En_Role;
+use App\Enums\UserRoleEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
@@ -11,9 +11,10 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory;
     protected $guarded = [
-        "id",
+        'id',
+        'role'
     ];
-    public $timestamps = false;
+    // public $timestamps = false;
     protected $hidden = [
         'password',
         'remember_token',
@@ -25,7 +26,7 @@ class User extends Authenticatable
             'password' => 'hashed',
             'date_of_birth' => 'date',
             'gender' => 'boolean',
-            'role' => En_Role::class,
+            'role' => UserRoleEnum::class,
         ];
     }
     public function patient()

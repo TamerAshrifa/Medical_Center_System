@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
-use App\Enums\En_PatientComplaintStatus;
+use App\Enums\PatientComplaintStatusEnum;
 use Illuminate\Database\Eloquent\Model;
 
 class PatientComplaint extends Model
 {
+    protected $guarded = [
+        "id",
+    ];
     protected function casts(): array
     {
         return [
-            'status' => En_PatientComplaintStatus::class,
+            'status' => PatientComplaintStatusEnum::class,
         ];
     }
 

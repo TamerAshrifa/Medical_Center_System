@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Enums\En_OTP_Type;
+use App\Enums\OtpTypeEnum;
 
 class Otp extends Model
 {
@@ -12,7 +12,7 @@ class Otp extends Model
     protected function casts(): array
     {
         return [
-            'type' => En_OTP_Type::class,
+            'type' => OtpTypeEnum::class,
         ];
     }
 
