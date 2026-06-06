@@ -14,7 +14,6 @@ class User extends Authenticatable
         'id',
         'role'
     ];
-    // public $timestamps = false;
     protected $hidden = [
         'password',
         'remember_token',
@@ -37,4 +36,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Admin::class, 'user_id');
     }
+
+    public function doctor()
+    {
+        return $this->hasOne(Doctor::class, 'user_id');
+    }
+
 }

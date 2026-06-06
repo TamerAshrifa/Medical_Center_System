@@ -1,36 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-    <h2>Email Verification</h2>
-
-    <p>Here is your email verification code:</p>
-
-    <h1>{{ $otp_code }}</h1>
-
-    <p>This code is valid for 10 minutes and can only be used once.</p>
-
-    <h4>Please don't share this code with anyone:<p>we will never ask for it on the phone or via email.</p>
-    </h4>
-
-    <p>Thanks,</p>
-    <p>The Medical Center Team</p>
-
-    You're receiving this email because a verification code was requested for your GitHub account. If this wasn't you,
-    please ignore this email.
-</body>
-
-</html> -->
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -91,7 +58,7 @@
                                         padding-bottom:20px;
                                         text-align:center;
                                     ">
-                                        Here is your email verification code:
+                                        Here is your OTP-Code:
                                     </td>
                                 </tr>
 

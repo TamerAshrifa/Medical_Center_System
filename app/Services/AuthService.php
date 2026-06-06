@@ -3,18 +3,18 @@
 namespace App\Services;
 
 use App\Enums\OtpTypeEnum;
-use App\GeneralClasses\Enums\ServiceResponseEnum;
-use App\GeneralClasses\ServiceResponse;
+use App\GeneralClasses\Enums\ResponseStatusEnum;
+use App\GeneralClasses\Response;
 use App\Repositories\Interfaces\ResetPasswordTokenRepositoryInterface;
 use Carbon\Carbon;
-use App\DTOs\UserDTO;
+use App\DTOs\User\UserDTO;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 
 use DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class AuthService
+class AuthService extends Service
 {
     public function __construct(
         protected UserRepositoryInterface $userRepo,
@@ -22,120 +22,168 @@ class AuthService
         protected ResetPasswordTokenRepositoryInterface $resetPasswordTokenRepo
     ) {
     }
-    public function registerUser(UserDTO $dtoUser): ServiceResponse
+    public function registerUser(UserDTO $dtoUser): Response
     {
-        return DB::transaction(
-            function () use ($dtoUser) {
-                if ($dtoUser->photo != null)
-                    $dtoUser->photo = $dtoUser->photo->store('user_photos', 'public');
-                $user = $this->userRepo->create($dtoUser);
-
-                $this->otpService->sendOtpToUser($dtoUser->email, $user->id, OtpTypeEnum::REGISTER_VERIFY);
-
-                return new ServiceResponse(
-                    ServiceResponseEnum::SUCCESS,
-                    'OTP-Code was sent to ' . $user->email . " successfully, please check your inbox",
-                    null,
-                    201
-                );
+        $response = null;
+        DB::transaction(
+            function () use (&$dtoUser, &$response) {
+                $response = $this->userRepo->create($dtoUser);
             }
         );
-    }
-    public function loginUser(string $email_or_username, string $password): ServiceResponse
-    {
-        $user = $this->userRepo->findByEmailOrUsername($email_or_username);
+        if ($response->result != ResponseStatusEnum::SUCCESS)
+            return $response;
 
-        if (blank($user) || !Hash::check($password, $user->password)) {
-            return new ServiceResponse(
-                ServiceResponseEnum::FAIL,
-                'Wrong email or password',
+        $user = $response->data;
+        $response = $this->otpService->sendOtpToUser($dtoUser->email, $user->id, OtpTypeEnum::REGISTER_VERIFY);
+        if ($response->result != ResponseStatusEnum::SUCCESS)
+            return $response;
+
+        return new Response(
+            ResponseStatusEnum::SUCCESS,
+            Response::messageToArray('OTP-Code was sent to ' . $user->email . ' successfully, please check your inbox'),
+            null,
+            201
+        );
+
+    }
+    public function loginUser(string $email_or_username, string $password): Response
+    {
+        $response = $this->userRepo->findByEmailOrUsername($email_or_username);
+        if ($response->result != ResponseStatusEnum::SUCCESS)
+            return $response;
+
+        $user = $response->data;
+
+        if ($user == null || !Hash::check($password, $user->password)) {
+            return new Response(
+                ResponseStatusEnum::FAIL,
+                Response::messageToArray('Wrong email or password; Or the email is not verified, if so then an OTP-Code was sent to your email, please check your inbox'),
                 null,
-                401
+                400
             );
         }
 
-        $otp = $this->otpService->sendOtpToUser(
+        $response = $this->otpService->sendOtpToUser(
             $user->email,
             $user->id,
-            ($user->email_verified_at != null) ? OtpTypeEnum::LOGIN_VERIFY : OtpTypeEnum::REGISTER_VERIFY,
-        )->data;
+            ($user->email_verified_at != null) ?
+            OtpTypeEnum::LOGIN_VERIFY : OtpTypeEnum::REGISTER_VERIFY,
+        );
+        if ($response->result != ResponseStatusEnum::SUCCESS)
+            return $response;
 
         if ($user->email_verified_at == null) {
-            return new ServiceResponse(
-                ServiceResponseEnum::FAIL,
-                'Email is not verified, OTP-Code was sent to your email, please check your inbox',
+            return new Response(
+                ResponseStatusEnum::FAIL,
+                Response::messageToArray('Wrong email or password; Or the email is not verified, if so then an OTP-Code was sent to your email, please check your inbox'),
                 null,
-                403
+                400
             );
         }
-        return new ServiceResponse(
-            ServiceResponseEnum::SUCCESS,
-            'OTP-Code was sent to ' . $user->email . ' successfully, please check your inbox',
+        return new Response(
+            ResponseStatusEnum::SUCCESS,
+            Response::messageToArray('OTP-Code was sent to ' . $user->email . ' successfully, please check your inbox'),
         );
     }
-    public function forgotPassword(string $email): ServiceResponse
+    public function forgotPassword(string $email): Response
     {
-        $user = $this->userRepo->findByEmail($email);
-        if (blank($user)) {
-            return new ServiceResponse(
-                ServiceResponseEnum::SUCCESS,
-                'If the email exists, an OTP-Code was sent to it successfully, please check your inbox',
+        $response = $this->userRepo->findByEmail($email);
+        if ($response->result != ResponseStatusEnum::SUCCESS)
+            return $response;
+
+        $user = $response->data;
+        if ($user == null) {
+            return new Response(
+                ResponseStatusEnum::SUCCESS,
+                Response::messageToArray('If the email exists, an OTP-Code was sent to it successfully, please check your inbox'),
             );
         }
 
         $this->otpService->sendOtpToUser($user->email, $user->id, OtpTypeEnum::FORGOT_PASSWORD);
-        return new ServiceResponse(
-            ServiceResponseEnum::SUCCESS,
-            'If the email exists, an OTP-Code was sent to it successfully, please check your inbox',
+        return new Response(
+            ResponseStatusEnum::SUCCESS,
+            Response::messageToArray('If the email exists, an OTP-Code was sent to it successfully, please check your inbox'),
         );
     }
-    public function resetPassword(array $data): ServiceResponse
+    public function resetPassword(array $data): Response
     {
+        $response = $this->resetPasswordTokenRepo->findByEmail($data['email']);
+        if ($response->result != ResponseStatusEnum::SUCCESS)
+            return $response;
+
+        $resetTokenRecord = $response->data;
+        if ($resetTokenRecord == null || $resetTokenRecord->token != $data['reset_token']) {
+            return new Response(
+                ResponseStatusEnum::FAIL,
+                Response::messageToArray('Invalid email or reset-token'),
+                null,
+                400
+            );
+        }
+
         return DB::transaction(
-            function () use ($data) {
-                $resetTokenRecord = $this->resetPasswordTokenRepo->findByEmail($data['email']);
-
-                if ($resetTokenRecord == null || $resetTokenRecord->token != $data['reset_token']) {
-                    return new ServiceResponse(
-                        ServiceResponseEnum::FAIL,
-                        'Invalid email or reset-token',
-                        null,
-                        400
-                    );
-                }
-
+            function () use ($data, &$resetTokenRecord, &$response) {
                 if (Carbon::now()->gt(Carbon::parse($resetTokenRecord->created_at)->addMinutes(10))) {
-                    $this->resetPasswordTokenRepo->delete($data['email']);
+                    $response = $this->resetPasswordTokenRepo->delete($data['email']);
+                    if ($response->result != ResponseStatusEnum::SUCCESS)
+                        return $response;
 
-                    $user = $this->userRepo->findByEmail($data['email']);
-                    $this->otpService->sendOtpToUser($user->email, $user->id, OtpTypeEnum::FORGOT_PASSWORD);
-                    return new ServiceResponse(
-                        ServiceResponseEnum::FAIL,
-                        'Sorry, the reset-token has expired, a new OTP-Code was sent to your email, please check your inbox',
+                    $response = $this->userRepo->findByEmail($data['email']);
+                    if ($response->result != ResponseStatusEnum::SUCCESS)
+                        return $response;
+                    $user = $response->data;
+
+
+                    $response = $this->otpService->sendOtpToUser($user->email, $user->id, OtpTypeEnum::FORGOT_PASSWORD);
+                    if ($response->result != ResponseStatusEnum::SUCCESS)
+                        return $response;
+
+                    return new Response(
+                        ResponseStatusEnum::FAIL,
+                        Response::messageToArray('Sorry, the reset-token has expired, a new OTP-Code was sent to your email, please check your inbox'),
                         null,
                         400
                     );
                 }
+                $response = $this->resetPasswordTokenRepo->delete($data['email']);
+                if ($response->result != ResponseStatusEnum::SUCCESS)
+                    return $response;
 
-                $this->resetPasswordTokenRepo->delete($data['email']);
-                $this->userRepo->resetPassword($data['email'], Hash::make($data['new_password']));
-                $this->userRepo->deleteAllTokensOfUser($data['email']);
-                $user = $this->userRepo->findByEmail($data['email']);
-                return new ServiceResponse(
-                    ServiceResponseEnum::SUCCESS,
-                    'Your password was updated successfully',
+
+                $response = $this->userRepo->resetPassword($data['email'], Hash::make($data['new_password']));
+                if ($response->result != ResponseStatusEnum::SUCCESS)
+                    return $response;
+
+                $response = $this->userRepo->deleteAllTokensOfUser($data['email']);
+                if ($response->result != ResponseStatusEnum::SUCCESS)
+                    return $response;
+
+                $response = $this->userRepo->findByEmail($data['email']);
+                if ($response->result != ResponseStatusEnum::SUCCESS)
+                    return $response;
+
+                $user = $response->data;
+                $message = $user->role == null ?
+                    'Your password was updated successfully, now please complete your registration by filling the required patient data' :
+                    'Your password was updated successfully, you are now logged in';
+
+                return new Response(
+                    ResponseStatusEnum::SUCCESS,
+                    Response::messageToArray($message),
                     $user->createToken('auth_token')->plainTextToken,
                 );
             }
         );
     }
-    public function logout(): ServiceResponse
+    public function logout(): Response
     {
-        Auth::user()->currentAccessToken()->delete();
+        $response = $this->userRepo->logoutUser(Auth::user());
+        if ($response->result != ResponseStatusEnum::SUCCESS)
+            return $response;
 
-        return new ServiceResponse(
-            ServiceResponseEnum::SUCCESS,
-            'User logged-out successfully',
+        return new Response(
+            ResponseStatusEnum::SUCCESS,
+            Response::messageToArray('User logged-out successfully'),
         );
     }
 }

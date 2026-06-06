@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Middleware\CheckAdminMiddleware;
+use App\Http\Middleware\CheckDoctorMiddleware;
+use App\Http\Middleware\CheckDoctorOnlyMiddleware;
+use App\Http\Middleware\CheckPatientOnlyMiddleware;
+use App\Http\Middleware\StorePatientMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -8,6 +13,7 @@ use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Symfony\Component\Mailer\Exception\TransportException;
 use Symfony\Component\Mime\Exception\RfcComplianceException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use App\Http\Middleware\CheckPatientMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -17,7 +23,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'CheckPatient' => CheckPatientMiddleware::class,
+            'CheckAdmin' => CheckAdminMiddleware::class,
+            'CheckDoctor' => CheckDoctorMiddleware::class,
+            'StorePatientMiddleware' => StorePatientMiddleware::class,
+            'CheckDoctorOnly' => CheckDoctorOnlyMiddleware::class,
+            'CheckPatientOnly' => CheckPatientOnlyMiddleware::class,
+        ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (AuthenticationException $e, $request) {
@@ -39,7 +53,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (TransportExceptioN $e, $request) {
             return response()->json([
                 'result' => 'Fail',
-                'message' => "No internet-connection to send the email",
+                'message' => 'Sorry, no internet connection',
             ], 503);
         });
 

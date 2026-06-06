@@ -3,8 +3,9 @@
 namespace App\Services;
 
 use App\Enums\OtpTypeEnum;
-use App\GeneralClasses\Enums\ServiceResponseEnum;
-use App\GeneralClasses\ServiceResponse;
+use App\Enums\UserRoleEnum;
+use App\GeneralClasses\Enums\ResponseStatusEnum;
+use App\GeneralClasses\Response;
 use App\Mail\SendOtpMail;
 use App\Models\Otp;
 use App\Models\User;
@@ -13,13 +14,14 @@ use App\Repositories\Interfaces\UserRepositoryInterface;
 use DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use function Illuminate\Support\now;
 
-class OtpService
+class OtpService extends Service
 {
     public function __construct(protected UserRepositoryInterface $repo_User)
     {
     }
-    public function sendOtpToUser(string $email, int $userId, OtpTypeEnum $type): ServiceResponse
+    public function sendOtpToUser(string $email, int $userId, OtpTypeEnum $type): Response
     {
         return DB::transaction(
             function () use ($email, $userId, $type) {
@@ -27,56 +29,63 @@ class OtpService
                 Otp::where('email', $email)->delete();
 
                 $otpCode = random_int(100000, 999999);
-                $otp = Otp::updateOrCreate(
+                $otpRecord = Otp::updateOrCreate(
                     [
                         'email' => $email
                     ],
                     [
                         'user_id' => $userId,
-                        'otp_code' => Hash::make($otpCode),
+                        'otp_code' => hash_hmac('sha256', $otpCode, config('app.key')),
                         'type' => $type,
                         'expires_at' => Carbon::now()->addMinutes(10),
                     ]
                 );
                 Mail::to($email)->send(new SendOtpMail($otpCode));
 
-                return new ServiceResponse(
-                    ServiceResponseEnum::SUCCESS,
+                return new Response(
+                    ResponseStatusEnum::SUCCESS,
                     null,
-                    $otp
+                    $otpRecord
                 );
             }
         );
     }
-    private function _processRegisterVerify(User $user, Otp $otpRecord): ServiceResponse
+    private function _processRegisterVerify(User $user, Otp $otpRecord): Response
     {
         if ($user->email_verified_at != null) {
             $otpRecord->delete();
-            return new ServiceResponse(
-                ServiceResponseEnum::FAIL,
-                'Email is already verified, you can login',
+            return new Response(
+                ResponseStatusEnum::FAIL,
+                Response::messageToArray('Email is already verified, you can login'),
                 null,
                 400
             );
         }
-        $user->update(['email_verified_at' => now()]);
+        $user->email_verified_at = now();
+        // $user->role = UserRoleEnum::PATIENT;
+        $user->save();
+
         $otpRecord->delete();
-        return new ServiceResponse(
-            ServiceResponseEnum::SUCCESS,
-            'Email verified successfully',
-            $user->createToken('auth_token')->plainTextToken
-        );
-    }
-    private function _processLoginVerify(User $user, Otp $otpRecord): ServiceResponse
-    {
-        $otpRecord->delete();
-        return new ServiceResponse(
-            ServiceResponseEnum::SUCCESS,
-            'OTP-Code verified successfully, you are now logged in',
+        return new Response(
+            ResponseStatusEnum::SUCCESS,
+            Response::messageToArray('Email verified successfully'),
             $user->createToken('auth_token')->plainTextToken,
         );
     }
-    private function _processForgotPasswordVerify(User $user, Otp $otpRecord): ServiceResponse
+    private function _processLoginVerify(User $user, Otp $otpRecord): Response
+    {
+        $message = $user->role == null ?
+            'OTP-Code verified successfully, now please complete your registration by filling the required patient data' :
+            'OTP-Code verified successfully, you are now logged in';
+
+        $otpRecord->delete();
+        return new Response(
+            ResponseStatusEnum::SUCCESS,
+            Response::messageToArray($message),
+            $user->createToken('auth_token')->plainTextToken,
+        );
+    }
+    private function _processForgotPasswordVerify(User $user, Otp $otpRecord): Response
     {
         $resetToken = Hash::make(bin2hex(random_bytes(32)));
         DB::table('password_reset_tokens')->insert([
@@ -85,23 +94,22 @@ class OtpService
             'created_at' => now(),
         ]);
         $otpRecord->delete();
-        return new ServiceResponse(
-            ServiceResponseEnum::SUCCESS,
-            'OTP-Code verified successfully, you can now reset your password',
+        return new Response(
+            ResponseStatusEnum::SUCCESS,
+            Response::messageToArray('OTP-Code verified successfully, you can now reset your password'),
             $resetToken,
         );
     }
-    public function verifyOtp(string $email, string $otpCode): ServiceResponse
+    public function verifyOtp(string $email, string $otpCode): Response
     {
-        $otpRecord = Otp::where('email', $email)->first();
+        $otpRecord = Otp::where('email', $email)
+            ->where('otp_code', hash_hmac('sha256', $otpCode, config('app.key')))
+            ->first();
 
-        if (
-            blank($otpRecord) ||
-            !Hash::check($otpCode, $otpRecord->otp_code)
-        ) {
-            return new ServiceResponse(
-                ServiceResponseEnum::FAIL,
-                'Invalid email or OTP-Code',
+        if ($otpRecord == null) {
+            return new Response(
+                ResponseStatusEnum::FAIL,
+                Response::messageToArray('Invalid email or OTP-Code'),
                 null,
                 400,
             );
@@ -110,25 +118,31 @@ class OtpService
         if (Carbon::now()->gt($otpRecord->expires_at)) {
             $otpRecord->delete();
 
-            $user = $this->repo_User->findByEmail($email);
+            $response = $this->repo_User->findByEmail($email);
+            if ($response->result != ResponseStatusEnum::SUCCESS)
+                return $response;
 
+            $user = $response->data;
             if ($user == null)
-                return new ServiceResponse(
-                    ServiceResponseEnum::FAIL,
-                    'Invalid email or OTP-Code',
+                return new Response(
+                    ResponseStatusEnum::FAIL,
+                    Response::messageToArray('Invalid email or OTP-Code'),
                     null,
                     400,
                 );
             $this->sendOtpToUser($email, $user->id, $otpRecord->type);
-            return new ServiceResponse(
-                ServiceResponseEnum::FAIL,
-                'Sorry, this OTP-Code has expired, a new one was sent to your email, please check your inbox',
+            return new Response(
+                ResponseStatusEnum::FAIL,
+                Response::messageToArray('Sorry, this OTP-Code has expired, a new one was sent to your email, please check your inbox'),
                 null,
                 400,
             );
         }
-        $user = $this->repo_User->findByEmail($email);
+        $response = $this->repo_User->findByEmail($email);
+        if ($response->result != ResponseStatusEnum::SUCCESS)
+            return $response;
 
+        $user = $response->data;
         switch ($otpRecord->type) {
             case OtpTypeEnum::REGISTER_VERIFY:
                 return $this->_processRegisterVerify($user, $otpRecord);

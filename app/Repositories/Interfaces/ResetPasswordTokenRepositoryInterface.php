@@ -2,8 +2,10 @@
 
 namespace App\Repositories\Interfaces;
 
-interface ResetPasswordTokenRepositoryInterface
+use App\GeneralClasses\Response;
+
+interface ResetPasswordTokenRepositoryInterface extends RepositoryInterface
 {
-    public function findByEmail(string $email);
-    public function delete(string $email): int;
+    public function findByEmail(string $email): Response;
+    public function delete(string $email): Response;
 }

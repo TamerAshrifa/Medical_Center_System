@@ -2,9 +2,19 @@
 
 namespace App\Providers;
 
+use App\Repositories\DoctorRepository;
+use App\Repositories\Interfaces\DoctorRepositoryInterface;
+use App\Repositories\Interfaces\PatientRepositoryInterface;
+use App\Repositories\Interfaces\RepositoryInterface;
 use App\Repositories\Interfaces\ResetPasswordTokenRepositoryInterface;
+use App\Repositories\Interfaces\RoomRepositoryInterface;
+use App\Repositories\Interfaces\SpecialityRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Repositories\PatientRepository;
+use App\Repositories\Repository;
 use App\Repositories\ResetPasswordTokenRepository;
+use App\Repositories\RoomRepository;
+use App\Repositories\SpecialityRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,6 +33,27 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             ResetPasswordTokenRepositoryInterface::class,
             ResetPasswordTokenRepository::class
+        );
+
+        $this->app->bind(
+            PatientRepositoryInterface::class,
+            PatientRepository::class
+        );
+        $this->app->bind(
+            RepositoryInterface::class,
+            Repository::class
+        );
+        $this->app->bind(
+            RoomRepositoryInterface::class,
+            RoomRepository::class
+        );
+        $this->app->bind(
+            DoctorRepositoryInterface::class,
+            DoctorRepository::class
+        );
+        $this->app->bind(
+            SpecialityRepositoryInterface::class,
+            SpecialityRepository::class
         );
     }
 

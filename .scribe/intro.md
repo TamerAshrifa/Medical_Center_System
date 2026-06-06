@@ -3,7 +3,7 @@
 ## This documentation was initialized by [Tamer Ashrifa](https://t.me/Tamer_Ashrifa).
 
 <aside>
-    <strong>Base URL</strong>: <code>http://127.0.0.1:8000</code>
+    <strong>Base URL</strong>: <code>http://127.0.0.1:8000/api</code>
 </aside>
 
     This documentation aims to provide all the information you need to work

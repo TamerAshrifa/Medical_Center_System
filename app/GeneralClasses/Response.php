@@ -2,18 +2,18 @@
 
 namespace App\GeneralClasses;
 
-use App\GeneralClasses\Enums\ServiceResponseEnum;
+use App\GeneralClasses\Enums\ResponseStatusEnum;
 
-class ServiceResponse
+class Response
 {
-    public ServiceResponseEnum $result;
-    public ?string $message;
+    public ResponseStatusEnum $result;
+    public ?array $message;
     public $data;
     public int $statusCode;
 
     public function __construct(
-        ServiceResponseEnum $result,
-        string $message = null,
+        ResponseStatusEnum $result,
+        ?array $message = null,
         $data = null,
         int $statusCode = 200,
     ) {
@@ -22,5 +22,11 @@ class ServiceResponse
         $this->data = $data;
         $this->statusCode = $statusCode;
     }
+
+    public static function messageToArray(string $message)
+    {
+        return ['base_message' => $message];
+    }
+
 
 }

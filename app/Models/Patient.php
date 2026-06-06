@@ -11,7 +11,7 @@ class Patient extends Model
         "id",
     ];
 
-    public function blood_type()
+    public function bloodType()
     {
         return $this->belongsTo(BloodType::class, 'blood_type_id');
     }

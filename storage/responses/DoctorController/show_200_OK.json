@@ -1,0 +1,67 @@
+{
+    "result": "Success",
+    "data": {
+        "id": 5,
+        "user": {
+            "id": 10,
+            "first_name": "Abagail Steuber",
+            "last_name": "Etha Reynolds",
+            "email": "demario.schaefer@example.net",
+            "phone": "(956) 585-9365",
+            "date_of_birth": "2025-08-16T21:00:00.000000Z",
+            "gender": "Male",
+            "photo": null,
+            "username": "considine.clyde",
+            "role": "doctor",
+            "email_verified_at": null,
+            "created_at": "2026-06-05T21:11:00.000000Z",
+            "last_update_at": "2026-06-05T21:11:04.000000Z"
+        },
+        "appointment_duration": 15,
+        "room": {
+            "id": 5,
+            "name": "Room 5",
+            "monthly_rent": "1884.00",
+            "last_update_by_admin": {
+                "id": 1,
+                "user": {
+                    "id": 1,
+                    "first_name": "Tamer",
+                    "last_name": "Ashrifa",
+                    "email": "tamrashryft@gmail.com",
+                    "phone": "0988138665",
+                    "date_of_birth": "2004-06-11T21:00:00.000000Z",
+                    "gender": "Male",
+                    "photo": null,
+                    "username": "TamerAshrifa",
+                    "role": "admin",
+                    "email_verified_at": "2026-06-05T21:10:58.000000Z",
+                    "created_at": "2026-06-05T21:10:58.000000Z",
+                    "last_update_at": "2026-06-05T21:11:04.000000Z"
+                },
+                "added_by_admin_id": null
+            }
+        },
+        "added_by_admin": {
+            "id": 1,
+            "user": {
+                "id": 1,
+                "first_name": "Tamer",
+                "last_name": "Ashrifa",
+                "email": "tamrashryft@gmail.com",
+                "phone": "0988138665",
+                "date_of_birth": "2004-06-11T21:00:00.000000Z",
+                "gender": "Male",
+                "photo": null,
+                "username": "TamerAshrifa",
+                "role": "admin",
+                "email_verified_at": "2026-06-05T21:10:58.000000Z",
+                "created_at": "2026-06-05T21:10:58.000000Z",
+                "last_update_at": "2026-06-05T21:11:04.000000Z"
+            },
+            "added_by_admin_id": null
+        }
+    }
+}
+
+// ⚠ Important Info: the previous example was for a patient logged-in, the response's data be changed based on logged-in user role

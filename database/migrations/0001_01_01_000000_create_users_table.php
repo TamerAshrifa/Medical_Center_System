@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->boolean('gender');
             $table->string('photo')->nullable();
             $table->string('username')->unique();
-            $table->enum('role', array_column(UserRoleEnum::cases(), 'value'))->default(UserRoleEnum::PATIENT);
+            $table->enum('role', array_column(UserRoleEnum::cases(), 'value'))->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

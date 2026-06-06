@@ -3,17 +3,24 @@
 namespace App\Repositories\Interfaces;
 
 use App\Enums\UserRoleEnum;
-use App\DTOs\UserDTO;
+use App\GeneralClasses\Response;
 use App\Models\User;
+use App\DTOs\User\UserDTO;
 
 
-interface UserRepositoryInterface
+interface UserRepositoryInterface extends RepositoryInterface
 {
-    public function create(UserDTO $dtoUser, UserRoleEnum $role = UserRoleEnum::PATIENT, $email_verified_at = null): User;
-    public function findByEmailOrUsername(string $email_or_username);
-    public function findByEmail(string $email);
-    public function resetPassword(string $email, string $newPassword): void;
-    public function deleteAllTokensOfUser(string $email): void;
+    public function create(
+        UserDTO $dtoUser,
+        $email_verified_at = null
+    ): Response;
 
+
+    public function findByEmailOrUsername(string $email_or_username): Response;
+    public function findByEmail(string $email): Response;
+    public function resetPassword(string $email, string $newPassword): Response;
+    public function deleteAllTokensOfUser(string $email): Response;
+    public function delete(int $userId): Response;
+    public function logoutUser(User $currentUser): Response;
 
 }

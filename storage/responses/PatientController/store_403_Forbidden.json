@@ -1,0 +1,9 @@
+// This response be returned when:
+// The logged-in user role is null (non-completed patient), OK, but he is trying to add a patient other than himself!
+
+{
+ "result": "Fail",
+    "message": {
+        "base_message": "Patients can only add themselves"
+    },
+}

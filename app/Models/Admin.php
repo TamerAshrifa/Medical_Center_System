@@ -14,7 +14,10 @@ class Admin extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-
+    public function addedByAdmin()
+    {
+        return $this->belongsTo(Admin::class, 'added_by_admin_id');
+    }
     public function updatedRooms()
     {
         return $this->hasMany(Room::class, 'last_update_by_admin_id');
@@ -34,7 +37,6 @@ class Admin extends Model
     {
         return $this->hasMany(MedicalCenterWorkSchedule::class, 'made_by_admin_id');
     }
-
 
     public function patientComplaintsReviews()
     {

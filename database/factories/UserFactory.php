@@ -8,21 +8,7 @@ use Illuminate\Support\Str;
 class UserFactory extends Factory
 {
     protected static ?string $password;
-    protected static int $userIdCounter = 2;
-    private function _role(int $id): string
-    {
-        if ($id > 30)
-            $id = 1;
-
-        if ($id >= 2 && $id <= 5)
-            return 'admin';
-        else if ($id >= 6 && $id <= 20)
-            return 'patient';
-        else if ($id >= 21 && $id <= 30)
-            return 'doctor';
-
-        return 'patient';
-    }
+    protected static ?int $counter;
 
     public function definition(): array
     {
@@ -38,8 +24,6 @@ class UserFactory extends Factory
             'username' => fake()->userName(),
 
             'password' => static::$password ??= 'password',
-            //   'role' => $this->_role(static::$userIdCounter++),
-
             'remember_token' => Str::random(10),
             'created_at' => now(),
         ];
