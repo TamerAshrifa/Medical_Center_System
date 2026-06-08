@@ -24,16 +24,7 @@ class AuthService extends Service
     }
     public function registerUser(UserDTO $dtoUser): Response
     {
-        $response = null;
-        DB::transaction(
-            function () use (&$dtoUser, &$response) {
-                $response = $this->userRepo->create($dtoUser);
-            }
-        );
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
-
-        $user = $response->data;
+        $user = $this->userRepo->create($dtoUser);
         $response = $this->otpService->sendOtpToUser($dtoUser->email, $user->id, OtpTypeEnum::REGISTER_VERIFY);
         if ($response->result != ResponseStatusEnum::SUCCESS)
             return $response;
@@ -48,11 +39,7 @@ class AuthService extends Service
     }
     public function loginUser(string $email_or_username, string $password): Response
     {
-        $response = $this->userRepo->findByEmailOrUsername($email_or_username);
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
-
-        $user = $response->data;
+        $user = $this->userRepo->findByEmailOrUsername($email_or_username, false);
 
         if ($user == null || !Hash::check($password, $user->password)) {
             return new Response(
@@ -87,11 +74,8 @@ class AuthService extends Service
     }
     public function forgotPassword(string $email): Response
     {
-        $response = $this->userRepo->findByEmail($email);
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
+        $user = $this->userRepo->findByEmail($email, false)->data;
 
-        $user = $response->data;
         if ($user == null) {
             return new Response(
                 ResponseStatusEnum::SUCCESS,
@@ -128,11 +112,7 @@ class AuthService extends Service
                     if ($response->result != ResponseStatusEnum::SUCCESS)
                         return $response;
 
-                    $response = $this->userRepo->findByEmail($data['email']);
-                    if ($response->result != ResponseStatusEnum::SUCCESS)
-                        return $response;
-                    $user = $response->data;
-
+                    $user = $this->userRepo->findByEmail($data['email']);
 
                     $response = $this->otpService->sendOtpToUser($user->email, $user->id, OtpTypeEnum::FORGOT_PASSWORD);
                     if ($response->result != ResponseStatusEnum::SUCCESS)
@@ -149,20 +129,26 @@ class AuthService extends Service
                 if ($response->result != ResponseStatusEnum::SUCCESS)
                     return $response;
 
+                if (!$this->userRepo->resetPassword($data['email'], Hash::make($data['new_password']))) {
+                    return new Response(
+                        ResponseStatusEnum::FAIL,
+                        Response::messageToArray('Failed to reset user password'),
+                        null,
+                        500
+                    );
+                }
 
-                $response = $this->userRepo->resetPassword($data['email'], Hash::make($data['new_password']));
-                if ($response->result != ResponseStatusEnum::SUCCESS)
-                    return $response;
+                if (!$this->userRepo->deleteAllTokens($data['email'])) {
+                    return new Response(
+                        ResponseStatusEnum::FAIL,
+                        Response::messageToArray('Failed to delete user tokens'),
+                        null,
+                        500
+                    );
+                }
 
-                $response = $this->userRepo->deleteAllTokensOfUser($data['email']);
-                if ($response->result != ResponseStatusEnum::SUCCESS)
-                    return $response;
+                $user = $this->userRepo->findByEmail($data['email']);
 
-                $response = $this->userRepo->findByEmail($data['email']);
-                if ($response->result != ResponseStatusEnum::SUCCESS)
-                    return $response;
-
-                $user = $response->data;
                 $message = $user->role == null ?
                     'Your password was updated successfully, now please complete your registration by filling the required patient data' :
                     'Your password was updated successfully, you are now logged in';
@@ -177,9 +163,13 @@ class AuthService extends Service
     }
     public function logout(): Response
     {
-        $response = $this->userRepo->logoutUser(Auth::user());
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
+        if (!$this->userRepo->logout(Auth::id()))
+            return new Response(
+                ResponseStatusEnum::FAIL,
+                Response::messageToArray('Failed to logout user'),
+                null,
+                500
+            );
 
         return new Response(
             ResponseStatusEnum::SUCCESS,

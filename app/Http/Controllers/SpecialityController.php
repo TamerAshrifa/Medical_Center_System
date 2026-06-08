@@ -25,7 +25,7 @@ class SpecialityController extends Controller
      * Add New Speciality
      * 
      * ###For: Web
-     * Only admins are allowed to use this API.
+     * Only admins are allowed to use this API. There is a middleware CheckAdmin on this API route
      * @responseFile 201 storage/responses/SpecialityController/store_201_Created.json
      */
     public function store(StoreSpecialityRequest $request): JsonResponse

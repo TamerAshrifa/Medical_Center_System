@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Enums\OtpTypeEnum;
-use App\Enums\UserRoleEnum;
 use App\GeneralClasses\Enums\ResponseStatusEnum;
 use App\GeneralClasses\Response;
 use App\Mail\SendOtpMail;
@@ -105,8 +104,9 @@ class OtpService extends Service
         $otpRecord = Otp::where('email', $email)
             ->where('otp_code', hash_hmac('sha256', $otpCode, config('app.key')))
             ->first();
+        $user = $this->repo_User->findByEmail($email, false);
 
-        if ($otpRecord == null) {
+        if ($otpRecord == null || $user == null) {
             return new Response(
                 ResponseStatusEnum::FAIL,
                 Response::messageToArray('Invalid email or OTP-Code'),
@@ -118,18 +118,6 @@ class OtpService extends Service
         if (Carbon::now()->gt($otpRecord->expires_at)) {
             $otpRecord->delete();
 
-            $response = $this->repo_User->findByEmail($email);
-            if ($response->result != ResponseStatusEnum::SUCCESS)
-                return $response;
-
-            $user = $response->data;
-            if ($user == null)
-                return new Response(
-                    ResponseStatusEnum::FAIL,
-                    Response::messageToArray('Invalid email or OTP-Code'),
-                    null,
-                    400,
-                );
             $this->sendOtpToUser($email, $user->id, $otpRecord->type);
             return new Response(
                 ResponseStatusEnum::FAIL,
@@ -138,11 +126,7 @@ class OtpService extends Service
                 400,
             );
         }
-        $response = $this->repo_User->findByEmail($email);
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
 
-        $user = $response->data;
         switch ($otpRecord->type) {
             case OtpTypeEnum::REGISTER_VERIFY:
                 return $this->_processRegisterVerify($user, $otpRecord);

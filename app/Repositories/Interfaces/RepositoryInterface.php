@@ -8,9 +8,5 @@ use Illuminate\Database\QueryException;
 
 interface RepositoryInterface
 {
-    public function executeCode(
-        Closure $callback,
-        bool $handleQueryException = false,
-        bool $doTransaction = true,
-    ): Response;
+
 }

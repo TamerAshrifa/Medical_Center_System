@@ -10,6 +10,8 @@ use App\Http\Requests\AuthController\RegisterRequest;
 use App\Http\Requests\AuthController\ResetPasswordRequest;
 use App\Http\Requests\AuthController\VerifyOtpRequest;
 use App\Models\Otp;
+use App\Models\User;
+use App\Repositories\Repository;
 use App\Services\OtpService;
 use App\services\AuthService;
 use App\DTOs\User\UserDTO;

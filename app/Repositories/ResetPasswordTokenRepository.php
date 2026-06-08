@@ -12,25 +12,23 @@ class ResetPasswordTokenRepository extends Repository implements ResetPasswordTo
 
     public function findByEmail(string $email): Response
     {
-        return $this->executeCode(function () use ($email) {
-            return new Response(
-                ResponseStatusEnum::SUCCESS,
-                null,
-                DB::table('password_reset_tokens')->where('email', $email)->first(),
-            );
-        });
+        return new Response(
+            ResponseStatusEnum::SUCCESS,
+            null,
+            DB::table('password_reset_tokens')->where('email', $email)->first(),
+        );
     }
 
     public function delete(string $email): Response
     {
-        return $this->executeCode(function () use ($email) {
+        return DB::transaction(function () use ($email) {
             return new Response(
                 ResponseStatusEnum::SUCCESS,
                 null,
                 DB::table('password_reset_tokens')->where('email', $email)->delete(),
                 204,
             );
-        }, true, true);
+        });
     }
 
 

@@ -30,4 +30,19 @@ readonly class UserDTO
             photo: isset($request['photo']) ? $request['photo'] : null
         );
     }
+
+    public function toArray(): array
+    {
+        return [
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'email' => $this->email,
+            'password' => $this->password,
+            'phone' => $this->phone,
+            'date_of_birth' => $this->date_of_birth,
+            'gender' => $this->gender,
+            'username' => $this->username,
+            'photo' => $this->photo,
+        ];
+    }
 }

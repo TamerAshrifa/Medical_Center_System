@@ -2,96 +2,101 @@
 
 namespace App\Repositories;
 
+use App\DTOs\User\UserDTOUpdate;
 use App\Enums\UserRoleEnum;
 use App\GeneralClasses\Enums\ResponseStatusEnum;
 use App\GeneralClasses\Response;
 use App\Models\User;
 use App\DTOs\User\UserDTO;
 use App\Repositories\Interfaces\UserRepositoryInterface;
+use DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserRepository extends Repository implements UserRepositoryInterface
 {
     public function create(
         UserDTO $dtoUser,
         $email_verified_at = null
-    ): Response {
-        return $this->executeCode(function () use ($dtoUser, $email_verified_at) {
-            return new Response(
-                ResponseStatusEnum::SUCCESS,
-                null,
-                User::create([
-                    'first_name' => $dtoUser->first_name,
-                    'last_name' => $dtoUser->last_name,
-                    'email' => $dtoUser->email,
-                    'email_verified_at' => $email_verified_at,
-                    'password' => $dtoUser->password,
-                    'phone' => $dtoUser->phone,
-                    'date_of_birth' => $dtoUser->date_of_birth,
-                    'gender' => $dtoUser->gender,
-                    'photo' => $dtoUser->photo,
-                    'username' => $dtoUser->username,
-                ]),
-                201
-            );
-        });
+    ): User {
+        $userData = $dtoUser->toArray();
+        $userData['email_verified_at'] = $email_verified_at;
+        $userData['password'] = Hash::make($userData['password']);
+        return User::create($userData);
     }
-    public function findByEmailOrUsername(string $email_or_username): Response
+    public function findByEmailOrUsername(string $email_or_username, $failIfNotExist = true): User|null
     {
-        return $this->executeCode(function () use ($email_or_username) {
-            return new Response(
-                ResponseStatusEnum::SUCCESS,
-                null,
-                User::where('email', $email_or_username)
-                    ->orWhere('username', $email_or_username)
-                    ->first()
-            );
-        });
+        return $failIfNotExist ?
+            User::where('email', $email_or_username)
+                ->orWhere('username', $email_or_username)
+                ->firstOrFail() :
+            User::where('email', $email_or_username)
+                ->orWhere('username', $email_or_username)
+                ->first();
     }
-    public function findByEmail(string $email): Response
+    public function findByEmail(string $email, $failIfNotExist = true): User|null
     {
-        return $this->executeCode(function () use ($email) {
-            return new Response(
-                ResponseStatusEnum::SUCCESS,
-                null,
-                User::where('email', $email)->first()
-            );
-        });
+        return $failIfNotExist ?
+            User::where('email', $email)->firstOrFail() :
+            User::where('email', $email)->first();
     }
-    public function resetPassword(string $email, string $newPassword): Response
+    public function findById(int $id, $failIfNotExist = true): User|null
     {
-        return $this->executeCode(function () use ($email, $newPassword) {
-            return new Response(
-                ResponseStatusEnum::SUCCESS,
-                null,
-                User::where('email', $email)->update(['password' => $newPassword])
-            );
-        });
+        return $failIfNotExist ?
+            User::findOrFail($id) :
+            User::find($id);
     }
-    public function deleteAllTokensOfUser(string $email): Response
+    public function findByIdWithRoleObject(int $id, UserRoleEnum $role, $failIfNotExists = true): User|null
     {
-        return $this->executeCode(function () use ($email) {
-            $user = User::where('email', $email)->first();
-            if ($user != null)
-                $user->tokens()->delete();
-            return new Response(ResponseStatusEnum::SUCCESS);
-        }, true, true);
+        return $failIfNotExists ?
+            User::with($role->value)->findOrFail($id) :
+            User::with($role->value)->find($id);
     }
-    public function delete(int $userId): Response
+    public function resetPassword(string $email, string $newPassword): bool
     {
-        return $this->executeCode(function () use ($userId) {
-            $user = User::find($userId);
-            if ($user != null)
-                $user->delete();
-            return new Response(ResponseStatusEnum::SUCCESS, null, null, 204);
-        }, true, true);
+        return User::where('email', $email)->update(['password' => $newPassword]) > 0;
+    }
+    public function deleteAllTokens(string $email): bool
+    {
+        return DB::transaction(fn() => $this->findByEmail($email)->tokens()->delete()) > 0;
+    }
+    public function deleteById(int $id): bool
+    {
+        return $this->findById($id)->delete() > 0;
+    }
+    public function deleteByObject(User $user): bool
+    {
+        return $user->delete() > 0;
+    }
+    public function logout(int $id): bool
+    {
+        return $this->findById($id)->currentAccessToken()->delete() > 0;
+    }
+    public function paginate(int $per_page = 10)
+    {
+        return User::orderBy('created_at', 'desc')->paginate($per_page);
     }
 
-    public function logoutUser(User $currentUser): Response
+    public function update(int $id, UserDTOUpdate $userDTO): Response
     {
-        return $this->executeCode(function () use ($currentUser) {
-            $currentUser->currentAccessToken()->delete();
-            return new Response(ResponseStatusEnum::SUCCESS);
-        }, true, true);
+        return DB::transaction(function () use ($id, $userDTO) {
+            $user = $this->findById($id);
+
+            $user->fill($userDTO->toArray());
+            if (!$user->isDirty()) {
+                return new Response(
+                    ResponseStatusEnum::NOTHING,
+                    Response::messageToArray('No changes detected'),
+                );
+            }
+
+            $user->save();
+
+            return new Response(
+                ResponseStatusEnum::SUCCESS,
+                Response::messageToArray('User updated successfully'),
+                $user
+            );
+        });
     }
 
 }

@@ -48,7 +48,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{doctorId}', [DoctorController::class, 'destroy'])->middleware('CheckAdmin');
     });
 
-
     // Specialities APIs
     Route::prefix('specialities')->group(function () {
         Route::post('', [SpecialityController::class, 'store'])->middleware('CheckAdmin');

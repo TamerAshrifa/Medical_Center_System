@@ -114,19 +114,8 @@ class DoctorService extends Service
     {
         $isWithRoom = $isWithAdderAdmin = false;
         $this->fillIncludedEntities($isWithRoom, $isWithAdderAdmin);
-        $response = $this->doctorRepository->getDoctorById($doctorId, $isWithRoom, $isWithAdderAdmin);
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
 
-        $doctor = $response->data;
-        if ($doctor == null) {
-            return new Response(
-                ResponseStatusEnum::FAIL,
-                Response::messageToArray('Doctor not found'),
-                null,
-                404
-            );
-        }
+        $doctor = $this->doctorRepository->getDoctorById($doctorId, true, $isWithRoom, $isWithAdderAdmin);
 
         return new Response(
             ResponseStatusEnum::SUCCESS,
@@ -136,19 +125,7 @@ class DoctorService extends Service
     }
     public function updateDoctor(DoctorDTOUpdate $doctorDTO, int $doctorId): Response
     {
-        $response = $this->doctorRepository->getDoctorById($doctorId);
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
-
-        $doctor = $response->data;
-        if ($doctor == null) {
-            return new Response(
-                ResponseStatusEnum::FAIL,
-                Response::messageToArray('Doctor not found'),
-                null,
-                404
-            );
-        }
+        $doctor = $this->doctorRepository->getDoctorById($doctorId);
 
         $doctorArray = $doctorDTO->toArray();
 
@@ -170,19 +147,8 @@ class DoctorService extends Service
     }
     public function deleteDoctor(int $doctorId): Response
     {
-        $response = $this->doctorRepository->getDoctorById($doctorId);
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
 
-        $doctor = $response->data;
-        if ($doctor == null) {
-            return new Response(
-                ResponseStatusEnum::FAIL,
-                Response::messageToArray('Doctor not found'),
-                null,
-                404
-            );
-        }
+        $doctor = $this->doctorRepository->getDoctorById($doctorId);
 
         $response = $this->doctorRepository->deleteDoctor($doctor);
         if ($response->result != ResponseStatusEnum::SUCCESS)

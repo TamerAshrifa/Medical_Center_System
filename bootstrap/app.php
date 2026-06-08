@@ -5,15 +5,20 @@ use App\Http\Middleware\CheckDoctorMiddleware;
 use App\Http\Middleware\CheckDoctorOnlyMiddleware;
 use App\Http\Middleware\CheckPatientOnlyMiddleware;
 use App\Http\Middleware\StorePatientMiddleware;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Mailer\Exception\TransportException;
 use Symfony\Component\Mime\Exception\RfcComplianceException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use App\Http\Middleware\CheckPatientMiddleware;
+use Illuminate\Support\Str;
+use Illuminate\Database\QueryException;
+
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -34,6 +39,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+
         $exceptions->render(function (AuthenticationException $e, $request) {
             return response()->json([
                 'result' => 'Fail',
@@ -70,5 +76,46 @@ return Application::configure(basePath: dirname(__DIR__))
                 'message' => 'HTTP request method not allowed, ' . $e->getMessage(),
             ], 405);
         });
+
+        $exceptions->render(function (ModelNotFoundException $e, $request) {
+            return response()->json([
+                'result' => 'Fail',
+                'message' => Str::headline(class_basename($e->getModel())) . " not found",
+            ], 404);
+        });
+
+        $exceptions->render(function (NotFoundHttpException $e, $request) {
+            $previous = $e;
+            while ($previous = $previous->getPrevious())
+                if ($previous instanceof ModelNotFoundException)
+                    return response()->json([
+                        'result' => 'Fail',
+                        'message' => Str::headline(class_basename($previous->getModel())) . ' not found',
+                    ], 404);
+            return response()->json([
+                'result' => 'Fail',
+                'message' => 'Not found',
+            ], 404);
+        });
+
+        $exceptions->render(function (QueryException $e, $request) {
+            return response()->json([
+                'result' => 'Fail',
+                'message' => 'It cannot be deleted because it\'s referenced by existing entities',
+            ], 409);
+        });
+
+        $exceptions->render(function (\Throwable $e, $request) {
+            return response()->json([
+                'result' => 'Fail',
+                'base_message' => 'Unexpected back-end error!',
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'details' => ($e->getPrevious() != null) ? $e->getPrevious()->getMessage() : null,
+            ], 500);
+        });
+
+
 
     })->create();

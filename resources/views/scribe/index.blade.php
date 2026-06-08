@@ -251,7 +251,7 @@ acounts for them in the appropriate table and permissions; After an admin makes,
     --form "gender="\
     --form "username=hdtqtqxbajwbpilpm"\
     --form "password_confirmation=consequatur"\
-    --form "photo=@C:\Users\USER\AppData\Local\Temp\phpA814.tmp" </code></pre></div>
+    --form "photo=@C:\Users\USER\AppData\Local\Temp\phpAAF8.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -484,7 +484,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\phpA814.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\phpAAF8.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>password_confirmation</code></b>&nbsp;&nbsp;
