@@ -10,9 +10,10 @@ return new class extends Migration {
         Schema::create('day_work_times', function (Blueprint $table) {
             $table->id();
             $table->foreignId('weekday_id')->constrained('week_days')->restrictOnDelete();
-            $table->dateTime('start_time');
-            $table->dateTime('end_time');
+            $table->time('start_time');
+            $table->time('end_time');
             $table->foreignId('work_schedule_id')->constrained('work_schedules')->restrictOnDelete();
+            $table->unique(['weekday_id', 'work_schedule_id']);
             $table->timestamps();
         });
     }

@@ -31,7 +31,6 @@ class UpdateUserRequest extends FormRequest
                 'sometimes',
                 'string',
                 'max:20',
-                'unique:users,phone',
                 Rule::unique('users', 'phone')->ignore($userId)
             ],
             'date_of_birth' => ['sometimes', 'date'],
@@ -40,7 +39,6 @@ class UpdateUserRequest extends FormRequest
                 'sometimes',
                 'string',
                 'max:20',
-                'unique:users,username',
                 Rule::unique('users', 'username')->ignore($userId)
             ],
             'photo' => ['sometimes', 'image', 'max:2048'],

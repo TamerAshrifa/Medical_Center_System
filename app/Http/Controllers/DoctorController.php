@@ -8,7 +8,6 @@ use App\Http\Requests\DoctorController\StoreDoctorRequest;
 use App\Http\Requests\DoctorController\UpdateDoctorRequest;
 use App\Services\DoctorService;
 use App\GeneralClasses\Enums\ResponseStatusEnum;
-use App\Http\Requests\PatientController\UpdatePatientRequest;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -157,4 +156,5 @@ class DoctorController extends Controller
 
         return response()->noContent(204);
     }
+
 }

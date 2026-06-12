@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->foreignId('doctor_id')->constrained()->cascadeOnDelete();
             $table->foreignId('speciality_id')->constrained()->restrictOnDelete();
             $table->date('experience_starting_date');
-            $table->boolean('view_experience_to_patients');
+            $table->boolean('view_experience');
             $table->timestamps();
         });
     }

@@ -9,15 +9,13 @@ use App\GeneralClasses\Response;
 use App\Models\User;
 use App\DTOs\User\UserDTO;
 use App\Repositories\Interfaces\UserRepositoryInterface;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserRepository extends Repository implements UserRepositoryInterface
 {
-    public function create(
-        UserDTO $dtoUser,
-        $email_verified_at = null
-    ): User {
+    public function create(UserDTO $dtoUser, $email_verified_at = null): User
+    {
         $userData = $dtoUser->toArray();
         $userData['email_verified_at'] = $email_verified_at;
         $userData['password'] = Hash::make($userData['password']);
@@ -75,7 +73,6 @@ class UserRepository extends Repository implements UserRepositoryInterface
     {
         return User::orderBy('created_at', 'desc')->paginate($per_page);
     }
-
     public function update(int $id, UserDTOUpdate $userDTO): Response
     {
         return DB::transaction(function () use ($id, $userDTO) {

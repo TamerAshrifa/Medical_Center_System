@@ -20,6 +20,12 @@ use Illuminate\Support\Facades\Auth;
  */
 class UserController extends Controller
 {
+
+
+    public function __construct(
+        protected UserService $userService,
+    ) {
+    }
     private function resource(&$userOrCollectionOfIt, bool $isCollection)
     {
         switch ($this->getCurrentUserRole()) {
@@ -35,14 +41,12 @@ class UserController extends Controller
                 if ($isCollection)
                     return UserToDoctorResource::collection($userOrCollectionOfIt);
                 return new UserToDoctorResource($userOrCollectionOfIt);
+            default:
+                if ($isCollection)
+                    return UserToPatientResource::collection($userOrCollectionOfIt);
+                return new UserToPatientResource($userOrCollectionOfIt);
         }
     }
-
-    public function __construct(
-        protected UserService $userService,
-    ) {
-    }
-
     /**
      * Add New User
      * 

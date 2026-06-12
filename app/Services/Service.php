@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Enums\UserRoleEnum;
 use Illuminate\Support\Facades\Auth;
 
-class Service
+abstract class Service
 {
     public function __construct(
     ) {

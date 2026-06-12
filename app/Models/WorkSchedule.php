@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\WorkScheduleTypeEnum;
 use Illuminate\Database\Eloquent\Model;
 
 class WorkSchedule extends Model
@@ -14,6 +15,7 @@ class WorkSchedule extends Model
         return [
             'effective_from_date' => 'date',
             'effective_to_date' => 'date',
+            'type' => WorkScheduleTypeEnum::class,
         ];
     }
     public function dayWorkTimes()

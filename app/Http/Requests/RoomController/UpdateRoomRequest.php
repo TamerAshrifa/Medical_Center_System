@@ -4,6 +4,7 @@ namespace App\Http\Requests\RoomController;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateRoomRequest extends FormRequest
 {
@@ -23,7 +24,12 @@ class UpdateRoomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'string', 'max:20', 'unique:rooms,name'],
+            'name' => [
+                'sometimes',
+                'string',
+                'max:20',
+                Rule::unique('rooms', 'name')->ignore($this->route('roomId'))
+            ],
             'monthly_rent' => ['sometimes', 'numeric', 'min:0'],
         ];
     }

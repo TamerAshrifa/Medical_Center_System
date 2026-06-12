@@ -17,7 +17,7 @@ class DoctorSpecialityFactory extends Factory
             // 'doctor_id' => static::$doctorId++,
             'speciality_id' => rand(1, 36),
             'experience_starting_date' => fake()->date(),
-            'view_experience_to_patients' => fake()->boolean(),
+            'view_experience' => fake()->boolean(),
         ];
     }
 }

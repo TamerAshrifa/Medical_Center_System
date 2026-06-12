@@ -71,7 +71,7 @@ class UserService extends Service
             new Response(ResponseStatusEnum::SUCCESS, null, null, 204) :
             new Response(
                 ResponseStatusEnum::FAIL,
-                Response::messageToArray('Failed to delete user'),
+                Response::messageToArray('Failed to delete user, please try again'),
                 null,
                 500
             );

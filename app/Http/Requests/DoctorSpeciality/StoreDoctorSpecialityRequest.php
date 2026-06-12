@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Requests\DoctorController;
+namespace App\Http\Requests\DoctorSpeciality;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UpdateDoctorRequest extends FormRequest
+class StoreDoctorSpecialityRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +23,9 @@ class UpdateDoctorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'room_id' => [
-                'sometimes',
-                'integer',
-                'exists:rooms,id',
-                Rule::unique('doctors', 'room_id')->ignore($this->route('doctorId'))
-            ],
-            'appointment_duration' => ['sometimes', 'integer', 'min:1'],
+            'speciality_id' => ['required', 'integer', 'exists:specialities,id'],
+            'experience_starting_date' => ['required', 'date'],
+            'view_experience' => ['required', 'boolean'],
         ];
     }
 }

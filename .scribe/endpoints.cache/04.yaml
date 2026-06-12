@@ -17,7 +17,7 @@ endpoints:
       title: 'Add New Speciality'
       description: |-
         ###For: Web
-        Only admins are allowed to use this API.
+        Only admins are allowed to use this API. There is a middleware CheckAdmin on this API route
       authenticated: true
       deprecated: false
     headers:

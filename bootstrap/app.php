@@ -18,6 +18,7 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use App\Http\Middleware\CheckPatientMiddleware;
 use Illuminate\Support\Str;
 use Illuminate\Database\QueryException;
+use Illuminate\Validation\ValidationException;
 
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -99,10 +100,22 @@ return Application::configure(basePath: dirname(__DIR__))
         });
 
         $exceptions->render(function (QueryException $e, $request) {
+            $driverErrorCode = $e->errorInfo[1] ?? null;
+            if ($driverErrorCode == 1451)
+                return response()->json([
+                    'result' => 'Fail',
+                    'message' => 'It cannot be deleted because it\'s referenced by existing entities',
+                ], 409);
+
+            throw $e;
+        });
+
+        $exceptions->render(function (ValidationException $e, $request) {
             return response()->json([
                 'result' => 'Fail',
-                'message' => 'It cannot be deleted because it\'s referenced by existing entities',
-            ], 409);
+                'message' => 'Validation failed',
+                'errors' => $e->errors(),
+            ], 422);
         });
 
         $exceptions->render(function (\Throwable $e, $request) {

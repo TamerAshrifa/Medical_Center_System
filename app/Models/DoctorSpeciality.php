@@ -15,7 +15,17 @@ class DoctorSpeciality extends Model
     {
         return [
             'experience_starting_date' => 'date',
-            'view_experience_to_patients' => 'boolean',
+            'view_experience' => 'boolean',
         ];
     }
+
+    public function doctor()
+    {
+        return $this->belongsTo(Doctor::class, 'doctor_id');
+    }
+    public function speciality()
+    {
+        return $this->belongsTo(Speciality::class, 'speciality_id');
+    }
+
 }

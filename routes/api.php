@@ -5,6 +5,7 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SpecialityController;
+use App\Http\Controllers\WorkScheduleController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -56,7 +57,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/{specialityId}', [SpecialityController::class, 'update'])->middleware('CheckAdmin');
         Route::delete('/{specialityId}', [SpecialityController::class, 'destroy'])->middleware('CheckAdmin');
     });
+
+
+    // Schedules APIs
+    // Route::prefix('schedules')->group(function () {
+    //     Route::post('', [WorkScheduleController::class, 'store'])->middleware('CheckDoctor');
+    // });
 });
-// User 1 (Admin) token: 2|n5oZ7tRbXFFnDn8rqofEoxHqKrFDH1AWk61lnWwp567835ae
-// User 31 (Patient) token: 1|t4Z8eusjqGllU62nl2A4NI6T8Ko1ZCk6BfyULD27f9219470
-// User 32 (Doctor 12) token: 3|Z2TJ6qZL6hTYvxs9PYZ0ubJULuxCT0CyTuncmgrF3abbf88b
+// User 1 (Admin) token: 1|yQNBERzNqY7gVD8GpjcuAGTrkIqbumZL9sXBqbS8c6c39b11
+// User 26 (Doctor 11) token: 

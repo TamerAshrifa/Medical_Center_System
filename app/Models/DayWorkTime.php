@@ -18,5 +18,4 @@ class DayWorkTime extends Model
     {
         return $this->belongsTo(WorkSchedule::class, 'work_schedule_id');
     }
-
 }

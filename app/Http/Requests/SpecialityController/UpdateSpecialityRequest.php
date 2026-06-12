@@ -4,6 +4,7 @@ namespace App\Http\Requests\SpecialityController;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateSpecialityRequest extends FormRequest
 {
@@ -23,7 +24,12 @@ class UpdateSpecialityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => ['sometimes', 'string', 'between:2,30', 'unique:specialities,name'],
+            "name" => [
+                'sometimes',
+                'string',
+                'between:2,30',
+                Rule::unique('specialities', 'name')->ignore($this->route('specialityId'))
+            ],
         ];
     }
 }
