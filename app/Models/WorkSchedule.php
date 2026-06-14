@@ -13,8 +13,8 @@ class WorkSchedule extends Model
     protected function casts(): array
     {
         return [
-            'effective_from_date' => 'date:Y-m-d',
-            'effective_to_date' => 'date:Y-m-d',
+            'effective_from_date' => 'datetime:Y-m-d',
+            'effective_to_date' => 'datetime:Y-m-d',
             'type' => WorkScheduleTypeEnum::class,
         ];
     }

@@ -12,12 +12,14 @@ interface DoctorRepositoryInterface extends RepositoryInterface
         int $per_page = 10,
         bool $isWithRoom = false,
         bool $isWithAdderAdmin = false,
+        bool $isWithUser = false,
     );
     public function getDoctorById(
         int $doctorId,
         bool $failIfNotExists = true,
         bool $isWithRoom = false,
         bool $isWithAdderAdmin = false,
+        bool $isWithUser = false,
     );
 
     public function deleteDoctor(Doctor &$doctor);

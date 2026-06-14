@@ -12,8 +12,8 @@ class DoctorUnavailability extends Model
     protected function casts(): array
     {
         return [
-            'from_date' => 'date:Y-m-d',
-            'to_date' => 'date:Y-m-d',
+            'from_date' => 'datetime:Y-m-d',
+            'to_date' => 'datetime:Y-m-d',
         ];
     }
 

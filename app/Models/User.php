@@ -23,7 +23,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime:Y-m-d H:i:s',
             'password' => 'hashed',
-            'date_of_birth' => 'date:Y-m-d',
+            'date_of_birth' => 'datetime:Y-m-d',
             'gender' => 'boolean',
             'role' => UserRoleEnum::class,
         ];

@@ -7,7 +7,9 @@ use App\DTOs\WorkScheduleDTO\WorkScheduleDTO;
 use App\Enums\UserRoleEnum;
 use App\Enums\WorkScheduleTypeEnum;
 use App\Http\Requests\WorkScheduleController\StoreWorkScheduleRequest;
+use App\Repositories\Interfaces\SchedulingRepositoryInterface;
 use App\Services\SchedulingService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class WorkScheduleController extends Controller
@@ -18,6 +20,7 @@ class WorkScheduleController extends Controller
      */
     public function __construct(
         protected SchedulingService $schedulingService,
+        protected SchedulingRepositoryInterface $schedulingRepository,
     ) {
     }
 
@@ -48,6 +51,7 @@ class WorkScheduleController extends Controller
             ]);
         }
         $user = Auth::user();
+
         $response = $this->schedulingService->createWorkSchedule(
             WorkScheduleDTO::fromRequest($workScheduleDTOData),
             $dayWorkTimeDTOs,

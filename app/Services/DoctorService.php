@@ -147,8 +147,8 @@ class DoctorService extends Service
     }
     public function deleteDoctor(int $doctorId): Response
     {
-
         $doctor = $this->doctorRepository->getDoctorById($doctorId);
+
 
         $response = $this->doctorRepository->deleteDoctor($doctor);
         if ($response->result != ResponseStatusEnum::SUCCESS)
