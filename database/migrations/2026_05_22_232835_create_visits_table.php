@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('visits', function (Blueprint $table) {
             $table->id();
             $table->foreignId('appointment_id')->constrained('appointments')->restrictOnDelete();
-            $table->dateTime('actual_time');
+            $table->time('actual_time');
             $table->string('medical_diagnosis');
             $table->string('prescription');
             $table->text('notes');

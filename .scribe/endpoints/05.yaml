@@ -31,20 +31,9 @@ endpoints:
       effective_from_date:
         custom: []
         name: effective_from_date
-        description: 'Must be a valid date.'
+        description: 'Must be a valid date in the format <code>Y-m-d</code>.'
         required: true
-        example: '2026-06-12T02:05:53'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      effective_to_date:
-        custom: []
-        name: effective_to_date
-        description: 'Must be a valid date. Must be a date after or equal to <code>effective_from_date</code>.'
-        required: true
-        example: '2107-07-11'
+        example: '2026-06-14'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -65,9 +54,9 @@ endpoints:
       'days[].weekday_id':
         custom: []
         name: 'days[].weekday_id'
-        description: 'The <code>id</code> of an existing record in the week_days table.'
+        description: 'The <code>id</code> of an existing record in the week_days table. Must be between 1 and 7.'
         required: true
-        example: 17
+        example: 2
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -78,7 +67,7 @@ endpoints:
         name: 'days[].start_time'
         description: 'Must be a valid date in the format <code>H:i</code>.'
         required: true
-        example: '02:05'
+        example: '18:10'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -89,20 +78,19 @@ endpoints:
         name: 'days[].end_time'
         description: 'Must be a valid date in the format <code>H:i</code>.'
         required: true
-        example: '02:05'
+        example: '18:10'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      effective_from_date: '2026-06-12T02:05:53'
-      effective_to_date: '2107-07-11'
+      effective_from_date: '2026-06-14'
       days:
         -
-          weekday_id: 17
-          start_time: '02:05'
-          end_time: '02:05'
+          weekday_id: 2
+          start_time: '18:10'
+          end_time: '18:10'
     fileParameters: []
     responses: []
     responseFields: []

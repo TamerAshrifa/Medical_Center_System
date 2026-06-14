@@ -8,6 +8,7 @@ use App\Enums\WorkScheduleTypeEnum;
 use App\GeneralClasses\Enums\ResponseStatusEnum;
 use App\GeneralClasses\Response;
 use App\Repositories\Interfaces\SchedulingRepositoryInterface;
+use Carbon\Carbon;
 use DB;
 
 class SchedulingService extends Service
@@ -82,6 +83,28 @@ class SchedulingService extends Service
         );
     }
 
+    public function paginateDoctorWorkSchedules(int $doctorId, bool $withExpired = false, int $per_page = 10): Response
+    {
+        $doctorWorkSchedules = $this->schedulingRepository->paginateDoctorWorkSchedules($doctorId, $withExpired, $per_page);
+
+        $items = $doctorWorkSchedules->items();
+        return new Response(
+            ResponseStatusEnum::SUCCESS,
+            [
+                "result" => "Success",
+                "current_page_number" => $doctorWorkSchedules->currentPage(),
+                "last_page_number" => $doctorWorkSchedules->lastPage(),
+                "records_per_page" => $doctorWorkSchedules->perPage(),
+                "next_page_url" => $doctorWorkSchedules->nextPageUrl(),
+                "previous_page_url" => $doctorWorkSchedules->previousPageUrl(),
+                "first_page_url" => $doctorWorkSchedules->url(1),
+                "last_page_url" => $doctorWorkSchedules->url($doctorWorkSchedules->lastPage()),
+                "total_records_number" => $doctorWorkSchedules->total(),
+            ],
+            $items
+        );
+    }
+
     public function createWorkSchedule(
         WorkScheduleDTO $workScheduleDTO,
         array $dayWorkTimeDTOs,
@@ -99,9 +122,18 @@ class SchedulingService extends Service
         $workSchedule = null;
         try {
             DB::transaction(function () use ($workScheduleDTO, $dayWorkTimeDTOs, $makerId, &$workSchedule) {
+
+                $isUpdated = $this->schedulingRepository->updateLastWorkScheduleExpireDate(
+                    Carbon::parse($workScheduleDTO->effective_from_date)->subDay()->toDateString(),
+                    $workScheduleDTO->type,
+                    $makerId
+                );
+                if (!$isUpdated)
+                    throw new \Exception('Failed to update last work schedule, please try again');
+
                 $workSchedule = $this->schedulingRepository->createWorkSchedule($workScheduleDTO);
                 if (!$workSchedule)
-                    throw new \Exception('1Failed to create work schedule, please try again');
+                    throw new \Exception('Failed to create work schedule, please try again');
 
                 $createdRecord =
                     ($workScheduleDTO->type == WorkScheduleTypeEnum::DOCTOR) ?
@@ -109,19 +141,19 @@ class SchedulingService extends Service
                     $this->schedulingRepository->createMedicalCenterWorkSchedule($workSchedule->id, $makerId);
 
                 if (!$createdRecord)
-                    throw new \Exception('2Failed to create work schedule, please try again');
+                    throw new \Exception('Failed to create work schedule, please try again');
 
                 foreach ($dayWorkTimeDTOs as $dayWorkTimeDTO) {
                     $dayWorkTimeDTO->work_schedule_id = $workSchedule->id;
                     $createdRecord = $this->schedulingRepository->createDayWorkTime($dayWorkTimeDTO);
                     if (!$createdRecord)
-                        throw new \Exception('3Failed to create work schedule, please try again');
+                        throw new \Exception('Failed to create work schedule, please try again');
                 }
             });
         } catch (\Exception $e) {
             return new Response(
                 ResponseStatusEnum::FAIL,
-                Response::messageToArray($e->getMessage() . $e->getLine() . $e->getFile()),
+                Response::messageToArray($e->getMessage()),
                 null,
                 400
             );

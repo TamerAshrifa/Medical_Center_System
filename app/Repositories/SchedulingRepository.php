@@ -5,12 +5,15 @@ namespace App\Repositories;
 use App\DTOs\DayWorkTime\DayWorkTimeDTO;
 use App\DTOs\WorkScheduleDTO\WorkScheduleDTO;
 use App\Enums\WorkScheduleTypeEnum;
+use App\GeneralClasses\Response;
 use App\Models\DayWorkTime;
 use App\Models\DoctorWorkSchedule;
 use App\Models\MedicalCenterWorkSchedule;
 use App\Models\WeekDay;
 use App\Models\WorkSchedule;
 use App\Repositories\Interfaces\SchedulingRepositoryInterface;
+use Carbon\Carbon;
+use DB;
 
 class SchedulingRepository extends Repository implements SchedulingRepositoryInterface
 {
@@ -24,12 +27,92 @@ class SchedulingRepository extends Repository implements SchedulingRepositoryInt
             ->where('type', WorkScheduleTypeEnum::DOCTOR->value)->orderBy('created_at', 'desc')
             ->paginate($per_page);
     }
-    public function paginateMedicalCenterWorkSchedules(int $per_page = 10)
+    public function paginateDoctorWorkSchedules(int $doctorId, bool $withExpired = false, int $per_page = 10)
     {
-        return WorkSchedule::with('medicalCenterWorkSchedule')->whereHas('medicalCenterWorkSchedule')
-            ->where('type', WorkScheduleTypeEnum::MEDICAL_CENTER->value)->orderBy('created_at', 'desc')
+        return WorkSchedule::whereHas('doctorWorkSchedule', fn($q) => $q->where('doctor_id', $doctorId))
+            ->with(['doctorWorkSchedule', 'dayWorkTimes'])
+            ->where('type', WorkScheduleTypeEnum::DOCTOR->value)
+            ->when(
+                !$withExpired,
+                function ($q) {
+                    $q->where(function ($q2) {
+                        $q2->where('effective_to_date', '>=', Carbon::now())
+                            ->orWhereNull('effective_to_date');
+                    });
+                }
+            )
+            ->orderBy('created_at', 'desc')
             ->paginate($per_page);
     }
+    public function paginateMedicalCenterWorkSchedules(int $per_page = 10, bool $withExpired = false)
+    {
+        return WorkSchedule::whereHas('medicalCenterWorkSchedule')->with('medicalCenterWorkSchedule')
+            ->where('type', WorkScheduleTypeEnum::MEDICAL_CENTER->value)
+            ->when(
+                !$withExpired,
+                function ($q) {
+                    $q->where(function ($q2) {
+                        $q2->where('effective_to_date', '>=', Carbon::now())
+                            ->orWhereNull('effective_to_date');
+                    });
+                }
+            )
+            ->orderBy('created_at', 'desc')
+            ->paginate($per_page);
+    }
+    public function findCurrentMedicalCenterWorkSchedule($failIfNotExists = true): WorkSchedule|null
+    {
+        $today = Carbon::today();
+        return WorkSchedule::where('type', WorkScheduleTypeEnum::MEDICAL_CENTER->value)
+            ->where('effective_from_date', '<=', $today)
+            ->where(function ($q) use ($today) {
+                $q->whereNull('effective_to_date')
+                    ->orWhere('effective_to_date', '>=', $today);
+            })
+            ->when(
+                $failIfNotExists,
+                fn($q) => $q->firstOrFail(),
+                fn($q) => $q->first()
+            );
+    }
+
+    public function findLastMedicalCenterWorkSchedule($failIfNotExists = true): WorkSchedule|null
+    {
+        $q = WorkSchedule::where('type', WorkScheduleTypeEnum::MEDICAL_CENTER->value)->whereNull('effective_to_date');
+
+        return $failIfNotExists ?
+            $q->firstOrFail() :
+            $q->first();
+    }
+
+    public function findLastDoctorWorkSchedule($failIfNotExists = true, int $doctorId): WorkSchedule|null
+    {
+        return WorkSchedule::whereHas('doctorWorkSchedule', fn($q) => $q->where('doctor_id', $doctorId))
+            ->where('type', WorkScheduleTypeEnum::DOCTOR->value)
+            ->WhereNull('effective_to_date')
+            ->when(
+                $failIfNotExists,
+                fn($q) => $q->firstOrFail(),
+                fn($q) => $q->first()
+            );
+    }
+
+    public function updateLastWorkScheduleExpireDate(
+        string $effective_to_date,
+        WorkScheduleTypeEnum $type,
+        int $makerId
+    ): bool {
+        $workSchedule = ($type == WorkScheduleTypeEnum::MEDICAL_CENTER) ?
+            $this->findLastMedicalCenterWorkSchedule(false) :
+            $this->findLastDoctorWorkSchedule(false, $makerId);
+        if (!$workSchedule)
+            return true;
+
+        return $workSchedule->update([
+            'effective_to_date' => $effective_to_date
+        ]) > 0;
+    }
+
     public function findWorkSchedule(int $id, $failIfNotExists = true): WorkSchedule|null
     {
         return $failIfNotExists ? WorkSchedule::findOrFail($id) : WorkSchedule::find($id);

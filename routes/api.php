@@ -59,10 +59,10 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
 
-    // Schedules APIs
+    // // Schedules APIs
     // Route::prefix('schedules')->group(function () {
     //     Route::post('', [WorkScheduleController::class, 'store'])->middleware('CheckDoctor');
     // });
 });
-// User 1 (Admin) token: 1|yQNBERzNqY7gVD8GpjcuAGTrkIqbumZL9sXBqbS8c6c39b11
+// User 1 (Admin) token: 1|vFlKneyH4iLgFycMTjqR3pUQtyjy5LAOxwKAakYDa02cf404
 // User 26 (Doctor 11) token: 

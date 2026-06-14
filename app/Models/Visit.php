@@ -12,7 +12,7 @@ class Visit extends Model
     protected function casts(): array
     {
         return [
-            'actual_time' => 'datetime',
+            'actual_time' => 'datetime:H:i',
         ];
     }
 

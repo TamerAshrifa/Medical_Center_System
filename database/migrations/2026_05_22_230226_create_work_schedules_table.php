@@ -11,8 +11,8 @@ return new class extends Migration {
         Schema::create('work_schedules', function (Blueprint $table) {
             $table->id();
             $table->date('effective_from_date');
-            $table->date('effective_to_date');
-            $table->enum('type', array_column(WorkScheduleTypeEnum::cases(), 'value'))->nullable();
+            $table->date('effective_to_date')->nullable();
+            $table->enum('type', array_column(WorkScheduleTypeEnum::cases(), 'value'));
             $table->timestamps();
         });
     }

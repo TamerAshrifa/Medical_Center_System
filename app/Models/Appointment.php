@@ -14,7 +14,7 @@ class Appointment extends Model
     protected function casts(): array
     {
         return [
-            'datetime' => 'datetime',
+            'datetime' => 'datetime:Y-m-d H:i',
             'status' => AppointmentStatusEnum::class,
         ];
     }

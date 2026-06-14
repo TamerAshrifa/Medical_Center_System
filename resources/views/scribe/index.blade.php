@@ -203,7 +203,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: June 12, 2026</li>
+        <li>Last updated: June 14, 2026</li>
     </ul>
 </div>
 
@@ -261,7 +261,7 @@ acounts for them in the appropriate table and permissions; After an admin makes,
     --form "gender=1"\
     --form "username=hdtqtqxbajwbpilpm"\
     --form "password_confirmation=consequatur"\
-    --form "photo=@C:\Users\USER\AppData\Local\Temp\php7CB4.tmp" </code></pre></div>
+    --form "photo=@C:\Users\USER\AppData\Local\Temp\phpA5D6.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -494,7 +494,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php7CB4.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\phpA5D6.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>password_confirmation</code></b>&nbsp;&nbsp;
@@ -6280,13 +6280,12 @@ Creating a new Work Scheduling by a doctor or admin, the doctor can create his o
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"effective_from_date\": \"2026-06-12T02:05:53\",
-    \"effective_to_date\": \"2107-07-11\",
+    \"effective_from_date\": \"2026-06-14\",
     \"days\": [
         {
-            \"weekday_id\": 17,
-            \"start_time\": \"02:05\",
-            \"end_time\": \"02:05\"
+            \"weekday_id\": 2,
+            \"start_time\": \"18:10\",
+            \"end_time\": \"18:10\"
         }
     ]
 }"
@@ -6305,13 +6304,12 @@ const headers = {
 };
 
 let body = {
-    "effective_from_date": "2026-06-12T02:05:53",
-    "effective_to_date": "2107-07-11",
+    "effective_from_date": "2026-06-14",
     "days": [
         {
-            "weekday_id": 17,
-            "start_time": "02:05",
-            "end_time": "02:05"
+            "weekday_id": 2,
+            "start_time": "18:10",
+            "end_time": "18:10"
         }
     ]
 };
@@ -6417,22 +6415,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="effective_from_date"                data-endpoint="POSTapi-schedules"
-               value="2026-06-12T02:05:53"
+               value="2026-06-14"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-12T02:05:53</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>effective_to_date</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
- &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="effective_to_date"                data-endpoint="POSTapi-schedules"
-               value="2107-07-11"
-               data-component="body">
-    <br>
-<p>Must be a valid date. Must be a date after or equal to <code>effective_from_date</code>. Example: <code>2107-07-11</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Example: <code>2026-06-14</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
         <details>
@@ -6451,10 +6437,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="days.0.weekday_id"                data-endpoint="POSTapi-schedules"
-               value="17"
+               value="2"
                data-component="body">
     <br>
-<p>The <code>id</code> of an existing record in the week_days table. Example: <code>17</code></p>
+<p>The <code>id</code> of an existing record in the week_days table. Must be between 1 and 7. Example: <code>2</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>start_time</code></b>&nbsp;&nbsp;
@@ -6463,10 +6449,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="days.0.start_time"                data-endpoint="POSTapi-schedules"
-               value="02:05"
+               value="18:10"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>H:i</code>. Example: <code>02:05</code></p>
+<p>Must be a valid date in the format <code>H:i</code>. Example: <code>18:10</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>end_time</code></b>&nbsp;&nbsp;
@@ -6475,10 +6461,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="days.0.end_time"                data-endpoint="POSTapi-schedules"
-               value="02:05"
+               value="18:10"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>H:i</code>. Example: <code>02:05</code></p>
+<p>Must be a valid date in the format <code>H:i</code>. Example: <code>18:10</code></p>
                     </div>
                                     </details>
         </div>

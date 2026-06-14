@@ -14,7 +14,7 @@ class DoctorSpeciality extends Model
     protected function casts(): array
     {
         return [
-            'experience_starting_date' => 'date',
+            'experience_starting_date' => 'date:Y-m-d',
             'view_experience' => 'boolean',
         ];
     }

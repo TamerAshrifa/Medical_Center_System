@@ -19,6 +19,7 @@ use App\Repositories\RoomRepository;
 use App\Repositories\SchedulingRepository;
 use App\Repositories\SpecialityRepository;
 use App\Repositories\UserRepository;
+use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -69,6 +70,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Carbon::serializeUsing(function (Carbon $carbon) {
+            return $carbon->setTimezone(config('app.timezone'))->toIso8601String();
+        });
     }
 }

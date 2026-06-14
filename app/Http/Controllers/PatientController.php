@@ -118,9 +118,8 @@ class PatientController extends Controller
     /**
      * Update Patient
      * 
-     * ###For: Mobile (Patient), Web
+     * ###For: Mobile (Patient)
      * Only patients are allowed to use this API.
-     * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
      * @urlParam patientId integer required min:1
      * @responseFile 403 storage/responses/PatientController/update_403_Forbidden.json
      * @responseFile 404 storage/responses/PatientController/update_404_Not_Found.json

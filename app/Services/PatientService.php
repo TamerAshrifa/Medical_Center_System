@@ -11,12 +11,14 @@ use App\Http\Resources\PatientToAdminResource;
 use App\Http\Resources\PatientToItselfResource;
 use App\Models\User;
 use App\Repositories\Interfaces\PatientRepositoryInterface;
+use App\Repositories\Interfaces\UserRepositoryInterface;
 use DB;
 
 class PatientService extends Service
 {
     public function __construct(
         protected PatientRepositoryInterface $patientRepository,
+        protected UserRepositoryInterface $userRepository,
     ) {
     }
 
@@ -130,23 +132,47 @@ class PatientService extends Service
     }
     public function deletePatient(int $patientId): Response
     {
-        $response = $this->patientRepository->getPatientById($patientId);
+        $response = $this->patientRepository->getPatientByIdWithUser($patientId);
         if ($response->result != ResponseStatusEnum::SUCCESS)
             return $response;
+
 
         $patient = $response->data;
         if ($patient == null) {
             return new Response(
                 ResponseStatusEnum::FAIL,
-                Response::messageToArray('patient not found'),
+                Response::messageToArray('Patient not found'),
                 null,
                 404
             );
         }
 
-        $response = $this->patientRepository->deletePatient($patient);
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
+        $user = $patient->user;
+        if ($user == null) {
+            return new Response(
+                ResponseStatusEnum::FAIL,
+                Response::messageToArray('User of patient not found'),
+                null,
+                404
+            );
+        }
+
+        try {
+            DB::transaction(function () use ($patient, $user) {
+                if (
+                    $this->patientRepository->deletePatient($patient)->result != ResponseStatusEnum::SUCCESS ||
+                    !$this->userRepository->deleteByObject($user)
+                )
+                    throw new \Exception('Failed to Delete patient, please try again');
+            });
+        } catch (\Throwable $e) {
+            return new Response(
+                ResponseStatusEnum::FAIL,
+                Response::messageToArray($e->getMessage()),
+                null,
+                500
+            );
+        }
 
         return new Response(
             ResponseStatusEnum::SUCCESS,

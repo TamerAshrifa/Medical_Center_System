@@ -31,11 +31,9 @@ class WorkScheduleController extends Controller
      */
     public function store(StoreWorkScheduleRequest $request)
     {
-        return 'ss';
         $validatedData = $request->validated();
         $workScheduleDTOData = [
             'effective_from_date' => $validatedData['effective_from_date'],
-            'effective_to_date' => $validatedData['effective_to_date'],
             'type' => Auth::user()->role === UserRoleEnum::ADMIN ?
                 WorkScheduleTypeEnum::MEDICAL_CENTER : WorkScheduleTypeEnum::DOCTOR,
         ];

@@ -21,9 +21,9 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
+            'email_verified_at' => 'datetime:Y-m-d H:i:s',
             'password' => 'hashed',
-            'date_of_birth' => 'date',
+            'date_of_birth' => 'date:Y-m-d',
             'gender' => 'boolean',
             'role' => UserRoleEnum::class,
         ];
