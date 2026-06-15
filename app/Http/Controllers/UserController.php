@@ -167,7 +167,3 @@ class UserController extends Controller
         return response()->noContent(204);
     }
 }
-
-
-
-

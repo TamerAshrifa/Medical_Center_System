@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DTOs\DayWorkTime;
+namespace App\DTOs\Appointment;
 
-readonly class DayWorkTimeDTOUpdate
+readonly class AppointmentDTOUpdate
 {
     public function __construct(
         public ?string $start_time,

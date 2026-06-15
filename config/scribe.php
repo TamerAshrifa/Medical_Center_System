@@ -181,6 +181,7 @@ return [
         // Note: does not work for `external` docs types
         'order' => [
             'Authentication APIs',
+            'User APIs',
             'Patient APIs',
             'Room APIs',
             'Doctor APIs',

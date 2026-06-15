@@ -78,6 +78,15 @@ class UserRepository extends Repository implements UserRepositoryInterface
         return DB::transaction(function () use ($id, $userDTO) {
             $user = $this->findById($id);
 
+            // dd([
+            //     'user' => $user,
+            //     'new data' => $userDTO->toArray(),
+            // ]);
+            // $payload = $userDTO->toArray();
+            // $current = $user->only(array_keys($payload));
+            // $diff = array_diff_assoc($payload, $current);
+            // dd($payload, $current, $diff);
+
             $user->fill($userDTO->toArray());
             if (!$user->isDirty()) {
                 return new Response(

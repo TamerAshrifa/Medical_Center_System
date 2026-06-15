@@ -21,10 +21,10 @@ readonly class DoctorSpecialityDTOUpdate
 
     public function toArray(): array
     {
-        return [
+        return array_filter([
             'experience_starting_date' => $this->experience_starting_date,
             'view_experience' => $this->view_experience,
-        ];
+        ], fn($value) => !is_null($value));
     }
 
 }

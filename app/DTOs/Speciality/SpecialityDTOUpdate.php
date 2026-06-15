@@ -16,8 +16,8 @@ readonly class SpecialityDTOUpdate
     }
     public function toArray(): array
     {
-        return [
+        return array_filter([
             'name' => $this->name,
-        ];
+        ], fn($value) => !is_null($value));
     }
 }

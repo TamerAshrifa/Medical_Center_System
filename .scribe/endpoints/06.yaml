@@ -1,0 +1,104 @@
+name: Endpoints
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/schedules
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Creating a Work Scheduling'
+      description: |-
+        ###For: Mobile(Doctor), Web
+        Only admins and doctors are allowed to use this API.
+        Creating a new Work Scheduling by a doctor or admin, the doctor can create his own work schedule,
+        and the admin can create work schedules for medical center.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      effective_from_date:
+        custom: []
+        name: effective_from_date
+        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after <code>2026-06-15</code>.'
+        required: true
+        example: '2107-07-15'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      days:
+        custom: []
+        name: days
+        description: 'Must have at least 1 items. Must not have more than 7 items.'
+        required: true
+        example:
+          - []
+        type: 'object[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'days[].weekday_id':
+        custom: []
+        name: 'days[].weekday_id'
+        description: 'The <code>id</code> of an existing record in the week_days table. Must be between 1 and 7.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'days[].start_time':
+        custom: []
+        name: 'days[].start_time'
+        description: 'Must be a valid date in the format <code>H:i</code>.'
+        required: true
+        example: '13:50'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'days[].end_time':
+        custom: []
+        name: 'days[].end_time'
+        description: 'Must be a valid date in the format <code>H:i</code>.'
+        required: true
+        example: '13:50'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      effective_from_date: '2107-07-15'
+      days:
+        -
+          weekday_id: 2
+          start_time: '13:50'
+          end_time: '13:50'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null

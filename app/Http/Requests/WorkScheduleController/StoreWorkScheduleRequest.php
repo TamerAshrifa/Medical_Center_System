@@ -83,7 +83,6 @@ class StoreWorkScheduleRequest extends FormRequest
                     }
             }
 
-
             $days = $this->input('days', []);
             foreach ($days as $index => $day) {
                 // The next 6 lines are Defensive Checks
@@ -97,11 +96,6 @@ class StoreWorkScheduleRequest extends FormRequest
                 if ($endTime <= $startTime)
                     $validator->errors()->add("days.$index.end_time", 'The end time must be after the start time');
             }
-
-
-
-
-
 
         });
     }

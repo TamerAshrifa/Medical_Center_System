@@ -21,10 +21,10 @@ readonly class PatientDTOUpdate
 
     public function toArray(): array
     {
-        return [
+        return array_filter([
             'blood_type_id' => $this->blood_type_id,
             'allergies' => $this->allergies,
             'chronic_diseases' => $this->chronic_diseases,
-        ];
+        ], fn($value) => !is_null($value));
     }
 }

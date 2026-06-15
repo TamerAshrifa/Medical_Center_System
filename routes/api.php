@@ -5,10 +5,9 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SpecialityController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkScheduleController;
 use Illuminate\Support\Facades\Route;
-
-
 
 // Authentication
 Route::middleware('throttle:3,1')->group(function () {
@@ -21,6 +20,16 @@ Route::middleware('throttle:3,1')->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->middleware('throttle:1,1');
+
+    // Users APIs
+    Route::prefix('users')->group(function () {
+        Route::post('', [UserController::class, 'store'])->middleware('CheckAdmin');
+        Route::get('/{per_page}', [UserController::class, 'index'])->middleware('CheckAdmin');
+        Route::get('/show/{id}', [UserController::class, 'show']);
+        Route::put('/{id}', [UserController::class, 'update']);
+        // Route::delete('/{specialityId}', [UserController::class, 'destroy'])->middleware('CheckAdmin');
+    });
+
 
     // Patient APIs
     Route::prefix('patients')->group(function () {
@@ -59,10 +68,13 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
 
-    // // Schedules APIs
-    // Route::prefix('schedules')->group(function () {
-    //     Route::post('', [WorkScheduleController::class, 'store'])->middleware('CheckDoctor');
-    // });
+
+
+    // Schedules APIs
+    Route::prefix('schedules')->group(function () {
+        Route::post('', [WorkScheduleController::class, 'store'])->middleware('CheckDoctor');
+    });
+
 });
 // User 1 (Admin) token: 1|vFlKneyH4iLgFycMTjqR3pUQtyjy5LAOxwKAakYDa02cf404
 // User 26 (Doctor 11) token: 

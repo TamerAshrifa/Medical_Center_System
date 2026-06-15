@@ -1,0 +1,18 @@
+{
+    "result": "Success",
+    "data": {
+        "id": 31,
+        "first_name": "vmq",
+        "last_name": "eop",
+        "email": "russel.bert@example.net",
+        "phone": "qamniihfqcoynlazg",
+        "date_of_birth": "2026-06-15T00:00:00+03:00",
+        "gender": "Male",
+        "photo": null,
+        "username": "hdtqtqxbajwbpilpm",
+        "role": null,
+        "email_verified_at": "2026-06-15T12:28:58+03:00",
+        "created_at": "2026-06-15T12:28:58+03:00",
+        "last_update_at": "2026-06-15T12:28:58+03:00"
+    }
+}

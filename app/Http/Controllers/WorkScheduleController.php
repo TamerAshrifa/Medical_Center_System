@@ -9,7 +9,6 @@ use App\Enums\WorkScheduleTypeEnum;
 use App\Http\Requests\WorkScheduleController\StoreWorkScheduleRequest;
 use App\Repositories\Interfaces\SchedulingRepositoryInterface;
 use App\Services\SchedulingService;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class WorkScheduleController extends Controller
@@ -30,7 +29,8 @@ class WorkScheduleController extends Controller
      * 
      * ###For: Mobile(Doctor), Web
      * Only admins and doctors are allowed to use this API.
-     * Creating a new Work Scheduling by a doctor or admin, the doctor can create his own work schedule, and the admin can create work schedules for medical center.
+     * Creating a new Work Scheduling by a doctor or admin, the doctor can create his own work schedule, 
+     * and the admin can create work schedules for medical center.
      */
     public function store(StoreWorkScheduleRequest $request)
     {

@@ -23,7 +23,7 @@ class UpdateDoctorSpecialityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'experience_starting_date' => ['sometimes', 'date'],
+            'experience_starting_date' => ['sometimes', 'date_format:Y-m-d'],
             'view_experience' => ['sometimes', 'boolean'],
         ];
     }

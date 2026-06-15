@@ -19,9 +19,9 @@ readonly class RoomDTOUpdate
 
     public function toArray(): array
     {
-        return [
+        return array_filter([
             'name' => $this->name,
             'monthly_rent' => $this->monthly_rent,
-        ];
+        ], fn($value) => !is_null($value));
     }
 }

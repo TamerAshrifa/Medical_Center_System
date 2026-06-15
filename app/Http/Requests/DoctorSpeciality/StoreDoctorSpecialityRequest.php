@@ -24,7 +24,7 @@ class StoreDoctorSpecialityRequest extends FormRequest
     {
         return [
             'speciality_id' => ['required', 'integer', 'exists:specialities,id'],
-            'experience_starting_date' => ['required', 'date'],
+            'experience_starting_date' => ['required', 'date_format:Y-m-d'],
             'view_experience' => ['required', 'boolean'],
         ];
     }

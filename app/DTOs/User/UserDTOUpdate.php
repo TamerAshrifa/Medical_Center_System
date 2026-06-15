@@ -29,7 +29,7 @@ readonly class UserDTOUpdate
 
     public function toArray(): array
     {
-        return [
+        return array_filter([
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'phone' => $this->phone,
@@ -37,7 +37,7 @@ readonly class UserDTOUpdate
             'gender' => $this->gender,
             'username' => $this->username,
             'photo' => $this->photo,
-        ];
+        ], fn($value) => !is_null($value));
     }
 
 }

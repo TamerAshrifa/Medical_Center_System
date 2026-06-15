@@ -33,7 +33,7 @@ class UpdateUserRequest extends FormRequest
                 'max:20',
                 Rule::unique('users', 'phone')->ignore($userId)
             ],
-            'date_of_birth' => ['sometimes', 'date'],
+            'date_of_birth' => ['sometimes', 'date_format:Y-m-d'],
             'gender' => ['sometimes', 'boolean'],
             'username' => [
                 'sometimes',

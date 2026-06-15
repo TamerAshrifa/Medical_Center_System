@@ -21,9 +21,9 @@ readonly class WorkScheduleDTOUpdate
 
     public function toArray(): array
     {
-        return [
+        return array_filter([
             'effective_from_date' => $this->effective_from_date,
             'effective_to_date' => $this->effective_to_date,
-        ];
+        ], fn($value) => !is_null($value));
     }
 }
