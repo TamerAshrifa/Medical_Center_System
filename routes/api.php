@@ -67,13 +67,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{specialityId}', [SpecialityController::class, 'destroy'])->middleware('CheckAdmin');
     });
 
-
-
-
-    // Schedules APIs
-    Route::prefix('schedules')->group(function () {
-        Route::post('', [WorkScheduleController::class, 'store'])->middleware('CheckDoctor');
-    });
+    // // Schedules APIs
+    // Route::prefix('schedules')->group(function () {
+    //     Route::post('', [WorkScheduleController::class, 'store'])->middleware('CheckDoctor');
+    // });
 
 });
 // User 1 (Admin) token: 1|vFlKneyH4iLgFycMTjqR3pUQtyjy5LAOxwKAakYDa02cf404
