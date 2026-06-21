@@ -9,12 +9,15 @@ class WeekDay extends Model
     protected $guarded = [
         "id",
     ];
-
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime:Y-m-d H:i:s',
+            'updated_at' => 'datetime:Y-m-d H:i:s',
+        ];
+    }
     public function dayWorkTimes()
     {
         return $this->hasMany(DayWorkTime::class, 'weekday_id');
     }
-
-
-
 }

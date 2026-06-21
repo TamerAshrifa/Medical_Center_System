@@ -3,11 +3,8 @@
 namespace App\Http\Requests\WorkScheduleController;
 
 use App\Enums\UserRoleEnum;
-use App\GeneralClasses\Enums\ResponseStatusEnum;
 use App\Models\Appointment;
-use App\Repositories\Interfaces\SchedulingRepositoryInterface;
 use App\Repositories\SchedulingRepository;
-use App\Services\SchedulingService;
 use Carbon\Carbon;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Contracts\Validation\Validator;
@@ -49,54 +46,131 @@ class StoreWorkScheduleRequest extends FormRequest
             'effective_from_date.after' => 'The effective from date field must be after today',
         ];
     }
-
-
-    public function withValidator(Validator $validator): void
+    private function handleGeneralValidation(Validator &$validator, $user): void
     {
-        $validator->after(function (Validator $validator) {
-            $lastAppointmentDatetime = Appointment::max('datetime');
+        $schedulingRepository = new SchedulingRepository();
+        $lastAppointmentDatetime = Appointment::max('datetime');
 
-            if ($lastAppointmentDatetime) {
-                $lastAppointmentDatetime = Carbon::parse($lastAppointmentDatetime)->toDateString();
-                if ($lastAppointmentDatetime > $this->input('effective_from_date'))
+        if ($lastAppointmentDatetime && $this->has('effective_from_date')) {
+            $lastAppointmentDatetime = Carbon::parse($lastAppointmentDatetime)->toDateString();
+            if ($lastAppointmentDatetime > $this->input('effective_from_date'))
+                $validator->errors()->add(
+                    'effective_from_date',
+                    "The effective from date must be after the last made appointment date (after $lastAppointmentDatetime)"
+                );
+        }
+
+        $lastWorkSchedule = $user->role === UserRoleEnum::ADMIN ?
+            $schedulingRepository->findLastMedicalCenterWorkSchedule(false) :
+            $schedulingRepository->findLastDoctorWorkSchedule(false, $user->doctor->id);
+        if ($lastWorkSchedule && $this->has('effective_from_date')) {
+            $effective_from_date = \DateTime::createFromFormat('Y-m-d', $this->input('effective_from_date'));
+            if ($effective_from_date)
+                if (
+                    Carbon::parse($this->input('effective_from_date'))->format('Y-m-d') <=
+                    Carbon::parse($lastWorkSchedule->effective_from_date)->format('Y-m-d')
+                ) {
+                    $lastScheduleDate = $lastWorkSchedule->effective_from_date->toDateString();
                     $validator->errors()->add(
                         'effective_from_date',
-                        "The effective from date must be after the last made appointment date (after $lastAppointmentDatetime)"
+                        "The effective from date must start after the last schedule date (after $lastScheduleDate)"
                     );
-            }
+                }
+        }
 
-            $user = Auth::user();
+        $days = $this->input('days', []);
+        foreach ($days as $index => $day) {
+            // The next 6 lines are Defensive Checks
+            if (!isset($day['start_time']) || !isset($day['end_time']))
+                continue;
+            $startTime = \DateTime::createFromFormat('H:i', $day['start_time']);
+            $endTime = \DateTime::createFromFormat('H:i', $day['end_time']);
+            if (!$startTime || !$endTime)
+                continue;
 
-            $schedulingRepository = new SchedulingRepository();
-            $lastWorkSchedule = $user->role === UserRoleEnum::ADMIN ?
-                $schedulingRepository->findLastMedicalCenterWorkSchedule(false) :
-                $schedulingRepository->findLastDoctorWorkSchedule(false, $user->doctor->id);
-            if ($lastWorkSchedule && $this->has('effective_from_date')) {
-                $effective_from_date = \DateTime::createFromFormat('Y-m-d', $this->input('effective_from_date'));
-                if ($effective_from_date)
-                    if (Carbon::parse($this->input('effective_from_date')) <= $lastWorkSchedule->effective_from_date) {
-                        $lastScheduleDate = $lastWorkSchedule->effective_from_date->toDateString();
-                        $validator->errors()->add(
-                            'effective_from_date',
-                            "The effective from date must start after the last schedule date (after $lastScheduleDate)"
-                        );
-                    }
-            }
+            if ($endTime <= $startTime)
+                $validator->errors()->add("days.$index.end_time", 'The end time must be after the start time');
+        }
+
+    }
+    private function handleAdminValidation(Validator &$validator): void
+    {
+        $schedulingRepository = new SchedulingRepository();
+        if ($this->has(['effective_from_date']) && \DateTime::createFromFormat('Y-m-d', $this->input('effective_from_date'))) {
+            $dbDates = $schedulingRepository->getDoctorsNotExpiredWorkSchedulesContainOrAfterDate(
+                Carbon::parse($this->input('effective_from_date'))->format('Y-m-d')
+            );
 
             $days = $this->input('days', []);
             foreach ($days as $index => $day) {
-                // The next 6 lines are Defensive Checks
-                if (!isset($day['start_time']) || !isset($day['end_time']))
+                if (!isset($day['start_time']) || !isset($day['end_time']) || !isset($day['weekday_id']))
                     continue;
-                $startTime = \DateTime::createFromFormat('H:i', $day['start_time']);
-                $endTime = \DateTime::createFromFormat('H:i', $day['end_time']);
-                if (!$startTime || !$endTime)
+                if (
+                    !\DateTime::createFromFormat('H:i', $day['start_time']) ||
+                    !\DateTime::createFromFormat('H:i', $day['end_time']) ||
+                    !is_int($day['weekday_id'])
+                )
                     continue;
 
-                if ($endTime <= $startTime)
-                    $validator->errors()->add("days.$index.end_time", 'The end time must be after the start time');
+                $dayInDB = null;
+                foreach ($dbDates as $d)
+                    if ($d->weekday_id == $day['weekday_id']) {
+                        $dayInDB = $d;
+                        break;
+                    }
+                if (!$dayInDB)
+                    continue;
+
+                $addedStartTime = Carbon::parse($day['start_time']);
+                $dbStartTime = $dayInDB->start_time;
+                $addedEndTime = Carbon::parse($day['end_time']);
+                $dbEndTime = $dayInDB->end_time;
+
+                if ($addedStartTime > $dbStartTime)
+                    $validator->errors()->add("days.$index.start_time", 'The start time of this day must be before or '
+                        . "equal to $dbStartTime because there is a doctor works at this time");
+                if ($addedEndTime > $dbEndTime)
+                    $validator->errors()->add("days.$index.end_time", 'The end time of this day must be after or '
+                        . "equal to $dbEndTime because there is a doctor works at this time");
             }
+        }
+    }
+    private function handleDoctorValidation(Validator &$validator): void
+    {
+        $schedulingRepository = new SchedulingRepository();
+        $oldestActiveCenterWorkSchedule = $schedulingRepository->findOldestMedicalCenterWorkSchedule();
+        if (!$oldestActiveCenterWorkSchedule)
+            return;
+        if (!$this->has('effective_from_date'))
+            return;
+        $effective_from_date = \DateTime::createFromFormat('Y-m-d', $this->input('effective_from_date'));
+        if (!$effective_from_date)
+            return;
 
+        if (
+            Carbon::parse($this->input('effective_from_date'))->format('Y-m-d') <
+            Carbon::parse($oldestActiveCenterWorkSchedule->effective_from_date)->format('Y-m-d')
+        ) {
+            $oldestActiveCenterWorkSchedule = $oldestActiveCenterWorkSchedule->effective_from_date->toDateString();
+            $validator->errors()->add(
+                'effective_from_date',
+                "The effective from date must start after or on the oldest active schedule date ($oldestActiveCenterWorkSchedule)"
+            );
+        }
+
+
+    }
+    public function withValidator(Validator $validator): void
+    {
+        $validator->after(function (Validator $validator) {
+            $user = Auth::user();
+
+            $this->handleGeneralValidation($validator, $user);
+
+            if ($user->role === UserRoleEnum::DOCTOR)
+                $this->handleDoctorValidation($validator);
+            else if ($user->role === UserRoleEnum::ADMIN)
+                $this->handleAdminValidation($validator);
         });
     }
 }

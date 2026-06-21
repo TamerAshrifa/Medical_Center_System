@@ -16,6 +16,8 @@ class DoctorSpeciality extends Model
         return [
             'experience_starting_date' => 'datetime:Y-m-d',
             'view_experience' => 'boolean',
+            'created_at' => 'datetime:Y-m-d H:i:s',
+            'updated_at' => 'datetime:Y-m-d H:i:s',
         ];
     }
 

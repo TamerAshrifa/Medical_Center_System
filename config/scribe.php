@@ -186,6 +186,8 @@ return [
             'Room APIs',
             'Doctor APIs',
             'Speciality APIs',
+            'Scheduling APIs',
+            'Appointment APIs',
         ],
     ],
 

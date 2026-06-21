@@ -12,4 +12,5 @@ interface PatientRepositoryInterface extends RepositoryInterface
     public function getPatientByIdWithUser(int $patientId): Response;
     public function getPatientById(int $patientId): Response;
     public function deletePatient(Patient $patient): Response;
+
 }

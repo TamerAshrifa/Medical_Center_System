@@ -11,6 +11,14 @@ class BloodType extends Model
     ];
     public $timestamps = false;
 
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime:Y-m-d H:i:s',
+            'updated_at' => 'datetime:Y-m-d H:i:s',
+        ];
+    }
+
     public function patients()
     {
         return $this->hasMany(Patient::class, 'blood_type_id');

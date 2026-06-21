@@ -14,6 +14,7 @@ use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use App\GeneralClasses\Enums\ResponseStatusEnum;
 use Illuminate\Support\Facades\Auth;
+use Storage;
 
 /**
  * @group User APIs
@@ -55,9 +56,17 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request): JsonResponse
     {
-        $response = $this->userService->create(UserDTO::fromRequest($request->validated()));
+        $userData = $request->validated();
+        if ($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('user_photos', 'public');
+            $userData['photo'] = $path;
+        }
+        $response = $this->userService->create(UserDTO::fromRequest($userData));
 
         if ($response->result != ResponseStatusEnum::SUCCESS) {
+            if (isset($userData['photo']))
+                Storage::disk('public')->delete($userData['photo']);
+
             return response()->json([
                 'result' => $response->result,
                 'message' => $response->message,
@@ -130,14 +139,24 @@ class UserController extends Controller
                 'message' => 'No one can edit another user\'s information',
             ], 403);
 
-        $response = $this->userService->update($id, UserDTOUpdate::fromRequest($request->validated()));
+        $userData = $request->validated();
+
+        if ($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('user_photos', 'public');
+            $userData['photo'] = $path;
+        }
+        $response = $this->userService->update($id, UserDTOUpdate::fromRequest($userData));
 
         if ($response->result != ResponseStatusEnum::SUCCESS) {
+            if (isset($userData['photo']))
+                Storage::disk('public')->delete($userData['photo']);
+
             return response()->json([
                 'result' => $response->result,
                 'message' => $response->message,
             ], $response->statusCode);
         }
+
 
         return response()->json([
             'result' => $response->result,

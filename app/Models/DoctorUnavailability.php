@@ -12,16 +12,10 @@ class DoctorUnavailability extends Model
     protected function casts(): array
     {
         return [
-            'from_date' => 'datetime:Y-m-d',
-            'to_date' => 'datetime:Y-m-d',
+            'created_at' => 'datetime:Y-m-d H:i:s',
+            'updated_at' => 'datetime:Y-m-d H:i:s',
         ];
     }
-
-    public function reasonType()
-    {
-        return $this->belongsTo(DoctorUnavailabilityReasonType::class, 'reason_type_id');
-    }
-
     public function doctor()
     {
         return $this->belongsTo(Doctor::class, 'doctor_id');

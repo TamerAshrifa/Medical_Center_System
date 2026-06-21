@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Http\Resources\User;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class UserToDoctorResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(Request $request): array
+    {
+        return [
+            'id' => $this->id,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'email' => $this->email,
+            'phone' => $this->phone,
+            'date_of_birth' => $this->date_of_birth->format('Y-m-d'),
+            'gender' => $this->gender ? 'Male' : 'Female',
+            'photo' => $this->photo,
+            'username' => $this->username,
+        ];
+    }
+}

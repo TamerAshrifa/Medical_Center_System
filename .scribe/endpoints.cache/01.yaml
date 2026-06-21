@@ -87,9 +87,9 @@ endpoints:
       date_of_birth:
         custom: []
         name: date_of_birth
-        description: 'Must be a valid date.'
+        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date before <code>2026-06-22</code>.'
         required: true
-        example: '2026-06-15T13:50:55'
+        example: '2020-10-17'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -100,7 +100,7 @@ endpoints:
         name: gender
         description: ''
         required: true
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -111,7 +111,7 @@ endpoints:
         name: username
         description: 'Must not be greater than 20 characters.'
         required: true
-        example: hdtqtqxbajwbpilpm
+        example: mqeopfuudtdsufvyv
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -134,9 +134,9 @@ endpoints:
       email: russel.bert@example.net
       password: 'dl4m{o,+'
       phone: qamniihfqcoynlazg
-      date_of_birth: '2026-06-15T13:50:55'
-      gender: true
-      username: hdtqtqxbajwbpilpm
+      date_of_birth: '2020-10-17'
+      gender: false
+      username: mqeopfuudtdsufvyv
     fileParameters:
       photo: null
     responses: []
@@ -339,9 +339,9 @@ endpoints:
       date_of_birth:
         custom: []
         name: date_of_birth
-        description: 'Must be a valid date.'
+        description: 'Must be a valid date in the format <code>Y-m-d</code>.'
         required: false
-        example: '2026-06-15T13:50:55'
+        example: '2026-06-22'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -352,7 +352,7 @@ endpoints:
         name: gender
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -384,8 +384,8 @@ endpoints:
       first_name: vmq
       last_name: eop
       phone: fuudtdsufvyvddqam
-      date_of_birth: '2026-06-15T13:50:55'
-      gender: true
+      date_of_birth: '2026-06-22'
+      gender: false
       username: niihfqcoynlazghdt
     fileParameters:
       photo: null

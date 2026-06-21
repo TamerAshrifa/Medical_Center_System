@@ -13,6 +13,8 @@ class Visit extends Model
     {
         return [
             'actual_time' => 'datetime:H:i',
+            'created_at' => 'datetime:Y-m-d H:i:s',
+            'updated_at' => 'datetime:Y-m-d H:i:s',
         ];
     }
 

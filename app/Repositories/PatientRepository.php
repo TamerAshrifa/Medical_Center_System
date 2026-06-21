@@ -7,7 +7,7 @@ use App\GeneralClasses\Response;
 use App\Models\Patient;
 use App\Repositories\Interfaces\PatientRepositoryInterface;
 use DB;
-use Illuminate\Database\QueryException;
+use Storage;
 
 class PatientRepository extends Repository implements PatientRepositoryInterface
 {
@@ -46,10 +46,21 @@ class PatientRepository extends Repository implements PatientRepositoryInterface
     }
     public function deletePatient(Patient $patient): Response
     {
-        return DB::transaction(function () use ($patient) {
-            $patient->delete();
-            return new Response(ResponseStatusEnum::SUCCESS, null, null, 204);
-        });
+        $user = $patient->user;
+        try {
+            return DB::transaction(function () use ($patient, $user) {
+                if (!$patient->delete() || !((new UserRepository())->deleteByObject($user)))
+                    throw new \LogicException('Field to delete patient, please try again');
+                return new Response(ResponseStatusEnum::SUCCESS, null, null, 204);
+            });
+        } catch (\LogicException $e) {
+            return new Response(
+                ResponseStatusEnum::FAIL,
+                Response::messageToArray($e->getMessage()),
+                null,
+                400
+            );
+        }
     }
 
 }

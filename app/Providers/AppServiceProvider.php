@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\WorkSchedule;
+use App\Repositories\AppointmentRepository;
 use App\Repositories\DoctorRepository;
+use App\Repositories\Interfaces\AppointmentRepositoryInterface;
 use App\Repositories\Interfaces\DoctorRepositoryInterface;
 use App\Repositories\Interfaces\PatientRepositoryInterface;
 use App\Repositories\Interfaces\RepositoryInterface;
@@ -62,6 +64,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             SchedulingRepositoryInterface::class,
             SchedulingRepository::class
+        );
+        $this->app->bind(
+            AppointmentRepositoryInterface::class,
+            AppointmentRepository::class
         );
     }
 

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Enums\UserRoleEnum;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -19,8 +20,9 @@ class UserSeeder extends Seeder
             'date_of_birth' => '2004-06-12',
             'gender' => true,
             'username' => 'TamerAshrifa',
-            'created_at' => now(),
-            'email_verified_at' => now(),
+            'email_verified_at' => Carbon::now(),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
         $user->role = UserRoleEnum::ADMIN;
         $user->save();

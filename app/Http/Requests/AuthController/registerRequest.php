@@ -19,7 +19,7 @@ class RegisterRequest extends FormRequest
             'email' => ['required', 'string', 'email', 'max:75', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'phone' => ['required', 'string', 'max:20', 'unique:users,phone'],
-            'date_of_birth' => ['required', 'date_format:Y-m-d'],
+            'date_of_birth' => ['required', 'date_format:Y-m-d', 'before:' . now()->format('Y-m-d')],
             'gender' => ['required', 'boolean'],
             'username' => ['required', 'string', 'max:20', 'unique:users,username'],
             'photo' => ['nullable', 'image', 'max:2048'],

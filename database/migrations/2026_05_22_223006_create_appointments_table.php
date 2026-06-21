@@ -13,8 +13,8 @@ return new class extends Migration {
             $table->foreignId('patient_id')->constrained()->restrictOnDelete();
             $table->foreignId('doctor_id')->constrained()->restrictOnDelete();
             $table->dateTime('datetime');
-            $table->unique('doctor_id', 'datetime');
-            $table->enum('column_name', array_column(AppointmentStatusEnum::cases(), 'value'))->default(AppointmentStatusEnum::PENDING);
+            $table->enum('status', array_column(AppointmentStatusEnum::cases(), 'value'))->default(AppointmentStatusEnum::PENDING);
+            // $table->unique(['doctor_id', 'datetime', 'status']);
             $table->timestamps();
         });
     }

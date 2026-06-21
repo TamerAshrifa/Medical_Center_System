@@ -16,6 +16,8 @@ class Appointment extends Model
         return [
             'datetime' => 'datetime:Y-m-d H:i',
             'status' => AppointmentStatusEnum::class,
+            'created_at' => 'datetime:Y-m-d H:i:s',
+            'updated_at' => 'datetime:Y-m-d H:i:s',
         ];
     }
 

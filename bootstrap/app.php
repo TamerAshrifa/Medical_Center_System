@@ -1,9 +1,15 @@
 <?php
 
+use App\Http\Middleware\CancelAppointmentMiddleware;
 use App\Http\Middleware\CheckAdminMiddleware;
 use App\Http\Middleware\CheckDoctorMiddleware;
 use App\Http\Middleware\CheckDoctorOnlyMiddleware;
 use App\Http\Middleware\CheckPatientOnlyMiddleware;
+use App\Http\Middleware\MakeAppointmentMissedMiddleware;
+use App\Http\Middleware\PaginateDoctorAppointmentsMiddleware;
+use App\Http\Middleware\PaginateDoctorWorkSchedulesMiddleware;
+use App\Http\Middleware\PaginatePatientAppointments;
+use App\Http\Middleware\ShowAppointmentMiddleware;
 use App\Http\Middleware\StorePatientMiddleware;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Application;
@@ -36,6 +42,12 @@ return Application::configure(basePath: dirname(__DIR__))
             'StorePatientMiddleware' => StorePatientMiddleware::class,
             'CheckDoctorOnly' => CheckDoctorOnlyMiddleware::class,
             'CheckPatientOnly' => CheckPatientOnlyMiddleware::class,
+            'PaginateDoctorWorkSchedulesMiddleware' => PaginateDoctorWorkSchedulesMiddleware::class,
+            'PaginateDoctorAppointmentsMiddleware' => PaginateDoctorAppointmentsMiddleware::class,
+            'PaginatePatientAppointments' => PaginatePatientAppointments::class,
+            'ShowAppointmentMiddleware' => ShowAppointmentMiddleware::class,
+            'CancelAppointmentMiddleware' => CancelAppointmentMiddleware::class,
+            'MakeAppointmentMissedMiddleware' => MakeAppointmentMissedMiddleware::class,
         ]);
 
     })
@@ -118,15 +130,15 @@ return Application::configure(basePath: dirname(__DIR__))
             ], 422);
         });
 
-        $exceptions->render(function (\Throwable $e, $request) {
-            return response()->json([
-                'result' => 'Fail',
-                'base_message' => 'Unexpected back-end error!',
-                'error' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'details' => ($e->getPrevious() != null) ? $e->getPrevious()->getMessage() : null,
-            ], 500);
-        });
-
+        // $exceptions->render(function (\Throwable $e, $request) {
+        //     return response()->json([
+        //         'result' => 'Fail',
+        //         'base_message' => 'Unexpected back-end error!',
+        //         'error' => $e->getMessage(),
+        //         'file' => $e->getFile(),
+        //         'line' => $e->getLine(),
+        //         'details' => ($e->getPrevious() != null) ? $e->getPrevious()->getMessage() : null,
+        //     ], 500);
+        // });
+    
     })->create();

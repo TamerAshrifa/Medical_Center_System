@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Speciality;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -52,6 +53,8 @@ class SpecialitiesSeeder extends Seeder
             Speciality::create([
                 'name' => $speciality,
                 'added_by_admin_id' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ]);
 
     }

@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\GeneralClasses\Enums\ResponseStatusEnum;
 use App\GeneralClasses\Response;
 use App\Models\Doctor;
-use App\Models\Speciality;
 use App\Repositories\Interfaces\DoctorRepositoryInterface;
 use DB;
 
@@ -62,8 +61,8 @@ class DoctorRepository extends Repository implements DoctorRepositoryInterface
     {
         $user = $doctor->user;
         try {
-            return DB::transaction(function () use (&$doctor, $user) {
-                if (!$doctor->delete() || !$user->delete())
+            return DB::transaction(function () use ($doctor, $user) {
+                if (!$doctor->delete() || !((new UserRepository())->deleteByObject($user)))
                     throw new \LogicException('Field to delete doctor, please try again');
                 return new Response(ResponseStatusEnum::SUCCESS, null, null, 204);
             });
@@ -76,5 +75,17 @@ class DoctorRepository extends Repository implements DoctorRepositoryInterface
             );
         }
     }
+    public function getDoctorAppointmentDuration(int $doctorId, bool $failIfDoctorNotExists = true): int
+    {
+        $query = Doctor::query()->where('id', $doctorId);
+        return $failIfDoctorNotExists ?
+            $query->valueOrFail('appointment_duration') :
+            $query->value('appointment_duration');
+    }
+
+
+
+
+
 
 }

@@ -105,7 +105,7 @@ endpoints:
         name: gender
         description: ''
         required: true
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -116,7 +116,7 @@ endpoints:
         name: username
         description: 'Must not be greater than 20 characters.'
         required: true
-        example: hdtqtqxbajwbpilpm
+        example: mqeopfuudtdsufvyv
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -151,8 +151,8 @@ endpoints:
       password: 'dl4m{o,+'
       phone: '+963999999999'
       date_of_birth: '2004-06-14'
-      gender: true
-      username: hdtqtqxbajwbpilpm
+      gender: false
+      username: mqeopfuudtdsufvyv
       password_confirmation: consequatur
     fileParameters:
       photo: null
@@ -211,15 +211,15 @@ endpoints:
         name: otp_code
         description: ''
         required: true
-        example: consequatur
-        type: string
+        example: 17
+        type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
       email: qkunze@example.com
-      otp_code: consequatur
+      otp_code: 17
     fileParameters: []
     responses:
       -

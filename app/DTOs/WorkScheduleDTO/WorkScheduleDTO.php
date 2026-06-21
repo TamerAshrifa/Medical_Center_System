@@ -19,6 +19,7 @@ readonly class WorkScheduleDTO
         );
     }
 
+
     public function toArray(): array
     {
         return [

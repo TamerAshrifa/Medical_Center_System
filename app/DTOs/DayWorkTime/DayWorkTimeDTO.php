@@ -22,6 +22,16 @@ class DayWorkTimeDTO
         );
     }
 
+    public static function copy(self $dto): self
+    {
+        return new self(
+            weekday_id: $dto->weekday_id,
+            start_time: $dto->start_time,
+            end_time: $dto->end_time,
+            work_schedule_id: $dto->work_schedule_id,
+        );
+    }
+
     public function toArray(): array
     {
         return [

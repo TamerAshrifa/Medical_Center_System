@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\OtpTypeEnum;
+use App\Enums\WorkScheduleTypeEnum;
 use App\GeneralClasses\Enums\ResponseStatusEnum;
 use App\Http\Requests\AuthController\ForgotPasswordRequest;
 use App\Http\Requests\AuthController\LoginRequest;
@@ -11,6 +12,7 @@ use App\Http\Requests\AuthController\ResetPasswordRequest;
 use App\Http\Requests\AuthController\VerifyOtpRequest;
 use App\Models\Otp;
 use App\Models\User;
+use App\Models\WorkSchedule;
 use App\Repositories\Repository;
 use App\Services\OtpService;
 use App\services\AuthService;

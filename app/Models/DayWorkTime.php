@@ -10,6 +10,17 @@ class DayWorkTime extends Model
         "id",
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'start_time' => 'datetime:H:i',
+            'end_time' => 'datetime:H:i',
+            'created_at' => 'datetime:Y-m-d H:i:s',
+            'updated_at' => 'datetime:Y-m-d H:i:s',
+        ];
+    }
+
+
     public function weekDay()
     {
         return $this->belongsTo(WeekDay::class, 'weekday_id');

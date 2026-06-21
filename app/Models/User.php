@@ -26,8 +26,11 @@ class User extends Authenticatable
             'date_of_birth' => 'datetime:Y-m-d',
             'gender' => 'boolean',
             'role' => UserRoleEnum::class,
+            'created_at' => 'datetime:Y-m-d H:i:s',
+            'updated_at' => 'datetime:Y-m-d H:i:s',
         ];
     }
+
     public function patient()
     {
         return $this->hasOne(Patient::class, 'user_id');

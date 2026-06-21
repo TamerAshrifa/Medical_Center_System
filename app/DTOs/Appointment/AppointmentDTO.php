@@ -1,34 +1,30 @@
 <?php
 
-namespace App\DTOs\DayWorkTime;
+namespace App\DTOs\Appointment;
 
 class AppointmentDTO
 {
     public function __construct(
-        public int $weekday_id,
-        public string $start_time,
-        public string $end_time,
-        public ?int $work_schedule_id,
+        public int $patient_id,
+        public int $doctor_id,
+        public string $datetime,
     ) {
     }
     public static function fromRequest(array $request): self
     {
         return new self(
-            weekday_id: $request['weekday_id'],
-            start_time: $request['start_time'],
-            end_time: $request['end_time'],
-            work_schedule_id: isset($request['work_schedule_id']) ?
-            $request['work_schedule_id'] : null,
+            patient_id: $request['patient_id'],
+            doctor_id: $request['doctor_id'],
+            datetime: $request['datetime'],
         );
     }
 
     public function toArray(): array
     {
         return [
-            'weekday_id' => $this->weekday_id,
-            'start_time' => $this->start_time,
-            'end_time' => $this->end_time,
-            'work_schedule_id' => $this->work_schedule_id,
+            'patient_id' => $this->patient_id,
+            'doctor_id' => $this->doctor_id,
+            'datetime' => $this->datetime,
         ];
     }
 }

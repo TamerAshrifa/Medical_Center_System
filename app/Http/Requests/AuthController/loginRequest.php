@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\AuthController;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -12,6 +13,7 @@ class LoginRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        // dd(Carbon::now()->format('H:i'));
         return true;
     }
 

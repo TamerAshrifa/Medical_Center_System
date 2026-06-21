@@ -10,7 +10,13 @@ class Patient extends Model
     protected $guarded = [
         "id",
     ];
-
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime:Y-m-d H:i:s',
+            'updated_at' => 'datetime:Y-m-d H:i:s',
+        ];
+    }
     public function bloodType()
     {
         return $this->belongsTo(BloodType::class, 'blood_type_id');

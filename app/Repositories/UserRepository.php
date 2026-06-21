@@ -11,6 +11,7 @@ use App\DTOs\User\UserDTO;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Storage;
 
 class UserRepository extends Repository implements UserRepositoryInterface
 {
@@ -57,13 +58,20 @@ class UserRepository extends Repository implements UserRepositoryInterface
     {
         return DB::transaction(fn() => $this->findByEmail($email)->tokens()->delete()) > 0;
     }
-    public function deleteById(int $id): bool
-    {
-        return $this->findById($id)->delete() > 0;
-    }
+
     public function deleteByObject(User $user): bool
     {
-        return $user->delete() > 0;
+        $photo = $user->photo;
+        if ($user->delete()) {
+            if ($photo)
+                Storage::disk('public')->delete($photo);
+            return true;
+        }
+        return false;
+    }
+    public function deleteById(int $id): bool
+    {
+        return $this->deleteByObject($this->findById($id));
     }
     public function logout(int $id): bool
     {

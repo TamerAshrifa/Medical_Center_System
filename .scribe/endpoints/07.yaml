@@ -1,0 +1,557 @@
+name: 'Appointment APIs'
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/appointments/{doctor_id}'
+    metadata:
+      custom: []
+      groupName: 'Appointment APIs'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'View Available Times to book'
+      description: |-
+        ###For: Mobile(Patient)
+        Only patients are allowed to use this API.
+        View all available times to book with a specific doctor
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      doctor_id:
+        custom: []
+        name: doctor_id
+        description: 'min:1'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      doctor_id: 17
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      date_of_day:
+        custom: []
+        name: date_of_day
+        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-06-22</code>.'
+        required: true
+        example: '2107-07-21'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      date_of_day: '2107-07-21'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/appointments/s/{doctor_id}'
+    metadata:
+      custom: []
+      groupName: 'Appointment APIs'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Make Appointment'
+      description: |-
+        ###For: Mobile(Patient)
+        Only patients are allowed to use this API.
+        Firstly, the patient select a time to book in from "View Available Times" API, then he assigns it to this API with
+        the date of day he wanna book in
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      doctor_id:
+        custom: []
+        name: doctor_id
+        description: 'min:1'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      doctor_id: 17
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      datetime:
+        custom: []
+        name: datetime
+        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-06-22 01:34</code>.'
+        required: true
+        example: '2107-07-21'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      datetime: '2107-07-21'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/appointments/{status}/{with_expired}/{per_page}'
+    metadata:
+      custom: []
+      groupName: 'Appointment APIs'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'View all appointments in the system'
+      description: |-
+        ###For: Web
+        Only admins are allowed to use this API
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      status:
+        custom: []
+        name: status
+        description: 'Status should be null or one of [pending - cancelled - cancelled_by_doctor - cancelled_by_medical_center - missed - attended]'
+        required: true
+        example: consequatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      with_expired:
+        custom: []
+        name: with_expired
+        description: 'Boolean value means does the admin want all of appointments to be showen even with expired ones or only non-expired appointments?'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      status: consequatur
+      with_expired: 17
+      per_page: 17
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"result":"Fail","message":"Unauthenticated; A valid token is required"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/appointments/DA/{status}/{with_expired}/{per_page}/{doctor_id}'
+    metadata:
+      custom: []
+      groupName: 'Appointment APIs'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'View all appointments of a specified doctor'
+      description: |-
+        ###For: Web, Mobile(Doctor)
+        Only admins and doctors are allowed to use this API
+        ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      status:
+        custom: []
+        name: status
+        description: 'Status should be null or one of [pending - cancelled - cancelled_by_doctor - cancelled_by_medical_center - missed - attended]'
+        required: true
+        example: consequatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      with_expired:
+        custom: []
+        name: with_expired
+        description: 'Boolean value means does the admin want all of appointments to be showen even with expired ones or only non-expired appointments?'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      doctor_id:
+        custom: []
+        name: doctor_id
+        description: "min:1 The ID number of doctor to view it's appointments"
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      status: consequatur
+      with_expired: 17
+      per_page: 17
+      doctor_id: 17
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"result":"Fail","message":"Unauthenticated; A valid token is required"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/appointments/PA/{status}/{with_expired}/{per_page}/{patient_id}'
+    metadata:
+      custom: []
+      groupName: 'Appointment APIs'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'View all appointments of a specified patoent'
+      description: |-
+        ###For: Web, Mobile(Patient)
+        Only admins and patoents are allowed to use this API
+        ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      status:
+        custom: []
+        name: status
+        description: 'Status should be null or one of [pending - cancelled - cancelled_by_doctor - cancelled_by_medical_center - missed - attended]'
+        required: true
+        example: consequatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      with_expired:
+        custom: []
+        name: with_expired
+        description: 'Boolean value means does the admin want all of appointments to be showen even with expired ones or only non-expired appointments?'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      per_page:
+        custom: []
+        name: per_page
+        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      patient_id:
+        custom: []
+        name: patient_id
+        description: "min:1 The ID number of patient to view it's appointments"
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      status: consequatur
+      with_expired: 17
+      per_page: 17
+      patient_id: 17
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"result":"Fail","message":"Unauthenticated; A valid token is required"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/appointments/{id}'
+    metadata:
+      custom: []
+      groupName: 'Appointment APIs'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'View a specified appointment'
+      description: |-
+        ###For: Web, Mobile(Patient, Doctor)
+        ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
+        Everyone in the system is allowed to use this API
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'min:1 The ID number of appointment to be showen'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 17
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"result":"Fail","message":"Unauthenticated; A valid token is required"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/appointments/cA/{id}'
+    metadata:
+      custom: []
+      groupName: 'Appointment APIs'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Cancel an appointment'
+      description: |-
+        ###For: Mobile(Patient)
+        Only patients are allowed to use this API
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'min:1 The ID number of appointment to be cancelled'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 17
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/appointments/mA/{id}'
+    metadata:
+      custom: []
+      groupName: 'Appointment APIs'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Make an appointment missed'
+      description: |-
+        ###For: Mobile(Doctor)
+        Only doctors are allowed to use this API
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'min:1 The ID number of appointment to be missed'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 17
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null

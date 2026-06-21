@@ -7,28 +7,70 @@ use App\DTOs\WorkScheduleDTO\WorkScheduleDTO;
 use App\Enums\UserRoleEnum;
 use App\Enums\WorkScheduleTypeEnum;
 use App\Http\Requests\WorkScheduleController\StoreWorkScheduleRequest;
+use App\Http\Resources\WeekDay\WeekDayToAdminResource;
+use App\Http\Resources\WeekDay\WeekDayToDoctorResource;
+use App\Http\Resources\WeekDay\WeekDayToPatientResource;
+use App\Http\Resources\WorkSchedule\WorkScheduleToDoctorResource;
+use App\Http\Resources\WorkSchedule\WorkScheduleToAdminResource;
 use App\Repositories\Interfaces\SchedulingRepositoryInterface;
 use App\Services\SchedulingService;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @group Scheduling APIs
+ */
 class WorkScheduleController extends Controller
 {
-
-    /**
-     * @group Doctor_Speciality APIs
-     */
     public function __construct(
+        protected SchedulingRepositoryInterface $SchedulingRepository,
         protected SchedulingService $schedulingService,
-        protected SchedulingRepositoryInterface $schedulingRepository,
     ) {
     }
 
 
+    private function weekDayResource($weekDayOrCollectionOfIt, bool $isCollection)
+    {
+        switch (Auth::user()->role) {
+            case UserRoleEnum::ADMIN:
+                return $isCollection ?
+                    WeekDayToAdminResource::collection($weekDayOrCollectionOfIt) :
+                    new WeekDayToAdminResource($weekDayOrCollectionOfIt);
+            case UserRoleEnum::DOCTOR:
+                return $isCollection ?
+                    WeekDayToDoctorResource::collection($weekDayOrCollectionOfIt) :
+                    new WeekDayToDoctorResource($weekDayOrCollectionOfIt);
+            case UserRoleEnum::PATIENT:
+                return $isCollection ?
+                    WeekDayToPatientResource::collection($weekDayOrCollectionOfIt) :
+                    new WeekDayToPatientResource($weekDayOrCollectionOfIt);
+            default:
+                return $isCollection ?
+                    WeekDayToPatientResource::collection($weekDayOrCollectionOfIt) :
+                    new WeekDayToPatientResource($weekDayOrCollectionOfIt);
+        }
+    }
+    private function workScheduleResource($recordOrCollection, bool $isCollection)
+    {
+        switch (Auth::user()->role) {
+            case UserRoleEnum::ADMIN:
+                return $isCollection ?
+                    WorkScheduleToAdminResource::collection($recordOrCollection) :
+                    new WorkScheduleToAdminResource($recordOrCollection);
+            case UserRoleEnum::DOCTOR:
+                return $isCollection ?
+                    WorkScheduleToDoctorResource::collection($recordOrCollection) :
+                    new WorkScheduleToDoctorResource($recordOrCollection);
+            default:
+                return $isCollection ?
+                    WorkScheduleToDoctorResource::collection($recordOrCollection) :
+                    new WorkScheduleToDoctorResource($recordOrCollection);
+        }
+    }
     /**
      * Creating a Work Scheduling
      * 
      * ###For: Mobile(Doctor), Web
-     * Only admins and doctors are allowed to use this API.
+     * Only admins and doctors are allowed to use this API
      * Creating a new Work Scheduling by a doctor or admin, the doctor can create his own work schedule, 
      * and the admin can create work schedules for medical center.
      */
@@ -65,7 +107,92 @@ class WorkScheduleController extends Controller
 
     }
 
+    /**
+     * View all days of week
+     * 
+     * ###For: Mobile(Patient, Doctor), Web
+     * Everyone in the system is allowed to use this API
+     */
+    public function indexWeekDays()
+    {
+        $response = $this->schedulingService->allWeekDays();
+        return response()->json([
+            'result' => $response->result,
+            'data' => $this->weekDayResource($response->data, true),
+        ], $response->statusCode);
+    }
+
+    /**
+     * View all work schedules of all doctors
+     * 
+     * ###For: Web
+     * Only admins are allowed to use this API
+     * @urlParam with_expired integer required Boolean value means does the user want all of schedules to be showen even with expired ones or only non-expired schedules?
+     * @urlParam per_page integer required min:1 The number of items shown in each page. Defaults to 10. 
+     */
+    public function paginateDoctorsWorkSchedules(bool $with_expired, int $per_page = 10)
+    {
+        $response = $this->schedulingService->paginateDoctorsWorkSchedules($with_expired, $per_page);
+        return response()->json([
+            'result' => $response->result,
+            'message' => $response->message,
+            'data' => $this->workScheduleResource($response->data, true),
+        ], $response->statusCode);
+    }
 
 
+    /**
+     * View all work schedules of the medical center
+     * 
+     * ###For: Web
+     * Only admins are allowed to use this API
+     * @urlParam with_expired integer required Boolean value means does the user want all of schedules to be showen even with expired ones or only non-expired schedules?
+     * @urlParam per_page integer required min:1 The number of items shown in each page. Defaults to 10. 
+     */
+    public function paginateMedicalCenterWorkSchedules(bool $with_expired, int $per_page = 10)
+    {
+        $response = $this->schedulingService->paginateMedicalCenterWorkSchedules($with_expired, $per_page);
+        return response()->json([
+            'result' => $response->result,
+            'message' => $response->message,
+            'data' => $this->workScheduleResource($response->data, true),
+        ], $response->statusCode);
+    }
+
+
+    /**
+     * View all work schedules of a specified doctor
+     * 
+     * ###For: Web, Mobile(Doctor)
+     * Only admins and doctors are allowed to use this API
+     * @urlParam doctor_id integer required min:1 The ID of the doctor to view his schedules 
+     * @urlParam with_expired integer required Boolean value means does the user want all of schedules to be showen even with expired ones or only non-expired schedules?
+     * @urlParam per_page integer required The number of items shown in each page. Defaults to 10. 
+     */
+    public function paginateDoctorWorkSchedules(int $doctor_id, bool $with_expired, int $per_page = 10)
+    {
+        $response = $this->schedulingService->paginateDoctorWorkSchedules($doctor_id, $with_expired, $per_page);
+        return response()->json([
+            'result' => $response->result,
+            'message' => $response->message,
+            'data' => $this->workScheduleResource($response->data, true),
+        ], $response->statusCode);
+    }
+
+    /**
+     * View all work schedules of a specified doctor
+     * 
+     * ###For: Web, Mobile(Doctor)
+     * Only admins and doctors are allowed to use this API
+     * @urlParam id integer required The ID of the work schedule to view
+     */
+    public function findWorkSchedule(int $id)
+    {
+        $response = $this->schedulingService->findWorkSchedule($id, true);
+        return response()->json([
+            'result' => $response->result,
+            'data' => $this->workScheduleResource($response->data, false),
+        ], $response->statusCode);
+    }
 
 }
