@@ -8,10 +8,14 @@ use App\Http\Middleware\CheckPatientOnlyMiddleware;
 use App\Http\Middleware\MakeAppointmentAttendedMiddleware;
 use App\Http\Middleware\MakeAppointmentMissedMiddleware;
 use App\Http\Middleware\PaginateDoctorAppointmentsMiddleware;
+use App\Http\Middleware\PaginateDoctorVisitsMiddleware;
 use App\Http\Middleware\PaginateDoctorWorkSchedulesMiddleware;
 use App\Http\Middleware\PaginatePatientAppointments;
+use App\Http\Middleware\PaginatePatientVisitsMiddleware;
 use App\Http\Middleware\ShowAppointmentMiddleware;
+use App\Http\Middleware\ShowVisitMiddleware;
 use App\Http\Middleware\StorePatientMiddleware;
+use App\Http\Middleware\UpdateVisitMiddleware;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -50,6 +54,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'CancelAppointmentMiddleware' => CancelAppointmentMiddleware::class,
             'MakeAppointmentMissedMiddleware' => MakeAppointmentMissedMiddleware::class,
             'MakeAppointmentAttendedMiddleware' => MakeAppointmentAttendedMiddleware::class,
+            'PaginateDoctorVisitsMiddleware' => PaginateDoctorVisitsMiddleware::class,
+            'PaginatePatientVisitsMiddleware' => PaginatePatientVisitsMiddleware::class,
+            'ShowVisitMiddleware' => ShowVisitMiddleware::class,
+            'UpdateVisitMiddleware' => UpdateVisitMiddleware::class,
         ]);
 
     })
@@ -74,7 +82,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (TransportExceptioN $e, $request) {
             return response()->json([
                 'result' => 'Fail',
-                'message' => 'Sorry, no internet connection',
+                'message' => 'No internet connection',
             ], 503);
         });
 

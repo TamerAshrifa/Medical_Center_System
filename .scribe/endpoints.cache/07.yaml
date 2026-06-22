@@ -45,16 +45,16 @@ endpoints:
       date_of_day:
         custom: []
         name: date_of_day
-        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-06-22</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-06-23</code>.'
         required: true
-        example: '2107-07-21'
+        example: '2107-07-22'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      date_of_day: '2107-07-21'
+      date_of_day: '2107-07-22'
     fileParameters: []
     responses: []
     responseFields: []
@@ -108,16 +108,16 @@ endpoints:
       datetime:
         custom: []
         name: datetime
-        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-06-22 01:34</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-06-23 00:08</code>.'
         required: true
-        example: '2107-07-21'
+        example: '2107-07-22'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      datetime: '2107-07-21'
+      datetime: '2107-07-22'
     fileParameters: []
     responses: []
     responseFields: []
@@ -547,6 +547,103 @@ endpoints:
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/appointments/aA/{id}'
+    metadata:
+      custom: []
+      groupName: 'Appointment APIs'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Make an appointment attended'
+      description: |-
+        ###For: Mobile(Doctor)
+        Only doctors are allowed to use this API
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'min:1 The ID number of appointment to be attended'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 17
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      actual_time:
+        custom: []
+        name: actual_time
+        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-06-23 00:00</code>.'
+        required: true
+        example: '2107-07-22'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      medical_diagnosis:
+        custom: []
+        name: medical_diagnosis
+        description: 'Must not be greater than 500 characters.'
+        required: true
+        example: mqeopfuudtdsufvyvddqa
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      prescription:
+        custom: []
+        name: prescription
+        description: 'Must not be greater than 250 characters.'
+        required: true
+        example: mniihfqcoynlazghdtqtq
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      notes:
+        custom: []
+        name: notes
+        description: 'Must not be greater than 1000 characters.'
+        required: true
+        example: xbajwbpilpmufinllwloa
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      actual_time: '2107-07-22'
+      medical_diagnosis: mqeopfuudtdsufvyvddqa
+      prescription: mniihfqcoynlazghdtqtq
+      notes: xbajwbpilpmufinllwloa
     fileParameters: []
     responses: []
     responseFields: []

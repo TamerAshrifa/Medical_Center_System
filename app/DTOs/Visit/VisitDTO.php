@@ -5,17 +5,17 @@ namespace App\DTOs\Visit;
 readonly class VisitDTO
 {
     public function __construct(
-        public int $appointement_id,
-        public int $actual_time,
-        public int $medical_diagnosis,
-        public int $prescription,
-        public int $notes,
+        public int $appointment_id,
+        public string $actual_time,
+        public string $medical_diagnosis,
+        public string $prescription,
+        public string $notes,
     ) {
     }
     public static function fromRequest(array $request): self
     {
         return new self(
-            appointement_id: $request['appointement_id'],
+            appointment_id: $request['appointment_id'],
             actual_time: $request['actual_time'],
             medical_diagnosis: $request['medical_diagnosis'],
             prescription: $request['prescription'],
@@ -25,7 +25,7 @@ readonly class VisitDTO
     public function toArray(): array
     {
         return [
-            'appointement_id' => $this->appointement_id,
+            'appointment_id' => $this->appointment_id,
             'actual_time' => $this->actual_time,
             'medical_diagnosis' => $this->medical_diagnosis,
             'prescription' => $this->prescription,

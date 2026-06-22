@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class PaginatePatientAppointments
+class PaginatePatientVisitsMiddleware
 {
     /**
      * Handle an incoming request.
@@ -22,8 +22,9 @@ class PaginatePatientAppointments
             if ($request->route('patient_id') != $user->patient->id)
                 return response()->json([
                     'result' => 'Fail',
-                    'message' => 'Patients can\'t see other patients\' appointments',
+                    'message' => 'Patients can\'t see other patients\' visits',
                 ], 403);
+
         return $next($request);
     }
 }

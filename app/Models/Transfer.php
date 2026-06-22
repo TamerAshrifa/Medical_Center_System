@@ -31,7 +31,7 @@ class Transfer extends Model
 
     public function appointement()
     {
-        return $this->belongsTo(Appointment::class, 'appointement_id');
+        return $this->belongsTo(Appointment::class, 'appointment_id');
     }
 
 

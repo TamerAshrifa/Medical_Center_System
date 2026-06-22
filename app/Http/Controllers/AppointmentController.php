@@ -41,7 +41,7 @@ class AppointmentController extends Controller
     }
     private function selectIncludedEntities(?bool &$withPatient, ?bool &$withDoctor)
     {
-        switch (Auth::user()->role) {
+        switch ($this->getCurrentUserRole()) {
             case UserRoleEnum::ADMIN:
                 $withPatient = $withDoctor = true;
                 break;
@@ -307,15 +307,9 @@ class AppointmentController extends Controller
 
         $response = $this->appointmentService->makeAppointmentAttended($visitDTO);
 
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-
         return response()->json([
             'result' => $response->result,
-            'data' => $response->data,
+            'message' => $response->message,
         ], $response->statusCode);
     }
 

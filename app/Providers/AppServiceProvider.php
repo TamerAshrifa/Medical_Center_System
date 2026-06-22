@@ -14,6 +14,7 @@ use App\Repositories\Interfaces\RoomRepositoryInterface;
 use App\Repositories\Interfaces\SchedulingRepositoryInterface;
 use App\Repositories\Interfaces\SpecialityRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Repositories\Interfaces\VisitRepositoryInterface;
 use App\Repositories\PatientRepository;
 use App\Repositories\Repository;
 use App\Repositories\ResetPasswordTokenRepository;
@@ -21,6 +22,7 @@ use App\Repositories\RoomRepository;
 use App\Repositories\SchedulingRepository;
 use App\Repositories\SpecialityRepository;
 use App\Repositories\UserRepository;
+use App\Repositories\VisitRepository;
 use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
 
@@ -68,6 +70,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             AppointmentRepositoryInterface::class,
             AppointmentRepository::class
+        );
+        $this->app->bind(
+            VisitRepositoryInterface::class,
+            VisitRepository::class
         );
     }
 

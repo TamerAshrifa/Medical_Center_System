@@ -5,9 +5,9 @@ namespace App\DTOs\Visit;
 readonly class VisitDTOUpdate
 {
     public function __construct(
-        public ?int $medical_diagnosis,
-        public ?int $prescription,
-        public ?int $notes,
+        public ?string $medical_diagnosis,
+        public ?string $prescription,
+        public ?string $notes,
     ) {
     }
     public static function fromRequest(array $request): self

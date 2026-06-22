@@ -42,9 +42,14 @@ class VisitRepository extends Repository implements VisitRepositoryInterface
     {
         return Visit::create($dtoData->toArray());
     }
-    public function updateVisit(VisitDTOUpdate $dtoData, int $id): bool
+    public function update(VisitDTOUpdate $dtoData, int $id): bool
     {
-        return Visit::where('id', $id)->updateOrFail($dtoData->toArray()) > 0;
+        return Visit::findOrFail($id)->update($dtoData->toArray());
+    }
+
+    public function exists(int $appointment_id): bool
+    {
+        return Visit::where('appointment_id', $appointment_id)->exists();
     }
 
 }

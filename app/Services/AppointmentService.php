@@ -10,6 +10,7 @@ use App\GeneralClasses\Response;
 use App\Http\Requests\AppointmentController\MakeAppointmentAttendedRequest;
 use App\Repositories\DoctorRepository;
 use App\Repositories\Interfaces\AppointmentRepositoryInterface;
+use App\Repositories\Interfaces\VisitRepositoryInterface;
 use App\Repositories\SchedulingRepository;
 use App\Repositories\VisitRepository;
 use Carbon\Carbon;
@@ -19,9 +20,11 @@ class AppointmentService extends Service
 {
     public function __construct(
         protected AppointmentRepositoryInterface $appointmentRepository,
+        protected VisitRepositoryInterface $visitRepositoryInterface,
         protected SchedulingService $schedulingService,
         protected SchedulingRepository $schedulingRepository,
         protected DoctorRepository $doctorRepository,
+
     ) {
     }
     public function paginate(?AppointmentStatusEnum $status, bool $with_expired = false, int $per_page = 10): Response
@@ -204,9 +207,18 @@ class AppointmentService extends Service
     }
     public function makeAppointmentAttended(VisitDTO $dataDTO): Response
     {
+        if ($this->visitRepositoryInterface->exists($dataDTO->appointment_id)) {
+            return new Response(
+                ResponseStatusEnum::FAIL,
+                Response::messageToArray('Sorry, This appointment was already made attended'),
+                null,
+                409
+            );
+        }
+
         try {
             DB::transaction(function () use ($dataDTO) {
-                $didSucceed = $this->appointmentRepository->updateAppointmentStatus(AppointmentStatusEnum::ATTENDED, $dataDTO->appointement_id);
+                $didSucceed = $this->appointmentRepository->updateAppointmentStatus(AppointmentStatusEnum::ATTENDED, $dataDTO->appointment_id);
                 if (!$didSucceed)
                     throw new \Exception('Failed to make the appointment attended, please try again');
 

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class PaginatePatientAppointments
+class PaginateDoctorVisitsMiddleware
 {
     /**
      * Handle an incoming request.
@@ -18,12 +18,13 @@ class PaginatePatientAppointments
     public function handle(Request $request, Closure $next): Response
     {
         $user = Auth::user();
-        if ($user->role == UserRoleEnum::PATIENT)
-            if ($request->route('patient_id') != $user->patient->id)
+        if ($user->role == UserRoleEnum::DOCTOR)
+            if ($request->route('doctor_id') != $user->doctor->id)
                 return response()->json([
                     'result' => 'Fail',
-                    'message' => 'Patients can\'t see other patients\' appointments',
+                    'message' => 'Doctors can\'t see other doctors\' visits',
                 ], 403);
+
         return $next($request);
     }
 }

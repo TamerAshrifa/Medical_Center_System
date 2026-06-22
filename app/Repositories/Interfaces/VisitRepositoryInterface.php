@@ -13,5 +13,8 @@ interface VisitRepositoryInterface extends RepositoryInterface
     public function paginateDoctorVisits(int $per_page = 10, int $doctor_id);
     public function find($failIfNotExists = true, bool $withAppointment, int $id): Visit|null;
     public function create(VisitDTO $dtoData): Visit;
-    public function updateVisit(VisitDTOUpdate $dtoData, int $id): bool;
+    public function update(VisitDTOUpdate $dtoData, int $id): bool;
+    public function exists(int $appointment_id): bool;
+
+
 }

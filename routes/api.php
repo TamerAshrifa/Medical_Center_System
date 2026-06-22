@@ -7,6 +7,7 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SpecialityController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VisitController;
 use App\Http\Controllers\WorkScheduleController;
 use Illuminate\Support\Facades\Route;
 
@@ -90,8 +91,16 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('aA/{id}', [AppointmentController::class, 'makeAppointmentAttended'])->middleware(['CheckDoctorOnly', 'MakeAppointmentAttendedMiddleware']);
     });
 
+    // Visits APIs
+    Route::prefix('visits/')->group(function () {
+        Route::get('{per_page}', [VisitController::class, 'paginate'])->middleware('CheckAdmin');
+        Route::get('DV/{per_page}/{doctor_id}', [VisitController::class, 'paginateDoctorVisits'])->middleware(['CheckDoctor', 'PaginateDoctorVisitsMiddleware']);
+        Route::get('PV/{per_page}/{patient_id}', [VisitController::class, 'paginatePatientVisits'])->middleware(['CheckPatient', 'PaginatePatientVisitsMiddleware']);
+        Route::get('s/{id}', [VisitController::class, 'show'])->middleware('ShowVisitMiddleware');
+        Route::post('{id}', [VisitController::class, 'update'])->middleware(['CheckDoctorOnly', 'UpdateVisitMiddleware']);
+    });
 });
 
-// User 1 (Admin 1) token: 1|fUMoQyYt8ycR85TSeLnpYPkF03PUObt8iLOVIUsyaaf62f2b
-// User 26 (Doctor 11) token: 2|iTpZHLc33CSKMJqyrOEP2JCuz8gu60ELwVfA6m6Ldc6b82f1
-// User 27 (Patient 11) token: 3|U97XZXlO9pABMbZxbSpx4X1V8oaoKRJjBKc2v1lded185a15
+// User 1 (Admin 1) token: 1|i4ctOqTeDPIhfDGO5j8huKHXEb9lX2IB6Epo9Hibb41a6664
+// User 26 (Doctor 11) token: 2|HMATOMqDbhSWV7wwhpqtnsVDV0Fq0sKlS0bUrIgu41ac8446
+// User 27 (Patient 11) token: 3|wVsX05shjYLECY1nbfp8R5ndbDUUJS40gLohUOVu426a79ab

@@ -130,33 +130,30 @@ class SchedulingService extends Service
 
             // We won't modify $medSch->dayWorkTimes so there is no problem with "Call By Reference"
             $medSchDayWorkTimes = $medSch->dayWorkTimes;
-            $medSchDayWorkTimesDaysIDs = [];
+            $medSchDayWorkTimesMap = [];
             foreach ($medSchDayWorkTimes as $dayRecord)
-                $medSchDayWorkTimesDaysIDs[] = $dayRecord->weekday_id;
+                $medSchDayWorkTimesMap[$dayRecord->weekday_id] = $dayRecord;
 
-            // Filter DTOs first and reindex so indexes stay consistent
+            // Filter DTOs to only those weekdays present in the medical center schedule
             $filteredDTOs = [];
             foreach ($dayWorkTimesDTOsArrayCopy as $dayWorkTimeDTO)
-                if (in_array($dayWorkTimeDTO->weekday_id, $medSchDayWorkTimesDaysIDs))
+                if (isset($medSchDayWorkTimesMap[$dayWorkTimeDTO->weekday_id]))
                     $filteredDTOs[] = $dayWorkTimeDTO;
 
-            // Replace the working array with the filtered, reindexed one
+            // Replace the working array with the filtered one
             $dayWorkTimesDTOsArray = $filteredDTOs;
 
-            // Ensure $medSchDayWorkTimes is a zero-based indexed array to match DTO indexes
-            $medSchDayWorkTimesValues = $medSchDayWorkTimes->values()->all();
-
-            foreach ($dayWorkTimesDTOsArray as $index => $dayWorkTimeDTO) {
-                if (!isset($medSchDayWorkTimesValues[$index]))
+            foreach ($dayWorkTimesDTOsArray as $dayWorkTimeDTO) {
+                $weekdayId = $dayWorkTimeDTO->weekday_id;
+                if (!isset($medSchDayWorkTimesMap[$weekdayId]))
                     continue;
 
-                if (Carbon::parse($dayWorkTimeDTO->start_time) < $medSchDayWorkTimesValues[$index]->start_time)
-                    $dayWorkTimesDTOsArray[$index]->start_time = $medSchDayWorkTimesValues[$index]->start_time;
+                $medSchDay = $medSchDayWorkTimesMap[$weekdayId];
+                if (Carbon::parse($dayWorkTimeDTO->start_time) < $medSchDay->start_time)
+                    $dayWorkTimeDTO->start_time = $medSchDay->start_time;
 
-                if (Carbon::parse($dayWorkTimeDTO->end_time) > $medSchDayWorkTimesValues[$index]->end_time)
-                    $dayWorkTimesDTOsArray[$index]->end_time = $medSchDayWorkTimesValues[$index]->end_time;
-                //     if ($medSch->end_time !== null && Carbon::parse($dayWorkTimeDTO->end_time) > Carbon::parse($medSch->end_time))
-                //         $dayWorkTimesDTOsArray[$index]->end_time = $medSch->end_time;
+                if (Carbon::parse($dayWorkTimeDTO->end_time) > $medSchDay->end_time)
+                    $dayWorkTimeDTO->end_time = $medSchDay->end_time;
             }
 
             // This array has the final data we gonna store in database

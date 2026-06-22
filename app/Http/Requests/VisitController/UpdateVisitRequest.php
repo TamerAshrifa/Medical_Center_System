@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Requests\AppointmentController;
+namespace App\Http\Requests\VisitController;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class MakeAppointmentAttendedRequest extends FormRequest
+class UpdateVisitRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,12 +22,10 @@ class MakeAppointmentAttendedRequest extends FormRequest
      */
     public function rules(): array
     {
-        $today = Carbon::today()->format('Y-m-d H:i');
         return [
-            'actual_time' => ['required', 'date_format:Y-m-d H:i', "after_or_equal:$today"],
-            'medical_diagnosis' => ['required', 'string', 'max:500'],
-            'prescription' => ['required', 'string', 'max:250'],
-            'notes' => ['required', 'string', 'max:1000'],
+            'medical_diagnosis' => ['sometimes', 'string', 'max:500'],
+            'prescription' => ['sometimes', 'string', 'max:250'],
+            'notes' => ['sometimes', 'string', 'max:1000'],
         ];
     }
 }
