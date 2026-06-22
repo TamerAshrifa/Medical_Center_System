@@ -3,19 +3,15 @@
 namespace App\Services;
 
 use App\DTOs\Appointment\AppointmentDTO;
-use App\DTOs\Visit\VisitDTO;
 use App\Enums\AppointmentStatusEnum;
 use App\GeneralClasses\Enums\ResponseStatusEnum;
 use App\GeneralClasses\Response;
-use App\Http\Requests\AppointmentController\MakeAppointmentAttendedRequest;
 use App\Repositories\DoctorRepository;
 use App\Repositories\Interfaces\AppointmentRepositoryInterface;
 use App\Repositories\SchedulingRepository;
-use App\Repositories\VisitRepository;
 use Carbon\Carbon;
-use DB;
 
-class AppointmentService extends Service
+class VisitService extends Service
 {
     public function __construct(
         protected AppointmentRepositoryInterface $appointmentRepository,
@@ -202,27 +198,21 @@ class AppointmentService extends Service
             Response::messageToArray('Appointment was made missed successfully'),
         );
     }
-    public function makeAppointmentAttended(VisitDTO $dataDTO): Response
+    public function makeAppointmentAttended(int $id): Response
     {
-        try {
-            DB::transaction(function () use ($dataDTO) {
-                $didSucceed = $this->appointmentRepository->updateAppointmentStatus(AppointmentStatusEnum::ATTENDED, $dataDTO->appointement_id);
-                if (!$didSucceed)
-                    throw new \Exception('Failed to make the appointment attended, please try again');
+        $didSucceed = $this->appointmentRepository->updateAppointmentStatus(AppointmentStatusEnum::ATTENDED, $id);
 
-                (new VisitRepository())->create($dataDTO);
-            });
-        } catch (\Throwable $e) {
+        if (!$didSucceed)
             return new Response(
                 ResponseStatusEnum::FAIL,
-                Response::messageToArray($e->getMessage()),
+                Response::messageToArray('Failed to make the appointment attended, please try again'),
                 null,
                 500
             );
-        }
+
         return new Response(
             ResponseStatusEnum::SUCCESS,
-            Response::messageToArray('Appointment attended successfully, a visit was made'),
+            Response::messageToArray('Appointment attended successfully'),
         );
     }
     public function allAvailableTimesToBook(string $dateOfDay, int $doctorId): Response

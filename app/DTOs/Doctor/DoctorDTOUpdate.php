@@ -19,9 +19,9 @@ readonly class DoctorDTOUpdate
     }
     public function toArray(): array
     {
-        return [
+        return array_filter([
             'room_id' => $this->room_id,
             'appointment_duration' => $this->appointment_duration,
-        ];
+        ], fn($value) => !is_null($value));
     }
 }

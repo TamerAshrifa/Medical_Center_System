@@ -87,6 +87,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::post('cA/{id}', [AppointmentController::class, 'cancelAppointment'])->middleware(['CheckPatientOnly', 'CancelAppointmentMiddleware']);
         Route::post('mA/{id}', [AppointmentController::class, 'makeAppointmentMissed'])->middleware(['CheckDoctorOnly', 'MakeAppointmentMissedMiddleware']);
+        Route::post('aA/{id}', [AppointmentController::class, 'makeAppointmentAttended'])->middleware(['CheckDoctorOnly', 'MakeAppointmentAttendedMiddleware']);
     });
 
 });

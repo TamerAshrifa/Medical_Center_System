@@ -22,4 +22,14 @@ class Unavailability extends Model
             'updated_at' => 'datetime:Y-m-d H:i:s',
         ];
     }
+
+    public function doctorUnavailability()
+    {
+        return $this->hasOne(DoctorUnavailability::class, 'unavailability_id');
+    }
+    public function medicalCenterUnavailability()
+    {
+        return $this->hasOne(MedicalCenterUnavailability::class, 'unavailability_id');
+    }
+
 }

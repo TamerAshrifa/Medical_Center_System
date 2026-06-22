@@ -16,4 +16,15 @@ class MedicalCenterUnavailability extends Model
             'updated_at' => 'datetime:Y-m-d H:i:s',
         ];
     }
+
+    public function madeByAdmin()
+    {
+        return $this->belongsTo(Admin::class, 'made_by_admin_id');
+    }
+
+    public function unavailability()
+    {
+        return $this->belongsTo(Unavailability::class, 'unavailability_id');
+    }
+
 }

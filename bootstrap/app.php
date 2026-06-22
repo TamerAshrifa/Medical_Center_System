@@ -5,6 +5,7 @@ use App\Http\Middleware\CheckAdminMiddleware;
 use App\Http\Middleware\CheckDoctorMiddleware;
 use App\Http\Middleware\CheckDoctorOnlyMiddleware;
 use App\Http\Middleware\CheckPatientOnlyMiddleware;
+use App\Http\Middleware\MakeAppointmentAttendedMiddleware;
 use App\Http\Middleware\MakeAppointmentMissedMiddleware;
 use App\Http\Middleware\PaginateDoctorAppointmentsMiddleware;
 use App\Http\Middleware\PaginateDoctorWorkSchedulesMiddleware;
@@ -48,6 +49,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'ShowAppointmentMiddleware' => ShowAppointmentMiddleware::class,
             'CancelAppointmentMiddleware' => CancelAppointmentMiddleware::class,
             'MakeAppointmentMissedMiddleware' => MakeAppointmentMissedMiddleware::class,
+            'MakeAppointmentAttendedMiddleware' => MakeAppointmentAttendedMiddleware::class,
         ]);
 
     })

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\DTOs\Appointment\AppointmentDTO;
+use App\DTOs\Visit\VisitDTO;
 use App\Enums\AppointmentStatusEnum;
 use App\Enums\UserRoleEnum;
 use App\GeneralClasses\Enums\ResponseStatusEnum;
 use App\Http\Requests\AppointmentController\AllAvailableTimesToBookRequest;
+use App\Http\Requests\AppointmentController\MakeAppointmentAttendedRequest;
 use App\Http\Requests\AppointmentController\StoreRequest;
 use App\Http\Resources\Appointment\AppointmentToAdminResource;
 use App\Http\Resources\Appointment\AppointmentToDoctorResource;
@@ -290,28 +292,32 @@ class AppointmentController extends Controller
 
     }
 
-    // /**
-    //  * Make an appointment missed
-    //  * 
-    //  * ###For: Mobile(Doctor)
-    //  * Only doctors are allowed to use this API
-    //  * @urlParam id integer required min:1 The ID number of appointment to be attended 
-    //  */
-    // public function makeAppointmentAttended(int $id)
-    // {
-    //     $response = $this->appointmentService->makeAppointmentAttended($id);
+    /**
+     * Make an appointment attended
+     * 
+     * ###For: Mobile(Doctor)
+     * Only doctors are allowed to use this API
+     * @urlParam id integer required min:1 The ID number of appointment to be attended 
+     */
+    public function makeAppointmentAttended(MakeAppointmentAttendedRequest $request, int $id)
+    {
+        $validatedData = $request->validated();
+        $validatedData['appointment_id'] = $id;
+        $visitDTO = VisitDTO::fromRequest($validatedData);
 
-    //     if ($response->result != ResponseStatusEnum::SUCCESS)
-    //         return response()->json([
-    //             'result' => $response->result,
-    //             'message' => $response->message,
-    //         ], $response->statusCode);
+        $response = $this->appointmentService->makeAppointmentAttended($visitDTO);
 
-    //     return response()->json([
-    //         'result' => $response->result,
-    //         'data' => $response->data,
-    //     ], $response->statusCode);
-    // }
+        if ($response->result != ResponseStatusEnum::SUCCESS)
+            return response()->json([
+                'result' => $response->result,
+                'message' => $response->message,
+            ], $response->statusCode);
+
+        return response()->json([
+            'result' => $response->result,
+            'data' => $response->data,
+        ], $response->statusCode);
+    }
 
 
 }

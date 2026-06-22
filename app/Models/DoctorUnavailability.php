@@ -20,6 +20,9 @@ class DoctorUnavailability extends Model
     {
         return $this->belongsTo(Doctor::class, 'doctor_id');
     }
-
+    public function unavailability()
+    {
+        return $this->belongsTo(Unavailability::class, 'unavailability_id');
+    }
 
 }
