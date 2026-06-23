@@ -99,6 +99,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('s/{id}', [VisitController::class, 'show'])->middleware('ShowVisitMiddleware');
         Route::post('{id}', [VisitController::class, 'update'])->middleware(['CheckDoctorOnly', 'UpdateVisitMiddleware']);
     });
+
+
+
+
+
+
 });
 
 // User 1 (Admin 1) token: 1|i4ctOqTeDPIhfDGO5j8huKHXEb9lX2IB6Epo9Hibb41a6664

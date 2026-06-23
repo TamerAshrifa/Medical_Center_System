@@ -10,7 +10,6 @@ use App\Http\Resources\Visit\VisitToAdminResource;
 use App\Http\Resources\Visit\VisitToDoctorResource;
 use App\Http\Resources\Visit\VisitToPatientResource;
 use App\Services\VisitService;
-use Illuminate\Http\Request;
 
 /**
  * @group Visit APIs
