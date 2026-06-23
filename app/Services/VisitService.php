@@ -2,14 +2,10 @@
 
 namespace App\Services;
 
-use App\DTOs\Appointment\AppointmentDTO;
-use App\DTOs\Visit\VisitDTO;
 use App\DTOs\Visit\VisitDTOUpdate;
-use App\Enums\AppointmentStatusEnum;
 use App\GeneralClasses\Enums\ResponseStatusEnum;
 use App\GeneralClasses\Response;
 use App\Repositories\Interfaces\VisitRepositoryInterface;
-use Carbon\Carbon;
 
 class VisitService extends Service
 {

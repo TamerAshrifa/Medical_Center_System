@@ -4,12 +4,9 @@ namespace App\Services;
 
 use App\DTOs\User\DoctorSpecialityDTO;
 use App\DTOs\User\DoctorSpecialityDTOUpdate;
-use App\DTOs\User\UserDTO;
-use App\DTOs\User\UserDTOUpdate;
 use App\GeneralClasses\Enums\ResponseStatusEnum;
 use App\GeneralClasses\Response;
 use App\Repositories\Interfaces\DoctorSpecialityRepositoryInterface;
-use function Illuminate\Support\now;
 
 class DoctorSpecialityService extends Service
 {

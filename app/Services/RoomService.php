@@ -7,9 +7,9 @@ use App\DTOs\Room\RoomDTOUpdate;
 use App\Enums\UserRoleEnum;
 use App\GeneralClasses\Enums\ResponseStatusEnum;
 use App\GeneralClasses\Response;
-use App\Http\Resources\RoomToAdminResource;
-use App\Http\Resources\RoomToDoctorResource;
-use App\Http\Resources\RoomToPatientResource;
+use App\Http\Resources\Room\RoomToAdminResource;
+use App\Http\Resources\Room\RoomToDoctorResource;
+use App\Http\Resources\Room\RoomToPatientResource;
 use App\Repositories\Interfaces\RoomRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 

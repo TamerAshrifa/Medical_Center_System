@@ -7,9 +7,9 @@ use App\DTOs\Speciality\SpecialityDTOUpdate;
 use App\Enums\UserRoleEnum;
 use App\GeneralClasses\Enums\ResponseStatusEnum;
 use App\GeneralClasses\Response;
-use App\Http\Resources\SpecialityToAdminResource;
-use App\Http\Resources\SpecialityToDoctorResource;
-use App\Http\Resources\SpecialityToPatientResource;
+use App\Http\Resources\Speciality\SpecialityToAdminResource;
+use App\Http\Resources\Speciality\SpecialityToDoctorResource;
+use App\Http\Resources\Speciality\SpecialityToPatientResource;
 use App\Repositories\Interfaces\SpecialityRepositoryInterface;
 
 class SpecialityService extends Service
