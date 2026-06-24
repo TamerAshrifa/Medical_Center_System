@@ -22,6 +22,7 @@ class VisitToAdminResource extends JsonResource
             'medical_diagnosis' => $this->medical_diagnosis,
             'prescription' => $this->prescription,
             'notes' => $this->notes,
+            'notes_for_other_doctors' => $this->notes_for_other_doctors,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];

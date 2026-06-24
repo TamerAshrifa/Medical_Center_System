@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class AppointmentRepository extends Repository implements AppointmentRepositoryInterface
 {
+
     public function paginate(AppointmentStatusEnum $status = null, bool $with_expired = false, int $per_page = 10)
     {
         return Appointment::with(['patient', 'doctor'])
@@ -64,6 +65,13 @@ class AppointmentRepository extends Repository implements AppointmentRepositoryI
             ->where('status', $status->value)
             ->exists();
     }
+
+    public function isAttended(int $id): bool
+    {
+        return Appointment::where('id', $id)->whereHas('visit')->exists();
+    }
+
+
     public function getBookedAppointmentsOfDoctorInDate(string $dateOfDay, int $doctorId): Collection
     {
         return Appointment::query()

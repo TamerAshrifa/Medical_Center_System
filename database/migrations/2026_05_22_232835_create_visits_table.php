@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->string('medical_diagnosis');
             $table->string('prescription');
             $table->text('notes');
+            $table->text('notes_for_other_doctors')->nullable();
             $table->timestamps();
         });
     }

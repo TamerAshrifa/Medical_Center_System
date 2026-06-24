@@ -10,6 +10,7 @@ readonly class VisitDTO
         public string $medical_diagnosis,
         public string $prescription,
         public string $notes,
+        public ?string $notes_for_other_doctors,
     ) {
     }
     public static function fromRequest(array $request): self
@@ -20,8 +21,11 @@ readonly class VisitDTO
             medical_diagnosis: $request['medical_diagnosis'],
             prescription: $request['prescription'],
             notes: $request['notes'],
+            notes_for_other_doctors: isset($request['notes_for_other_doctors']) ?
+            $request['notes_for_other_doctors'] : null,
         );
     }
+
     public function toArray(): array
     {
         return [
@@ -30,6 +34,7 @@ readonly class VisitDTO
             'medical_diagnosis' => $this->medical_diagnosis,
             'prescription' => $this->prescription,
             'notes' => $this->notes,
+            'notes_for_other_doctors' => $this->notes_for_other_doctors,
         ];
     }
 }

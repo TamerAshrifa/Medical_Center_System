@@ -30,6 +30,11 @@ class Appointment extends Model
         return $this->belongsTo(Doctor::class, 'doctor_id');
     }
 
+    public function visit()
+    {
+        return $this->hasOne(Visit::class, 'appointment_id');
+    }
+
     public function transfer()
     {
         return $this->hasOne(Transfer::class, 'appointment_id');

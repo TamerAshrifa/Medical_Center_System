@@ -23,12 +23,12 @@ class MakeAppointmentAttendedRequest extends FormRequest
      */
     public function rules(): array
     {
-        $today = Carbon::today()->format('Y-m-d H:i');
         return [
-            'actual_time' => ['required', 'date_format:Y-m-d H:i', "after_or_equal:$today"],
+            'actual_time' => ['required', 'date_format:Y-m-d H:i', 'after_or_equal:' . Carbon::today()],
             'medical_diagnosis' => ['required', 'string', 'max:500'],
             'prescription' => ['required', 'string', 'max:250'],
             'notes' => ['required', 'string', 'max:1000'],
+            'notes_for_other_doctors' => ['nullable', 'string', 'max:1000'],
         ];
     }
 }

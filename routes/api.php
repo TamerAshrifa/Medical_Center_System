@@ -3,6 +3,7 @@
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\MedicalRecordAccessController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SpecialityController;
@@ -100,9 +101,18 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('{id}', [VisitController::class, 'update'])->middleware(['CheckDoctorOnly', 'UpdateVisitMiddleware']);
     });
 
+    // // Medical Record Access APIs (Access Permission APIs)
+    // Route::prefix('access/')->group(function () {
+    //     Route::post('{doctor_id}/{visit_id}', [MedicalRecordAccessController::class, 'store'])->middleware(['CheckPatientOnly', 'StoreMedicalRecordAccessMiddleware']);
+    //     Route::get('DA/{per_page}/{with_unactive}/{doctor_id}', [MedicalRecordAccessController::class, 'paginateDoctorMedicalRecordAccesses'])->middleware(['CheckDoctor', 'PaginateDoctorVisitsMiddleware']);
+    //     Route::get('PA/{per_page}/{with_unactive}/{patient_id}', [MedicalRecordAccessController::class, 'paginatePatientMedicalRecordAccesses'])->middleware(['CheckPatient', 'paginatePatientMedicalRecordAccessesMiddleware']);
 
 
+    //     Route::get('VA/{per_page}/{with_unactive}/{doctor_id}', [MedicalRecordAccessController::class, 'paginateDoctorMedicalRecordAccesses'])->middleware(['CheckDoctor', 'paginateDoctorMedicalRecordAccesses']);
 
+    //     Route::get('s/{id}', [MedicalRecordAccessController::class, 'show'])->middleware('ShowVisitMiddleware');
+    //     Route::post('{id}', [MedicalRecordAccessController::class, 'update'])->middleware(['CheckDoctorOnly', 'UpdateVisitMiddleware']);
+    // });
 
 
 });

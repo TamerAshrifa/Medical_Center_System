@@ -33,7 +33,6 @@ class VisitService extends Service
             $items
         );
     }
-
     public function paginateDoctorVisits(int $per_page = 10, int $doctor_id): Response
     {
         $visits = $this->visitRepositoryInterface->paginateDoctorVisits($per_page, $doctor_id);
@@ -74,7 +73,6 @@ class VisitService extends Service
             $items
         );
     }
-
     public function find($failIfNotExists, bool $withAppointment, int $id): Response
     {
         return new Response(
@@ -83,7 +81,6 @@ class VisitService extends Service
             $this->visitRepositoryInterface->find($failIfNotExists, $withAppointment, $id)
         );
     }
-
     public function update(VisitDTOUpdate $dto, int $id): Response
     {
         $didUpdate = $this->visitRepositoryInterface->update($dto, $id);
@@ -97,5 +94,4 @@ class VisitService extends Service
             Response::messageToArray('Visit updated successfully'),
         );
     }
-
 }

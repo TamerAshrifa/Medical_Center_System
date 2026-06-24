@@ -21,6 +21,7 @@ class VisitToDoctorResource extends JsonResource
             'medical_diagnosis' => $this->medical_diagnosis,
             'prescription' => $this->prescription,
             'notes' => $this->notes,
+            'notes_for_other_doctors' => $this->notes_for_other_doctors,
         ];
     }
 }

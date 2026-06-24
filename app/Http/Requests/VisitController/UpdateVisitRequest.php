@@ -26,6 +26,7 @@ class UpdateVisitRequest extends FormRequest
             'medical_diagnosis' => ['sometimes', 'string', 'max:500'],
             'prescription' => ['sometimes', 'string', 'max:250'],
             'notes' => ['sometimes', 'string', 'max:1000'],
+            'notes_for_other_doctors' => ['sometimes', 'string', 'max:1000'],
         ];
     }
 }

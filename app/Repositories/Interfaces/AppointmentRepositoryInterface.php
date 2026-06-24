@@ -16,5 +16,9 @@ interface AppointmentRepositoryInterface extends RepositoryInterface
     function updateAppointmentStatus(AppointmentStatusEnum $status, int $id): bool;
     public function create(AppointmentDTO $dtoData): Appointment;
     public function exists(int $doctorId, string $datetime, AppointmentStatusEnum $status): bool;
+    public function isAttended(int $id): bool;
     public function getBookedAppointmentsOfDoctorInDate(string $dateOfDay, int $doctorId): Collection;
+
+
+
 }

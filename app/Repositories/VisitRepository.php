@@ -46,7 +46,6 @@ class VisitRepository extends Repository implements VisitRepositoryInterface
     {
         return Visit::findOrFail($id)->update($dtoData->toArray());
     }
-
     public function exists(int $appointment_id): bool
     {
         return Visit::where('appointment_id', $appointment_id)->exists();

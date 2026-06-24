@@ -8,12 +8,15 @@ use App\Http\Middleware\CheckPatientOnlyMiddleware;
 use App\Http\Middleware\MakeAppointmentAttendedMiddleware;
 use App\Http\Middleware\MakeAppointmentMissedMiddleware;
 use App\Http\Middleware\PaginateDoctorAppointmentsMiddleware;
+use App\Http\Middleware\PaginateDoctorMedicalRecordAccessesMiddleware;
 use App\Http\Middleware\PaginateDoctorVisitsMiddleware;
 use App\Http\Middleware\PaginateDoctorWorkSchedulesMiddleware;
 use App\Http\Middleware\PaginatePatientAppointments;
+use App\Http\Middleware\paginatePatientMedicalRecordAccessesMiddleware;
 use App\Http\Middleware\PaginatePatientVisitsMiddleware;
 use App\Http\Middleware\ShowAppointmentMiddleware;
 use App\Http\Middleware\ShowVisitMiddleware;
+use App\Http\Middleware\StoreMedicalRecordAccessMiddleware;
 use App\Http\Middleware\StorePatientMiddleware;
 use App\Http\Middleware\UpdateVisitMiddleware;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -58,6 +61,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'PaginatePatientVisitsMiddleware' => PaginatePatientVisitsMiddleware::class,
             'ShowVisitMiddleware' => ShowVisitMiddleware::class,
             'UpdateVisitMiddleware' => UpdateVisitMiddleware::class,
+            'StoreMedicalRecordAccessMiddleware' => StoreMedicalRecordAccessMiddleware::class,
+            'PaginateDoctorMedicalRecordAccessesMiddleware' => PaginateDoctorMedicalRecordAccessesMiddleware::class,
+            'paginatePatientMedicalRecordAccessesMiddleware' => paginatePatientMedicalRecordAccessesMiddleware::class,
         ]);
 
     })

@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Enums\UserRoleEnum;
 use App\Models\Visit;
+use App\Repositories\MedicalRecordAccessRepository;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,11 +31,11 @@ class ShowVisitMiddleware
 
         if (
             $user->role == UserRoleEnum::DOCTOR &&
-            $user->doctor->id != Visit::findOrFail($request->route('id'), 'appointment_id')->appointment->doctor_id
+            !((new MedicalRecordAccessRepository())->hasAccess($request->route('id'), $user->doctor->id))
         )
             return response()->json([
                 'result' => 'Fail',
-                'message' => 'Doctors can\'t see other doctors\' visits',
+                'message' => 'Sorry, You don\'t have access permission to this visit',
             ], 403);
 
         return $next($request);

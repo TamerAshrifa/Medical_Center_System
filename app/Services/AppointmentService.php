@@ -3,11 +3,12 @@
 namespace App\Services;
 
 use App\DTOs\Appointment\AppointmentDTO;
+use App\DTOs\MedicalRecordAccess\MedicalRecordAccessDTO;
 use App\DTOs\Visit\VisitDTO;
 use App\Enums\AppointmentStatusEnum;
 use App\GeneralClasses\Enums\ResponseStatusEnum;
 use App\GeneralClasses\Response;
-use App\Http\Requests\AppointmentController\MakeAppointmentAttendedRequest;
+use App\Models\Appointment;
 use App\Repositories\DoctorRepository;
 use App\Repositories\Interfaces\AppointmentRepositoryInterface;
 use App\Repositories\Interfaces\VisitRepositoryInterface;
@@ -22,8 +23,10 @@ class AppointmentService extends Service
         protected AppointmentRepositoryInterface $appointmentRepository,
         protected VisitRepositoryInterface $visitRepositoryInterface,
         protected SchedulingService $schedulingService,
+        protected MedicalRecordAccessService $medicalRecordAccessService,
         protected SchedulingRepository $schedulingRepository,
         protected DoctorRepository $doctorRepository,
+        protected VisitRepository $visitRepository,
 
     ) {
     }
@@ -47,7 +50,6 @@ class AppointmentService extends Service
             $items
         );
     }
-
     public function paginateDoctorAppointments(?AppointmentStatusEnum $status, bool $with_expired = false, int $per_page = 10, int $doctor_id): Response
     {
         $appointments = $this->appointmentRepository->paginateDoctorAppointments($status, $with_expired, $per_page, $doctor_id);
@@ -207,22 +209,26 @@ class AppointmentService extends Service
     }
     public function makeAppointmentAttended(VisitDTO $dataDTO): Response
     {
-        if ($this->visitRepositoryInterface->exists($dataDTO->appointment_id)) {
+        if ($this->appointmentRepository->isAttended($dataDTO->appointment_id)) {
             return new Response(
-                ResponseStatusEnum::FAIL,
-                Response::messageToArray('Sorry, This appointment was already made attended'),
-                null,
-                409
+                ResponseStatusEnum::NOTHING,
+                Response::messageToArray('This appointment was already made attended'),
             );
         }
 
         try {
             DB::transaction(function () use ($dataDTO) {
-                $didSucceed = $this->appointmentRepository->updateAppointmentStatus(AppointmentStatusEnum::ATTENDED, $dataDTO->appointment_id);
-                if (!$didSucceed)
-                    throw new \Exception('Failed to make the appointment attended, please try again');
+                $this->appointmentRepository->updateAppointmentStatus(AppointmentStatusEnum::ATTENDED, $dataDTO->appointment_id);
 
-                (new VisitRepository())->create($dataDTO);
+                $createdVisitId = $this->visitRepository->create($dataDTO)->id;
+
+                $appointment = Appointment::findOrFail($dataDTO->appointment_id, ['patient_id', 'doctor_id']);
+
+                $this->medicalRecordAccessService->create(MedicalRecordAccessDTO::fromRequest([
+                    'visit_id' => $createdVisitId,
+                    'patient_id' => $appointment->patient_id,
+                    'can_accessed_by_doctor_id' => $appointment->doctor_id,
+                ]));
             });
         } catch (\Throwable $e) {
             return new Response(
@@ -232,6 +238,7 @@ class AppointmentService extends Service
                 500
             );
         }
+
         return new Response(
             ResponseStatusEnum::SUCCESS,
             Response::messageToArray('Appointment attended successfully, a visit was made'),
