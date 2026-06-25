@@ -15,6 +15,7 @@ class AppointmentToDoctorResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
         return [
             'id' => $this->id,
             'datetime' => $this->datetime->format('Y-m-d H:i'),

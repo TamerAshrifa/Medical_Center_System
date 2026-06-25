@@ -9,11 +9,12 @@ use App\Http\Middleware\MakeAppointmentAttendedMiddleware;
 use App\Http\Middleware\MakeAppointmentMissedMiddleware;
 use App\Http\Middleware\PaginateDoctorAppointmentsMiddleware;
 use App\Http\Middleware\PaginateDoctorMedicalRecordAccessesMiddleware;
+use App\Http\Middleware\PaginatePatientMedicalRecordAccessesMiddleware;
 use App\Http\Middleware\PaginateDoctorVisitsMiddleware;
 use App\Http\Middleware\PaginateDoctorWorkSchedulesMiddleware;
 use App\Http\Middleware\PaginatePatientAppointments;
-use App\Http\Middleware\paginatePatientMedicalRecordAccessesMiddleware;
 use App\Http\Middleware\PaginatePatientVisitsMiddleware;
+use App\Http\Middleware\PaginateVisitMedicalRecordAccessesMiddleware;
 use App\Http\Middleware\ShowAppointmentMiddleware;
 use App\Http\Middleware\ShowVisitMiddleware;
 use App\Http\Middleware\StoreMedicalRecordAccessMiddleware;
@@ -62,8 +63,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'ShowVisitMiddleware' => ShowVisitMiddleware::class,
             'UpdateVisitMiddleware' => UpdateVisitMiddleware::class,
             'StoreMedicalRecordAccessMiddleware' => StoreMedicalRecordAccessMiddleware::class,
+            'PaginatePatientMedicalRecordAccessesMiddleware' => PaginatePatientMedicalRecordAccessesMiddleware::class,
             'PaginateDoctorMedicalRecordAccessesMiddleware' => PaginateDoctorMedicalRecordAccessesMiddleware::class,
-            'paginatePatientMedicalRecordAccessesMiddleware' => paginatePatientMedicalRecordAccessesMiddleware::class,
+            'PaginateVisitMedicalRecordAccessesMiddleware' => PaginateVisitMedicalRecordAccessesMiddleware::class,
         ]);
 
     })

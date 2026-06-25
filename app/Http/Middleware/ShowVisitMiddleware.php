@@ -19,7 +19,9 @@ class ShowVisitMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+
         $user = Auth::user();
+
         if (
             $user->role == UserRoleEnum::PATIENT &&
             $user->patient->id != Visit::findOrFail($request->route('id'), 'appointment_id')->appointment->patient_id

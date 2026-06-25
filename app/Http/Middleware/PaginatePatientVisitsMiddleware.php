@@ -3,6 +3,8 @@
 namespace App\Http\Middleware;
 
 use App\Enums\UserRoleEnum;
+use App\Models\Appointment;
+use App\Models\Visit;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +20,7 @@ class PaginatePatientVisitsMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $user = Auth::user();
+
         if ($user->role == UserRoleEnum::PATIENT)
             if ($request->route('patient_id') != $user->patient->id)
                 return response()->json([
