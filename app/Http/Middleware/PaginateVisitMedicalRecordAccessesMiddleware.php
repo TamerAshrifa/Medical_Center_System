@@ -21,25 +21,15 @@ class PaginateVisitMedicalRecordAccessesMiddleware
     {
         $user = Auth::user();
 
-        $appointmentId = Visit::where('id', $request->route('visit_id'))->valueOrFail('appointement_id');
-        $appointmentOfVisit = Appointment::where('id', $appointmentId)->firstOrFail(['patient_id', 'doctor_id']);
+        // ID of patient who attended the visit
+        $makerPatientId = Visit::findOrFail($request->route('visit_id'))->appointment->patient_id;
 
         if ($user->role == UserRoleEnum::PATIENT)
-            if ($appointmentOfVisit->patient_id != $user->patient->id)
+            if ($user->patient->id != $makerPatientId)
                 return response()->json([
                     'result' => 'Fail',
                     'message' => 'Patients can\'t see other patients\' visits\' given permessions',
                 ], 403);
-
-        if ($user->role == UserRoleEnum::DOCTOR) {
-            if ($appointmentOfVisit->doctor_id != $user->patient->id)
-                return response()->json([
-                    'result' => 'Fail',
-                    'message' => 'Doctors can\'t see other doctors\' visit\' access permissions',
-                ], 403);
-
-            $request->route()->setParameter('with_unactive', false);
-        }
 
         return $next($request);
     }

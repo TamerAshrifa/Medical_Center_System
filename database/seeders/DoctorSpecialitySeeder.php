@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\DoctorSpeciality;
-use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 class DoctorSpecialitySeeder extends Seeder
@@ -13,9 +12,7 @@ class DoctorSpecialitySeeder extends Seeder
     {
         for ($i = 0; $i <= 35; $i++)
             DoctorSpeciality::factory()->create([
-                'doctor_id' => $i % 10 + 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'doctor_id' => $i % 11 + 1,
             ]);
     }
 }

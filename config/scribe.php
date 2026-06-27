@@ -188,6 +188,11 @@ return [
             'Speciality APIs',
             'Scheduling APIs',
             'Appointment APIs',
+            'Visit APIs',
+            'Medical Record Access APIs (Access Permission APIs)',
+            'Patient Complaint APIs',
+            'Transfer APIs',
+            'Unavailability APIs',
         ],
     ],
 

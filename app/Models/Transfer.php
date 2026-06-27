@@ -29,7 +29,7 @@ class Transfer extends Model
         return $this->belongsTo(Patient::class, 'patient_id');
     }
 
-    public function appointement()
+    public function appointment()
     {
         return $this->belongsTo(Appointment::class, 'appointment_id');
     }

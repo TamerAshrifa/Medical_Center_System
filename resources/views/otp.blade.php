@@ -96,9 +96,8 @@
                                         padding-top:25px;
                                     ">
                                         <strong style="color:#ffffff;">
-                                            Please don't share this code with anyone:
+                                            Please don't share this code with anyone
                                         </strong>
-                                        we'll never ask for it on the phone or via email.
                                     </td>
                                 </tr>
 

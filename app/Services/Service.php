@@ -11,13 +11,12 @@ abstract class Service
     ) {
     }
 
-    public function getCurrentUserRole(): UserRoleEnum|null
+    protected function getCurrentUserRole(): UserRoleEnum|null
     {
         return Auth::user()->role;
     }
 
-
-    public function getPaginationMessage($paginationRecords): array
+    protected function getPaginationMessage($paginationRecords): array
     {
         return [
             'result' => 'Success',

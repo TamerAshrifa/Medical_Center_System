@@ -70,9 +70,12 @@ class AppointmentRepository extends Repository implements AppointmentRepositoryI
     {
         return Appointment::where('id', $id)->whereHas('visit')->exists();
     }
+    public function hasTransfer(int $id): bool
+    {
+        return Appointment::findOrFail($id)->whereHas('transfer')->exists();
+    }
 
-
-    public function getBookedAppointmentsOfDoctorInDate(string $dateOfDay, int $doctorId): Collection
+    public function getBookedAppointmentsOfDoctorInDate(string $dateOfDay, int $doctorId)
     {
         return Appointment::query()
             ->where('doctor_id', $doctorId)
@@ -84,4 +87,49 @@ class AppointmentRepository extends Repository implements AppointmentRepositoryI
             ])
             ->get('datetime');
     }
+
+    public function allPendingAppointmentsEmailsInDateRange(string $startDate, string $endDate)
+    {
+        return Appointment::query()
+            ->join('patients', 'appointments.patient_id', '=', 'patients.id')
+            ->join('users', 'patients.user_id', '=', 'users.id')
+            ->where('appointments.status', AppointmentStatusEnum::PENDING->value)
+            ->whereDate('appointments.datetime', '>=', $startDate . ' 00:00:00')
+            ->whereDate('appointments.datetime', '<=', $endDate . ' 23:59:59')
+            ->distinct()
+            ->pluck('users.email');
+    }
+
+    public function cancelByMedicalCenterAllPendingAppointmentsEmailsInDateRange(string $startDate, string $endDate)
+    {
+        return Appointment::query()
+            ->where('status', AppointmentStatusEnum::PENDING->value)
+            ->whereDate('datetime', '>=', $startDate . ' 00:00:00')
+            ->whereDate('datetime', '<=', $endDate . ' 23:59:59')
+            ->update(['status' => AppointmentStatusEnum::CANCELLED_BY_MEDICAL_CENTER->value]);
+    }
+
+    public function allDoctorPendingAppointmentsEmailsInDateRange(string $startDate, string $endDate, int $doctorId)
+    {
+        return Appointment::query()
+            ->join('patients', 'appointments.patient_id', '=', 'patients.id')
+            ->join('users', 'patients.user_id', '=', 'users.id')
+            ->where('appointments.doctor_id', $doctorId)
+            ->where('appointments.status', AppointmentStatusEnum::PENDING->value)
+            ->whereDate('appointments.datetime', '>=', $startDate)
+            ->whereDate('appointments.datetime', '<=', $endDate)
+            ->distinct()
+            ->pluck('users.email');
+    }
+
+    public function cancelByDoctorAllDoctorPendingAppointmentsEmailsInDateRange(string $startDate, string $endDate, int $doctorId)
+    {
+        return Appointment::query()
+            ->where('doctor_id', $doctorId)
+            ->where('status', AppointmentStatusEnum::PENDING->value)
+            ->whereDate('datetime', '>=', $startDate . ' 00:00:00')
+            ->whereDate('datetime', '<=', $endDate . ' 23:59:59')
+            ->update(['status' => AppointmentStatusEnum::CANCELLED_BY_DOCTOR->value]);
+    }
+
 }

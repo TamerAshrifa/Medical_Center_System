@@ -23,5 +23,7 @@ interface DoctorRepositoryInterface extends RepositoryInterface
     );
     public function deleteDoctor(Doctor &$doctor): Response;
     public function getDoctorAppointmentDuration(int $doctorId, bool $failIfDoctorNotExists = true): int;
+    public function allDoctorsEmails();
+    public function getDoctorFullname(int $doctorId): string;
 
 }

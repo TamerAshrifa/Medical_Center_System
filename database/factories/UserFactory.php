@@ -9,7 +9,6 @@ use Illuminate\Support\Str;
 class UserFactory extends Factory
 {
     protected static ?string $password;
-    protected static ?int $counter;
 
     public function definition(): array
     {

@@ -1,0 +1,362 @@
+name: 'Medical Record Access APIs (Access Permission APIs)'
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/access/{doctor_id}/{visit_id}'
+    metadata:
+      custom: []
+      groupName: 'Medical Record Access APIs (Access Permission APIs)'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Grant a new access permission'
+      description: |-
+        ###For: Mobile(Patient)
+        Only patients are allowed to use this API.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      doctor_id:
+        custom: []
+        name: doctor_id
+        description: 'min:1'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      visit_id:
+        custom: []
+        name: visit_id
+        description: 'min:1'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      doctor_id: 17
+      visit_id: 17
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/access/DA/{per_page}/{with_unactive}/{doctor_id}'
+    metadata:
+      custom: []
+      groupName: 'Medical Record Access APIs (Access Permission APIs)'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'View all permission accesses given to a specified doctor'
+      description: |-
+        ###For: Web, Mobile(Doctor)
+        Only admins and doctors are allowed to use this API
+        ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      per_page:
+        custom: []
+        name: per_page
+        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      with_unactive:
+        custom: []
+        name: with_unactive
+        description: 'Boolean value means does the admin want all of permission accesses to be showen even with unactivated ones? Doctores only allowed to see with unactive ones.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      doctor_id:
+        custom: []
+        name: doctor_id
+        description: "min:1 The ID number of doctor to view it's permission accesses"
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      per_page: 17
+      with_unactive: 17
+      doctor_id: 17
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"result":"Fail","message":"Unauthenticated; A valid token is required"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/access/PA/{per_page}/{with_unactive}/{patient_id}'
+    metadata:
+      custom: []
+      groupName: 'Medical Record Access APIs (Access Permission APIs)'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'View all permission accesses given by a specified patient'
+      description: |-
+        ###For: Web, Mobile(Patient)
+        Only admins and patients are allowed to use this API
+        ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      per_page:
+        custom: []
+        name: per_page
+        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      with_unactive:
+        custom: []
+        name: with_unactive
+        description: 'Boolean value means does the user want all of permission accesses to be showen even with unactivated ones?'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      patient_id:
+        custom: []
+        name: patient_id
+        description: 'min:1 The ID number of patient to view all permissions given by him'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      per_page: 17
+      with_unactive: 17
+      patient_id: 17
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"result":"Fail","message":"Unauthenticated; A valid token is required"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/access/VA/{per_page}/{with_unactive}/{visit_id}'
+    metadata:
+      custom: []
+      groupName: 'Medical Record Access APIs (Access Permission APIs)'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'View all permission accesses to a specified visit'
+      description: |-
+        ###For: Web, Mobile(Patient)
+        Only admins and patients are allowed to use this API
+        ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      per_page:
+        custom: []
+        name: per_page
+        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      with_unactive:
+        custom: []
+        name: with_unactive
+        description: 'Boolean value means does the user want all of permission accesses to be showen even with unactivated ones?'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      visit_id:
+        custom: []
+        name: visit_id
+        description: 'min:1 The ID number of visit to view who have access to it'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      per_page: 17
+      with_unactive: 17
+      visit_id: 17
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"result":"Fail","message":"Unauthenticated; A valid token is required"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/access/{id}'
+    metadata:
+      custom: []
+      groupName: 'Medical Record Access APIs (Access Permission APIs)'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Revoke an access permission'
+      description: |-
+        ###For: Mobile(Patient)
+        Only patients are allowed to use this API
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'min:1 The ID number of medical access record to be revoked'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 17
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null

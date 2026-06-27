@@ -4,9 +4,12 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\MedicalRecordAccessController;
+use App\Http\Controllers\PatientComplaintController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SpecialityController;
+use App\Http\Controllers\TransferController;
+use App\Http\Controllers\UnavailabilityController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisitController;
 use App\Http\Controllers\WorkScheduleController;
@@ -101,22 +104,66 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('{id}', [VisitController::class, 'update'])->middleware(['CheckDoctorOnly', 'UpdateVisitMiddleware']);
     });
 
-    // // Medical Record Access APIs (Access Permission APIs)
-    // Route::prefix('access/')->group(function () {
-    //     Route::post('{doctor_id}/{visit_id}', [MedicalRecordAccessController::class, 'store'])->middleware(['CheckPatientOnly', 'StoreMedicalRecordAccessMiddleware']);
-    //     Route::get('DA/{per_page}/{with_unactive}/{doctor_id}', [MedicalRecordAccessController::class, 'paginateDoctorMedicalRecordAccesses'])->middleware(['CheckDoctor', 'PaginateDoctorMedicalRecordAccessesMiddleware']);
-    //     Route::get('PA/{per_page}/{with_unactive}/{patient_id}', [MedicalRecordAccessController::class, 'paginatePatientMedicalRecordAccesses'])->middleware(['CheckPatient', 'paginatePatientMedicalRecordAccessesMiddleware']);
-    //     Route::get('VA/{per_page}/{with_unactive}/{visit_id}', [MedicalRecordAccessController::class, 'paginateVisitMedicalRecordAccesses'])->middleware(['CheckDoctor', 'PaginateVisitMedicalRecordAccessesMiddleware']);
+    // Medical Record Access APIs (Access Permission APIs)
+    Route::prefix('access/')->group(function () {
+        Route::post('{doctor_id}/{visit_id}', [MedicalRecordAccessController::class, 'store'])->middleware(['CheckPatientOnly', 'StoreMedicalRecordAccessMiddleware']);
+        Route::get('DA/{per_page}/{with_unactive}/{doctor_id}', [MedicalRecordAccessController::class, 'paginateDoctorMedicalRecordAccesses'])->middleware(['CheckDoctor', 'PaginateDoctorMedicalRecordAccessesMiddleware']);
+        Route::get('PA/{per_page}/{with_unactive}/{patient_id}', [MedicalRecordAccessController::class, 'paginatePatientMedicalRecordAccesses'])->middleware(['CheckPatient', 'PaginatePatientMedicalRecordAccessesMiddleware']);
+        Route::get('VA/{per_page}/{with_unactive}/{visit_id}', [MedicalRecordAccessController::class, 'paginateVisitMedicalRecordAccesses'])->middleware(['CheckPatient', 'PaginateVisitMedicalRecordAccessesMiddleware']);
+        Route::post('{id}', [MedicalRecordAccessController::class, 'destroy'])->middleware(['CheckPatientOnly', 'DestroyMedicalRecordAccessMiddleware']);
+    });
 
+    // Patient Complaint APIs
+    Route::prefix('complaint/')->group(function () {
+        Route::post('', [PatientComplaintController::class, 'store'])->middleware(['CheckPatientOnly', 'throttle:1,1']);
+        Route::get('{patient_id}', [PatientComplaintController::class, 'allPatientComplaints'])->middleware(['CheckPatient', 'AllPatientComplaintsMiddleware']);
+        Route::get('s/{id}', [PatientComplaintController::class, 'show'])->middleware(['CheckPatient', 'ShowPatientComplaintMiddleware']);
+        Route::get('{per_page}/{with_reviewed}', [PatientComplaintController::class, 'paginate'])
+            ->whereNumber('per_page')->where('with_reviewed', '0|1|true|false')->middleware(['CheckAdmin']);
+        Route::post('{reply}/{id}', [PatientComplaintController::class, 'makePatientComplaintReviewed'])->middleware(['CheckAdmin']);
+    });
 
+    // Transfer APIs
+    Route::prefix('transfer/')->group(function () {
+        Route::post('{transfer_id}', [TransferController::class, 'makeAppointmentForTransfer'])
+            ->whereNumber(['transfer_id'])
+            ->middleware(['CheckPatientOnly', 'MakeAppointmentForTransferMiddleware']);
+        Route::post('ch/{transfer_id}', [TransferController::class, 'makeAnotherAppointmentForTransfer'])
+            ->whereNumber(['transfer_id'])
+            ->middleware(['CheckPatientOnly', 'MakeAnotherAppointmentForTransferMiddleware']);
+        Route::post('{patient_id}/{receiving_doctor_id}', [TransferController::class, 'store'])
+            ->whereNumber(['patient_id', 'receiving_doctor_id'])
+            ->middleware(['CheckDoctorOnly', 'StoreTransferMiddleware']);
+        Route::get('s/{id}', [TransferController::class, 'show'])->whereNumber('id')
+            ->middleware(['ShowTransferMiddleware']);
+        Route::get('{per_page}/{with_attended}', [TransferController::class, 'paginate'])
+            ->whereNumber('per_page')->where('with_attended', '0|1|true|false')->middleware(['CheckAdmin']);
+        Route::get('aP/{with_attended}/{patient_id}', [TransferController::class, 'allPatientTransfers'])
+            ->whereNumber('patient_id')->where('with_attended', '0|1|true|false')
+            ->middleware(['CheckPatient', 'AllPatientTransfersMiddleware']);
+        Route::get('pRef/{per_page}/{with_attended}/{doctor_id}', [TransferController::class, 'paginateReferredTransfers'])
+            ->whereNumber(['per_page', 'doctor_id'])->where('with_attended', '0|1|true|false')
+            ->middleware(['CheckDoctor', 'PaginateReferredTransfersMiddleware']);
+        Route::get('pRec/{per_page}/{with_attended}/{doctor_id}', [TransferController::class, 'paginateReceivedTransfers'])
+            ->whereNumber(['per_page', 'doctor_id'])->where('with_attended', '0|1|true|false')
+            ->middleware(['CheckDoctor', 'PaginateReceivedTransfersMiddleware']);
+    });
 
-    //     Route::get('s/{id}', [MedicalRecordAccessController::class, 'show'])->middleware('ShowVisitMiddleware');
-    //     Route::post('{id}', [MedicalRecordAccessController::class, 'update'])->middleware(['CheckDoctorOnly', 'UpdateVisitMiddleware']);
-    // });
-
-
+    // Unavailability APIs
+    Route::prefix('unavailability/')->group(function () {
+        Route::post('', [UnavailabilityController::class, 'store'])->middleware(['CheckDoctor']);
+        Route::get('{with_passed}/{per_page}', [UnavailabilityController::class, 'paginateDoctorsUnavailabilities'])
+            ->whereNumber('per_page')->where('with_passed', '0|1|true|false')->middleware(['CheckAdmin']);
+        Route::get('{with_passed}/{per_page}/{doctor_id}', [UnavailabilityController::class, 'paginateDoctorUnavailabilities'])
+            ->whereNumber(['per_page', 'doctor_id'])->where('with_passed', '0|1|true|false')->middleware(['CheckDoctor', 'PaginateDoctorUnavailabilitiesMiddleware']);
+        Route::get('m/{with_passed}/{per_page}', [UnavailabilityController::class, 'paginateMedicalUnavailabilities'])
+            ->whereNumber(['per_page'])->where('with_passed', '0|1|true|false')->middleware(['CheckAdmin']);
+    });
 });
 
-// User 1 (Admin 1) token: 1|i4ctOqTeDPIhfDGO5j8huKHXEb9lX2IB6Epo9Hibb41a6664
-// User 26 (Doctor 11) token: 2|HMATOMqDbhSWV7wwhpqtnsVDV0Fq0sKlS0bUrIgu41ac8446
-// User 27 (Patient 11) token: 3|wVsX05shjYLECY1nbfp8R5ndbDUUJS40gLohUOVu426a79ab
+// User 1 (Admin 1) token: 1|5yz8yTJ9yqhotdgE70j1h4CrS8hYZcuvPb3y4r6ve18d47b2
+// User 2 (Doctor 1) token: 2|OqW3Z5QuX3tiPsuYSvWsVew3W3ffgqNVWRMOKERFc3af1da4
+// User 3 (Patient 1) token: 3|YBLVQMKuAUW6iBwzP0gPndcqKE1RXfo50SQjdqVoe62f23d9
+
+// User 8 (Doctor 2) token: 4|pKeOx148hrHuJd1CB7AF4azhUUwjWhsQ15MzfTxv7d859739
+

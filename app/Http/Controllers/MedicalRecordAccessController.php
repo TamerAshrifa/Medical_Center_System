@@ -56,7 +56,7 @@ class MedicalRecordAccessController extends Controller
     {
         $request = [
             'visit_id' => $visit_id,
-            'patient_id' => Auth::id(),
+            'patient_id' => Auth::user()->patient->id,
             'can_accessed_by_doctor_id' => $doctor_id,
         ];
 

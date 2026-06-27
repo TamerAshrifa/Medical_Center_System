@@ -10,21 +10,27 @@ use App\Repositories\Interfaces\AppointmentRepositoryInterface;
 use App\Repositories\Interfaces\DoctorRepositoryInterface;
 use App\Repositories\Interfaces\DoctorSpecialityRepositoryInterface;
 use App\Repositories\Interfaces\MedicalRecordAccessRepositoryInterface;
+use App\Repositories\Interfaces\PatientComplaintRepositoryInterface;
 use App\Repositories\Interfaces\PatientRepositoryInterface;
 use App\Repositories\Interfaces\RepositoryInterface;
 use App\Repositories\Interfaces\ResetPasswordTokenRepositoryInterface;
 use App\Repositories\Interfaces\RoomRepositoryInterface;
 use App\Repositories\Interfaces\SchedulingRepositoryInterface;
 use App\Repositories\Interfaces\SpecialityRepositoryInterface;
+use App\Repositories\Interfaces\TransferRepositoryInterface;
+use App\Repositories\Interfaces\UnavailabilityRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\Interfaces\VisitRepositoryInterface;
 use App\Repositories\MedicalRecordAccessRepository;
+use App\Repositories\PatientComplaintRepository;
 use App\Repositories\PatientRepository;
 use App\Repositories\Repository;
 use App\Repositories\ResetPasswordTokenRepository;
 use App\Repositories\RoomRepository;
 use App\Repositories\SchedulingRepository;
 use App\Repositories\SpecialityRepository;
+use App\Repositories\TransferRepository;
+use App\Repositories\UnavailabilityRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\VisitRepository;
 use Carbon\Carbon;
@@ -85,6 +91,19 @@ class AppServiceProvider extends ServiceProvider
             VisitRepositoryInterface::class,
             VisitRepository::class
         );
+        $this->app->bind(
+            PatientComplaintRepositoryInterface::class,
+            PatientComplaintRepository::class
+        );
+        $this->app->bind(
+            TransferRepositoryInterface::class,
+            TransferRepository::class
+        );
+        $this->app->bind(
+            UnavailabilityRepositoryInterface::class,
+            UnavailabilityRepository::class
+        );
+
     }
 
     /**

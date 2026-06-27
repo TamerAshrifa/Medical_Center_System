@@ -17,8 +17,11 @@ interface AppointmentRepositoryInterface extends RepositoryInterface
     public function create(AppointmentDTO $dtoData): Appointment;
     public function exists(int $doctorId, string $datetime, AppointmentStatusEnum $status): bool;
     public function isAttended(int $id): bool;
-    public function getBookedAppointmentsOfDoctorInDate(string $dateOfDay, int $doctorId): Collection;
-
-
+    public function getBookedAppointmentsOfDoctorInDate(string $dateOfDay, int $doctorId);
+    public function hasTransfer(int $id): bool;
+    public function allPendingAppointmentsEmailsInDateRange(string $startDate, string $endDate);
+    public function allDoctorPendingAppointmentsEmailsInDateRange(string $startDate, string $endDate, int $doctorId);
+    public function cancelByMedicalCenterAllPendingAppointmentsEmailsInDateRange(string $startDate, string $endDate);
+    public function cancelByDoctorAllDoctorPendingAppointmentsEmailsInDateRange(string $startDate, string $endDate, int $doctorId);
 
 }

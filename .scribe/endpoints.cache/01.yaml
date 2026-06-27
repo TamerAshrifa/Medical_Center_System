@@ -87,9 +87,9 @@ endpoints:
       date_of_birth:
         custom: []
         name: date_of_birth
-        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date before <code>2026-06-23</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date before <code>2026-06-28</code>.'
         required: true
-        example: '2020-10-18'
+        example: '2020-10-23'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -134,7 +134,7 @@ endpoints:
       email: russel.bert@example.net
       password: 'dl4m{o,+'
       phone: qamniihfqcoynlazg
-      date_of_birth: '2020-10-18'
+      date_of_birth: '2020-10-23'
       gender: true
       username: mqeopfuudtdsufvyv
     fileParameters:
@@ -341,7 +341,7 @@ endpoints:
         name: date_of_birth
         description: 'Must be a valid date in the format <code>Y-m-d</code>.'
         required: false
-        example: '2026-06-23'
+        example: '2026-06-28'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -384,7 +384,7 @@ endpoints:
       first_name: vmq
       last_name: eop
       phone: fuudtdsufvyvddqam
-      date_of_birth: '2026-06-23'
+      date_of_birth: '2026-06-28'
       gender: true
       username: niihfqcoynlazghdt
     fileParameters:

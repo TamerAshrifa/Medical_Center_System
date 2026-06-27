@@ -14,6 +14,8 @@ return new class extends Migration {
             $table->text('content');
             $table->enum('status', array_column(PatientComplaintStatusEnum::cases(), 'value'))->default(PatientComplaintStatusEnum::NEW);
             $table->foreignId('reviewed_by_admin_id')->nullable()->constrained('admins')->restrictOnDelete();
+            $table->text('reply')->nullable();
+            $table->timestamps();
         });
     }
 

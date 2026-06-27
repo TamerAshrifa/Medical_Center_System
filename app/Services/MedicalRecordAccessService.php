@@ -63,9 +63,9 @@ class MedicalRecordAccessService extends Service
     }
     public function unactive(int $id): Response
     {
-        $medicalRecordAccess = MedicalRecordAccess::where('id', $id)->get(['doctor_id', 'visit_id']);
-        $accessedDoctorId = $medicalRecordAccess->doctor_id;
-        $makerDoctorId = Visit::where('id', $medicalRecordAccess->visit_id)->valueOrFail('doctor_id');
+        $medicalRecordAccess = MedicalRecordAccess::where('id', $id)->firstOrFail(['can_accessed_by_doctor_id', 'visit_id']);
+        $accessedDoctorId = $medicalRecordAccess->can_accessed_by_doctor_id;
+        $makerDoctorId = Visit::findOrFail($medicalRecordAccess->visit_id)->appointment->doctor_id;
 
         if ($accessedDoctorId == $makerDoctorId) {
             return new Response(

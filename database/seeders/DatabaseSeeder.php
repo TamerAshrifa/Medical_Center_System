@@ -21,6 +21,10 @@ class DatabaseSeeder extends Seeder
             SpecialitiesSeeder::class,
             DoctorSpecialitySeeder::class,
             WeekDaySeeder::class,
+            WorkScheduleSeeder::class,
+            AppointmentSeeder::class,
+            VisitSeeder::class,
+            MedicalRecordAccessSeeder::class,
         ]);
     }
 }

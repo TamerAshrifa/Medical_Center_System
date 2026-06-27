@@ -24,7 +24,7 @@ class ShowVisitMiddleware
 
         if (
             $user->role == UserRoleEnum::PATIENT &&
-            $user->patient->id != Visit::findOrFail($request->route('id'), 'appointment_id')->appointment->patient_id
+            $user->patient->id != Visit::findOrFail($request->route('id'), ['appointment_id'])->appointment->patient_id
         )
             return response()->json([
                 'result' => 'Fail',

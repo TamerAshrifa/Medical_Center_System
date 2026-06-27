@@ -83,9 +83,23 @@ class DoctorRepository extends Repository implements DoctorRepositoryInterface
             $query->value('appointment_duration');
     }
 
+    public function getDoctorFullname(int $doctorId): string
+    {
+        $query = Doctor::query()
+            ->join('users', 'doctors.user_id', '=', 'users.id')
+            ->where('doctors.id', $doctorId)
+            ->select([
+                'users.first_name',
+                'users.last_name',
+            ])->first();
 
+        return $query->first_name . ' ' . $query->last_name;
+    }
 
-
-
-
+    public function allDoctorsEmails()
+    {
+        return Doctor::query()
+            ->join('users', 'doctors.user_id', '=', 'users.id')
+            ->pluck('users.email');
+    }
 }

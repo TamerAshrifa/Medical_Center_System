@@ -2,9 +2,134 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\DTOs\Unavailability\UnavailabilityDTO;
+use App\Enums\UnavailabilityReasonTypeEnum;
+use App\Enums\UnavailabilityTypeEnum;
+use App\Enums\UserRoleEnum;
+use App\Http\Requests\UnavailabilityController\StoreUnavailabilityRequest;
+use App\Http\Resources\Unavailability\UnavailabilityToAdminResource;
+use App\Http\Resources\Unavailability\UnavailabilityToDoctorResource;
+use App\Http\Resources\Unavailability\UnavailabilityToPatientResource;
+use App\Repositories\Interfaces\UnavailabilityRepositoryInterface;
+use App\Services\UnavailabilityService;
+use Illuminate\Support\Facades\Auth;
 
+/**
+ * @group Unavailability APIs
+ */
 class UnavailabilityController extends Controller
 {
-    //
+    public function __construct(
+        protected UnavailabilityService $unavailabilityService,
+    ) {
+    }
+
+    private function resource($recordOrCollection, bool $isCollection)
+    {
+        switch ($this->getCurrentUserRole()) {
+            case UserRoleEnum::ADMIN:
+                return $isCollection ?
+                    UnavailabilityToAdminResource::collection($recordOrCollection) :
+                    new UnavailabilityToAdminResource($recordOrCollection);
+            case UserRoleEnum::DOCTOR:
+                return $isCollection ?
+                    UnavailabilityToDoctorResource::collection($recordOrCollection) :
+                    new UnavailabilityToDoctorResource($recordOrCollection);
+            default:
+                return $isCollection ?
+                    UnavailabilityToDoctorResource::collection($recordOrCollection) :
+                    new UnavailabilityToDoctorResource($recordOrCollection);
+        }
+    }
+
+    /**
+     * Create an unavailability
+     * 
+     * ###For: Mobile(Doctor), Web
+     * Only admins and doctors are allowed to use this API.
+     * Creating a new unavailability by a doctor or admin, the doctor can create his own unavailability, 
+     * and the admin can create unavailability for medical center.
+     */
+    public function store(StoreUnavailabilityRequest $request)
+    {
+        $user = Auth::user();
+
+        $validatedData = array_merge($request->validated(), [
+            'type' => $user->role == UserRoleEnum::ADMIN ?
+                UnavailabilityTypeEnum::MEDICAL_CENTER : UnavailabilityTypeEnum::DOCTOR,
+        ]);
+
+        $cases = UnavailabilityReasonTypeEnum::cases();
+        foreach ($cases as $case)
+            if ($case->value == $validatedData['reason_type']) {
+                $validatedData['reason_type'] = $case;
+                break;
+            }
+
+        $response = $this->unavailabilityService->createUnavailability(
+            UnavailabilityDTO::fromRequest($validatedData),
+            $user->role === UserRoleEnum::ADMIN ?
+            $user->admin->id : $user->doctor->id
+        );
+        return response()->json([
+            'result' => $response->result,
+            'message' => $response->message,
+        ], $response->statusCode);
+    }
+
+    /**
+     * Paginate unavailabilities of all doctors
+     * 
+     * ###For: Web
+     * Only admins are allowed to use this API.
+     * @urlParam with_passed integer required Boolean value means does the user want all of unavailabilities to be showen even with the ones from the past?
+     * @urlParam per_page integer required The number of items shown in each page, Defaults to 10. 
+     */
+    public function paginateDoctorsUnavailabilities(bool $with_passed, int $per_page = 10)
+    {
+        $response = $this->unavailabilityService->paginateDoctorsUnavailabilities($with_passed, $per_page);
+        return response()->json([
+            'result' => $response->result,
+            'message' => $response->message,
+            'data' => $this->resource($response->data, true),
+        ], $response->statusCode);
+    }
+
+    /**
+     * Paginate unavailabilities of a specified doctor
+     * 
+     * ###For: Web, Mobile(Doctor)
+     * Only admins and doctors are allowed to use this API.
+     * @urlParam with_passed integer required Boolean value means does the user want all of unavailabilities to be showen even with the ones from the past?
+     * @urlParam per_page integer required The number of items shown in each page, Defaults to 10. 
+     * @urlParam doctor_id integer required The ID of the doctor to view his unavailabilities 
+     */
+    public function paginateDoctorUnavailabilities(bool $with_passed, int $per_page = 10, int $doctor_id)
+    {
+        $response = $this->unavailabilityService->paginateDoctorUnavailabilities($with_passed, $per_page, $doctor_id);
+        return response()->json([
+            'result' => $response->result,
+            'message' => $response->message,
+            'data' => $this->resource($response->data, true),
+        ], $response->statusCode);
+    }
+
+    /**
+     * View all unavailabilities of the medical center
+     * 
+     * ###For: Web
+     * Only admins are allowed to use this API. 
+     * @urlParam with_passed integer required Boolean value means does the admin want all of unavailabilities to be showen even with the ones from the past?
+     * @urlParam per_page integer required The number of items shown in each page, Defaults to 10. 
+     */
+    public function paginateMedicalUnavailabilities(bool $with_passed, int $per_page = 10)
+    {
+        $response = $this->unavailabilityService->paginateMedicalUnavailabilities($with_passed, $per_page);
+        return response()->json([
+            'result' => $response->result,
+            'message' => $response->message,
+            'data' => $this->resource($response->data, true),
+        ], $response->statusCode);
+    }
+
 }

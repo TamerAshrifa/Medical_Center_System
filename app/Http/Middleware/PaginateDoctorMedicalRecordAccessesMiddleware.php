@@ -27,7 +27,6 @@ class PaginateDoctorMedicalRecordAccessesMiddleware
 
             $request->route()->setParameter('with_unactive', false);
         }
-
         return $next($request);
     }
 }

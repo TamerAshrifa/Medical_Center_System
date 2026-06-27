@@ -13,16 +13,14 @@ class MedicalRecordAccessRepository extends Repository implements MedicalRecordA
         return MedicalRecordAccess::
             where('patient_id', $patient_id)
             ->when(!$withUnactive, fn($q) => $q->whereNot('is_active', false))
-            ->with(['visit', 'doctor'])
             ->orderByDesc('created_at')
             ->paginate($per_page);
     }
     public function paginateDoctorMedicalRecordAccesses(int $per_page = 10, bool $withUnactive = true, int $doctor_id)
     {
         return MedicalRecordAccess::
-            where('doctor_id', $doctor_id)
+            where('can_accessed_by_doctor_id', $doctor_id)
             ->when(!$withUnactive, fn($q) => $q->whereNot('is_active', false))
-            ->with(['visit', 'patient'])
             ->orderByDesc('created_at')
             ->paginate($per_page);
     }
@@ -32,7 +30,6 @@ class MedicalRecordAccessRepository extends Repository implements MedicalRecordA
         return MedicalRecordAccess::
             where('visit_id', $visit_id)
             ->when(!$withUnactive, fn($q) => $q->whereNot('is_active', false))
-            ->with(['visit', 'doctor'])
             ->orderByDesc('created_at')
             ->paginate($per_page);
     }

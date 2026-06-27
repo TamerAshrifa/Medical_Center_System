@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\WeekDay;
-use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class WeekDaySeeder extends Seeder
@@ -15,8 +14,6 @@ class WeekDaySeeder extends Seeder
         foreach ($weekDays as $weekday)
             WeekDay::create([
                 'name' => $weekday,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
             ]);
     }
 }

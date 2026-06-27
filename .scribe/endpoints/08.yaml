@@ -331,10 +331,22 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      notes_for_other_doctors:
+        custom: []
+        name: notes_for_other_doctors
+        description: 'Must not be greater than 1000 characters.'
+        required: false
+        example: auydlsmsjuryvojcybzvr
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanBodyParameters:
       medical_diagnosis: vmqeopfuudtdsufvyvddq
       prescription: amniihfqcoynlazghdtqt
       notes: qxbajwbpilpmufinllwlo
+      notes_for_other_doctors: auydlsmsjuryvojcybzvr
     fileParameters: []
     responses: []
     responseFields: []

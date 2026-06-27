@@ -192,6 +192,14 @@ class SchedulingRepository extends Repository implements SchedulingRepositoryInt
     }
     public function allAvailableTimesToBook(string $dateOfDay, int $doctorId, bool $failIfScheduleNotExists = true): Collection
     {
+        $unavailabilityRepository = new UnavailabilityRepository();
+        $d = Carbon::parse($dateOfDay)->format('Y-m-d');
+        if (
+            $unavailabilityRepository->isMedicalCenterUnavailability($d) ||
+            $unavailabilityRepository->isDoctorUnavailability($d, $doctorId)
+        )
+            return Collection::empty();
+
         $query = WorkSchedule::query()
             ->with(['dayWorkTimes'])
             ->whereHas('doctorWorkSchedule', fn($q) => $q->where('doctor_id', $doctorId))
@@ -214,7 +222,6 @@ class SchedulingRepository extends Repository implements SchedulingRepositoryInt
         return $returned ?
             $returned->dayWorkTimes :
             Collection::empty();
-
     }
     public function getWeekDayId(string $dateOfDay, $failIfWeekDayNotExists = true): int
     {

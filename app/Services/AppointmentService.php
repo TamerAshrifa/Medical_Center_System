@@ -11,6 +11,7 @@ use App\GeneralClasses\Response;
 use App\Models\Appointment;
 use App\Repositories\DoctorRepository;
 use App\Repositories\Interfaces\AppointmentRepositoryInterface;
+use App\Repositories\Interfaces\UnavailabilityRepositoryInterface;
 use App\Repositories\Interfaces\VisitRepositoryInterface;
 use App\Repositories\SchedulingRepository;
 use App\Repositories\VisitRepository;
@@ -27,6 +28,7 @@ class AppointmentService extends Service
         protected SchedulingRepository $schedulingRepository,
         protected DoctorRepository $doctorRepository,
         protected VisitRepository $visitRepository,
+        protected UnavailabilityRepositoryInterface $unavailabilityRepository,
 
     ) {
     }
@@ -106,6 +108,28 @@ class AppointmentService extends Service
                 409
             );
         }
+        if ($this->unavailabilityRepository->isMedicalCenterUnavailability(Carbon::parse($appointmentDTO->datetime)->format('Y-m-d'))) {
+            return new Response(
+                ResponseStatusEnum::FAIL,
+                Response::messageToArray('Sorry, The medical center has a vacation time on this date, please book at available time'),
+                null,
+                409
+            );
+        }
+        if (
+            $this->unavailabilityRepository->isDoctorUnavailability(
+                Carbon::parse($appointmentDTO->datetime)->format('Y-m-d'),
+                $appointmentDTO->doctor_id
+            )
+        ) {
+            return new Response(
+                ResponseStatusEnum::FAIL,
+                Response::messageToArray('Sorry, The doctor has a vacation time on this date, please book at available time'),
+                null,
+                409
+            );
+        }
+
 
         $availableTimesResponse = $this->allAvailableTimesToBook($appointmentDTO->datetime, $appointmentDTO->doctor_id);
         if ($availableTimesResponse->result != ResponseStatusEnum::SUCCESS)

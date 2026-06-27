@@ -1,24 +1,35 @@
 <?php
 
+use App\Http\Middleware\AllPatientComplaintsMiddleware;
+use App\Http\Middleware\AllPatientTransfersMiddleware;
 use App\Http\Middleware\CancelAppointmentMiddleware;
 use App\Http\Middleware\CheckAdminMiddleware;
 use App\Http\Middleware\CheckDoctorMiddleware;
 use App\Http\Middleware\CheckDoctorOnlyMiddleware;
 use App\Http\Middleware\CheckPatientOnlyMiddleware;
+use App\Http\Middleware\DestroyMedicalRecordAccessMiddleware;
+use App\Http\Middleware\MakeAnotherAppointmentForTransferMiddleware;
 use App\Http\Middleware\MakeAppointmentAttendedMiddleware;
+use App\Http\Middleware\MakeAppointmentForTransferMiddleware;
 use App\Http\Middleware\MakeAppointmentMissedMiddleware;
 use App\Http\Middleware\PaginateDoctorAppointmentsMiddleware;
 use App\Http\Middleware\PaginateDoctorMedicalRecordAccessesMiddleware;
+use App\Http\Middleware\PaginateDoctorUnavailabilitiesMiddleware;
 use App\Http\Middleware\PaginatePatientMedicalRecordAccessesMiddleware;
 use App\Http\Middleware\PaginateDoctorVisitsMiddleware;
 use App\Http\Middleware\PaginateDoctorWorkSchedulesMiddleware;
 use App\Http\Middleware\PaginatePatientAppointments;
 use App\Http\Middleware\PaginatePatientVisitsMiddleware;
+use App\Http\Middleware\PaginateReceivedTransfersMiddleware;
+use App\Http\Middleware\PaginateReferredTransfersMiddleware;
 use App\Http\Middleware\PaginateVisitMedicalRecordAccessesMiddleware;
 use App\Http\Middleware\ShowAppointmentMiddleware;
+use App\Http\Middleware\ShowPatientComplaintMiddleware;
+use App\Http\Middleware\ShowTransferMiddleware;
 use App\Http\Middleware\ShowVisitMiddleware;
 use App\Http\Middleware\StoreMedicalRecordAccessMiddleware;
 use App\Http\Middleware\StorePatientMiddleware;
+use App\Http\Middleware\StoreTransferMiddleware;
 use App\Http\Middleware\UpdateVisitMiddleware;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Application;
@@ -66,6 +77,17 @@ return Application::configure(basePath: dirname(__DIR__))
             'PaginatePatientMedicalRecordAccessesMiddleware' => PaginatePatientMedicalRecordAccessesMiddleware::class,
             'PaginateDoctorMedicalRecordAccessesMiddleware' => PaginateDoctorMedicalRecordAccessesMiddleware::class,
             'PaginateVisitMedicalRecordAccessesMiddleware' => PaginateVisitMedicalRecordAccessesMiddleware::class,
+            'DestroyMedicalRecordAccessMiddleware' => DestroyMedicalRecordAccessMiddleware::class,
+            'AllPatientComplaintsMiddleware' => AllPatientComplaintsMiddleware::class,
+            'ShowPatientComplaintMiddleware' => ShowPatientComplaintMiddleware::class,
+            'StoreTransferMiddleware' => StoreTransferMiddleware::class,
+            'AllPatientTransfersMiddleware' => AllPatientTransfersMiddleware::class,
+            'PaginateReferredTransfersMiddleware' => PaginateReferredTransfersMiddleware::class,
+            'ShowTransferMiddleware' => ShowTransferMiddleware::class,
+            'MakeAppointmentForTransferMiddleware' => MakeAppointmentForTransferMiddleware::class,
+            'MakeAnotherAppointmentForTransferMiddleware' => MakeAnotherAppointmentForTransferMiddleware::class,
+            'PaginateReceivedTransfersMiddleware' => PaginateReceivedTransfersMiddleware::class,
+            'PaginateDoctorUnavailabilitiesMiddleware' => PaginateDoctorUnavailabilitiesMiddleware::class,
         ]);
 
     })
@@ -82,8 +104,8 @@ return Application::configure(basePath: dirname(__DIR__))
             $seconds = $e->getHeaders()['Retry-After'] ?? 60;
             return response()->json([
                 'result' => 'Fail',
-                'message' => ($seconds > 1) ? "Several incorrect attempts were made, please try again in $seconds seconds" :
-                    'Several incorrect attempts were made, please try again after 1 second',
+                'message' => ($seconds > 1) ? "Several attempts were made, please try again in $seconds seconds" :
+                    'Several attempts were made, please try again after 1 second',
             ], 429);
         });
 

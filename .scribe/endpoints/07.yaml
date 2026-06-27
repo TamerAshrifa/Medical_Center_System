@@ -43,16 +43,16 @@ endpoints:
       date_of_day:
         custom: []
         name: date_of_day
-        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-06-23</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-06-28</code>.'
         required: true
-        example: '2107-07-22'
+        example: '2107-07-27'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      date_of_day: '2107-07-22'
+      date_of_day: '2107-07-27'
     fileParameters: []
     responses: []
     responseFields: []
@@ -106,16 +106,16 @@ endpoints:
       datetime:
         custom: []
         name: datetime
-        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-06-23 00:08</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-06-28 00:05</code>.'
         required: true
-        example: '2107-07-22'
+        example: '2107-07-27'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      datetime: '2107-07-22'
+      datetime: '2107-07-27'
     fileParameters: []
     responses: []
     responseFields: []
@@ -596,9 +596,9 @@ endpoints:
       actual_time:
         custom: []
         name: actual_time
-        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-06-23 00:00</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-06-28 00:00:00</code>.'
         required: true
-        example: '2107-07-22'
+        example: '2107-07-27'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -637,11 +637,23 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      notes_for_other_doctors:
+        custom: []
+        name: notes_for_other_doctors
+        description: 'Must not be greater than 1000 characters.'
+        required: false
+        example: uydlsmsjuryvojcybzvrb
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
     cleanBodyParameters:
-      actual_time: '2107-07-22'
+      actual_time: '2107-07-27'
       medical_diagnosis: mqeopfuudtdsufvyvddqa
       prescription: mniihfqcoynlazghdtqtq
       notes: xbajwbpilpmufinllwloa
+      notes_for_other_doctors: uydlsmsjuryvojcybzvrb
     fileParameters: []
     responses: []
     responseFields: []

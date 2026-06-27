@@ -17,8 +17,8 @@ class StoreMedicalRecordAccessMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $patientId = Auth::id();
-        $visitPatientId = Visit::where('id', $request->route('visit_id'))->valueOrFail('patient_id');
+        $patientId = Auth::user()->patient->id;
+        $visitPatientId = Visit::findOrFail($request->route('visit_id'))->appointment->patient_id;
         if ($patientId != $visitPatientId)
             return response()->json([
                 'result' => 'Fail',
