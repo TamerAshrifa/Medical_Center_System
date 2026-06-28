@@ -92,24 +92,8 @@ class UnavailabilityRepository extends Repository implements UnavailabilityRepos
     {
         return Unavailability::query()
             ->whereHas('doctorUnavailability', fn($q) => $q->where('doctor_id', $doctorId))
-            ->where(function ($q) use ($startDate, $endDate) {
-                $q->where(function ($q2) use ($startDate, $endDate) {
-                    $q2->whereDate('from_date', '<=', $startDate)
-                        ->whereDate('to_date', '>=', $endDate);
-                })
-                    ->orWhere(function ($q2) use ($startDate, $endDate) {
-                        $q2->whereDate('from_date', '>=', $startDate)
-                            ->whereDate('to_date', '>=', $endDate);
-                    })
-                    ->orWhere(function ($q2) use ($startDate, $endDate) {
-                        $q2->whereDate('from_date', '<=', $startDate)
-                            ->whereDate('to_date', '<=', $endDate);
-                    })
-                    ->orWhere(function ($q2) use ($startDate, $endDate) {
-                        $q2->whereDate('from_date', '>=', $startDate)
-                            ->whereDate('to_date', '<=', $endDate);
-                    });
-            })
+            ->whereDate('from_date', '<=', $endDate)
+            ->whereDate('to_date', '>=', $startDate)
             ->exists();
     }
 
@@ -117,24 +101,8 @@ class UnavailabilityRepository extends Repository implements UnavailabilityRepos
     {
         return Unavailability::query()
             ->whereHas('medicalCenterUnavailability')
-            ->where(function ($q) use ($startDate, $endDate) {
-                $q->where(function ($q2) use ($startDate, $endDate) {
-                    $q2->whereDate('from_date', '<=', $startDate)
-                        ->whereDate('to_date', '>=', $endDate);
-                })
-                    ->orWhere(function ($q2) use ($startDate, $endDate) {
-                        $q2->whereDate('from_date', '>=', $startDate)
-                            ->whereDate('to_date', '>=', $endDate);
-                    })
-                    ->orWhere(function ($q2) use ($startDate, $endDate) {
-                        $q2->whereDate('from_date', '<=', $startDate)
-                            ->whereDate('to_date', '<=', $endDate);
-                    })
-                    ->orWhere(function ($q2) use ($startDate, $endDate) {
-                        $q2->whereDate('from_date', '>=', $startDate)
-                            ->whereDate('to_date', '<=', $endDate);
-                    });
-            })
+            ->whereDate('from_date', '<=', $endDate)
+            ->whereDate('to_date', '>=', $startDate)
             ->exists();
     }
 
