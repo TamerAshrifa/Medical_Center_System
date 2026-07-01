@@ -56,7 +56,7 @@ endpoints:
         name: reason_type
         description: ''
         required: true
-        example: other
+        example: vacation
         type: string
         enumValues:
           - vacation
@@ -78,7 +78,7 @@ endpoints:
     cleanBodyParameters:
       from_date: '2107-07-31'
       to_date: '2107-07-31'
-      reason_type: other
+      reason_type: vacation
       justification: consequatur
     fileParameters: []
     responses: []

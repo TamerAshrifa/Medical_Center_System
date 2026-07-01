@@ -497,7 +497,7 @@ acounts for them in the appropriate table and permissions; After an admin makes,
     --form "gender="\
     --form "username=mqeopfuudtdsufvyv"\
     --form "password_confirmation=consequatur"\
-    --form "photo=@C:\Users\USER\AppData\Local\Temp\php2E0A.tmp" </code></pre></div>
+    --form "photo=@C:\Users\USER\AppData\Local\Temp\phpA642.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -730,7 +730,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php2E0A.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\phpA642.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>password_confirmation</code></b>&nbsp;&nbsp;
@@ -1622,9 +1622,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "password=dl4m{o,+"\
     --form "phone=qamniihfqcoynlazg"\
     --form "date_of_birth=2020-10-27"\
-    --form "gender=1"\
+    --form "gender="\
     --form "username=mqeopfuudtdsufvyv"\
-    --form "photo=@C:\Users\USER\AppData\Local\Temp\php2E59.tmp" </code></pre></div>
+    --form "photo=@C:\Users\USER\AppData\Local\Temp\phpA681.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -1645,7 +1645,7 @@ body.append('email', 'russel.bert@example.net');
 body.append('password', 'dl4m{o,+');
 body.append('phone', 'qamniihfqcoynlazg');
 body.append('date_of_birth', '2020-10-27');
-body.append('gender', '1');
+body.append('gender', '');
 body.append('username', 'mqeopfuudtdsufvyv');
 body.append('photo', document.querySelector('input[name="photo"]').files[0]);
 
@@ -1835,7 +1835,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>username</code></b>&nbsp;&nbsp;
@@ -1859,7 +1859,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php2E59.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\phpA681.tmp</code></p>
         </div>
         </form>
 
@@ -2359,9 +2359,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "last_name=eop"\
     --form "phone=fuudtdsufvyvddqam"\
     --form "date_of_birth=2026-07-02"\
-    --form "gender=1"\
+    --form "gender="\
     --form "username=niihfqcoynlazghdt"\
-    --form "photo=@C:\Users\USER\AppData\Local\Temp\php2EC7.tmp" </code></pre></div>
+    --form "photo=@C:\Users\USER\AppData\Local\Temp\phpA6D0.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2380,7 +2380,7 @@ body.append('first_name', 'vmq');
 body.append('last_name', 'eop');
 body.append('phone', 'fuudtdsufvyvddqam');
 body.append('date_of_birth', '2026-07-02');
-body.append('gender', '1');
+body.append('gender', '');
 body.append('username', 'niihfqcoynlazghdt');
 body.append('photo', document.querySelector('input[name="photo"]').files[0]);
 
@@ -2559,7 +2559,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>username</code></b>&nbsp;&nbsp;
@@ -2583,7 +2583,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php2EC7.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\phpA6D0.tmp</code></p>
         </div>
         </form>
 
@@ -7754,8 +7754,8 @@ and the admin can create work schedules for medical center.</p>
     \"days\": [
         {
             \"weekday_id\": 2,
-            \"start_time\": \"02:11\",
-            \"end_time\": \"02:11\"
+            \"start_time\": \"02:24\",
+            \"end_time\": \"02:24\"
         }
     ]
 }"
@@ -7778,8 +7778,8 @@ let body = {
     "days": [
         {
             "weekday_id": 2,
-            "start_time": "02:11",
-            "end_time": "02:11"
+            "start_time": "02:24",
+            "end_time": "02:24"
         }
     ]
 };
@@ -7919,10 +7919,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="days.0.start_time"                data-endpoint="POSTapi-schedules"
-               value="02:11"
+               value="02:24"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>H:i</code>. Example: <code>02:11</code></p>
+<p>Must be a valid date in the format <code>H:i</code>. Example: <code>02:24</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>end_time</code></b>&nbsp;&nbsp;
@@ -7931,10 +7931,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="days.0.end_time"                data-endpoint="POSTapi-schedules"
-               value="02:11"
+               value="02:24"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>H:i</code>. Example: <code>02:11</code></p>
+<p>Must be a valid date in the format <code>H:i</code>. Example: <code>02:24</code></p>
                     </div>
                                     </details>
         </div>
@@ -8928,7 +8928,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="2107-07-31"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 02:11</code>. Example: <code>2107-07-31</code></p>
+<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 02:24</code>. Example: <code>2107-07-31</code></p>
         </div>
         </form>
 
@@ -12811,7 +12811,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="2107-07-31"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 02:11</code>. Example: <code>2107-07-31</code></p>
+<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 02:24</code>. Example: <code>2107-07-31</code></p>
         </div>
         </form>
 
@@ -12973,7 +12973,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="2107-07-31"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 02:11</code>. Example: <code>2107-07-31</code></p>
+<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 02:24</code>. Example: <code>2107-07-31</code></p>
         </div>
         </form>
 
@@ -14038,7 +14038,7 @@ and the admin can create unavailability for medical center.</p>
     --data "{
     \"from_date\": \"2107-07-31\",
     \"to_date\": \"2107-07-31\",
-    \"reason_type\": \"other\",
+    \"reason_type\": \"vacation\",
     \"justification\": \"consequatur\"
 }"
 </code></pre></div>
@@ -14058,7 +14058,7 @@ const headers = {
 let body = {
     "from_date": "2107-07-31",
     "to_date": "2107-07-31",
-    "reason_type": "other",
+    "reason_type": "vacation",
     "justification": "consequatur"
 };
 
@@ -14187,10 +14187,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="reason_type"                data-endpoint="POSTapi-unavailability"
-               value="other"
+               value="vacation"
                data-component="body">
     <br>
-<p>Example: <code>other</code></p>
+<p>Example: <code>vacation</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>vacation</code></li> <li><code>other</code></li></ul>
         </div>
@@ -14753,7 +14753,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"speciality_id\": 17,
     \"experience_starting_date\": \"2026-07-02\",
-    \"view_experience\": true
+    \"view_experience\": false
 }"
 </code></pre></div>
 
@@ -14772,7 +14772,7 @@ const headers = {
 let body = {
     "speciality_id": 17,
     "experience_starting_date": "2026-07-02",
-    "view_experience": true
+    "view_experience": false
 };
 
 fetch(url, {
@@ -14913,7 +14913,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
         </form>
 
@@ -15595,7 +15595,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"experience_starting_date\": \"2026-07-02\",
-    \"view_experience\": false
+    \"view_experience\": true
 }"
 </code></pre></div>
 
@@ -15613,7 +15613,7 @@ const headers = {
 
 let body = {
     "experience_starting_date": "2026-07-02",
-    "view_experience": false
+    "view_experience": true
 };
 
 fetch(url, {
@@ -15755,7 +15755,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
         </form>
 

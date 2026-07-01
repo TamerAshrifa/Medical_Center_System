@@ -45,7 +45,7 @@ endpoints:
       datetime:
         custom: []
         name: datetime
-        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 02:11</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 02:24</code>.'
         required: true
         example: '2107-07-31'
         type: string
@@ -107,7 +107,7 @@ endpoints:
       datetime:
         custom: []
         name: datetime
-        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 02:11</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 02:24</code>.'
         required: true
         example: '2107-07-31'
         type: string

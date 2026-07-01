@@ -54,7 +54,7 @@ endpoints:
         name: view_experience
         description: ''
         required: true
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -63,7 +63,7 @@ endpoints:
     cleanBodyParameters:
       speciality_id: 17
       experience_starting_date: '2026-07-02'
-      view_experience: true
+      view_experience: false
     fileParameters: []
     responses: []
     responseFields: []
@@ -389,7 +389,7 @@ endpoints:
         name: view_experience
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -397,7 +397,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       experience_starting_date: '2026-07-02'
-      view_experience: false
+      view_experience: true
     fileParameters: []
     responses: []
     responseFields: []

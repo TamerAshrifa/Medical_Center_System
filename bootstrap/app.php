@@ -35,6 +35,7 @@ use App\Http\Middleware\UpdateDoctorMiddleware;
 use App\Http\Middleware\UpdateDoctorSpecialityMiddleware;
 use App\Http\Middleware\UpdatePatientMiddleware;
 use App\Http\Middleware\UpdateVisitMiddleware;
+use App\Models\ExceptionLog;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -178,15 +179,18 @@ return Application::configure(basePath: dirname(__DIR__))
             ], 422);
         });
 
-        // $exceptions->render(function (\Throwable $e, $request) {
-        //     return response()->json([
-        //         'did_succeed' => false,
-        //         'base_message' => 'Unexpected back-end error!',
-        //         'error' => $e->getMessage(),
-        //         'file' => $e->getFile(),
-        //         'line' => $e->getLine(),
-        //         'details' => ($e->getPrevious() != null) ? $e->getPrevious()->getMessage() : null,
-        //     ], 500);
-        // });
-    
+        $exceptions->render(function (\Throwable $e, $request) {
+            ExceptionLog::create([
+                'error_message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'track' => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'did_succeed' => false,
+                'base_message' => 'Unexpected error occurred, please contact the administrator',
+            ], 500);
+        });
+
     })->create();
