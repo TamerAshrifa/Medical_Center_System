@@ -87,7 +87,7 @@ endpoints:
       date_of_birth:
         custom: []
         name: date_of_birth
-        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date before <code>2026-07-01</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date before <code>2026-07-02</code>.'
         required: true
         example: '2020-10-27'
         type: string
@@ -210,7 +210,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/users/show/{id}'
+    uri: 'api/users/s/{id}'
     metadata:
       custom: []
       groupName: 'User APIs'
@@ -242,6 +242,65 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       id: 17
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"did_succeed":false,"message":"Unauthenticated; A valid token is required"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/users/se/{search_word}'
+    metadata:
+      custom: []
+      groupName: 'User APIs'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: |-
+        Search for a non-roled user
+        ###For: Web
+        Only admins are allowed to use this API.
+      description: 'This API is to search for a non-roled user by first_name, returns a collection of non-roled users have similar first_name; This API is used when adding a (Patient - Doctor - Admin) to link them with a specified non-roled user'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      search_word:
+        custom: []
+        name: search_word
+        description: ''
+        required: true
+        example: consequatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      search_word: consequatur
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -341,7 +400,7 @@ endpoints:
         name: date_of_birth
         description: 'Must be a valid date in the format <code>Y-m-d</code>.'
         required: false
-        example: '2026-07-01'
+        example: '2026-07-02'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -384,7 +443,7 @@ endpoints:
       first_name: vmq
       last_name: eop
       phone: fuudtdsufvyvddqam
-      date_of_birth: '2026-07-01'
+      date_of_birth: '2026-07-02'
       gender: true
       username: niihfqcoynlazghdt
     fileParameters:

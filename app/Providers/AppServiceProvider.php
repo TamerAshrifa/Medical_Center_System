@@ -2,10 +2,11 @@
 
 namespace App\Providers;
 
-use App\Models\WorkSchedule;
+use App\Repositories\AdminRepository;
 use App\Repositories\AppointmentRepository;
 use App\Repositories\DoctorRepository;
 use App\Repositories\DoctorSpecialityRepository;
+use App\Repositories\Interfaces\AdminRepositoryInterface;
 use App\Repositories\Interfaces\AppointmentRepositoryInterface;
 use App\Repositories\Interfaces\DoctorRepositoryInterface;
 use App\Repositories\Interfaces\DoctorSpecialityRepositoryInterface;
@@ -43,65 +44,69 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(
+        $this->app->singleton(
             AppointmentRepositoryInterface::class,
             AppointmentRepository::class
         );
-        $this->app->bind(
+        $this->app->singleton(
             DoctorRepositoryInterface::class,
             DoctorRepository::class
         );
-        $this->app->bind(
+        $this->app->singleton(
             DoctorSpecialityRepositoryInterface::class,
             DoctorSpecialityRepository::class
         );
-        $this->app->bind(
+        $this->app->singleton(
             MedicalRecordAccessRepositoryInterface::class,
             MedicalRecordAccessRepository::class
         );
-        $this->app->bind(
+        $this->app->singleton(
             PatientRepositoryInterface::class,
             PatientRepository::class
         );
-        $this->app->bind(
+        $this->app->singleton(
             RepositoryInterface::class,
             Repository::class
         );
-        $this->app->bind(
+        $this->app->singleton(
             ResetPasswordTokenRepositoryInterface::class,
             ResetPasswordTokenRepository::class
         );
-        $this->app->bind(
+        $this->app->singleton(
             RoomRepositoryInterface::class,
             RoomRepository::class
         );
-        $this->app->bind(
+        $this->app->singleton(
             SchedulingRepositoryInterface::class,
             SchedulingRepository::class
         );
-        $this->app->bind(
+        $this->app->singleton(
             SpecialityRepositoryInterface::class,
             SpecialityRepository::class
         );
-        $this->app->bind(
+        $this->app->singleton(
             UserRepositoryInterface::class,
             UserRepository::class
         );
-        $this->app->bind(
+        $this->app->singleton(
             VisitRepositoryInterface::class,
             VisitRepository::class
         );
-        $this->app->bind(
+        $this->app->singleton(
             PatientComplaintRepositoryInterface::class,
             PatientComplaintRepository::class
         );
-        $this->app->bind(
+        $this->app->singleton(
             TransferRepositoryInterface::class,
             TransferRepository::class
         );
-        $this->app->bind(
+        $this->app->singleton(
             UnavailabilityRepositoryInterface::class,
             UnavailabilityRepository::class
+        );
+        $this->app->singleton(
+            AdminRepositoryInterface::class,
+            AdminRepository::class
         );
 
     }

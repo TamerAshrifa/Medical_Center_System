@@ -64,5 +64,12 @@ class UserService extends Service
                 500
             );
     }
-
+    public function searchForNonRoledUser(string $searchWord): Response
+    {
+        return new Response(
+            true,
+            null,
+            $this->userRepository->searchForNonRoledUser($searchWord),
+        );
+    }
 }

@@ -4,8 +4,10 @@ namespace App\Services;
 
 use App\Enums\OtpTypeEnum;
 
+use App\Enums\UserRoleEnum;
 use App\GeneralClasses\Response;
 use App\Mail\SendOtpMail;
+use App\Models\Admin;
 use App\Models\Otp;
 use App\Models\User;
 use Carbon\Carbon;
@@ -125,6 +127,17 @@ class OtpService extends Service
                 400,
             );
         }
+
+        if (
+            $user->role == UserRoleEnum::ADMIN &&
+            !$user->admin->is_active
+        )
+            return new Response(
+                false,
+                Response::messageToArray('Sorry, your account is unactive, call the super admin'),
+                null,
+                403,
+            );
 
         switch ($otpRecord->type) {
             case OtpTypeEnum::REGISTER_VERIFY:

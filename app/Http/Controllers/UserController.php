@@ -163,4 +163,20 @@ class UserController extends Controller
 
         return response()->noContent(204);
     }
+
+    /**
+     * Search for a non-roled user
+     * ###For: Web
+     * Only admins are allowed to use this API.
+     * This API is to search for a non-roled user by first_name, returns a collection of non-roled users have similar first_name; This API is used when adding a (Patient - Doctor - Admin) to link them with a specified non-roled user
+     * @urlParam search_word string required 
+     */
+    public function searchForNonRoledUser(string $search_word)
+    {
+        $response = $this->userService->searchForNonRoledUser($search_word);
+
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
+    }
 }

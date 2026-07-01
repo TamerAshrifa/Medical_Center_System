@@ -47,9 +47,6 @@ class PatientController extends Controller
      * Only non-completed users, and admins are allowed to use this API.
      * (Non-completed users are the users who were created but without specifing their role)
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
-     * @responseFile 201 storage/responses/PatientController/store_201_Created.json
-     * @responseFile 403 storage/responses/PatientController/store_403_Forbidden.json
-     * @responseFile 409 storage/responses/PatientController/store_409_Conflict.json
      */
     public function store(StorePatientRequest $request)
     {
@@ -145,4 +142,22 @@ class PatientController extends Controller
 
         return response()->noContent(204);
     }
+
+    /**
+     * Search for a Patient
+     * 
+     * ###For: Mobile(Doctor), Web
+     * Only Doctors and Admins are allowed to use this API.
+     * This API is to search for a patient by first_name, returns a collection of patients have similar first_name
+     * @urlParam search_word string required 
+     */
+    public function search(string $search_word)
+    {
+        $response = $this->patientService->search($search_word);
+
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
+    }
+
 }

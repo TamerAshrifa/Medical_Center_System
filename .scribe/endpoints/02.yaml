@@ -79,25 +79,7 @@ endpoints:
       allergies: consequatur
       chronic_diseases: consequatur
     fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 201
-        content: "{\r\n    \"did_succeed\": true,\r\n    \"message\": {\r\n        \"base_message\": \"Patient added successfully\"\r\n    },\r\n    \"data\": {\r\n        \"id\": 13,\r\n        \"allergies\": \"consequatur\",\r\n        \"chronic_diseases\": \"consequatur\",\r\n        \"user\": {\r\n            \"id\": 31,\r\n            \"first_name\": \"vmq\",\r\n            \"last_name\": \"eop\",\r\n            \"email\": \"tamrashryft2@gmail.com\",\r\n            \"phone\": \"+963999999999\",\r\n            \"date_of_birth\": \"2004-06-13T21:00:00.000000Z\",\r\n            \"gender\": \"Male\",\r\n            \"photo\": null,\r\n            \"username\": \"hdtqtqxbajwbpilpm\"\r\n        },\r\n        \"blood_type_id\": {\r\n            \"id\": 4,\r\n            \"name\": \"A+\"\r\n        }\r\n    }\r\n}\r\n\r\n// ⚠ Important Info: in the previous example was for a patient adding himself, if an admin was adding the patient, the previous response's data would be like:\r\n//{\r\n//    \"did_succeed\": true,\r\n//    \"message\": {\r\n//        \"base_message\": \"Patient added successfully\"\r\n//    },\r\n//    \"data\": {\r\n//        \"id\": 14,\r\n//        \"allergies\": \"consequatur\",\r\n//        \"chronic_diseases\": \"consequatur\",\r\n//        \"user\": {\r\n//            \"id\": 31,\r\n//            \"first_name\": \"vmq\",\r\n//            \"last_name\": \"eop\",\r\n//            \"email\": \"tamrashryft2@gmail.com\",\r\n//            \"phone\": \"+963999999999\",\r\n//            \"date_of_birth\": \"2004-06-13T21:00:00.000000Z\",\r\n//            \"gender\": \"Male\",\r\n//            \"photo\": null,\r\n//            \"username\": \"hdtqtqxbajwbpilpm\",\r\n//            \"role\": \"patient\",\r\n//            \"email_verified_at\": \"2026-06-05T21:12:22.000000Z\",\r\n//            \"created_at\": \"2026-06-05T21:11:12.000000Z\",\r\n//            \"last_update_at\": \"2026-06-06T16:46:19.000000Z\"\r\n//        },\r\n//        \"blood_type_id\": {\r\n//            \"id\": 4,\r\n//            \"name\": \"A+\"\r\n//        }\r\n//    }\r\n//}"
-        headers: []
-        description: ''
-      -
-        custom: []
-        status: 403
-        content: "// This response be returned when:\r\n// The logged-in user role is null (non-completed patient), OK, but he is trying to add a patient other than himself!\r\n\r\n{\r\n \"did_succeed\": false,\r\n    \"message\": {\r\n        \"base_message\": \"Patients can only add themselves\"\r\n    },\r\n}"
-        headers: []
-        description: ''
-      -
-        custom: []
-        status: 409
-        content: "// This response be returned when:\r\n// The user which being tried to add already has a role (PATIENT - ADMIN - DOCTOR).\r\n\r\n{\r\n    \"did_succeed\": false,\r\n    \"message\": \"User is already a patient, it can\\'t be modified\"\r\n}\r\n\r\n// In the previous example the user-role was patient, so the response was \"already a patient\", other cases are: \"already a patient\" - \"already a patient\""
-        headers: []
-        description: ''
+    responses: []
     responseFields: []
     auth:
       - headers
@@ -165,7 +147,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/patients/show/{patientId}'
+    uri: 'api/patients/s/{id}'
     metadata:
       custom: []
       groupName: 'Patient APIs'
@@ -184,9 +166,9 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      patientId:
+      id:
         custom: []
-        name: patientId
+        name: id
         description: 'min:1'
         required: true
         example: 17
@@ -196,7 +178,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      patientId: 17
+      id: 17
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -232,8 +214,67 @@ endpoints:
   -
     custom: []
     httpMethods:
+      - GET
+    uri: 'api/patients/se/{search_word}'
+    metadata:
+      custom: []
+      groupName: 'Patient APIs'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Search for a Patient'
+      description: |-
+        ###For: Mobile(Doctor), Web
+        Only Doctors and Admins are allowed to use this API.
+        This API is to search for a patient by first_name, returns a collection of patients have similar first_name
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      search_word:
+        custom: []
+        name: search_word
+        description: ''
+        required: true
+        example: consequatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      search_word: consequatur
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"did_succeed":false,"message":"Unauthenticated; A valid token is required"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
       - PUT
-    uri: 'api/patients/{patientId}'
+    uri: 'api/patients/{id}'
     metadata:
       custom: []
       groupName: 'Patient APIs'
@@ -251,6 +292,17 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the patient.'
+        required: true
+        example: consequatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
       patientId:
         custom: []
         name: patientId
@@ -263,6 +315,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
+      id: consequatur
       patientId: 17
     queryParameters: []
     cleanQueryParameters: []
@@ -342,7 +395,7 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: 'api/patients/{patientId}'
+    uri: 'api/patients/{id}'
     metadata:
       custom: []
       groupName: 'Patient APIs'
@@ -360,10 +413,10 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      patientId:
+      id:
         custom: []
-        name: patientId
-        description: 'min:1'
+        name: id
+        description: ''
         required: true
         example: 17
         type: integer
@@ -372,7 +425,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      patientId: 17
+      id: 17
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

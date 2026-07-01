@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
@@ -18,23 +19,23 @@ use Illuminate\Support\Facades\Route;
 
 // Authentication
 Route::middleware('throttle:3,1')->group(function () {
-    Route::post('register', [AuthController::class, 'register']);
-    Route::post('verifyOtp', [AuthController::class, 'verifyOtp']);
-    Route::post('login', [AuthController::class, 'login']);
-    Route::post('forgotPassword', [AuthController::class, 'forgotPassword']);
-    Route::post('resetPassword', [AuthController::class, 'resetPassword']);
+    Route::post('r', [AuthController::class, 'register']);
+    Route::post('v', [AuthController::class, 'verifyOtp']);
+    Route::post('l', [AuthController::class, 'login']);
+    Route::post('f', [AuthController::class, 'forgotPassword']);
+    Route::post('re', [AuthController::class, 'resetPassword']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->middleware('throttle:1,1');
-    // dd(true);
+
     // Users APIs
     Route::prefix('users/')->group(function () {
         Route::post('', [UserController::class, 'store'])->middleware('CheckAdmin');
         Route::get('{per_page}', [UserController::class, 'index'])->middleware('CheckAdmin');
-        Route::get('show/{id}', [UserController::class, 'show']);
+        Route::get('s/{id}', [UserController::class, 'show']);
+        Route::get('se/{search_word}', [UserController::class, 'searchForNonRoledUser']);
         Route::put('{id}', [UserController::class, 'update']);
-        // Route::delete('/{specialityId}', [UserController::class, 'destroy'])->middleware('CheckAdmin');
     });
 
     // Patient APIs
@@ -42,15 +43,23 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('', [PatientController::class, 'store'])->middleware('StorePatientMiddleware');
         Route::get('{per_page}', [PatientController::class, 'index'])->middleware('CheckAdmin');
         Route::get('s/{id}', [PatientController::class, 'show'])->middleware('ShowPatientMiddleware');
+        Route::get('se/{search_word}', [PatientController::class, 'search'])->middleware(['CheckDoctor']);
         Route::put('{id}', [PatientController::class, 'update'])->middleware(['CheckPatientOnly', 'UpdatePatientMiddleware']);
         Route::delete('{id}', [PatientController::class, 'destroy'])->middleware('CheckAdmin');
+    });
+
+    // Admin APIs
+    Route::prefix('admins/')->middleware('CheckAdmin')->group(function () {
+        Route::get('{search_word}', [AdminController::class, 'search']);
+        Route::post('{user_id}', [AdminController::class, 'store']);
+        Route::post('u/{id}', [AdminController::class, 'destroy']);
     });
 
     // Room APIs
     Route::prefix('rooms/')->group(function () {
         Route::post('', [RoomController::class, 'store'])->middleware('CheckAdmin');
         Route::get('{per_page}', [RoomController::class, 'index'])->middleware('CheckAdmin');
-        Route::get('show/{roomId}', [RoomController::class, 'show']);
+        Route::get('s/{roomId}', [RoomController::class, 'show']);
         Route::put('{roomId}', [RoomController::class, 'update'])->middleware('CheckAdmin');
         Route::delete('{roomId}', [RoomController::class, 'destroy'])->middleware('CheckAdmin');
     });
@@ -59,7 +68,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('doctors/')->group(function () {
         Route::post('', [DoctorController::class, 'store'])->middleware('CheckAdmin');
         Route::get('{per_page}', [DoctorController::class, 'index']);
-        Route::get('show/{doctor_id}', [DoctorController::class, 'show']);
+        Route::get('s/{doctor_id}', [DoctorController::class, 'show']);
+        Route::get('se/{search_word}', [DoctorController::class, 'search']);
         Route::put('{doctor_id}', [DoctorController::class, 'update'])->middleware(['CheckDoctorOnly', 'UpdateDoctorMiddleware']);
         Route::delete('{doctorId}', [DoctorController::class, 'destroy'])->middleware('CheckAdmin');
     });
@@ -68,7 +78,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('specialities/')->group(function () {
         Route::post('', [SpecialityController::class, 'store'])->middleware('CheckAdmin');
         Route::get('{per_page}', [SpecialityController::class, 'index']);
-        Route::get('show/{specialityId}', [SpecialityController::class, 'show']);
+        Route::get('s/{specialityId}', [SpecialityController::class, 'show']);
         Route::put('{specialityId}', [SpecialityController::class, 'update'])->middleware('CheckAdmin');
         Route::delete('{specialityId}', [SpecialityController::class, 'destroy'])->middleware('CheckAdmin');
     });
@@ -172,9 +182,3 @@ Route::middleware('auth:sanctum')->group(function () {
             ->whereNumber(['per_page'])->where('with_passed', '0|1|true|false')->middleware(['CheckAdmin']);
     });
 });
-
-// User 1 (Admin 1) token: 5|O2aVQjjqtvEZbvDxUCxHrcrODpjAzFkkMFJ4aSTLefb9b6c6
-// User 2 (Doctor 1) token: 2|OqW3Z5QuX3tiPsuYSvWsVew3W3ffgqNVWRMOKERFc3af1da4
-// User 3 (Patient 1) token: 3|YBLVQMKuAUW6iBwzP0gPndcqKE1RXfo50SQjdqVoe62f23d9
-
-// User 8 (Doctor 2) token: 4|pKeOx148hrHuJd1CB7AF4azhUUwjWhsQ15MzfTxv7d859739

@@ -107,12 +107,14 @@ class PatientService extends Service
             );
         }
 
+        return new Response(true, null, null, 204);
+    }
+    public function search(string $searchWord): Response
+    {
         return new Response(
             true,
             null,
-            null,
-            204
+            $this->patientRepository->search($searchWord),
         );
     }
-
 }

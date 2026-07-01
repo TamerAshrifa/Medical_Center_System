@@ -24,4 +24,5 @@ interface DoctorRepositoryInterface extends RepositoryInterface
     public function delete(Doctor &$doctor): bool;
     public function allDoctorsEmails();
     public function fullname(int $id): string;
+    public function search(string $searchWord);
 }

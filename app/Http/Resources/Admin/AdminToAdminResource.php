@@ -21,6 +21,7 @@ class AdminToAdminResource extends JsonResource
             'id' => $this->id,
             'user_id' => $this->user_id,
             'user_fullname' => $this->user->first_name . ' ' . $this->user->last_name,
+            'is_active' => $this->is_active,
             'added_by_admin_id' => $this->added_by_admin_id,
             'added_by_admin_fullname' => $addedByAdminFullname,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),

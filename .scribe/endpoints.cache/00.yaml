@@ -11,7 +11,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/register
+    uri: api/r
     metadata:
       custom: []
       groupName: 'Authentication APIs'
@@ -172,7 +172,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/verifyOtp
+    uri: api/v
     metadata:
       custom: []
       groupName: 'Authentication APIs'
@@ -261,7 +261,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/login
+    uri: api/l
     metadata:
       custom: []
       groupName: 'Authentication APIs'
@@ -332,7 +332,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/forgotPassword
+    uri: api/f
     metadata:
       custom: []
       groupName: 'Authentication APIs'
@@ -385,7 +385,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/resetPassword
+    uri: api/re
     metadata:
       custom: []
       groupName: 'Authentication APIs'

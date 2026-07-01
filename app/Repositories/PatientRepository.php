@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Enums\UserRoleEnum;
 use App\Models\Patient;
+use App\Models\User;
 use App\Repositories\Interfaces\PatientRepositoryInterface;
 use DB;
 
@@ -49,5 +51,17 @@ class PatientRepository extends Repository implements PatientRepositoryInterface
             return false;
         }
     }
+
+    public function search(string $searchWord)
+    {
+        return Patient::query()
+            ->with('user:id,first_name,last_name')
+            ->whereHas('user', function ($q) use ($searchWord) {
+                $q->where('role', UserRoleEnum::PATIENT->value)
+                    ->where('first_name', 'LIKE', "%$searchWord%");
+            })
+            ->get();
+    }
+
 
 }

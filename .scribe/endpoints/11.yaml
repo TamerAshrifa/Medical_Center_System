@@ -1,22 +1,21 @@
-name: 'Transfer APIs'
+name: 'Medical Record Access APIs (Access Permission APIs)'
 description: ''
 endpoints:
   -
     custom: []
     httpMethods:
       - POST
-    uri: 'api/transfer/{transfer_id}'
+    uri: 'api/access/{doctor_id}/{visit_id}'
     metadata:
       custom: []
-      groupName: 'Transfer APIs'
+      groupName: 'Medical Record Access APIs (Access Permission APIs)'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Make an appointment for a specified transfer'
+      title: 'Grant a new access permission'
       description: |-
         ###For: Mobile(Patient)
-        Only patients are allowed to use this API
-        Everyone in the system is allowed to use this API
+        Only patients are allowed to use this API.
       authenticated: true
       deprecated: false
     headers:
@@ -24,10 +23,21 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      transfer_id:
+      doctor_id:
         custom: []
-        name: transfer_id
-        description: 'The ID number of transfer to make an appointment for'
+        name: doctor_id
+        description: 'min:1'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      visit_id:
+        custom: []
+        name: visit_id
+        description: 'min:1'
         required: true
         example: 17
         type: integer
@@ -36,158 +46,12 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      transfer_id: 17
+      doctor_id: 17
+      visit_id: 17
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters:
-      datetime:
-        custom: []
-        name: datetime
-        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-01 17:11</code>.'
-        required: true
-        example: '2107-07-31'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      datetime: '2107-07-31'
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: 'api/transfer/ch/{transfer_id}'
-    metadata:
-      custom: []
-      groupName: 'Transfer APIs'
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Make another appointment instead of previous-one for a specified transfer'
-      description: |-
-        ###For: Mobile(Patient)
-        Only patients are allowed to use this API
-        Everyone in the system is allowed to use this API
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_AUTH_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      transfer_id:
-        custom: []
-        name: transfer_id
-        description: 'The ID number of transfer to make an appointment for'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      transfer_id: 17
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      datetime:
-        custom: []
-        name: datetime
-        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-01 17:11</code>.'
-        required: true
-        example: '2107-07-31'
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      datetime: '2107-07-31'
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: 'api/transfer/{patient_id}/{receiving_doctor_id}'
-    metadata:
-      custom: []
-      groupName: 'Transfer APIs'
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Transfer a patient to another doctor'
-      description: |-
-        ###For: Mobile(Doctor)
-        Only doctors are allowed to use this API
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_AUTH_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      patient_id:
-        custom: []
-        name: patient_id
-        description: ''
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      receiving_doctor_id:
-        custom: []
-        name: receiving_doctor_id
-        description: ''
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      patient_id: 17
-      receiving_doctor_id: 17
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      message:
-        custom: []
-        name: message
-        description: ''
-        required: true
-        example: consequatur
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanBodyParameters:
-      message: consequatur
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
     responses: []
     responseFields: []
@@ -202,17 +66,18 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/transfer/s/{id}'
+    uri: 'api/access/DA/{per_page}/{with_unactive}/{doctor_id}'
     metadata:
       custom: []
-      groupName: 'Transfer APIs'
+      groupName: 'Medical Record Access APIs (Access Permission APIs)'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Show a specified transfer'
+      title: 'View all permission accesses given to a specified doctor'
       description: |-
-        ###For: Web, Mobile(Patient, Doctor)
-        Everyone in the system is allowed to use this API
+        ###For: Web, Mobile(Doctor)
+        Only admins and doctors are allowed to use this API
+        ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
       authenticated: true
       deprecated: false
     headers:
@@ -220,10 +85,32 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      id:
+      per_page:
         custom: []
-        name: id
-        description: 'The ID number of transfer to be showen'
+        name: per_page
+        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      with_unactive:
+        custom: []
+        name: with_unactive
+        description: 'Boolean value means does the admin want all of permission accesses to be showen even with unactivated ones? Doctores only allowed to see with unactive ones.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      doctor_id:
+        custom: []
+        name: doctor_id
+        description: "min:1 The ID number of doctor to view it's permission accesses"
         required: true
         example: 17
         type: integer
@@ -232,7 +119,9 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      id: 17
+      per_page: 17
+      with_unactive: 17
+      doctor_id: 17
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -260,17 +149,18 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/transfer/{per_page}/{with_attended}'
+    uri: 'api/access/PA/{per_page}/{with_unactive}/{patient_id}'
     metadata:
       custom: []
-      groupName: 'Transfer APIs'
+      groupName: 'Medical Record Access APIs (Access Permission APIs)'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Paginate transfers in the system'
+      title: 'View all permission accesses given by a specified patient'
       description: |-
-        ###For: Web
-        Only admins are allowed to use this API
+        ###For: Web, Mobile(Patient)
+        Only admins and patients are allowed to use this API
+        ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
       authenticated: true
       deprecated: false
     headers:
@@ -289,70 +179,10 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      with_attended:
+      with_unactive:
         custom: []
-        name: with_attended
-        description: 'Boolean value means does the admin want all of transfers to be showen even with attended ones?'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      per_page: 17
-      with_attended: 17
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 405
-        content: '{"did_succeed":false,"message":"HTTP request method not allowed, The GET method is not supported for route api\/transfer\/17\/17. Supported methods: POST."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - GET
-    uri: 'api/transfer/aP/{with_attended}/{patient_id}'
-    metadata:
-      custom: []
-      groupName: 'Transfer APIs'
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'View all transfers of a specified patient'
-      description: |-
-        ###For: Web, Mobile(Patient)
-        Only admins and patients are allowed to use this API
-        ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_AUTH_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      with_attended:
-        custom: []
-        name: with_attended
-        description: 'Boolean value means does the admin want all of transfers to be showen even with attended ones?'
+        name: with_unactive
+        description: 'Boolean value means does the user want all of permission accesses to be showen even with unactivated ones?'
         required: true
         example: 17
         type: integer
@@ -372,7 +202,8 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      with_attended: 17
+      per_page: 17
+      with_unactive: 17
       patient_id: 17
     queryParameters: []
     cleanQueryParameters: []
@@ -382,8 +213,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 404
-        content: '{"did_succeed":false,"message":"Not found"}'
+        status: 401
+        content: '{"did_succeed":false,"message":"Unauthenticated; A valid token is required"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -401,17 +232,17 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/transfer/pRef/{per_page}/{with_attended}/{doctor_id}'
+    uri: 'api/access/VA/{per_page}/{with_unactive}/{visit_id}'
     metadata:
       custom: []
-      groupName: 'Transfer APIs'
+      groupName: 'Medical Record Access APIs (Access Permission APIs)'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Paginate transfers sent by a specified doctor'
+      title: 'View all permission accesses to a specified visit'
       description: |-
-        ###For: Web, Mobile(Doctor)
-        Only admins and doctors are allowed to use this API
+        ###For: Web, Mobile(Patient)
+        Only admins and patients are allowed to use this API
         ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
       authenticated: true
       deprecated: false
@@ -431,10 +262,10 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      with_attended:
+      with_unactive:
         custom: []
-        name: with_attended
-        description: 'Boolean value means does the admin want all of transfers to be showen even with attended ones?'
+        name: with_unactive
+        description: 'Boolean value means does the user want all of permission accesses to be showen even with unactivated ones?'
         required: true
         example: 17
         type: integer
@@ -442,10 +273,10 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      doctor_id:
+      visit_id:
         custom: []
-        name: doctor_id
-        description: ''
+        name: visit_id
+        description: 'min:1 The ID number of visit to view who have access to it'
         required: true
         example: 17
         type: integer
@@ -455,8 +286,8 @@ endpoints:
         deprecated: false
     cleanUrlParameters:
       per_page: 17
-      with_attended: 17
-      doctor_id: 17
+      with_unactive: 17
+      visit_id: 17
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -465,8 +296,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 404
-        content: '{"did_succeed":false,"message":"Not found"}'
+        status: 401
+        content: '{"did_succeed":false,"message":"Unauthenticated; A valid token is required"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -483,19 +314,18 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - GET
-    uri: 'api/transfer/pRec/{per_page}/{with_attended}/{doctor_id}'
+      - POST
+    uri: 'api/access/{id}'
     metadata:
       custom: []
-      groupName: 'Transfer APIs'
+      groupName: 'Medical Record Access APIs (Access Permission APIs)'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Paginate received transfers of a specified doctor'
+      title: 'Revoke an access permission'
       description: |-
-        ###For: Web, Mobile(Doctor)
-        Only admins and doctors are allowed to use this API
-        ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
+        ###For: Mobile(Patient)
+        Only patients are allowed to use this API
       authenticated: true
       deprecated: false
     headers:
@@ -503,32 +333,10 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      per_page:
+      id:
         custom: []
-        name: per_page
-        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      with_attended:
-        custom: []
-        name: with_attended
-        description: 'Boolean value means does the admin want all of transfers to be showen even with attended ones?'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      doctor_id:
-        custom: []
-        name: doctor_id
-        description: ''
+        name: id
+        description: 'min:1 The ID number of medical access record to be revoked'
         required: true
         example: 17
         type: integer
@@ -537,24 +345,13 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      per_page: 17
-      with_attended: 17
-      doctor_id: 17
+      id: 17
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 404
-        content: '{"did_succeed":false,"message":"Not found"}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
+    responses: []
     responseFields: []
     auth:
       - headers

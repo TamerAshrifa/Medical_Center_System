@@ -92,7 +92,7 @@ class AppointmentService extends Service
 
 
         $availableTimesResponse = $this->allAvailableTimesToBook($dto->datetime, $dto->doctor_id);
-        if ($availableTimesResponse->did_succeed != true)
+        if (!$availableTimesResponse->did_succeed)
             return new Response(
                 false,
                 Response::messageToArray('Sorry, This appointment time isn\'t available to book'),

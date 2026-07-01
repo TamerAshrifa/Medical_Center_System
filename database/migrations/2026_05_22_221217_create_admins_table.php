@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('added_by_admin_id')->nullable()->constrained('admins')->restrictOnDelete();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

@@ -100,6 +100,23 @@ class DoctorController extends Controller
     }
 
     /**
+     * Search for a Doctor
+     * 
+     * ###For: Mobile(Patient - Doctor), Web
+     * Everyone in the system is allowed to use this API.
+     * This API is to search for a doctor by first_name, returns a collection of doctors have similar first_name
+     * @urlParam search_word string required 
+     */
+    public function search(string $search_word)
+    {
+        $response = $this->doctorService->search($search_word);
+
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
+    }
+
+    /**
      * Update a Doctor
      * 
      * ###For: Mobile(Doctor)

@@ -1,47 +1,56 @@
-name: 'Patient Complaint APIs'
+name: 'Visit APIs'
 description: ''
 endpoints:
   -
     custom: []
     httpMethods:
-      - POST
-    uri: api/complaint
+      - GET
+    uri: 'api/visits/{per_page}'
     metadata:
       custom: []
-      groupName: 'Patient Complaint APIs'
+      groupName: 'Visit APIs'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Make a Complaint'
+      title: 'View all visits in the system'
       description: |-
-        ###For: Mobile(Patient)
-        Only patients are allowed to use this API.
+        ###For: Web
+        Only admins are allowed to use this API
       authenticated: true
       deprecated: false
     headers:
       Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      content:
+    urlParameters:
+      per_page:
         custom: []
-        name: content
-        description: 'Must not be greater than 1000 characters.'
+        name: per_page
+        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
         required: true
-        example: vmqeopfuudtdsufvyvddq
-        type: string
+        example: 17
+        type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-    cleanBodyParameters:
-      content: vmqeopfuudtdsufvyvddq
+    cleanUrlParameters:
+      per_page: 17
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"did_succeed":false,"message":"Unauthenticated; A valid token is required"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
     responseFields: []
     auth:
       - headers
@@ -54,14 +63,85 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/complaint/{patient_id}'
+    uri: 'api/visits/DV/{per_page}/{doctor_id}'
     metadata:
       custom: []
-      groupName: 'Patient Complaint APIs'
+      groupName: 'Visit APIs'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'View all complaints made by a specified patient'
+      title: 'View all visits of a specified doctor'
+      description: |-
+        ###For: Web, Mobile(Doctor)
+        Only admins and doctors are allowed to use this API
+        ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      per_page:
+        custom: []
+        name: per_page
+        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      doctor_id:
+        custom: []
+        name: doctor_id
+        description: "min:1 The ID number of doctor to view it's visits"
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      per_page: 17
+      doctor_id: 17
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"did_succeed":false,"message":"Unauthenticated; A valid token is required"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/visits/PV/{per_page}/{patient_id}'
+    metadata:
+      custom: []
+      groupName: 'Visit APIs'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'View all visits of a specified patient'
       description: |-
         ###For: Web, Mobile(Patient)
         Only admins and patients are allowed to use this API
@@ -73,10 +153,21 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
+      per_page:
+        custom: []
+        name: per_page
+        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
       patient_id:
         custom: []
         name: patient_id
-        description: 'min:1 The ID number of patient to view all his Complaints'
+        description: "min:1 The ID number of patient to view it's visits"
         required: true
         example: 17
         type: integer
@@ -85,6 +176,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
+      per_page: 17
       patient_id: 17
     queryParameters: []
     cleanQueryParameters: []
@@ -113,17 +205,18 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/complaint/s/{id}'
+    uri: 'api/visits/s/{id}'
     metadata:
       custom: []
-      groupName: 'Patient Complaint APIs'
+      groupName: 'Visit APIs'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Show a Patient-Complaint'
+      title: 'View a specified visit'
       description: |-
-        ###For: Web, Mobile(Patient)
-        Only admins and patients are allowed to use this API
+        ###For: Web, Mobile(Patient, Doctor)
+        ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
+        Everyone in the system is allowed to use this API
       authenticated: true
       deprecated: false
     headers:
@@ -134,7 +227,7 @@ endpoints:
       id:
         custom: []
         name: id
-        description: 'The ID number of medical access record to be shown'
+        description: 'min:1 The ID number of visit to be showen'
         required: true
         example: 17
         type: integer
@@ -170,19 +263,18 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - GET
-    uri: 'api/complaint/{per_page}/{with_reviewed}'
+      - POST
+    uri: 'api/visits/{id}'
     metadata:
       custom: []
-      groupName: 'Patient Complaint APIs'
+      groupName: 'Visit APIs'
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: "View all Patients' Complaints"
+      title: 'Update a specified visit'
       description: |-
-        ###For: Web
-        Only admins are allowed to use this API
-        ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
+        ###For: Mobile(Doctor)
+        Only doctors are allowed to use this API
       authenticated: true
       deprecated: false
     headers:
@@ -190,21 +282,10 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      per_page:
+      id:
         custom: []
-        name: per_page
-        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      with_reviewed:
-        custom: []
-        name: with_reviewed
-        description: 'Boolean value means does the admin want all of the complaints to be showen even with reviewed ones?'
+        name: id
+        description: 'min:1 The ID number of visit to be updated'
         required: true
         example: 17
         type: integer
@@ -213,82 +294,59 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      per_page: 17
-      with_reviewed: 17
+      id: 17
     queryParameters: []
     cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses:
-      -
+    bodyParameters:
+      medical_diagnosis:
         custom: []
-        status: 405
-        content: '{"did_succeed":false,"message":"HTTP request method not allowed, The GET method is not supported for route api\/complaint\/17\/17. Supported methods: POST."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
-    responseFields: []
-    auth:
-      - headers
-      - Authorization
-      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
-    controller: null
-    method: null
-    route: null
-  -
-    custom: []
-    httpMethods:
-      - POST
-    uri: 'api/complaint/{reply}/{id}'
-    metadata:
-      custom: []
-      groupName: 'Patient Complaint APIs'
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: 'Make a Patient-Complaint Reviewed'
-      description: |-
-        ###For: Web
-        Only admins are allowed to use this API
-      authenticated: true
-      deprecated: false
-    headers:
-      Authorization: 'Bearer {YOUR_AUTH_KEY}'
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters:
-      reply:
-        custom: []
-        name: reply
-        description: ''
-        required: true
-        example: consequatur
+        name: medical_diagnosis
+        description: 'Must not be greater than 500 characters.'
+        required: false
+        example: vmqeopfuudtdsufvyvddq
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      id:
+      prescription:
         custom: []
-        name: id
-        description: 'The ID number of medical access record to be revoked'
-        required: true
-        example: 17
-        type: integer
+        name: prescription
+        description: 'Must not be greater than 250 characters.'
+        required: false
+        example: amniihfqcoynlazghdtqt
+        type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-    cleanUrlParameters:
-      reply: consequatur
-      id: 17
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
+      notes:
+        custom: []
+        name: notes
+        description: 'Must not be greater than 1000 characters.'
+        required: false
+        example: qxbajwbpilpmufinllwlo
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      notes_for_other_doctors:
+        custom: []
+        name: notes_for_other_doctors
+        description: 'Must not be greater than 1000 characters.'
+        required: false
+        example: auydlsmsjuryvojcybzvr
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      medical_diagnosis: vmqeopfuudtdsufvyvddq
+      prescription: amniihfqcoynlazghdtqt
+      notes: qxbajwbpilpmufinllwlo
+      notes_for_other_doctors: auydlsmsjuryvojcybzvr
     fileParameters: []
     responses: []
     responseFields: []

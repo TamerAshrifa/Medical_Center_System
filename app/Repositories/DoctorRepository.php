@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enums\UserRoleEnum;
 use App\Models\Doctor;
 use App\Repositories\Interfaces\DoctorRepositoryInterface;
 use DB;
@@ -85,4 +86,16 @@ class DoctorRepository extends Repository implements DoctorRepositoryInterface
             ->join('users', 'doctors.user_id', '=', 'users.id')
             ->pluck('users.email');
     }
+
+    public function search(string $searchWord)
+    {
+        return Doctor::query()
+            ->with('user:id,first_name,last_name')
+            ->whereHas('user', function ($q) use ($searchWord) {
+                $q->where('role', UserRoleEnum::DOCTOR->value)
+                    ->where('first_name', 'LIKE', "%$searchWord%");
+            })
+            ->get();
+    }
+
 }

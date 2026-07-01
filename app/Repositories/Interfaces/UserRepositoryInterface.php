@@ -3,8 +3,6 @@
 namespace App\Repositories\Interfaces;
 
 use App\DTOs\User\UserDTOUpdate;
-use App\Enums\UserRoleEnum;
-use App\GeneralClasses\Response;
 use App\Models\User;
 use App\DTOs\User\UserDTO;
 
@@ -22,5 +20,6 @@ interface UserRepositoryInterface extends RepositoryInterface
     public function logout(int $id): bool;
     public function paginate(int $perPage = 10);
     public function update(int $id, UserDTOUpdate $dto): bool;
+    public function searchForNonRoledUser(string $searchWord);
 
 }

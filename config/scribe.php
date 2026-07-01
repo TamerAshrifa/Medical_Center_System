@@ -194,6 +194,7 @@ return [
             'Patient Complaint APIs',
             'Transfer APIs',
             'Unavailability APIs',
+            'Admin APIs',
         ],
     ],
 

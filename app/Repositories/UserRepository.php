@@ -83,5 +83,11 @@ class UserRepository extends Repository implements UserRepositoryInterface
 
         return $user->save();
     }
-
+    public function searchForNonRoledUser(string $searchWord)
+    {
+        return User::query()
+            ->where('role', null)
+            ->where('first_name', 'LIKE', "%$searchWord%")
+            ->get();
+    }
 }
