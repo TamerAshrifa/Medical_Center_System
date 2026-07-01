@@ -50,7 +50,7 @@ use App\Http\Middleware\CheckPatientMiddleware;
 use Illuminate\Support\Str;
 use Illuminate\Database\QueryException;
 use Illuminate\Validation\ValidationException;
-
+use App\GeneralClasses\Response;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -105,44 +105,45 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (AuthenticationException $e, $request) {
             return response()->json([
                 'did_succeed' => false,
-                'message' => 'Unauthenticated; A valid token is required',
+                'message' => Response::messageToArray('Unauthenticated; A valid token is required'),
             ], 401);
+
         });
 
         $exceptions->render(function (ThrottleRequestsException $e, $request) {
             $seconds = $e->getHeaders()['Retry-After'] ?? 60;
             return response()->json([
                 'did_succeed' => false,
-                'message' => ($seconds > 1) ? "Several attempts were made, please try again in $seconds seconds" :
-                    'Several attempts were made, please try again after 1 second',
+                'message' => ($seconds > 1) ? Response::messageToArray("Several attempts were made, please try again in $seconds seconds") :
+                    Response::messageToArray("Several attempts were made, please try again after 1 second"),
             ], 429);
         });
 
         $exceptions->render(function (TransportExceptioN $e, $request) {
             return response()->json([
                 'did_succeed' => false,
-                'message' => 'No internet connection',
+                'message' => Response::messageToArray('No internet connection'),
             ], 503);
         });
 
         $exceptions->render(function (RfcComplianceException $e, $request) {
             return response()->json([
                 'did_succeed' => false,
-                'message' => "Invalid email format",
+                'message' => Response::messageToArray('Invalid email format'),
             ], 422);
         });
 
         $exceptions->render(function (MethodNotAllowedHttpException $e, $request) {
             return response()->json([
                 'did_succeed' => false,
-                'message' => 'HTTP request method not allowed, ' . $e->getMessage(),
+                'message' => Response::messageToArray('HTTP request method not allowed, ' . $e->getMessage()),
             ], 405);
         });
 
         $exceptions->render(function (ModelNotFoundException $e, $request) {
             return response()->json([
                 'did_succeed' => false,
-                'message' => Str::headline(class_basename($e->getModel())) . " not found",
+                'message' => Response::messageToArray(Str::headline(class_basename($e->getModel())) . " not found"),
             ], 404);
         });
 
@@ -152,11 +153,11 @@ return Application::configure(basePath: dirname(__DIR__))
                 if ($previous instanceof ModelNotFoundException)
                     return response()->json([
                         'did_succeed' => false,
-                        'message' => Str::headline(class_basename($previous->getModel())) . ' not found',
+                        'message' => Response::messageToArray(Str::headline(class_basename($previous->getModel())) . ' not found'),
                     ], 404);
             return response()->json([
                 'did_succeed' => false,
-                'message' => 'Not found',
+                'message' => Response::messageToArray('Not found'),
             ], 404);
         });
 
@@ -165,7 +166,7 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($driverErrorCode == 1451)
                 return response()->json([
                     'did_succeed' => false,
-                    'message' => 'It cannot be deleted because it\'s referenced by existing entities',
+                    'message' => Response::messageToArray('It cannot be deleted because it\'s referenced by existing entities'),
                 ], 409);
 
             throw $e;
@@ -174,7 +175,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (ValidationException $e, $request) {
             return response()->json([
                 'did_succeed' => false,
-                'message' => 'Invalid input',
+                'message' => Response::messageToArray('Invalid input'),
                 'errors' => $e->errors(),
             ], 422);
         });
@@ -189,7 +190,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
             return response()->json([
                 'did_succeed' => false,
-                'base_message' => 'Unexpected error occurred, please contact the administrator',
+                'message' => Response::messageToArray('Unexpected error occurred, please contact the administrator'),
             ], 500);
         });
 
