@@ -12,7 +12,6 @@ use App\Http\Resources\User\UserToDoctorResource;
 use App\Http\Resources\User\UserToPatientResource;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
-use App\GeneralClasses\Enums\ResponseStatusEnum;
 use Illuminate\Support\Facades\Auth;
 use Storage;
 
@@ -29,7 +28,7 @@ class UserController extends Controller
     }
     private function resource(&$userOrCollectionOfIt, bool $isCollection)
     {
-        switch ($this->getCurrentUserRole()) {
+        switch ($this->currentUserRole()) {
             case UserRoleEnum::ADMIN:
                 if ($isCollection)
                     return UserToAdminResource::collection($userOrCollectionOfIt);
@@ -63,21 +62,16 @@ class UserController extends Controller
         }
         $response = $this->userService->create(UserDTO::fromRequest($userData));
 
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
+        if (!$response->did_succeed) {
             if (isset($userData['photo']))
                 Storage::disk('public')->delete($userData['photo']);
 
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
+            return $this->jsonResponse($response);
         }
 
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, false),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -91,11 +85,9 @@ class UserController extends Controller
     {
         $response = $this->userService->paginate($per_page);
 
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -112,16 +104,15 @@ class UserController extends Controller
         if ($loggedUser->role == null || $loggedUser->role == UserRoleEnum::PATIENT)
             if ($loggedUser->id != $id)
                 return response()->json([
-                    'result' => 'Fail',
+                    'did_succeed' => false,
                     'message' => 'Patients can\'t see other patients profiles',
                 ], 403);
 
         $response = $this->userService->show($id);
 
-        return response()->json([
-            'result' => $response->result,
-            'data' => $this->resource($response->data, false),
-        ]);
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -135,7 +126,7 @@ class UserController extends Controller
     {
         if (Auth::id() != $id)
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => 'No one can edit another user\'s information',
             ], 403);
 
@@ -147,22 +138,13 @@ class UserController extends Controller
         }
         $response = $this->userService->update($id, UserDTOUpdate::fromRequest($userData));
 
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
+        if (!$response->did_succeed)
             if (isset($userData['photo']))
                 Storage::disk('public')->delete($userData['photo']);
 
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
-
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, false),
-        ]);
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -176,12 +158,8 @@ class UserController extends Controller
     {
         $response = $this->userService->delete($id);
 
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
+        if (!$response->did_succeed)
+            return $this->jsonResponse($response);
 
         return response()->noContent(204);
     }

@@ -2,8 +2,6 @@
 
 namespace App\Repositories;
 
-use App\GeneralClasses\Enums\ResponseStatusEnum;
-use App\GeneralClasses\Response;
 use App\Models\Speciality;
 use App\Repositories\Interfaces\SpecialityRepositoryInterface;
 use DB;
@@ -14,53 +12,49 @@ class SpecialityRepository extends Repository implements SpecialityRepositoryInt
     {
         $included = [];
         if ($withAdderAdmin)
-            $included[] = 'addedByAdmin';
+            $included = array_merge($included, [
+                'addedByAdmin:id,user_id',
+                'addedByAdmin.user:id,first_name,last_name',
+            ]);
         if ($withDoctors)
-            $included[] = 'doctors';
+            $included = array_merge($included, [
+                'doctors:id,user_id',
+                'doctors.user:id,first_name,last_name',
+            ]);
 
         return $included;
     }
-    public function addNewSpeciality(array $specialityData): Response
+    public function add(array $specialityData): Speciality
     {
-        return new Response(
-            ResponseStatusEnum::SUCCESS,
-            null,
-            Speciality::create($specialityData),
-            201
-        );
+        return Speciality::create($specialityData);
     }
-    public function getAllSpecialitiesPaged(
-        int $per_page = 10,
-        bool $isWithAdderAdmin = false,
-        bool $isWithDoctors = false
-    ): Response {
-        return new Response(
-            ResponseStatusEnum::SUCCESS,
-            null,
-            Speciality::with($this->getIncludedEntities($isWithAdderAdmin, $isWithDoctors))
-                ->orderBy('created_at', 'desc')->paginate($per_page),
-        );
+    public function paginate(
+        int $perPage = 10,
+        bool $withAdderAdmin = false,
+        bool $withDoctors = false
+    ) {
+        return Speciality::query()
+            ->with($this->getIncludedEntities($withAdderAdmin, $withDoctors))
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage);
     }
 
-    public function getSpecialityById(
-        int $specialityId,
-        bool $isWithAdderAdmin = false,
-        bool $isWithDoctors = false,
-    ): Response {
-        return new Response(
-            ResponseStatusEnum::SUCCESS,
-            null,
-            Speciality::with($this->getIncludedEntities($isWithAdderAdmin, $isWithDoctors))
-                ->find($specialityId)
-        );
+    public function find(
+        int $id,
+        bool $withAdderAdmin = false,
+        bool $withDoctors = false,
+        bool $failIfNotExists = true,
+    ): Speciality {
+        $query = Speciality::query()
+            ->with($this->getIncludedEntities($withAdderAdmin, $withDoctors));
+        return $failIfNotExists ?
+            $query->findOrFail($id) :
+            $query->find($id);
     }
 
-    public function deleteSpeciality(Speciality &$speciality): Response
+    public function delete(Speciality &$speciality): bool
     {
-        return DB::transaction(function () use (&$speciality) {
-            $speciality->delete();
-            return new Response(ResponseStatusEnum::SUCCESS, null, null, 204);
-        });
+        return $speciality->delete() > 0;
     }
 
 }

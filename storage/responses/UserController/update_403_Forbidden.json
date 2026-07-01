@@ -1,4 +1,4 @@
 {
-    "result": "Fail",
+    "did_succeed": false,
     "message": "No one can edit another user's information"
 }

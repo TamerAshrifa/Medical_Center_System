@@ -2,53 +2,39 @@
 
 namespace App\Repositories;
 
-use App\GeneralClasses\Enums\ResponseStatusEnum;
-use App\GeneralClasses\Response;
 use App\Models\Room;
 use App\Repositories\Interfaces\RoomRepositoryInterface;
-use DB;
 
 class RoomRepository extends Repository implements RoomRepositoryInterface
 {
-    public function addNewRoom(array $roomData): Response
+    public function add(array $roomData): Room
     {
-        return new Response(
-            ResponseStatusEnum::SUCCESS,
-            null,
-            Room::create($roomData),
-            201
-        );
+        return Room::create($roomData);
     }
-    public function getAllRoomsPaged(int $per_page = 10): Response
+    public function paginate(int $perPage = 10)
     {
-        return new Response(
-            ResponseStatusEnum::SUCCESS,
-            null,
-            Room::orderBy('created_at', 'desc')->paginate($per_page),
-        );
+        return Room::orderBy('created_at', 'desc')->paginate($perPage);
     }
-    public function getRoomByIdWithAdmin(int $roomId): Response
+    public function findWithAdmin(int $id, bool $failIfNotExists = true): Room
     {
-        return new Response(
-            ResponseStatusEnum::SUCCESS,
-            null,
-            Room::with('lastUpdateByAdmin')->find($roomId)
-        );
+        $query = Room::query()
+            ->with([
+                'lastUpdateByAdmin:id,user_id',
+                'lastUpdateByAdmin.user:id,first_name,last_name',
+            ]);
+        return $failIfNotExists ?
+            $query->findOrFail($id) :
+            $query->find($id);
     }
-    public function getRoomById(int $roomId): Response
+    public function find(int $id, bool $failIfNotExists = true): Room
     {
-        return new Response(
-            ResponseStatusEnum::SUCCESS,
-            null,
-            Room::find($roomId)
-        );
+        return $failIfNotExists ?
+            Room::findOrFail($id) :
+            Room::find($id);
     }
-    public function deleteRoom(Room $room): Response
+    public function delete(Room $room): bool
     {
-        return DB::transaction(function () use ($room) {
-            $room->delete();
-            return new Response(ResponseStatusEnum::SUCCESS, null, null, 204);
-        });
+        return $room->delete() > 0;
     }
 
 }

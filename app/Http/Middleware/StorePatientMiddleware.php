@@ -20,14 +20,14 @@ class StorePatientMiddleware
         $loggedUser = Auth::user();
         if (!($loggedUser->role == null || $loggedUser->role == UserRoleEnum::ADMIN)) {
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => 'Only admins and patients (to themselves) allowed',
             ], 403);
         }
 
         if ($loggedUser->role == null && $loggedUser->id != $request->user_id) {
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => 'Patients can only add themselves',
             ], 403);
         }

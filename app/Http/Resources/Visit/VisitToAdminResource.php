@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Visit;
 
-use App\Http\Resources\Appointment\AppointmentToAdminResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,6 +17,12 @@ class VisitToAdminResource extends JsonResource
         return [
             'id' => $this->id,
             'appointment_id' => $this->appointment_id,
+            'patient_id' => $this->appointment->patient->id,
+            'patient_fullname' => $this->appointment->patient->user->first_name . ' ' .
+                $this->appointment->patient->user->last_name,
+            'doctor_id' => $this->appointment->doctor->id,
+            'doctor_fullname' => $this->appointment->doctor->user->first_name . ' ' .
+                $this->appointment->doctor->user->last_name,
             'actual_time' => $this->actual_time->format('Y-m-d H:i'),
             'medical_diagnosis' => $this->medical_diagnosis,
             'prescription' => $this->prescription,

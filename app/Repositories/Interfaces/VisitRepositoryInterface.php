@@ -8,13 +8,11 @@ use App\Models\Visit;
 
 interface VisitRepositoryInterface extends RepositoryInterface
 {
-    public function paginate(int $per_page = 10);
-    public function paginatePatientVisits(int $per_page = 10, int $patient_id);
-    public function paginateDoctorVisits(int $per_page = 10, int $doctor_id);
+    public function paginate(int $perPage = 10);
+    public function paginatePatientVisits(int $perPage = 10, int $patientId);
+    public function paginateDoctorVisits(int $perPage = 10, int $doctorId);
     public function find($failIfNotExists = true, bool $withAppointment, int $id): Visit|null;
-    public function create(VisitDTO $dtoData): Visit;
-    public function update(VisitDTOUpdate $dtoData, int $id): bool;
-    public function exists(int $appointment_id): bool;
-
+    public function create(VisitDTO $dto): Visit;
+    public function update(VisitDTOUpdate $dto, int $id): bool;
 
 }

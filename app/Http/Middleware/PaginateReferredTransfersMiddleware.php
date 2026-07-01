@@ -21,7 +21,7 @@ class PaginateReferredTransfersMiddleware
         if ($user->role == UserRoleEnum::DOCTOR)
             if ($user->doctor->id != $request->route('doctor_id'))
                 return response()->json([
-                    'result' => 'Fail',
+                    'did_succeed' => false,
                     'message' => 'Doctors can\'t see other doctors\' transfers',
                 ], 403);
 

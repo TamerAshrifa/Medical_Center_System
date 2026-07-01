@@ -5,133 +5,96 @@ namespace App\Services;
 use App\DTOs\Doctor\DoctorDTO;
 use App\DTOs\Doctor\DoctorDTOUpdate;
 use App\Enums\UserRoleEnum;
-use App\GeneralClasses\Enums\ResponseStatusEnum;
 use App\GeneralClasses\Response;
-use App\Http\Resources\Doctor\DoctorToAdminResource;
-use App\Http\Resources\Doctor\DoctorToDoctorResource;
-use App\Http\Resources\Doctor\DoctorToPatientResource;
-use App\Models\User;
 use App\Repositories\Interfaces\DoctorRepositoryInterface;
+use App\Repositories\Interfaces\UserRepositoryInterface;
 use DB;
 
 class DoctorService extends Service
 {
-    public function __construct(protected DoctorRepositoryInterface $doctorRepository)
-    {
+    public function __construct(
+        protected DoctorRepositoryInterface $doctorRepository,
+        protected UserRepositoryInterface $userRepository
+    ) {
     }
 
-    private function fillIncludedEntities(bool &$isWithRoom, bool &$isWithAdderAdmin): void
+    private function fillIncludedEntities(bool &$withRoom, bool &$withAdderAdmin, UserRoleEnum $currentUserRole): void
     {
-        switch ($this->getCurrentUserRole()) {
+        switch ($currentUserRole) {
             case UserRoleEnum::ADMIN:
-                $isWithRoom = $isWithAdderAdmin = true;
+                $withRoom = $withAdderAdmin = true;
                 break;
             case UserRoleEnum::PATIENT:
-                $isWithRoom = $isWithAdderAdmin = false;
+                $withRoom = $withAdderAdmin = false;
                 break;
             case UserRoleEnum::DOCTOR:
-                $isWithRoom = true;
-                $isWithAdderAdmin = false;
+                $withRoom = true;
+                $withAdderAdmin = false;
                 break;
         }
     }
-    private function getDoctorResource(&$doctorOrCollectionOfIt, bool $isCollection)
-    {
-        switch ($this->getCurrentUserRole()) {
-            case UserRoleEnum::ADMIN:
-                if ($isCollection)
-                    return DoctorToAdminResource::collection($doctorOrCollectionOfIt);
-                return new DoctorToAdminResource($doctorOrCollectionOfIt);
-            case UserRoleEnum::PATIENT:
-                if ($isCollection)
-                    return DoctorToPatientResource::collection($doctorOrCollectionOfIt);
-                return new DoctorToPatientResource($doctorOrCollectionOfIt);
-            case UserRoleEnum::DOCTOR:
-                if ($isCollection)
-                    return DoctorToDoctorResource::collection($doctorOrCollectionOfIt);
-                return new DoctorToDoctorResource($doctorOrCollectionOfIt);
-        }
-    }
-    public function getAllDoctorsPaged(int $per_page = 10): Response
+    public function paginate(int $perPage = 10, UserRoleEnum $currentUserRole): Response
     {
         $isWithRoom = $isWithAdderAdmin = false;
-        $this->fillIncludedEntities($isWithRoom, $isWithAdderAdmin);
-        $response = $this->doctorRepository->getAllDoctorsPaged($per_page, $isWithRoom, $isWithAdderAdmin);
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
+        $this->fillIncludedEntities($isWithRoom, $isWithAdderAdmin, $currentUserRole);
+        $records = $this->doctorRepository->paginate($perPage, $isWithRoom, $isWithAdderAdmin);
 
-        $doctors = $response->data;
-        $items = $doctors->items();
         return new Response(
-            ResponseStatusEnum::SUCCESS,
-            [
-                'result' => 'Success',
-                'current_page_number' => $doctors->currentPage(),
-                'last_page_number' => $doctors->lastPage(),
-                'doctors_per_page' => $doctors->perPage(),
-                'next_page_url' => $doctors->nextPageUrl(),
-                'previous_page_url' => $doctors->previousPageUrl(),
-                'first_page_url' => $doctors->url(1),
-                'last_page_url' => $doctors->url($doctors->lastPage()),
-                'total_doctors_number' => $doctors->total(),
-            ],
-            $this->getDoctorResource($items, true),
+            true,
+            $this->paginationMessage($records),
+            $records->items(),
         );
     }
-    public function addNewDoctor(DoctorDTO $doctorDTO): Response
+    public function add(DoctorDTO $dto): Response
     {
-        $user = User::find($doctorDTO->user_id);
+        $user = $this->userRepository->find($dto->user_id);
         if ($user->role != null)
             return new Response(
-                ResponseStatusEnum::FAIL,
+                false,
                 Response::messageToArray('User is already a ' . $user->role->value . ', it can\'t be modified'),
                 null,
                 409
             );
 
-        $response = new Response(ResponseStatusEnum::FAIL, null, null, 400);
+        $addedDoctor = null;
         DB::transaction(
-            function () use ($user, &$response, $doctorDTO) {
+            function () use ($user, &$addedDoctor, $dto) {
                 $user->role = UserRoleEnum::DOCTOR;
                 $user->save();
-                $response = $this->doctorRepository->addNewDoctor($doctorDTO->toArray());
+                $addedDoctor = $this->doctorRepository->add($dto->toArray());
             }
         );
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
-
-        $addedDoctor = $response->data;
 
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             Response::messageToArray('Doctor added successfully'),
-            $this->getDoctorResource($addedDoctor, false),
+            $addedDoctor,
             201
         );
     }
-    public function showDoctor(int $doctorId): Response
+    public function show(int $id, UserRoleEnum $currentUserRole): Response
     {
         $isWithRoom = $isWithAdderAdmin = false;
-        $this->fillIncludedEntities($isWithRoom, $isWithAdderAdmin);
+        $this->fillIncludedEntities($isWithRoom, $isWithAdderAdmin, $currentUserRole);
 
-        $doctor = $this->doctorRepository->getDoctorById($doctorId, true, $isWithRoom, $isWithAdderAdmin);
+        $doctor = $this->doctorRepository->find($id, true, $isWithRoom, $isWithAdderAdmin);
 
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             null,
-            $this->getDoctorResource($doctor, false),
+            $doctor,
         );
     }
-    public function updateDoctor(DoctorDTOUpdate $doctorDTO, int $doctorId): Response
+    public function update(DoctorDTOUpdate $dto, int $id): Response
     {
-        $doctor = $this->doctorRepository->getDoctorById($doctorId);
+        $doctor = $this->doctorRepository->find($id);
 
-        $doctorArray = $doctorDTO->toArray();
+        $doctorArray = $dto->toArray();
 
         $doctor->fill($doctorArray);
         if (!$doctor->isDirty()) {
             return new Response(
-                ResponseStatusEnum::NOTHING,
+                true,
                 Response::messageToArray('No changes detected'),
             );
         }
@@ -139,21 +102,24 @@ class DoctorService extends Service
         $doctor->save();
 
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             Response::messageToArray('Doctor updated successfully'),
-            $this->getDoctorResource($doctor, false),
+            $doctor,
         );
     }
-    public function deleteDoctor(int $doctorId): Response
+    public function delete(int $id): Response
     {
-        $doctor = $this->doctorRepository->getDoctorById($doctorId);
+        $doctor = $this->doctorRepository->find($id);
 
+        if (!$this->doctorRepository->delete($doctor))
+            return new Response(
+                false,
+                Response::messageToArray('Failed to delete the doctor, please try again'),
+                null,
+                500
+            );
 
-        $response = $this->doctorRepository->deleteDoctor($doctor);
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
-
-        return new Response(ResponseStatusEnum::SUCCESS, null, null, 204);
+        return new Response(true, null, null, 204);
     }
 
 }

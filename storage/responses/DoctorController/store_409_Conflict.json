@@ -2,7 +2,7 @@
 // The user which being tried to add already has a role.
 
 {
-    "result": "Fail",
+    "did_succeed": false,
     "message": "User is already a patient, it can\'t be modified"
 }
 

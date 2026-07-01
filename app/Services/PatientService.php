@@ -5,10 +5,8 @@ namespace App\Services;
 use App\DTOs\Patient\PatientDTO;
 use App\DTOs\Patient\PatientDTOUpdate;
 use App\Enums\UserRoleEnum;
-use App\GeneralClasses\Enums\ResponseStatusEnum;
+
 use App\GeneralClasses\Response;
-use App\Http\Resources\Patient\PatientToAdminResource;
-use App\Http\Resources\Patient\PatientToItselfResource;
 use App\Models\User;
 use App\Repositories\Interfaces\PatientRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
@@ -22,135 +20,70 @@ class PatientService extends Service
     ) {
     }
 
-    public function getAllPatientsPaged(int $per_page = 10): Response
+    public function paginate(int $perPage = 10): Response
     {
-        $response = $this->patientRepository->getAllPatientsPaged($per_page);
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
-
-        $patients = $response->data;
+        $records = $this->patientRepository->paginate($perPage);
         return new Response(
-            ResponseStatusEnum::SUCCESS,
-            [
-                "result" => "Success",
-                "current_page_number" => $patients->currentPage(),
-                "last_page_number" => $patients->lastPage(),
-                "patients_per_page" => $patients->perPage(),
-                "next_page_url" => $patients->nextPageUrl(),
-                "previous_page_url" => $patients->previousPageUrl(),
-                "first_page_url" => $patients->url(1),
-                "last_page_url" => $patients->url($patients->lastPage()),
-                "total_patients_number" => $patients->total(),
-            ],
-            PatientToAdminResource::collection($patients->items()),
+            true,
+            $this->paginationMessage($records),
+            $records->items(),
         );
     }
-    public function addNewPatient(PatientDTO $patientDTO): Response
+    public function add(PatientDTO $dto): Response
     {
-        $user = User::find($patientDTO->user_id);
+        $user = User::find($dto->user_id);
 
-        $response = new Response(ResponseStatusEnum::FAIL, null, null, 400);
+        $addedPatient = null;
         DB::transaction(
-            function () use ($user, &$response, $patientDTO) {
+            function () use ($user, &$addedPatient, $dto) {
                 $user->role = UserRoleEnum::PATIENT;
                 $user->save();
-                $response = $this->patientRepository->addNewPatient($patientDTO->toArray());
+                $addedPatient = $this->patientRepository->add($dto->toArray());
             }
         );
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
-
-        $addedPatient = $response->data;
 
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             Response::messageToArray('Patient added successfully'),
-            $this->getCurrentUserRole() == UserRoleEnum::ADMIN ?
-            new PatientToAdminResource($addedPatient) :
-            new PatientToItselfResource($addedPatient),
+            $addedPatient,
             201
         );
     }
-    public function showPatient(int $patientId): Response
+    public function show(int $id): Response
     {
-        $response = $this->patientRepository->getPatientByIdWithUser($patientId);
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
-
-        $patient = $response->data;
-        if ($patient == null) {
-            return new Response(
-                ResponseStatusEnum::FAIL,
-                Response::messageToArray('Patient not found'),
-                null,
-                404
-            );
-        }
-
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             null,
-            $this->getCurrentUserRole() === UserRoleEnum::ADMIN ?
-            new PatientToAdminResource($patient) :
-            new PatientToItselfResource($patient),
+            $this->patientRepository->findWithUser($id),
         );
     }
-    public function updatePatient(PatientDTOUpdate $patientDTO, int $patientId): Response
+    public function update(PatientDTOUpdate $dto, int $id): Response
     {
-        $response = $this->patientRepository->getPatientById($patientId);
-
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
-
-        $patient = $response->data;
-        if ($patient == null) {
-            return new Response(
-                ResponseStatusEnum::FAIL,
-                Response::messageToArray('patient not found'),
-                null,
-                404
-            );
-        }
-
-        $patientArray = $patientDTO->toArray();
+        $patient = $this->patientRepository->find($id);
+        $patientArray = $dto->toArray();
         $patient->fill($patientArray);
         if (!$patient->isDirty()) {
             return new Response(
-                ResponseStatusEnum::NOTHING,
+                true,
                 Response::messageToArray('No changes detected'),
             );
         }
 
         $patient->save();
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             Response::messageToArray('Patient updated successfully'),
-            $this->getCurrentUserRole() === UserRoleEnum::ADMIN ?
-            new PatientToAdminResource($patient) :
-            new PatientToItselfResource($patient),
+            $patient,
         );
     }
-    public function deletePatient(int $patientId): Response
+    public function delete(int $id): Response
     {
-        $response = $this->patientRepository->getPatientByIdWithUser($patientId);
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
-
-
-        $patient = $response->data;
-        if ($patient == null) {
-            return new Response(
-                ResponseStatusEnum::FAIL,
-                Response::messageToArray('Patient not found'),
-                null,
-                404
-            );
-        }
+        $patient = $this->patientRepository->findWithUser($id);
 
         $user = $patient->user;
         if ($user == null) {
             return new Response(
-                ResponseStatusEnum::FAIL,
+                false,
                 Response::messageToArray('User of patient not found'),
                 null,
                 404
@@ -160,14 +93,14 @@ class PatientService extends Service
         try {
             DB::transaction(function () use ($patient, $user) {
                 if (
-                    $this->patientRepository->deletePatient($patient)->result != ResponseStatusEnum::SUCCESS ||
+                    !$this->patientRepository->deletePatient($patient) ||
                     !$this->userRepository->deleteByObject($user)
                 )
                     throw new \Exception('Failed to Delete patient, please try again');
             });
         } catch (\Throwable $e) {
             return new Response(
-                ResponseStatusEnum::FAIL,
+                false,
                 Response::messageToArray($e->getMessage()),
                 null,
                 500
@@ -175,7 +108,7 @@ class PatientService extends Service
         }
 
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             null,
             null,
             204

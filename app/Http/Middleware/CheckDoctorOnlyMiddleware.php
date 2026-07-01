@@ -21,7 +21,7 @@ class CheckDoctorOnlyMiddleware
 
         if ($patient->role != UserRoleEnum::DOCTOR)
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => 'Only Doctors allowed',
             ], 403);
 

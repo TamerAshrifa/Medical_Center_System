@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\DTOs\Speciality\SpecialityDTO;
 use App\DTOs\Speciality\SpecialityDTOUpdate;
+use App\Enums\UserRoleEnum;
 use App\Http\Requests\SpecialityController\StoreSpecialityRequest;
 use App\Http\Requests\SpecialityController\UpdateSpecialityRequest;
+use App\Http\Resources\Speciality\SpecialityToAdminResource;
+use App\Http\Resources\Speciality\SpecialityToDoctorResource;
+use App\Http\Resources\Speciality\SpecialityToPatientResource;
 use App\Services\SpecialityService;
 use Illuminate\Http\JsonResponse;
-use App\GeneralClasses\Enums\ResponseStatusEnum;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -20,7 +23,23 @@ class SpecialityController extends Controller
         protected SpecialityService $specialityService,
     ) {
     }
-
+    private function resource(&$recordOrCollection, bool $isCollection)
+    {
+        switch ($this->currentUserRole()) {
+            case UserRoleEnum::ADMIN:
+                if ($isCollection)
+                    return SpecialityToAdminResource::collection($recordOrCollection);
+                return new SpecialityToAdminResource($recordOrCollection);
+            case UserRoleEnum::PATIENT:
+                if ($isCollection)
+                    return SpecialityToPatientResource::collection($recordOrCollection);
+                return new SpecialityToPatientResource($recordOrCollection);
+            case UserRoleEnum::DOCTOR:
+                if ($isCollection)
+                    return SpecialityToDoctorResource::collection($recordOrCollection);
+                return new SpecialityToDoctorResource($recordOrCollection);
+        }
+    }
     /**
      * Add New Speciality
      * 
@@ -30,22 +49,14 @@ class SpecialityController extends Controller
      */
     public function store(StoreSpecialityRequest $request): JsonResponse
     {
-        $specialityData = $request->validated();
-        $specialityData['added_by_admin_id'] = Auth::id();
-        $response = $this->specialityService->addNewSpeciality(SpecialityDTO::fromRequest($specialityData));
+        $specialityData = array_merge($request->validated(), [
+            'added_by_admin_id' => Auth::user()->admin->id,
+        ]);
+        $response = $this->specialityService->add(SpecialityDTO::fromRequest($specialityData));
 
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $response->data,
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -59,13 +70,11 @@ class SpecialityController extends Controller
      */
     public function index(int $per_page): JsonResponse
     {
-        $response = $this->specialityService->getAllSpecialitiesPaged($per_page);
+        $response = $this->specialityService->paginate($per_page, $this->currentUserRole());
 
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $response->data,
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -80,19 +89,11 @@ class SpecialityController extends Controller
      */
     public function show(int $specialityId): JsonResponse
     {
-        $response = $this->specialityService->showSpeciality($specialityId);
+        $response = $this->specialityService->show($specialityId, $this->currentUserRole());
 
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
-
-        return response()->json([
-            'result' => $response->result,
-            'data' => $response->data,
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -107,23 +108,14 @@ class SpecialityController extends Controller
      */
     public function update(UpdateSpecialityRequest $request, int $specialityId): JsonResponse
     {
-        $response = $this->specialityService->updateSpeciality(
+        $response = $this->specialityService->update(
             SpecialityDTOUpdate::fromRequest($request->validated()),
             $specialityId
         );
 
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $response->data,
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -138,14 +130,10 @@ class SpecialityController extends Controller
 
     public function destroy(int $specialityId)
     {
-        $response = $this->specialityService->deleteSpeciality($specialityId);
+        $response = $this->specialityService->delete($specialityId);
 
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
+        if (!$response->did_succeed)
+            return $this->jsonResponse($response);
 
         return response()->noContent(204);
     }

@@ -4,11 +4,8 @@ namespace App\Repositories;
 
 use App\DTOs\User\DoctorSpecialityDTO;
 use App\DTOs\User\DoctorSpecialityDTOUpdate;
-use App\GeneralClasses\Enums\ResponseStatusEnum;
-use App\GeneralClasses\Response;
 use App\Models\DoctorSpeciality;
 use App\Repositories\Interfaces\DoctorSpecialityRepositoryInterface;
-use Illuminate\Support\Facades\DB;
 
 class DoctorSpecialityRepository extends Repository implements DoctorSpecialityRepositoryInterface
 {
@@ -20,43 +17,36 @@ class DoctorSpecialityRepository extends Repository implements DoctorSpecialityR
     ): DoctorSpeciality|null {
         $entities = [];
         if ($withDoctor)
-            $entities[] = 'doctor';
+            $entities = array_merge($entities, [
+                'doctor:id,user_id',
+                'doctor.user:id,first_name,last_name',
+            ]);
         if ($withSpeciality)
-            $entities[] = 'speciality';
+            $entities[] = 'speciality:id,name';
 
         return $failIfNotExists ?
             DoctorSpeciality::with($entities)->findOrFail($id) :
             DoctorSpeciality::with($entities)->find($id);
     }
-    public function paginate(int $per_page = 10)
+    public function paginate(int $perPage = 10)
     {
-        return DoctorSpeciality::orderBy('created_at', 'desc')->paginate($per_page);
+        return DoctorSpeciality::query()
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage);
     }
-    public function create(DoctorSpecialityDTO $dtoData): DoctorSpeciality
+    public function create(DoctorSpecialityDTO $dto): DoctorSpeciality
     {
-        return DoctorSpeciality::create($dtoData->toArray());
+        return DoctorSpeciality::create($dto->toArray());
     }
-    public function update(DoctorSpecialityDTOUpdate $dtoData, int $id): Response
+    public function update(DoctorSpecialityDTOUpdate $dto, int $id): bool
     {
-        return DB::transaction(function () use ($dtoData, $id) {
-            $record = $this->find($id);
+        $record = $this->find($id);
 
-            $record->fill($dtoData->toArray());
-            if (!$record->isDirty()) {
-                return new Response(
-                    ResponseStatusEnum::NOTHING,
-                    Response::messageToArray('No changes detected'),
-                );
-            }
+        $record->fill($dto->toArray());
+        if (!$record->isDirty())
+            return true;
 
-            $record->save();
-
-            return new Response(
-                ResponseStatusEnum::SUCCESS,
-                Response::messageToArray('Updated successfully'),
-                $record
-            );
-        });
+        return $record->save();
     }
     public function delete(int $id): bool
     {
@@ -73,10 +63,19 @@ class DoctorSpecialityRepository extends Repository implements DoctorSpecialityR
 
     public function allForDoctor(int $doctorId)
     {
-        return DoctorSpeciality::with('speciality')->where('doctor_id', $doctorId)->get();
+        return DoctorSpeciality::query()
+            ->with('speciality:id,name')
+            ->where('doctor_id', $doctorId)
+            ->get();
     }
     public function allForSpeciality(int $specialityId)
     {
-        return DoctorSpeciality::with('doctor')->where('speciality_id', $specialityId)->get();
+        return DoctorSpeciality::query()
+            ->with([
+                'doctor:id,user_id',
+                'doctor.user:id,first_name,last_name',
+            ])
+            ->where('speciality_id', $specialityId)
+            ->get();
     }
 }

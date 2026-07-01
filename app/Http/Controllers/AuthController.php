@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Enums\OtpTypeEnum;
-use App\GeneralClasses\Enums\ResponseStatusEnum;
 use App\Http\Requests\AuthController\ForgotPasswordRequest;
 use App\Http\Requests\AuthController\LoginRequest;
 use App\Http\Requests\AuthController\RegisterRequest;
@@ -46,12 +45,9 @@ class AuthController extends Controller
         if (isset($userData['photo']))
             $userData['photo'] = $userData['photo']->store('user_photos', 'public');
 
-        $response = $this->userService->registerUser(UserDTO::fromRequest($userData));
+        $response = $this->userService->register(UserDTO::fromRequest($userData));
 
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-        ], $response->statusCode);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -67,7 +63,6 @@ class AuthController extends Controller
      */
     public function verifyOtp(VerifyOtpRequest $request)
     {
-        //email
         $isForgetOtp = Otp::where('email', $request->email)
             ->where('otp_code', hash_hmac('sha256', $request->otp_code, config('app.key')))
             ->first();
@@ -77,30 +72,23 @@ class AuthController extends Controller
 
         $response = $this->otpService->verifyOtp($request->email, $request->otp_code);
 
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
+        if (!$response->did_succeed)
+            return $this->jsonResponse($response);
 
         if ($isForgetOtp)
             return response()->json([
-                'result' => $response->result,
+                'did_succeed' => $response->did_succeed,
                 'message' => $response->message,
                 'user_id' => PersonalAccessToken::findToken($response->data)->tokenable->id,
                 'reset_token' => $response->data,
             ], $response->statusCode);
 
         return response()->json([
-            'result' => $response->result,
+            'did_succeed' => $response->did_succeed,
             'message' => $response->message,
             'user_id' => PersonalAccessToken::findToken($response->data)->tokenable->id,
             'token' => $response->data,
         ], $response->statusCode);
-
-
-
     }
 
     /**
@@ -113,12 +101,8 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        $response = $this->userService->loginUser($request->email_or_username, $request->password);
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-        ], $response->statusCode);
+        $response = $this->userService->login($request->email_or_username, $request->password);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -131,11 +115,7 @@ class AuthController extends Controller
     public function forgotPassword(ForgotPasswordRequest $request)
     {
         $response = $this->userService->forgotPassword($request->email);
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-        ], $response->statusCode);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -151,16 +131,14 @@ class AuthController extends Controller
     public function resetPassword(ResetPasswordRequest $request)
     {
         $response = $this->userService->resetPassword($request->validated());
-        if ($response->result == ResponseStatusEnum::SUCCESS)
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-                'user_id' => PersonalAccessToken::findToken($response->data)->tokenable->id,
-                'token' => $response->data,
-            ], $response->statusCode);
+        if (!$response->did_succeed)
+            return $this->jsonResponse($response);
+
         return response()->json([
-            'result' => $response->result,
+            'did_succeed' => $response->did_succeed,
             'message' => $response->message,
+            'user_id' => PersonalAccessToken::findToken($response->data)->tokenable->id,
+            'token' => $response->data,
         ], $response->statusCode);
     }
 
@@ -173,9 +151,6 @@ class AuthController extends Controller
     public function logout()
     {
         $response = $this->userService->logout();
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-        ], $response->statusCode);
+        return $this->jsonResponse($response);
     }
 }

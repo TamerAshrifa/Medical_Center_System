@@ -371,7 +371,7 @@
                                 <a href="#unavailability-apis-GETapi-unavailability--with_passed---per_page---doctor_id-">Paginate unavailabilities of a specified doctor</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="unavailability-apis-GETapi-unavailability-m--with_passed---per_page-">
-                                <a href="#unavailability-apis-GETapi-unavailability-m--with_passed---per_page-">View all unavailabilities of the medical center</a>
+                                <a href="#unavailability-apis-GETapi-unavailability-m--with_passed---per_page-">Paginate unavailabilities of the medical center</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -384,7 +384,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: June 28, 2026</li>
+        <li>Last updated: July 1, 2026</li>
     </ul>
 </div>
 
@@ -442,7 +442,7 @@ acounts for them in the appropriate table and permissions; After an admin makes,
     --form "gender="\
     --form "username=mqeopfuudtdsufvyv"\
     --form "password_confirmation=consequatur"\
-    --form "photo=@C:\Users\USER\AppData\Local\Temp\php3954.tmp" </code></pre></div>
+    --form "photo=@C:\Users\USER\AppData\Local\Temp\phpEDD7.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -482,7 +482,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;message&quot;: &quot;OTP-Code was sent to tamrashryft2@gmail.com successfully, please check your inbox&quot;
 }</code>
  </pre>
@@ -675,7 +675,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php3954.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\phpEDD7.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>password_confirmation</code></b>&nbsp;&nbsp;
@@ -744,7 +744,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;message&quot;: &quot;Email verified successfully&quot;,
     &quot;token_or_reset_token&quot;: &quot;5|9cc4ues9eb6rAXxanCXiPxICZcUFK6PgMl7IxcXXf287c850&quot;
 }</code>
@@ -755,7 +755,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;message&quot;: &quot;OTP-Code verified successfully, you can now reset your password&quot;,
     &quot;token_or_reset_token&quot;: &quot;$2y$12$5MftcDSWXj5UTaxuYL3eTOI2iP6G6jSZ5Rv30Hvc6gh8OKvl.0j/K&quot;
 }</code>
@@ -766,7 +766,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Invalid OTP-Code&quot;
 }</code>
  </pre>
@@ -776,7 +776,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Sorry, this OTP-Code has expired, a new one was sent to your email, please check your inbox&quot;
 }</code>
  </pre>
@@ -786,7 +786,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Email is already verified, you can login&quot;
 }</code>
  </pre>
@@ -942,7 +942,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;message&quot;: &quot;OTP-Code was sent to tamrashryft2@gmail.com successfully, please check your inbox&quot;
 }</code>
  </pre>
@@ -952,7 +952,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Wrong email or password; Or the email is not verified, OTP-Code was sent to your email, please check your inbox&quot;
 }</code>
  </pre>
@@ -1106,7 +1106,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;message&quot;: &quot;If the email exists, an OTP-Code was sent to it successfully, please check your gmail&quot;
 }</code>
  </pre>
@@ -1254,7 +1254,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;message&quot;: &quot;Your password was updated successfully&quot;,
     &quot;token&quot;: &quot;6|1rbJvOIdEoHxeSKIiT6L66vnQqvBrtXFIRaxDJApa25692ae&quot;
 }</code>
@@ -1265,7 +1265,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Invalid reset-token&quot;
 }</code>
  </pre>
@@ -1275,7 +1275,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Sorry, the reset-token has expired, a new OTP-Code was sent to your email, please check your inbox&quot;
 }</code>
  </pre>
@@ -1448,7 +1448,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;message&quot;: &quot;User logged-out successfully&quot;
 }</code>
  </pre>
@@ -1566,10 +1566,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "email=russel.bert@example.net"\
     --form "password=dl4m{o,+"\
     --form "phone=qamniihfqcoynlazg"\
-    --form "date_of_birth=2020-10-23"\
+    --form "date_of_birth=2020-10-27"\
     --form "gender=1"\
     --form "username=mqeopfuudtdsufvyv"\
-    --form "photo=@C:\Users\USER\AppData\Local\Temp\php3993.tmp" </code></pre></div>
+    --form "photo=@C:\Users\USER\AppData\Local\Temp\phpF088.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -1589,7 +1589,7 @@ body.append('last_name', 'eop');
 body.append('email', 'russel.bert@example.net');
 body.append('password', 'dl4m{o,+');
 body.append('phone', 'qamniihfqcoynlazg');
-body.append('date_of_birth', '2020-10-23');
+body.append('date_of_birth', '2020-10-27');
 body.append('gender', '1');
 body.append('username', 'mqeopfuudtdsufvyv');
 body.append('photo', document.querySelector('input[name="photo"]').files[0]);
@@ -1755,10 +1755,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date_of_birth"                data-endpoint="POSTapi-users"
-               value="2020-10-23"
+               value="2020-10-27"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date before <code>2026-06-28</code>. Example: <code>2020-10-23</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date before <code>2026-07-01</code>. Example: <code>2020-10-27</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -1804,7 +1804,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php3993.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\phpF088.tmp</code></p>
         </div>
         </form>
 
@@ -1862,7 +1862,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
 }</code>
  </pre>
@@ -2020,7 +2020,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
 }</code>
  </pre>
@@ -2145,10 +2145,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "first_name=vmq"\
     --form "last_name=eop"\
     --form "phone=fuudtdsufvyvddqam"\
-    --form "date_of_birth=2026-06-28"\
+    --form "date_of_birth=2026-07-01"\
     --form "gender=1"\
     --form "username=niihfqcoynlazghdt"\
-    --form "photo=@C:\Users\USER\AppData\Local\Temp\php39E3.tmp" </code></pre></div>
+    --form "photo=@C:\Users\USER\AppData\Local\Temp\phpF5E8.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2166,7 +2166,7 @@ const body = new FormData();
 body.append('first_name', 'vmq');
 body.append('last_name', 'eop');
 body.append('phone', 'fuudtdsufvyvddqam');
-body.append('date_of_birth', '2026-06-28');
+body.append('date_of_birth', '2026-07-01');
 body.append('gender', '1');
 body.append('username', 'niihfqcoynlazghdt');
 body.append('photo', document.querySelector('input[name="photo"]').files[0]);
@@ -2321,10 +2321,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date_of_birth"                data-endpoint="PUTapi-users--id-"
-               value="2026-06-28"
+               value="2026-07-01"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Example: <code>2026-06-28</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Example: <code>2026-07-01</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -2370,7 +2370,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php39E3.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\phpF5E8.tmp</code></p>
         </div>
         </form>
 
@@ -2441,7 +2441,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;message&quot;: {
         &quot;base_message&quot;: &quot;Patient added successfully&quot;
     },
@@ -2469,7 +2469,7 @@ fetch(url, {
 
 // ⚠ Important Info: in the previous example was for a patient adding himself, if an admin was adding the patient, the previous response&#039;s data would be like:
 //{
-//    &quot;result&quot;: &quot;Success&quot;,
+//    &quot;did_succeed&quot;: true,
 //    &quot;message&quot;: {
 //        &quot;base_message&quot;: &quot;Patient added successfully&quot;
 //    },
@@ -2508,7 +2508,7 @@ fetch(url, {
 // The logged-in user role is null (non-completed patient), OK, but he is trying to add a patient other than himself!
 
 {
- &quot;result&quot;: &quot;Fail&quot;,
+ &quot;did_succeed&quot;: false,
     &quot;message&quot;: {
         &quot;base_message&quot;: &quot;Patients can only add themselves&quot;
     },
@@ -2523,7 +2523,7 @@ fetch(url, {
 // The user which being tried to add already has a role (PATIENT - ADMIN - DOCTOR).
 
 {
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;User is already a patient, it can\&#039;t be modified&quot;
 }
 
@@ -2711,9 +2711,9 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;message&quot;: {
-        &quot;result&quot;: &quot;Success&quot;,
+        &quot;did_succeed&quot;: true,
         &quot;current_page_number&quot;: 1,
         &quot;last_page_number&quot;: 3,
         &quot;patients_per_page&quot;: 4,
@@ -2970,7 +2970,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;data&quot;: {
         &quot;id&quot;: 14,
         &quot;allergies&quot;: &quot;consequatur&quot;,
@@ -3005,7 +3005,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Patients can&#039;t see other patients information&quot;
 }</code>
  </pre>
@@ -3015,7 +3015,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;data&quot;: &quot;Patient not found&quot;
 }</code>
  </pre>
@@ -3177,7 +3177,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;data&quot;: &quot;No changes detected&quot;
 }</code>
  </pre>
@@ -3187,7 +3187,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-  &quot;result&quot;: &quot;Success&quot;,
+  &quot;did_succeed&quot;: true,
   &quot;message&quot;: {
     &quot;base_message&quot;: &quot;Patient updated successfully&quot;
   },
@@ -3219,7 +3219,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Patients can&#039;t update other patients information&quot;
 }</code>
  </pre>
@@ -3229,7 +3229,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;data&quot;: &quot;Patient not found&quot;
 }</code>
  </pre>
@@ -3422,7 +3422,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;data&quot;: &quot;Patient not found&quot;
 }</code>
  </pre>
@@ -3586,7 +3586,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;message&quot;: {
         &quot;base_message&quot;: &quot;Room added successfully&quot;
     },
@@ -3774,9 +3774,9 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;message&quot;: {
-        &quot;result&quot;: &quot;Success&quot;,
+        &quot;did_succeed&quot;: true,
         &quot;current_page_number&quot;: 1,
         &quot;last_page_number&quot;: 8,
         &quot;rooms_per_page&quot;: 4,
@@ -4033,7 +4033,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;data&quot;: {
         &quot;id&quot;: 3,
         &quot;name&quot;: &quot;Room 3&quot;
@@ -4042,7 +4042,7 @@ fetch(url, {
 
 // ⚠ Important Info: The previous example was for a patient logged-in, if an admin was logged-in, the previous response&#039;s data would be like:
 //{
-//    &quot;result&quot;: &quot;Success&quot;,
+//    &quot;did_succeed&quot;: true,
 //    &quot;data&quot;: {
 //        &quot;id&quot;: 3,
 //        &quot;name&quot;: &quot;Room 3&quot;,
@@ -4075,7 +4075,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: {
         &quot;base_message&quot;: &quot;Room not found&quot;
     }
@@ -4237,7 +4237,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;message&quot;: {
         &quot;base_message&quot;: &quot;No changes detected&quot;
     }
@@ -4249,7 +4249,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;message&quot;: {
         &quot;base_message&quot;: &quot;Room updated successfully&quot;
     },
@@ -4285,7 +4285,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: {
         &quot;base_message&quot;: &quot;Room not found&quot;
     }
@@ -4468,7 +4468,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: {
         &quot;base_message&quot;: &quot;Room not found&quot;
     }
@@ -4636,7 +4636,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;message&quot;: {
         &quot;base_message&quot;: &quot;Doctor added successfully&quot;
     },
@@ -4713,7 +4713,7 @@ fetch(url, {
 // The user which being tried to add already has a role.
 
 {
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;User is already a patient, it can\&#039;t be modified&quot;
 }
 
@@ -4890,9 +4890,9 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;message&quot;: {
-        &quot;result&quot;: &quot;Success&quot;,
+        &quot;did_succeed&quot;: true,
         &quot;current_page_number&quot;: 1,
         &quot;last_page_number&quot;: 3,
         &quot;doctors_per_page&quot;: 4,
@@ -5304,7 +5304,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;data&quot;: {
         &quot;id&quot;: 5,
         &quot;user&quot;: {
@@ -5377,7 +5377,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: {
         &quot;base_message&quot;: &quot;Doctor not found&quot;
     }
@@ -5539,7 +5539,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;data&quot;: &quot;No changes detected&quot;
 }</code>
  </pre>
@@ -5549,7 +5549,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;message&quot;: {
         &quot;base_message&quot;: &quot;Doctor updated successfully&quot;
     },
@@ -5581,7 +5581,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Doctors can&#039;t update other doctors information&quot;
 }</code>
  </pre>
@@ -5591,7 +5591,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;data&quot;: &quot;Doctor not found&quot;
 }</code>
  </pre>
@@ -5772,7 +5772,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;data&quot;: &quot;Doctor not found&quot;
 }</code>
  </pre>
@@ -5934,7 +5934,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;message&quot;: {
         &quot;base_message&quot;: &quot;Speciality added successfully&quot;
     },
@@ -6110,9 +6110,9 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;message&quot;: {
-        &quot;result&quot;: &quot;Success&quot;,
+        &quot;did_succeed&quot;: true,
         &quot;current_page_number&quot;: 1,
         &quot;last_page_number&quot;: 10,
         &quot;specialities_per_page&quot;: 4,
@@ -6622,7 +6622,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;data&quot;: {
         &quot;id&quot;: 17,
         &quot;name&quot;: &quot;Urology&quot;,
@@ -6782,7 +6782,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: {
         &quot;base_message&quot;: &quot;Speciality not found&quot;
     }
@@ -6942,7 +6942,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;message&quot;: {
         &quot;base_message&quot;: &quot;No changes detected&quot;
     }
@@ -6954,7 +6954,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Success&quot;,
+    &quot;did_succeed&quot;: true,
     &quot;message&quot;: {
         &quot;base_message&quot;: &quot;Speciality updated successfully&quot;
     },
@@ -6989,7 +6989,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: {
         &quot;base_message&quot;: &quot;Speciality not found&quot;
     }
@@ -7160,7 +7160,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: {
         &quot;base_message&quot;: &quot;Speciality not found&quot;
     }
@@ -7291,12 +7291,12 @@ and the admin can create work schedules for medical center.</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"effective_from_date\": \"2107-07-27\",
+    \"effective_from_date\": \"2107-07-31\",
     \"days\": [
         {
             \"weekday_id\": 2,
-            \"start_time\": \"00:05\",
-            \"end_time\": \"00:05\"
+            \"start_time\": \"17:11\",
+            \"end_time\": \"17:11\"
         }
     ]
 }"
@@ -7315,12 +7315,12 @@ const headers = {
 };
 
 let body = {
-    "effective_from_date": "2107-07-27",
+    "effective_from_date": "2107-07-31",
     "days": [
         {
             "weekday_id": 2,
-            "start_time": "00:05",
-            "end_time": "00:05"
+            "start_time": "17:11",
+            "end_time": "17:11"
         }
     ]
 };
@@ -7426,10 +7426,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="effective_from_date"                data-endpoint="POSTapi-schedules"
-               value="2107-07-27"
+               value="2107-07-31"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after <code>2026-06-28</code>. Example: <code>2107-07-27</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after <code>2026-07-01</code>. Example: <code>2107-07-31</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
         <details>
@@ -7460,10 +7460,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="days.0.start_time"                data-endpoint="POSTapi-schedules"
-               value="00:05"
+               value="17:11"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>H:i</code>. Example: <code>00:05</code></p>
+<p>Must be a valid date in the format <code>H:i</code>. Example: <code>17:11</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>end_time</code></b>&nbsp;&nbsp;
@@ -7472,10 +7472,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="days.0.end_time"                data-endpoint="POSTapi-schedules"
-               value="00:05"
+               value="17:11"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>H:i</code>. Example: <code>00:05</code></p>
+<p>Must be a valid date in the format <code>H:i</code>. Example: <code>17:11</code></p>
                     </div>
                                     </details>
         </div>
@@ -7535,7 +7535,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
 }</code>
  </pre>
@@ -7679,7 +7679,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
 }</code>
  </pre>
@@ -7848,7 +7848,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
 }</code>
  </pre>
@@ -8017,7 +8017,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
 }</code>
  </pre>
@@ -8169,7 +8169,7 @@ View all available times to book with a specific doctor</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"date_of_day\": \"2107-07-27\"
+    \"date_of_day\": \"2107-07-31\"
 }"
 </code></pre></div>
 
@@ -8186,7 +8186,7 @@ const headers = {
 };
 
 let body = {
-    "date_of_day": "2107-07-27"
+    "date_of_day": "2107-07-31"
 };
 
 fetch(url, {
@@ -8303,10 +8303,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date_of_day"                data-endpoint="POSTapi-appointments--doctor_id-"
-               value="2107-07-27"
+               value="2107-07-31"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-06-28</code>. Example: <code>2107-07-27</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-07-01</code>. Example: <code>2107-07-31</code></p>
         </div>
         </form>
 
@@ -8332,7 +8332,7 @@ the date of day he wanna book in</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"datetime\": \"2107-07-27\"
+    \"datetime\": \"2107-07-31\"
 }"
 </code></pre></div>
 
@@ -8349,7 +8349,7 @@ const headers = {
 };
 
 let body = {
-    "datetime": "2107-07-27"
+    "datetime": "2107-07-31"
 };
 
 fetch(url, {
@@ -8466,10 +8466,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="datetime"                data-endpoint="POSTapi-appointments-s--doctor_id-"
-               value="2107-07-27"
+               value="2107-07-31"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-06-28 00:05</code>. Example: <code>2107-07-27</code></p>
+<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-01 17:11</code>. Example: <code>2107-07-31</code></p>
         </div>
         </form>
 
@@ -8527,7 +8527,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
 }</code>
  </pre>
@@ -8709,7 +8709,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
 }</code>
  </pre>
@@ -8903,7 +8903,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
 }</code>
  </pre>
@@ -9097,7 +9097,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
 }</code>
  </pre>
@@ -9500,7 +9500,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"actual_time\": \"2107-07-27\",
+    \"actual_time\": \"2107-07-31\",
     \"medical_diagnosis\": \"mqeopfuudtdsufvyvddqa\",
     \"prescription\": \"mniihfqcoynlazghdtqtq\",
     \"notes\": \"xbajwbpilpmufinllwloa\",
@@ -9521,7 +9521,7 @@ const headers = {
 };
 
 let body = {
-    "actual_time": "2107-07-27",
+    "actual_time": "2107-07-31",
     "medical_diagnosis": "mqeopfuudtdsufvyvddqa",
     "prescription": "mniihfqcoynlazghdtqtq",
     "notes": "xbajwbpilpmufinllwloa",
@@ -9642,10 +9642,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="actual_time"                data-endpoint="POSTapi-appointments-aA--id-"
-               value="2107-07-27"
+               value="2107-07-31"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-06-28 00:00:00</code>. Example: <code>2107-07-27</code></p>
+<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-01 00:00:00</code>. Example: <code>2107-07-31</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>medical_diagnosis</code></b>&nbsp;&nbsp;
@@ -9755,7 +9755,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
 }</code>
  </pre>
@@ -9913,7 +9913,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
 }</code>
  </pre>
@@ -10083,7 +10083,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
 }</code>
  </pre>
@@ -10253,7 +10253,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
 }</code>
  </pre>
@@ -10770,7 +10770,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
 }</code>
  </pre>
@@ -10952,7 +10952,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
 }</code>
  </pre>
@@ -11134,7 +11134,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
 }</code>
  </pre>
@@ -11608,7 +11608,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
 }</code>
  </pre>
@@ -11765,7 +11765,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
 }</code>
  </pre>
@@ -11923,7 +11923,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;HTTP request method not allowed, The GET method is not supported for route api/complaint/17/17. Supported methods: POST.&quot;
 }</code>
  </pre>
@@ -12215,7 +12215,7 @@ Everyone in the system is allowed to use this API</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"datetime\": \"2107-07-27\"
+    \"datetime\": \"2107-07-31\"
 }"
 </code></pre></div>
 
@@ -12232,7 +12232,7 @@ const headers = {
 };
 
 let body = {
-    "datetime": "2107-07-27"
+    "datetime": "2107-07-31"
 };
 
 fetch(url, {
@@ -12349,10 +12349,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="datetime"                data-endpoint="POSTapi-transfer--transfer_id-"
-               value="2107-07-27"
+               value="2107-07-31"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-06-28 00:05</code>. Example: <code>2107-07-27</code></p>
+<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-01 17:11</code>. Example: <code>2107-07-31</code></p>
         </div>
         </form>
 
@@ -12377,7 +12377,7 @@ Everyone in the system is allowed to use this API</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"datetime\": \"2107-07-27\"
+    \"datetime\": \"2107-07-31\"
 }"
 </code></pre></div>
 
@@ -12394,7 +12394,7 @@ const headers = {
 };
 
 let body = {
-    "datetime": "2107-07-27"
+    "datetime": "2107-07-31"
 };
 
 fetch(url, {
@@ -12511,10 +12511,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="datetime"                data-endpoint="POSTapi-transfer-ch--transfer_id-"
-               value="2107-07-27"
+               value="2107-07-31"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-06-28 00:05</code>. Example: <code>2107-07-27</code></p>
+<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-01 17:11</code>. Example: <code>2107-07-31</code></p>
         </div>
         </form>
 
@@ -12745,7 +12745,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
 }</code>
  </pre>
@@ -12902,7 +12902,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;HTTP request method not allowed, The GET method is not supported for route api/transfer/17/17. Supported methods: POST.&quot;
 }</code>
  </pre>
@@ -13072,7 +13072,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Not found&quot;
 }</code>
  </pre>
@@ -13242,7 +13242,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Not found&quot;
 }</code>
  </pre>
@@ -13424,7 +13424,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Not found&quot;
 }</code>
  </pre>
@@ -13562,8 +13562,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </p>
 
 <h3>For: Mobile(Doctor), Web</h3>
-<h4>Only admins and doctors are allowed to use this API</h4>
-<p>Creating a new unavailability by a doctor or admin, the doctor can create his own unavailability,
+<p>Only admins and doctors are allowed to use this API.
+Creating a new unavailability by a doctor or admin, the doctor can create his own unavailability,
 and the admin can create unavailability for medical center.</p>
 
 <span id="example-requests-POSTapi-unavailability">
@@ -13577,8 +13577,8 @@ and the admin can create unavailability for medical center.</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"from_date\": \"2026-06-28\",
-    \"to_date\": \"2026-06-28\",
+    \"from_date\": \"2107-07-31\",
+    \"to_date\": \"2107-07-31\",
     \"reason_type\": \"vacation\",
     \"justification\": \"consequatur\"
 }"
@@ -13597,8 +13597,8 @@ const headers = {
 };
 
 let body = {
-    "from_date": "2026-06-28",
-    "to_date": "2026-06-28",
+    "from_date": "2107-07-31",
+    "to_date": "2107-07-31",
     "reason_type": "vacation",
     "justification": "consequatur"
 };
@@ -13704,10 +13704,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="POSTapi-unavailability"
-               value="2026-06-28"
+               value="2107-07-31"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Example: <code>2026-06-28</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-07-01 00:00:00</code>. Example: <code>2107-07-31</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -13716,10 +13716,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="to_date"                data-endpoint="POSTapi-unavailability"
-               value="2026-06-28"
+               value="2107-07-31"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Example: <code>2026-06-28</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>from_date</code>. Example: <code>2107-07-31</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>reason_type</code></b>&nbsp;&nbsp;
@@ -13756,7 +13756,7 @@ Must be one of:
 </p>
 
 <h3>For: Web</h3>
-<p>Only admins are allowed to use this API</p>
+<p>Only admins are allowed to use this API.</p>
 
 <span id="example-requests-GETapi-unavailability--with_passed---per_page-">
 <blockquote>Example request:</blockquote>
@@ -13803,7 +13803,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Not found&quot;
 }</code>
  </pre>
@@ -13925,7 +13925,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 </p>
 
 <h3>For: Web, Mobile(Doctor)</h3>
-<p>Only admins and doctors are allowed to use this API</p>
+<p>Only admins and doctors are allowed to use this API.</p>
 
 <span id="example-requests-GETapi-unavailability--with_passed---per_page---doctor_id-">
 <blockquote>Example request:</blockquote>
@@ -13972,7 +13972,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Not found&quot;
 }</code>
  </pre>
@@ -14099,14 +14099,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
-                    <h2 id="unavailability-apis-GETapi-unavailability-m--with_passed---per_page-">View all unavailabilities of the medical center</h2>
+                    <h2 id="unavailability-apis-GETapi-unavailability-m--with_passed---per_page-">Paginate unavailabilities of the medical center</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <h3>For: Web</h3>
-<p>Only admins are allowed to use this API</p>
+<p>Only admins are allowed to use this API.</p>
 
 <span id="example-requests-GETapi-unavailability-m--with_passed---per_page-">
 <blockquote>Example request:</blockquote>
@@ -14153,7 +14153,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;result&quot;: &quot;Fail&quot;,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: &quot;Not found&quot;
 }</code>
  </pre>

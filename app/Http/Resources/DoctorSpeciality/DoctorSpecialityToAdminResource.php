@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources\DoctorSpeciality;
 
-use App\Http\Resources\Doctor\DoctorToAdminResource;
-use App\Http\Resources\Speciality\SpecialityToAdminResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,8 +16,11 @@ class DoctorSpecialityToAdminResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'doctor' => new DoctorToAdminResource($this->doctor),
-            'speciality' => new SpecialityToAdminResource($this->speciality),
+            'doctor_id' => $this->doctor_id,
+            'doctor_fullname' => $this->doctor->user->first_name . ' ' .
+                $this->doctor->user->last_name,
+            'speciality_id' => $this->speciality_id,
+            'speciality_name' => $this->speciality->name,
             'experience_starting_date' => $this->experience_starting_date->format('Y-m-d'),
             'view_experience' => $this->view_experience,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),

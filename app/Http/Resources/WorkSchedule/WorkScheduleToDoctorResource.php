@@ -17,17 +17,12 @@ class WorkScheduleToDoctorResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $workScheduleSpecification = $this->type == WorkScheduleTypeEnum::DOCTOR ?
-            new DoctorWorkScheduleToOwnerResource($this->doctorWorkSchedule) :
-            new MedicalCenterWorkScheduleToDoctorResource($this->medicalCenterWorkSchedule);
-        $effective_to_date = $this->effective_to_date ?
-            $this->effective_to_date->format('Y-m-d') :
-            null;
         return [
             'id' => $this->id,
             'effective_from_date' => $this->effective_from_date->format('Y-m-d'),
-            'effective_to_date' => $effective_to_date,
-            'work_schedule_specification' => $workScheduleSpecification,
+            'effective_to_date' => $this->effective_to_date ?
+                $this->effective_to_date->format('Y-m-d') : null,
+            'medical_center_work_schedule' => $this->medicalCenterWorkSchedule,
         ];
     }
 }

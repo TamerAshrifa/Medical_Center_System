@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Appointment;
 
-use App\Http\Resources\Doctor\DoctorToPatientResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,10 +18,11 @@ class AppointmentToPatientResource extends JsonResource
             'id' => $this->id,
             'datetime' => $this->datetime->format('Y-m-d H:i'),
             'status' => $this->status ? $this->status->value : null,
+            'doctor_id' => $this->doctor_id,
+            'doctor_fullname' => $this->doctor->user->first_name . ' ' .
+                $this->doctor->user->last_name,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
-            'patient_id' => $this->patient_id,
-            'doctor' => new DoctorToPatientResource($this->doctor),
         ];
     }
 }

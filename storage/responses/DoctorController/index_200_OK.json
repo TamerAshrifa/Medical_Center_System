@@ -1,7 +1,7 @@
 {
-    "result": "Success",
+    "did_succeed": true,
     "message": {
-        "result": "Success",
+        "did_succeed": true,
         "current_page_number": 1,
         "last_page_number": 3,
         "doctors_per_page": 4,

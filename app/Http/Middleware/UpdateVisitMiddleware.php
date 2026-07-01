@@ -23,7 +23,7 @@ class UpdateVisitMiddleware
             Visit::findOrFail($request->route('id'), 'appointment_id')->appointment->doctor_id
         )
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => 'Doctors can\'t modify other doctors\' visits',
             ], 403);
 

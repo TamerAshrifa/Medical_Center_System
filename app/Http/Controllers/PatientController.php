@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\DTOs\Patient\PatientDTO;
 use App\DTOs\Patient\PatientDTOUpdate;
 use App\Enums\UserRoleEnum;
-use App\GeneralClasses\Enums\ResponseStatusEnum;
 use App\Http\Requests\PatientController\StorePatientRequest;
 use App\Http\Requests\PatientController\UpdatePatientRequest;
+use App\Http\Resources\Patient\PatientToAdminResource;
+use App\Http\Resources\Patient\PatientToDoctorResource;
+use App\Http\Resources\Patient\PatientToItselfResource;
 use App\Models\User;
 use App\Services\PatientService;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +23,23 @@ class PatientController extends Controller
         protected PatientService $patientService,
     ) {
     }
-
+    private function resource($recordOrCollection, bool $isCollection)
+    {
+        switch ($this->currentUserRole()) {
+            case UserRoleEnum::ADMIN:
+                if ($isCollection)
+                    return PatientToAdminResource::collection($recordOrCollection);
+                return new PatientToAdminResource($recordOrCollection);
+            case UserRoleEnum::DOCTOR:
+                if ($isCollection)
+                    return PatientToDoctorResource::collection($recordOrCollection);
+                return new PatientToDoctorResource($recordOrCollection);
+            case UserRoleEnum::PATIENT:
+                if ($isCollection)
+                    return PatientToItselfResource::collection($recordOrCollection);
+                return new PatientToItselfResource($recordOrCollection);
+        }
+    }
     /**
      * Add New Patient
      * 
@@ -38,24 +56,15 @@ class PatientController extends Controller
         $user = User::find($request->user_id);
         if ($user->role != null)
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => 'User is already a ' . $user->role->value . ', it can\'t be modified',
             ], 409);
 
-        $response = $this->patientService->addNewPatient(PatientDTO::fromRequest($request->validated()));
+        $response = $this->patientService->add(PatientDTO::fromRequest($request->validated()));
 
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $response->data,
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -68,13 +77,11 @@ class PatientController extends Controller
      */
     public function index(int $per_page)
     {
-        $response = $this->patientService->getAllPatientsPaged($per_page);
+        $response = $this->patientService->paginate($per_page);
 
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $response->data,
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -83,36 +90,18 @@ class PatientController extends Controller
      * ###For: Mobile (Patient, Doctor), Web
      * Everyone in the system can use this API, but patients can only see their own information
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
-     * @urlParam patientId integer required min:1
+     * @urlParam id integer required min:1
      * @responseFile 403 storage/responses/PatientController/show_403_Forbidden.json
      * @responseFile 404 storage/responses/PatientController/show_404_Not_Found.json
      * @responseFile 200 storage/responses/PatientController/show_200_OK.json
      */
-    public function show(int $patientId)
+    public function show(int $id)
     {
-        $loggedUser = Auth::user();
+        $response = $this->patientService->show($id);
 
-        if ($loggedUser->role == UserRoleEnum::PATIENT)
-            if ($loggedUser->patient->id != $patientId)
-                return response()->json([
-                    'result' => 'Fail',
-                    'message' => 'Patients can\'t see other patients information'
-                ], 403);
-
-        $response = $this->patientService->showPatient($patientId);
-
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
-
-        return response()->json([
-            'result' => $response->result,
-            'data' => $response->data,
-        ], $response->statusCode);
-
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -126,32 +115,16 @@ class PatientController extends Controller
      * @responseFile 200 storage/responses/PatientController/update_200_OK.json
      * @responseFile 200 storage/responses/PatientController/update_200_2_OK.json
      */
-    public function update(UpdatePatientRequest $request, int $patientId)
+    public function update(UpdatePatientRequest $request, int $id)
     {
-        $loggedUser = Auth::user();
-        if ($loggedUser->patient->id != $patientId) {
-            return response()->json([
-                'result' => 'Fail',
-                'message' => 'Patients can\'t update other patients information'
-            ], 403);
-        }
-        $response = $this->patientService->updatePatient(
+        $response = $this->patientService->update(
             PatientDTOUpdate::fromRequest($request->validated()),
-            $patientId
+            $id
         );
 
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $response->data,
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -159,20 +132,16 @@ class PatientController extends Controller
      * 
      * ###For: Web
      * Only admins are allowed to use this API.
-     * @urlParam patientId integer required min:1
+     * @urlParam id integer required
      * @responseFile 404 storage/responses/PatientController/destroy_404_Not_Found.json
      * @responseFile 204 storage/responses/PatientController/destroy_204_No_Content.json
      */
-    public function destroy(int $patientId)
+    public function destroy(int $id)
     {
-        $response = $this->patientService->deletePatient($patientId);
+        $response = $this->patientService->delete($id);
 
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
+        if (!$response->did_succeed)
+            return $this->jsonResponse($response);
 
         return response()->noContent(204);
     }

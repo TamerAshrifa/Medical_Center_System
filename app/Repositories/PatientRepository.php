@@ -2,64 +2,51 @@
 
 namespace App\Repositories;
 
-use App\GeneralClasses\Enums\ResponseStatusEnum;
-use App\GeneralClasses\Response;
 use App\Models\Patient;
 use App\Repositories\Interfaces\PatientRepositoryInterface;
 use DB;
-use Storage;
 
 class PatientRepository extends Repository implements PatientRepositoryInterface
 {
-    public function addNewPatient(array $patientData): Response
+    public function add(array $patientData): Patient
     {
-        return new Response(
-            ResponseStatusEnum::SUCCESS,
-            null,
-            Patient::create($patientData),
-            201
-        );
+        return Patient::create($patientData);
     }
-    public function getAllPatientsPaged(int $per_page = 10): Response
+    public function paginate(int $perPage = 10)
     {
-        return new Response(
-            ResponseStatusEnum::SUCCESS,
-            null,
-            Patient::with(['user', 'bloodType'])->orderBy('created_at', 'desc')->paginate($per_page),
-        );
+        return Patient::query()
+            ->with([
+                'user:id,first_name,last_name',
+                'bloodType:id,name'
+            ])
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage);
     }
-    public function getPatientByIdWithUser(int $patientId): Response
+    public function findWithUser(int $id, bool $failIfNotExists = true): Patient
     {
-        return new Response(
-            ResponseStatusEnum::SUCCESS,
-            null,
-            Patient::with('user')->find($patientId)
-        );
+        $query = Patient::query()
+            ->with('user:id,first_name,last_name');
+        return $failIfNotExists ?
+            $query->findOrFail($id) :
+            $query->find($id);
     }
-    public function getPatientById(int $patientId): Response
+    public function find(int $id, bool $failIfNotExists = true): Patient
     {
-        return new Response(
-            ResponseStatusEnum::SUCCESS,
-            null,
-            Patient::find($patientId)
-        );
+        return $failIfNotExists ?
+            Patient::findOrFail($id) :
+            Patient::find($id);
     }
-    public function deletePatient(Patient $patient): Response
+    public function deletePatient(Patient $patient): bool
     {
         $user = $patient->user;
         try {
             return DB::transaction(function () use ($patient, $user) {
                 if (!$patient->delete() || !((new UserRepository())->deleteByObject($user)))
-                    throw new \LogicException('Field to delete patient, please try again');
-                return new Response(ResponseStatusEnum::SUCCESS, null, null, 204);
+                    throw new \LogicException();
+                return true;
             });
         } catch (\LogicException $e) {
-            return new Response(
-                ResponseStatusEnum::FAIL,
-                Response::messageToArray($e->getMessage()),
-                null,
-                400
-            );
+            return false;
         }
     }
 

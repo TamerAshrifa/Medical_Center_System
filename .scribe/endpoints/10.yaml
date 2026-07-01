@@ -95,7 +95,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"result":"Fail","message":"Unauthenticated; A valid token is required"}'
+        content: '{"did_succeed":false,"message":"Unauthenticated; A valid token is required"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -153,7 +153,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"result":"Fail","message":"Unauthenticated; A valid token is required"}'
+        content: '{"did_succeed":false,"message":"Unauthenticated; A valid token is required"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -224,7 +224,7 @@ endpoints:
       -
         custom: []
         status: 405
-        content: '{"result":"Fail","message":"HTTP request method not allowed, The GET method is not supported for route api\/complaint\/17\/17. Supported methods: POST."}'
+        content: '{"did_succeed":false,"message":"HTTP request method not allowed, The GET method is not supported for route api\/complaint\/17\/17. Supported methods: POST."}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json

@@ -25,7 +25,7 @@ class ShowTransferMiddleware
             $user->patient->id != $transfer->patient_id
         )
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => 'Patients can\'t see other patients\' transfers',
             ], 403);
 
@@ -36,7 +36,7 @@ class ShowTransferMiddleware
                 $doctorId != $transfer->receiving_doctor_id
             )
                 return response()->json([
-                    'result' => 'Fail',
+                    'did_succeed' => false,
                     'message' => 'Doctors can\'t see other doctors\' transfers',
                 ], 403);
         }

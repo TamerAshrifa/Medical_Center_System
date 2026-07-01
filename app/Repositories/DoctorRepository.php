@@ -2,92 +2,75 @@
 
 namespace App\Repositories;
 
-use App\GeneralClasses\Enums\ResponseStatusEnum;
-use App\GeneralClasses\Response;
 use App\Models\Doctor;
 use App\Repositories\Interfaces\DoctorRepositoryInterface;
 use DB;
 
 class DoctorRepository extends Repository implements DoctorRepositoryInterface
 {
-    private function getIncludedEntities(bool $isWithRoom, bool $isWithAdderAdmin, bool $isWithUser): array
+    private function getIncludedEntities(bool $withRoom, bool $withAdderAdmin, bool $withUser): array
     {
         $included = [];
-        if ($isWithRoom)
-            $included[] = 'room';
-        if ($isWithAdderAdmin)
-            $included[] = 'addedByAdmin';
-        if ($isWithUser)
-            $included[] = 'user';
+        if ($withRoom)
+            $included[] = 'room:id,name';
+        if ($withAdderAdmin)
+            $included = array_merge($included, [
+                'addedByAdmin:id,user_id',
+                'addedByAdmin.user:id,first_name,last_name',
+            ]);
+        if ($withUser)
+            $included[] = 'user:id,first_name,last_name';
 
         return $included;
     }
-    public function addNewDoctor(array $doctorData): Response
+    public function add(array $doctorData): Doctor
     {
-        return new Response(
-            ResponseStatusEnum::SUCCESS,
-            null,
-            Doctor::create($doctorData),
-            201
-        );
+        return Doctor::create($doctorData);
     }
-    public function getAllDoctorsPaged(
-        int $per_page = 10,
-        bool $isWithRoom = false,
-        bool $isWithAdderAdmin = false,
-        bool $isWithUser = false,
-    ): Response {
-        return new Response(
-            ResponseStatusEnum::SUCCESS,
-            null,
-            Doctor::with($this->getIncludedEntities($isWithRoom, $isWithAdderAdmin, $isWithUser))
-                ->orderBy('created_at', 'desc')->paginate($per_page),
-        );
+    public function paginate(
+        int $perPage = 10,
+        bool $withRoom = false,
+        bool $withAdderAdmin = false,
+        bool $withUser = false,
+    ) {
+        return Doctor::query()
+            ->with($this->getIncludedEntities($withRoom, $withAdderAdmin, $withUser))
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage);
     }
 
-    public function getDoctorById(
+    public function find(
         int $doctorId,
         bool $failIfNotExists = true,
-        bool $isWithRoom = false,
-        bool $isWithAdderAdmin = false,
-        bool $isWithUser = false,
-    ) {
-        $returned = $failIfNotExists ?
-            Doctor::with($this->getIncludedEntities($isWithRoom, $isWithAdderAdmin, $isWithUser))->findOrFail($doctorId) :
-            Doctor::with($this->getIncludedEntities($isWithRoom, $isWithAdderAdmin, $isWithUser))->find($doctorId);
-        return $returned;
+        bool $withRoom = false,
+        bool $withAdderAdmin = false,
+        bool $withUser = false,
+    ): Doctor {
+        $query = Doctor::query()
+            ->with($this->getIncludedEntities($withRoom, $withAdderAdmin, $withUser));
+        return $failIfNotExists ?
+            $query->findOrFail($doctorId) :
+            $query->find($doctorId);
     }
-    public function deleteDoctor(Doctor &$doctor): Response
+    public function delete(Doctor &$doctor): bool
     {
         $user = $doctor->user;
         try {
             return DB::transaction(function () use ($doctor, $user) {
                 if (!$doctor->delete() || !((new UserRepository())->deleteByObject($user)))
-                    throw new \LogicException('Field to delete doctor, please try again');
-                return new Response(ResponseStatusEnum::SUCCESS, null, null, 204);
+                    throw new \LogicException();
+                return true;
             });
         } catch (\LogicException $e) {
-            return new Response(
-                ResponseStatusEnum::FAIL,
-                Response::messageToArray($e->getMessage()),
-                null,
-                400
-            );
+            return false;
         }
     }
-    public function getDoctorAppointmentDuration(int $doctorId, bool $failIfDoctorNotExists = true): int
-    {
-        $query = Doctor::query()->where('id', $doctorId);
-        return $failIfDoctorNotExists ?
-            $query->valueOrFail('appointment_duration') :
-            $query->value('appointment_duration');
-    }
 
-    public function getDoctorFullname(int $doctorId): string
+    public function fullname(int $id): string
     {
         $query = Doctor::query()
             ->join('users', 'doctors.user_id', '=', 'users.id')
-            ->where('doctors.id', $doctorId)
+            ->where('doctors.id', $id)
             ->select([
                 'users.first_name',
                 'users.last_name',

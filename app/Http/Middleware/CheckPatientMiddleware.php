@@ -23,7 +23,7 @@ class CheckPatientMiddleware
 
         if (!($patient->role == UserRoleEnum::PATIENT || $patient->role == UserRoleEnum::ADMIN))
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => 'Only patients and admins allowed',
             ], 403);
 

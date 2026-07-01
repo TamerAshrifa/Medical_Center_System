@@ -25,11 +25,15 @@ use App\Http\Middleware\PaginateReferredTransfersMiddleware;
 use App\Http\Middleware\PaginateVisitMedicalRecordAccessesMiddleware;
 use App\Http\Middleware\ShowAppointmentMiddleware;
 use App\Http\Middleware\ShowPatientComplaintMiddleware;
+use App\Http\Middleware\ShowPatientMiddleware;
 use App\Http\Middleware\ShowTransferMiddleware;
 use App\Http\Middleware\ShowVisitMiddleware;
 use App\Http\Middleware\StoreMedicalRecordAccessMiddleware;
 use App\Http\Middleware\StorePatientMiddleware;
 use App\Http\Middleware\StoreTransferMiddleware;
+use App\Http\Middleware\UpdateDoctorMiddleware;
+use App\Http\Middleware\UpdateDoctorSpecialityMiddleware;
+use App\Http\Middleware\UpdatePatientMiddleware;
 use App\Http\Middleware\UpdateVisitMiddleware;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Application;
@@ -88,6 +92,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'MakeAnotherAppointmentForTransferMiddleware' => MakeAnotherAppointmentForTransferMiddleware::class,
             'PaginateReceivedTransfersMiddleware' => PaginateReceivedTransfersMiddleware::class,
             'PaginateDoctorUnavailabilitiesMiddleware' => PaginateDoctorUnavailabilitiesMiddleware::class,
+            'UpdateDoctorMiddleware' => UpdateDoctorMiddleware::class,
+            'UpdateDoctorSpecialityMiddleware' => UpdateDoctorSpecialityMiddleware::class,
+            'ShowPatientMiddleware' => ShowPatientMiddleware::class,
+            'UpdatePatientMiddleware' => UpdatePatientMiddleware::class,
         ]);
 
     })
@@ -95,7 +103,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $exceptions->render(function (AuthenticationException $e, $request) {
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => 'Unauthenticated; A valid token is required',
             ], 401);
         });
@@ -103,7 +111,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (ThrottleRequestsException $e, $request) {
             $seconds = $e->getHeaders()['Retry-After'] ?? 60;
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => ($seconds > 1) ? "Several attempts were made, please try again in $seconds seconds" :
                     'Several attempts were made, please try again after 1 second',
             ], 429);
@@ -111,28 +119,28 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $exceptions->render(function (TransportExceptioN $e, $request) {
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => 'No internet connection',
             ], 503);
         });
 
         $exceptions->render(function (RfcComplianceException $e, $request) {
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => "Invalid email format",
             ], 422);
         });
 
         $exceptions->render(function (MethodNotAllowedHttpException $e, $request) {
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => 'HTTP request method not allowed, ' . $e->getMessage(),
             ], 405);
         });
 
         $exceptions->render(function (ModelNotFoundException $e, $request) {
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => Str::headline(class_basename($e->getModel())) . " not found",
             ], 404);
         });
@@ -142,11 +150,11 @@ return Application::configure(basePath: dirname(__DIR__))
             while ($previous = $previous->getPrevious())
                 if ($previous instanceof ModelNotFoundException)
                     return response()->json([
-                        'result' => 'Fail',
+                        'did_succeed' => false,
                         'message' => Str::headline(class_basename($previous->getModel())) . ' not found',
                     ], 404);
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => 'Not found',
             ], 404);
         });
@@ -155,7 +163,7 @@ return Application::configure(basePath: dirname(__DIR__))
             $driverErrorCode = $e->errorInfo[1] ?? null;
             if ($driverErrorCode == 1451)
                 return response()->json([
-                    'result' => 'Fail',
+                    'did_succeed' => false,
                     'message' => 'It cannot be deleted because it\'s referenced by existing entities',
                 ], 409);
 
@@ -164,7 +172,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $exceptions->render(function (ValidationException $e, $request) {
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => 'Invalid input',
                 'errors' => $e->errors(),
             ], 422);
@@ -172,7 +180,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // $exceptions->render(function (\Throwable $e, $request) {
         //     return response()->json([
-        //         'result' => 'Fail',
+        //         'did_succeed' => false,
         //         'base_message' => 'Unexpected back-end error!',
         //         'error' => $e->getMessage(),
         //         'file' => $e->getFile(),

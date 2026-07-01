@@ -27,7 +27,7 @@ class PatientComplaint extends Model
 
     public function reviewedByAdmin()
     {
-        return $this->belongsTo(Admin::class, 'admin_id');
+        return $this->belongsTo(Admin::class, 'reviewed_by_admin_id');
     }
 
 }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\DTOs\MedicalRecordAccess\MedicalRecordAccessDTO;
 use App\Enums\UserRoleEnum;
-use App\GeneralClasses\Enums\ResponseStatusEnum;
 use App\Http\Resources\MedicalRecordAccess\MedicalRecordAccessToAdminResource;
 use App\Http\Resources\MedicalRecordAccess\MedicalRecordAccessToDoctorResource;
 use App\Http\Resources\MedicalRecordAccess\MedicalRecordAccessToPatientResource;
@@ -23,7 +22,7 @@ class MedicalRecordAccessController extends Controller
 
     private function resource($recordOrCollectionOfIt, bool $isCollection)
     {
-        switch (Auth::user()->role) {
+        switch ($this->currentUserRole()) {
             case UserRoleEnum::ADMIN:
                 return $isCollection ?
                     MedicalRecordAccessToAdminResource::collection($recordOrCollectionOfIt) :
@@ -62,10 +61,7 @@ class MedicalRecordAccessController extends Controller
 
         $response = $this->medicalRecordAccessService->create(MedicalRecordAccessDTO::fromRequest($request));
 
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-        ], $response->statusCode);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -82,17 +78,9 @@ class MedicalRecordAccessController extends Controller
     {
         $response = $this->medicalRecordAccessService->paginateDoctorMedicalRecordAccesses($per_page, $with_unactive, $doctor_id);
 
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -109,17 +97,9 @@ class MedicalRecordAccessController extends Controller
     {
         $response = $this->medicalRecordAccessService->paginatePatientMedicalRecordAccesses($per_page, $with_unactive, $patient_id);
 
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
 
@@ -137,17 +117,9 @@ class MedicalRecordAccessController extends Controller
     {
         $response = $this->medicalRecordAccessService->paginateVisitMedicalRecordAccesses($per_page, $with_unactive, $visit_id);
 
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -161,10 +133,7 @@ class MedicalRecordAccessController extends Controller
     {
         $response = $this->medicalRecordAccessService->unactive($id);
 
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-        ], $response->statusCode);
+        return $this->jsonResponse($response);
     }
 
 }

@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Enums\OtpTypeEnum;
-use App\GeneralClasses\Enums\ResponseStatusEnum;
+
 use App\GeneralClasses\Response;
 use App\Mail\SendOtpMail;
 use App\Models\Otp;
@@ -42,7 +42,7 @@ class OtpService extends Service
                 Mail::to($email)->send(new SendOtpMail($otpCode));
 
                 return new Response(
-                    ResponseStatusEnum::SUCCESS,
+                    true,
                     null,
                     $otpRecord
                 );
@@ -54,19 +54,18 @@ class OtpService extends Service
         if ($user->email_verified_at != null) {
             $otpRecord->delete();
             return new Response(
-                ResponseStatusEnum::FAIL,
+                false,
                 Response::messageToArray('Email is already verified, you can login'),
                 null,
                 400
             );
         }
         $user->email_verified_at = now();
-        // $user->role = UserRoleEnum::PATIENT;
         $user->save();
 
         $otpRecord->delete();
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             Response::messageToArray('Email verified successfully'),
             $user->createToken('auth_token')->plainTextToken,
         );
@@ -79,7 +78,7 @@ class OtpService extends Service
 
         $otpRecord->delete();
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             Response::messageToArray($message),
             $user->createToken('auth_token')->plainTextToken,
         );
@@ -94,7 +93,7 @@ class OtpService extends Service
         ]);
         $otpRecord->delete();
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             Response::messageToArray('OTP-Code verified successfully, you can now reset your password'),
             $resetToken,
         );
@@ -108,7 +107,7 @@ class OtpService extends Service
 
         if ($otpRecord == null || $user == null) {
             return new Response(
-                ResponseStatusEnum::FAIL,
+                false,
                 Response::messageToArray('Invalid email or OTP-Code'),
                 null,
                 400,
@@ -120,7 +119,7 @@ class OtpService extends Service
 
             $this->sendOtpToUser($email, $user->id, $otpRecord->type);
             return new Response(
-                ResponseStatusEnum::FAIL,
+                false,
                 Response::messageToArray('Sorry, this OTP-Code has expired, a new one was sent to your email, please check your inbox'),
                 null,
                 400,

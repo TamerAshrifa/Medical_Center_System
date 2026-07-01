@@ -17,6 +17,9 @@ class VisitToPatientResource extends JsonResource
         return [
             'id' => $this->id,
             'appointment_id' => $this->appointment_id,
+            'doctor_id' => $this->appointment->doctor->id,
+            'doctor_fullname' => $this->appointment->doctor->user->first_name . ' ' .
+                $this->appointment->doctor->user->last_name,
             'actual_time' => $this->actual_time->format('Y-m-d H:i'),
             'medical_diagnosis' => $this->medical_diagnosis,
             'prescription' => $this->prescription,

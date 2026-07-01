@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources\Patient;
 
-use App\Http\Resources\BloodType\BloodTypeToPatientResource;
-use App\Http\Resources\User\UserToPatientResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,8 +18,10 @@ class PatientToItselfResource extends JsonResource
             'id' => $this->id,
             'allergies' => $this->allergies,
             'chronic_diseases' => $this->chronic_diseases,
-            'user' => new UserToPatientResource($this->user),
-            'blood_type' => new BloodTypeToPatientResource($this->bloodType),
+            'user_id' => $this->user_id,
+            'user_fullname' => $this->user->first_name . ' ' . $this->user->last_name,
+            'blood_type_id' => $this->blood_type_id,
+            'blood_type_name' => $this->bloodType->name,
         ];
     }
 }

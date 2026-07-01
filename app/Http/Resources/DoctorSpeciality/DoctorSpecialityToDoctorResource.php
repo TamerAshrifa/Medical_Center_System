@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources\DoctorSpeciality;
 
-use App\Http\Resources\Doctor\DoctorToDoctorResource;
-use App\Http\Resources\Speciality\SpecialityToDoctorResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,8 +16,11 @@ class DoctorSpecialityToDoctorResource extends JsonResource
     {
         $returned = [
             'id' => $this->id,
-            'doctor' => new DoctorToDoctorResource($this->doctor),
-            'speciality' => new SpecialityToDoctorResource($this->speciality),
+            'doctor_id' => $this->doctor_id,
+            'doctor_fullname' => $this->doctor->user->first_name . ' ' .
+                $this->doctor->user->last_name,
+            'speciality_id' => $this->speciality_id,
+            'speciality_name' => $this->speciality->name,
         ];
         if ($this->view_experience)
             $returned['experience_starting_date'] = $this->experience_starting_date->format('Y-m-d');

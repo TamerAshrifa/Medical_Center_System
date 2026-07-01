@@ -2,22 +2,20 @@
 
 namespace App\GeneralClasses;
 
-use App\GeneralClasses\Enums\ResponseStatusEnum;
-
 class Response
 {
-    public ResponseStatusEnum $result;
+    public bool $did_succeed;
     public ?array $message;
     public $data;
     public int $statusCode;
 
     public function __construct(
-        ResponseStatusEnum $result,
+        bool $did_succeed,
         ?array $message = null,
         $data = null,
         int $statusCode = 200,
     ) {
-        $this->result = $result;
+        $this->did_succeed = $did_succeed;
         $this->message = $message;
         $this->data = $data;
         $this->statusCode = $statusCode;
@@ -27,6 +25,5 @@ class Response
     {
         return ['base_message' => $message];
     }
-
 
 }

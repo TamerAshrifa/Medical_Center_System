@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\DTOs\User\DoctorSpecialityDTO;
 use App\DTOs\User\DoctorSpecialityDTOUpdate;
-use App\GeneralClasses\Enums\ResponseStatusEnum;
+
 use App\GeneralClasses\Response;
 use App\Repositories\Interfaces\DoctorSpecialityRepositoryInterface;
 
@@ -15,51 +15,36 @@ class DoctorSpecialityService extends Service
     ) {
     }
 
-    public function paginate(int $per_page = 10): Response
+    public function paginate(int $perPage = 10): Response
     {
-        $doctorsSpecialities = $this->doctorSpecialityRepository->paginate($per_page);
-        $items = $doctorsSpecialities->items();
+        $records = $this->doctorSpecialityRepository->paginate($perPage);
         return new Response(
-            ResponseStatusEnum::SUCCESS,
-            [
-                "result" => "Success",
-                "current_page_number" => $doctorsSpecialities->currentPage(),
-                "last_page_number" => $doctorsSpecialities->lastPage(),
-                "records_per_page" => $doctorsSpecialities->perPage(),
-                "next_page_url" => $doctorsSpecialities->nextPageUrl(),
-                "previous_page_url" => $doctorsSpecialities->previousPageUrl(),
-                "first_page_url" => $doctorsSpecialities->url(1),
-                "last_page_url" => $doctorsSpecialities->url($doctorsSpecialities->lastPage()),
-                "total_records_number" => $doctorsSpecialities->total(),
-            ],
-            $items
+            true,
+            $this->paginationMessage($records),
+            $records->items()
         );
     }
-
-
     public function allForDoctor(int $doctorId): Response
     {
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             null,
             $this->doctorSpecialityRepository->allForDoctor($doctorId)
         );
     }
-
     public function allForSpeciality(int $specialityId): Response
     {
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             null,
             $this->doctorSpecialityRepository->allForSpeciality($specialityId)
         );
     }
-
-    public function create(DoctorSpecialityDTO $dtoData): Response
+    public function create(DoctorSpecialityDTO $dto): Response
     {
-        if ($this->doctorSpecialityRepository->exists($dtoData->doctor_id, $dtoData->speciality_id)) {
+        if ($this->doctorSpecialityRepository->exists($dto->doctor_id, $dto->speciality_id)) {
             return new Response(
-                ResponseStatusEnum::FAIL,
+                false,
                 Response::messageToArray('Speciality already exists'),
                 null,
                 409
@@ -67,39 +52,43 @@ class DoctorSpecialityService extends Service
         }
 
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             Response::messageToArray('Speciality added successfully'),
-            $this->doctorSpecialityRepository->create($dtoData),
+            $this->doctorSpecialityRepository->create($dto),
             201
         );
     }
-    public function find(int $id): Response
-    {
+    public function find(
+        int $id,
+        $failIfNotExists = true,
+        $withDoctor = false,
+        $withSpeciality = false
+    ): Response {
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             null,
-            $this->doctorSpecialityRepository->find($id, true, true, true)
+            $this->doctorSpecialityRepository->find($id, $failIfNotExists, $withDoctor, $withSpeciality)
         );
     }
-    public function update(int $id, DoctorSpecialityDTOUpdate $dtoData): Response
+    public function update(int $id, DoctorSpecialityDTOUpdate $dto): Response
     {
-        $response = $this->doctorSpecialityRepository->update($dtoData, $id);
-
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
+        if (!$this->doctorSpecialityRepository->update($dto, $id))
+            return new Response(
+                false,
+                Response::messageToArray('Failed to delete the speciality, please try again'),
+            );
 
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             Response::messageToArray('Your speciality updated successfully'),
-            $response->data
         );
     }
     public function delete(int $id): Response
     {
         return $this->doctorSpecialityRepository->delete($id) ?
-            new Response(ResponseStatusEnum::SUCCESS, null, null, 204) :
+            new Response(true, null, null, 204) :
             new Response(
-                ResponseStatusEnum::FAIL,
+                false,
                 Response::messageToArray('Failed to delete speciality, please try again'),
                 null,
                 500

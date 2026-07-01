@@ -32,6 +32,4 @@ class MedicalRecordAccess extends Model
     {
         return $this->belongsTo(Doctor::class, 'can_accessed_by_doctor_id');
     }
-
-
 }

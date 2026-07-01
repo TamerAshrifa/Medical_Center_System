@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\DTOs\Appointment\AppointmentDTO;
 use App\DTOs\Transfer\TransferDTO;
 use App\Enums\UserRoleEnum;
-use App\GeneralClasses\Enums\ResponseStatusEnum;
 use App\Http\Requests\TransferController\StoreRequest;
 use App\Http\Resources\Transfer\TransferToAdminResource;
 use App\Http\Resources\Transfer\TransferToDoctorResource;
@@ -28,7 +27,7 @@ class TransferController extends Controller
 
     private function resource($recordOrCollectionOfIt, bool $isCollection)
     {
-        switch (Auth::user()->role) {
+        switch ($this->currentUserRole()) {
             case UserRoleEnum::ADMIN:
                 return $isCollection ?
                     TransferToAdminResource::collection($recordOrCollectionOfIt) :
@@ -61,18 +60,15 @@ class TransferController extends Controller
         Patient::findOrFail($patient_id, 'id');
         Doctor::findOrFail($receiving_doctor_id, 'id');
 
-        $validatedData = $request->validated();
-        $validatedData = array_merge($validatedData, [
+        $validatedData = array_merge($request->validated(), [
             'referring_doctor_id' => Auth::user()->doctor->id,
             'receiving_doctor_id' => $receiving_doctor_id,
             'patient_id' => $patient_id,
         ]);
 
         $response = $this->transferService->create(TransferDTO::fromRequest($validatedData));
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-        ], $response->statusCode);
+
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -87,11 +83,9 @@ class TransferController extends Controller
     {
         $response = $this->transferService->paginate($per_page, $with_attended);
 
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -107,11 +101,9 @@ class TransferController extends Controller
     {
         $response = $this->transferService->allPatientTransfers($with_attended, $patient_id);
 
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -128,11 +120,9 @@ class TransferController extends Controller
     {
         $response = $this->transferService->paginateReferredTransfers($per_page, $with_attended, $doctor_id);
 
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -149,11 +139,9 @@ class TransferController extends Controller
     {
         $response = $this->transferService->paginateReceivedTransfers($per_page, $with_attended, $doctor_id);
 
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -166,10 +154,9 @@ class TransferController extends Controller
     public function show(int $id)
     {
         $response = $this->transferService->find($id);
-        return response()->json([
-            'result' => $response->result,
-            'data' => $this->resource($response->data, false),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -190,17 +177,9 @@ class TransferController extends Controller
 
         $response = $this->transferService->makeAppointmentForTransfer(AppointmentDTO::fromRequest($validatedData), false, $transfer_id);
 
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -221,17 +200,7 @@ class TransferController extends Controller
 
         $response = $this->transferService->makeAnotherAppointmentForTransfer(AppointmentDTO::fromRequest($validatedData), $transfer_id);
 
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-        ], $response->statusCode);
+        return $this->jsonResponse($response);
     }
 
 }

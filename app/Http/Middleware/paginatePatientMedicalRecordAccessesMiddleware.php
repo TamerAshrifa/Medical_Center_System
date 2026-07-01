@@ -21,7 +21,7 @@ class PaginatePatientMedicalRecordAccessesMiddleware
         if ($user->role == UserRoleEnum::PATIENT)
             if ($request->route('patient_id') != $user->patient->id)
                 return response()->json([
-                    'result' => 'Fail',
+                    'did_succeed' => false,
                     'message' => 'Patients can\'t see other patients\' given permessions',
                 ], 403);
 

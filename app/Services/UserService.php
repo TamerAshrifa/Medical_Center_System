@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\DTOs\User\UserDTO;
 use App\DTOs\User\UserDTOUpdate;
-use App\GeneralClasses\Enums\ResponseStatusEnum;
+
 use App\GeneralClasses\Response;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 
@@ -15,62 +15,50 @@ class UserService extends Service
     ) {
     }
 
-    public function paginate(int $per_page = 10): Response
+    public function paginate(int $perPage = 10): Response
     {
-        $users = $this->userRepository->paginate($per_page);
-        $items = $users->items();
+        $records = $this->userRepository->paginate($perPage);
         return new Response(
-            ResponseStatusEnum::SUCCESS,
-            [
-                "result" => "Success",
-                "current_page_number" => $users->currentPage(),
-                "last_page_number" => $users->lastPage(),
-                "users_per_page" => $users->perPage(),
-                "next_page_url" => $users->nextPageUrl(),
-                "previous_page_url" => $users->previousPageUrl(),
-                "first_page_url" => $users->url(1),
-                "last_page_url" => $users->url($users->lastPage()),
-                "total_users_number" => $users->total(),
-            ],
-            $items
+            true,
+            $this->paginationMessage($records),
+            $records->items()
         );
     }
-    public function create(UserDTO $userDTO): Response
+    public function create(UserDTO $dto): Response
     {
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             Response::messageToArray('User added successfully'),
-            $this->userRepository->create($userDTO, now()),
+            $this->userRepository->create($dto, now()),
             201
         );
     }
-    public function show(int $userId): Response
+    public function show(int $id): Response
     {
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             null,
-            $this->userRepository->findById($userId)
+            $this->userRepository->find($id)
         );
     }
-    public function update(int $userId, UserDTOUpdate $userDTO): Response
+    public function update(int $id, UserDTOUpdate $userDTO): Response
     {
-        $response = $this->userRepository->update($userId, $userDTO);
-
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
-
+        if (!$this->userRepository->update($id, $userDTO))
+            return new Response(
+                true,
+                Response::messageToArray('Failed to updated user, please try again'),
+            );
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             Response::messageToArray('User updated successfully'),
-            $response->data
         );
     }
-    public function delete(int $userId): Response
+    public function delete(int $id): Response
     {
-        return $this->userRepository->deleteById($userId) ?
-            new Response(ResponseStatusEnum::SUCCESS, null, null, 204) :
+        return $this->userRepository->delete($id) ?
+            new Response(true, null, null, 204) :
             new Response(
-                ResponseStatusEnum::FAIL,
+                false,
                 Response::messageToArray('Failed to delete user, please try again'),
                 null,
                 500

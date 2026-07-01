@@ -24,12 +24,12 @@ class ShowAppointmentMiddleware
             $data = $response->getData(true); // array
             if ($user->role == UserRoleEnum::PATIENT && $user->patient->id != ($data['data'])['patient_id'])
                 return response()->json([
-                    'result' => 'Fail',
+                    'did_succeed' => false,
                     'message' => 'Patients can\'t see other patients\' appointments',
                 ], 403);
             else if ($user->role == UserRoleEnum::DOCTOR && $user->doctor->id != ($data['data'])['doctor_id'])
                 return response()->json([
-                    'result' => 'Fail',
+                    'did_succeed' => false,
                     'message' => 'Doctors can\'t see other doctors\' appointments',
                 ], 403);
             if (array_key_exists('patient_id', $data['data']))

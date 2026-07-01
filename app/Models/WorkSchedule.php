@@ -33,5 +33,4 @@ class WorkSchedule extends Model
         return $this->hasOne(MedicalCenterWorkSchedule::class, 'work_schedule_id');
     }
 
-
 }

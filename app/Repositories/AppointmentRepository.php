@@ -5,46 +5,66 @@ namespace App\Repositories;
 use App\DTOs\Appointment\AppointmentDTO;
 use App\Enums\AppointmentStatusEnum;
 use App\Models\Appointment;
+use App\Models\Doctor;
 use App\Repositories\Interfaces\AppointmentRepositoryInterface;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 
 class AppointmentRepository extends Repository implements AppointmentRepositoryInterface
 {
-
-    public function paginate(AppointmentStatusEnum $status = null, bool $with_expired = false, int $per_page = 10)
+    public function paginate(AppointmentStatusEnum $status = null, bool $withExpired = false, int $perPage = 10)
     {
-        return Appointment::with(['patient', 'doctor'])
+        return Appointment::query()
+            ->with([
+                'patient:id,user_id',
+                'patient.user:id,first_name,last_name',
+                'doctor:id,user_id',
+                'doctor.user:id,first_name,last_name',
+            ])
             ->when($status, fn($q) => $q->where('status', $status->value))
-            ->when(!$with_expired, fn($q) => $q->where('datetime', '>=', Carbon::today()))
+            ->when(!$withExpired, fn($q) => $q->where('datetime', '>=', Carbon::today()))
             ->orderBy('created_at', 'desc')
-            ->paginate($per_page);
+            ->paginate($perPage);
     }
-    public function paginatePatientAppointments(AppointmentStatusEnum $status = null, bool $with_expired = false, int $per_page = 10, int $patientId)
+    public function paginatePatientAppointments(AppointmentStatusEnum $status = null, bool $withExpired = false, int $perPage = 10, int $patientId)
     {
-        return Appointment::with('doctor')
+        return Appointment::query()
+            ->with([
+                'doctor:id,user_id',
+                'doctor.user:id,first_name,last_name',
+            ])
             ->where('patient_id', $patientId)
             ->when($status, fn($q) => $q->where('status', $status->value))
-            ->when(!$with_expired, fn($q) => $q->where('datetime', '>=', Carbon::today()))
+            ->when(!$withExpired, fn($q) => $q->where('datetime', '>=', Carbon::today()))
             ->orderBy('created_at', 'desc')
-            ->paginate($per_page);
+            ->paginate($perPage);
     }
-    public function paginateDoctorAppointments(AppointmentStatusEnum $status = null, bool $with_expired = false, int $per_page = 10, int $doctor_id)
+    public function paginateDoctorAppointments(AppointmentStatusEnum $status = null, bool $withExpired = false, int $perPage = 10, int $doctorId)
     {
-        return Appointment::with('patient')
-            ->where('doctor_id', $doctor_id)
+        return Appointment::query()
+            ->with([
+                'patient:id,user_id',
+                'patient.user:id,first_name,last_name',
+            ])
+            ->where('doctor_id', $doctorId)
             ->when($status, fn($q) => $q->where('status', $status->value))
-            ->when(!$with_expired, fn($q) => $q->where('datetime', '>=', Carbon::today()))
+            ->when(!$withExpired, fn($q) => $q->where('datetime', '>=', Carbon::today()))
             ->orderBy('created_at', 'desc')
-            ->paginate($per_page);
+            ->paginate($perPage);
     }
     public function find($failIfNotExists = true, bool $withPatient, bool $withDoctor, int $id): Appointment|null
     {
         $entities = [];
         if ($withPatient)
-            $entities[] = 'patient';
+            $entities = array_merge($entities, [
+                'patient:id,user_id',
+                'patient.user:id,first_name,last_name',
+            ]);
+
         if ($withDoctor)
-            $entities[] = 'doctor';
+            $entities = array_merge($entities, [
+                'doctor:id,user_id',
+                'doctor.user:id,first_name,last_name',
+            ]);
 
         $query = Appointment::query()->with($entities);
 
@@ -54,9 +74,9 @@ class AppointmentRepository extends Repository implements AppointmentRepositoryI
     {
         return $this->find(true, false, false, $id)->update(['status' => $status->value]) > 0;
     }
-    public function create(AppointmentDTO $dtoData): Appointment
+    public function create(AppointmentDTO $dto): Appointment
     {
-        return Appointment::create($dtoData->toArray());
+        return Appointment::create($dto->toArray());
     }
     public function exists(int $doctorId, string $datetime, AppointmentStatusEnum $status): bool
     {
@@ -69,10 +89,6 @@ class AppointmentRepository extends Repository implements AppointmentRepositoryI
     public function isAttended(int $id): bool
     {
         return Appointment::where('id', $id)->whereHas('visit')->exists();
-    }
-    public function hasTransfer(int $id): bool
-    {
-        return Appointment::findOrFail($id)->whereHas('transfer')->exists();
     }
 
     public function getBookedAppointmentsOfDoctorInDate(string $dateOfDay, int $doctorId)
@@ -94,8 +110,8 @@ class AppointmentRepository extends Repository implements AppointmentRepositoryI
             ->join('patients', 'appointments.patient_id', '=', 'patients.id')
             ->join('users', 'patients.user_id', '=', 'users.id')
             ->where('appointments.status', AppointmentStatusEnum::PENDING->value)
-            ->whereDate('appointments.datetime', '>=', $startDate . ' 00:00:00')
-            ->whereDate('appointments.datetime', '<=', $endDate . ' 23:59:59')
+            ->whereDate('appointments.datetime', '>=', $startDate)
+            ->whereDate('appointments.datetime', '<=', $endDate)
             ->distinct()
             ->pluck('users.email');
     }
@@ -104,8 +120,8 @@ class AppointmentRepository extends Repository implements AppointmentRepositoryI
     {
         return Appointment::query()
             ->where('status', AppointmentStatusEnum::PENDING->value)
-            ->whereDate('datetime', '>=', $startDate . ' 00:00:00')
-            ->whereDate('datetime', '<=', $endDate . ' 23:59:59')
+            ->whereDate('datetime', '>=', $startDate)
+            ->whereDate('datetime', '<=', $endDate)
             ->update(['status' => AppointmentStatusEnum::CANCELLED_BY_MEDICAL_CENTER->value]);
     }
 
@@ -122,14 +138,23 @@ class AppointmentRepository extends Repository implements AppointmentRepositoryI
             ->pluck('users.email');
     }
 
-    public function cancelByDoctorAllDoctorPendingAppointmentsEmailsInDateRange(string $startDate, string $endDate, int $doctorId)
-    {
+    public function cancelByDoctorAllDoctorPendingAppointmentsEmailsInDateRange(
+        string $startDate,
+        string $endDate,
+        int $doctorId
+    ) {
         return Appointment::query()
             ->where('doctor_id', $doctorId)
             ->where('status', AppointmentStatusEnum::PENDING->value)
-            ->whereDate('datetime', '>=', $startDate . ' 00:00:00')
-            ->whereDate('datetime', '<=', $endDate . ' 23:59:59')
+            ->whereDate('datetime', '>=', $startDate)
+            ->whereDate('datetime', '<=', $endDate)
             ->update(['status' => AppointmentStatusEnum::CANCELLED_BY_DOCTOR->value]);
     }
-
+    public function doctorAppointmentDuration(int $doctorId, bool $failIfDoctorNotExists = true): int
+    {
+        $query = Doctor::query()->where('id', $doctorId);
+        return $failIfDoctorNotExists ?
+            $query->valueOrFail('appointment_duration') :
+            $query->value('appointment_duration');
+    }
 }

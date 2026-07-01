@@ -20,7 +20,7 @@ class CheckAdminMiddleware
         $user = Auth::user();
         if ($user->role != UserRoleEnum::ADMIN)
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => 'Only admins allowed',
             ], 403);
 

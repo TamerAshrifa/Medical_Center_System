@@ -23,7 +23,7 @@ class AllPatientTransfersMiddleware
             $user->patient->id != $request->route('patient_id')
         )
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => 'Patients can\'t see other patients\' transfers',
             ], 403);
 

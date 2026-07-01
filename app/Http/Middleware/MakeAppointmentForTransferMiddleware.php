@@ -20,7 +20,7 @@ class MakeAppointmentForTransferMiddleware
         $ownerPatientId = Transfer::where('id', $request->route('transfer_id'))->valueOrFail('patient_id');
         if (Auth::user()->patient->id != $ownerPatientId)
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => 'Patients can\'t make appointments for other patients\' transfers',
             ], 403);
 

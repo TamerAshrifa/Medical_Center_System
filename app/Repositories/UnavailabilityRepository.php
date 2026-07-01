@@ -3,9 +3,7 @@
 namespace App\Repositories;
 
 use App\DTOs\Unavailability\UnavailabilityDTO;
-use App\Enums\AppointmentStatusEnum;
 use App\Enums\UnavailabilityTypeEnum;
-use App\Models\Appointment;
 use App\Models\DoctorUnavailability;
 use App\Models\MedicalCenterUnavailability;
 use App\Models\Unavailability;
@@ -18,7 +16,11 @@ class UnavailabilityRepository extends Repository implements UnavailabilityRepos
     {
         return Unavailability::
             whereHas('doctorUnavailability')
-            ->with('doctorUnavailability')
+            ->with([
+                'doctorUnavailability',
+                'doctorUnavailability.doctor:id,user_id',
+                'doctorUnavailability.doctor.user:id,first_name,last_name',
+            ])
             ->where('type', UnavailabilityTypeEnum::DOCTOR->value)
             ->orderBy('created_at', 'desc')
             ->when(!$withPassed, fn($q) => $q->where('to_date', '>=', Carbon::today()))
@@ -29,7 +31,11 @@ class UnavailabilityRepository extends Repository implements UnavailabilityRepos
     {
         return Unavailability::
             whereHas('doctorUnavailability', fn($q) => $q->where('doctor_id', $doctorId))
-            ->with('doctorUnavailability')
+            ->with([
+                'doctorUnavailability',
+                'doctorUnavailability.doctor:id,user_id',
+                'doctorUnavailability.doctor.user:id,first_name,last_name',
+            ])
             ->where('type', UnavailabilityTypeEnum::DOCTOR->value)
             ->orderBy('created_at', 'desc')
             ->when(!$withPassed, fn($q) => $q->where('to_date', '>=', Carbon::today()))
@@ -40,7 +46,11 @@ class UnavailabilityRepository extends Repository implements UnavailabilityRepos
     {
         return Unavailability::
             whereHas('medicalCenterUnavailability')
-            ->with('medicalCenterUnavailability')
+            ->with([
+                'medicalCenterUnavailability',
+                'medicalCenterUnavailability.madeByAdmin:id,user_id',
+                'medicalCenterUnavailability.madeByAdmin.user:id,first_name,last_name',
+            ])
             ->where('type', UnavailabilityTypeEnum::MEDICAL_CENTER->value)
             ->when(!$withPassed, fn($q) => $q->where('to_date', '>=', Carbon::today()))
             ->orderBy('created_at', 'desc')

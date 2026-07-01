@@ -2,7 +2,7 @@
 // The logged-in user role is null (non-completed patient), OK, but he is trying to add a patient other than himself!
 
 {
- "result": "Fail",
+ "did_succeed": false,
     "message": {
         "base_message": "Patients can only add themselves"
     },

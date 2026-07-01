@@ -20,10 +20,14 @@ class SchedulingRepository extends Repository implements SchedulingRepositoryInt
     {
         return WeekDay::all();
     }
-    public function paginateDoctorsWorkSchedules(bool $withExpired = false, int $per_page = 10)
+    public function paginateDoctorsWorkSchedules(bool $withExpired = false, int $perPage = 10)
     {
         return WorkSchedule::whereHas('doctorWorkSchedule')
-            ->with('doctorWorkSchedule')
+            ->with([
+                'doctorWorkSchedule',
+                'doctorWorkSchedule.doctor:id,user_id',
+                'doctorWorkSchedule.doctor.user:id,first_name,last_name',
+            ])
             ->where('type', WorkScheduleTypeEnum::DOCTOR->value)
             ->orderBy('created_at', 'desc')
             ->when(!$withExpired, function ($q) {
@@ -32,12 +36,16 @@ class SchedulingRepository extends Repository implements SchedulingRepositoryInt
                         ->orWhereNull('effective_to_date');
                 });
             })
-            ->paginate($per_page);
+            ->paginate($perPage);
     }
-    public function paginateDoctorWorkSchedules(int $doctorId, bool $withExpired = false, int $per_page = 10)
+    public function paginateDoctorWorkSchedules(int $doctorId, bool $withExpired = false, int $perPage = 10)
     {
         return WorkSchedule::whereHas('doctorWorkSchedule', fn($q) => $q->where('doctor_id', $doctorId))
-            ->with(['doctorWorkSchedule', 'dayWorkTimes'])
+            ->with([
+                'doctorWorkSchedule',
+                'doctorWorkSchedule.doctor:id,user_id',
+                'doctorWorkSchedule.doctor.user:id,first_name,last_name',
+            ])
             ->where('type', WorkScheduleTypeEnum::DOCTOR->value)
             ->when(!$withExpired, function ($q) {
                 $q->where(function ($q2) {
@@ -46,11 +54,17 @@ class SchedulingRepository extends Repository implements SchedulingRepositoryInt
                 });
             })
             ->orderBy('created_at', 'desc')
-            ->paginate($per_page);
+            ->paginate($perPage);
     }
-    public function paginateMedicalCenterWorkSchedules(bool $withExpired = false, int $per_page = 10)
+    public function paginateMedicalCenterWorkSchedules(bool $withExpired = false, int $perPage = 10)
     {
-        return WorkSchedule::whereHas('medicalCenterWorkSchedule')->with('medicalCenterWorkSchedule')
+        return WorkSchedule::query()
+            ->whereHas('medicalCenterWorkSchedule')
+            ->with([
+                'medicalCenterWorkSchedule',
+                'medicalCenterWorkSchedule.madeByAdmin:id,user_id',
+                'medicalCenterWorkSchedule.madeByAdmin.user:id,first_name,last_name',
+            ])
             ->where('type', WorkScheduleTypeEnum::MEDICAL_CENTER->value)
             ->when(!$withExpired, function ($q) {
                 $q->where(function ($q2) {
@@ -59,9 +73,9 @@ class SchedulingRepository extends Repository implements SchedulingRepositoryInt
                 });
             })
             ->orderBy('created_at', 'desc')
-            ->paginate($per_page);
+            ->paginate($perPage);
     }
-    public function allMedicalCenterWorkSchedules(bool $withExpired = false, bool $withMedicalCenterWorkSchedule = false, bool $withDayWorkTimes = false): Collection
+    public function allMedicalCenterWorkSchedules(bool $withExpired = false, bool $withMedicalCenterWorkSchedule = false, bool $withDayWorkTimes = false)
     {
         return WorkSchedule::whereHas('medicalCenterWorkSchedule')
             ->where('type', WorkScheduleTypeEnum::MEDICAL_CENTER->value)
@@ -90,7 +104,6 @@ class SchedulingRepository extends Repository implements SchedulingRepositoryInt
         return $failIfNotExists ?
             $query->firstOrFail() :
             $query->first();
-
     }
     public function findOldestMedicalCenterWorkSchedule(bool $considerExpiration = true, $failIfNotExists = true): WorkSchedule|null
     {
@@ -109,12 +122,11 @@ class SchedulingRepository extends Repository implements SchedulingRepositoryInt
         return $failIfNotExists ?
             $query->firstOrFail() :
             $query->first();
-
     }
     public function getDoctorsNotExpiredWorkSchedulesContainOrAfterDate(string $addedScheduleEffectiveFromDate)
     {
         return WorkSchedule::query()
-            ->selectRaw('day_work_times.weekday_id, MIN(day_work_times.start_time) as start_time, MAX(day_work_times.end_time) as end_time')
+            ->selectRaw('day_work_times.weekday_id, min(day_work_times.start_time) as start_time, max(day_work_times.end_time) as end_time')
             ->join('day_work_times', 'work_schedules.id', '=', 'day_work_times.work_schedule_id')
             ->where('work_schedules.type', WorkScheduleTypeEnum::DOCTOR->value)
             ->where(function ($q) use ($addedScheduleEffectiveFromDate) {
@@ -126,7 +138,9 @@ class SchedulingRepository extends Repository implements SchedulingRepositoryInt
     }
     public function findLastMedicalCenterWorkSchedule($failIfNotExists = true): WorkSchedule|null
     {
-        $q = WorkSchedule::where('type', WorkScheduleTypeEnum::MEDICAL_CENTER->value)->whereNull('effective_to_date');
+        $q = WorkSchedule::query()
+            ->where('type', WorkScheduleTypeEnum::MEDICAL_CENTER->value)
+            ->whereNull('effective_to_date');
 
         return $failIfNotExists ?
             $q->firstOrFail() :
@@ -141,7 +155,7 @@ class SchedulingRepository extends Repository implements SchedulingRepositoryInt
 
         return $failIfNotExists ? $query->firstOrFail() : $query->first();
     }
-    public function updateLastWorkScheduleExpireDate(string $effective_to_date, WorkScheduleTypeEnum $type, int $makerId): bool
+    public function updateLastWorkScheduleExpireDate(string $effectiveToDate, WorkScheduleTypeEnum $type, int $makerId): bool
     {
         $workSchedule = ($type == WorkScheduleTypeEnum::MEDICAL_CENTER) ?
             $this->findLastMedicalCenterWorkSchedule(false) :
@@ -150,47 +164,36 @@ class SchedulingRepository extends Repository implements SchedulingRepositoryInt
             return true;
 
         return $workSchedule->update([
-            'effective_to_date' => $effective_to_date
+            'effective_to_date' => $effectiveToDate
         ]) > 0;
     }
     public function findWorkSchedule(int $id, $failIfNotExists = true): WorkSchedule|null
     {
         return $failIfNotExists ? WorkSchedule::findOrFail($id) : WorkSchedule::find($id);
     }
-    public function paginateWorkSchedules(bool $withExpired = false, int $per_page = 10)
+    public function createWorkSchedule(WorkScheduleDTO $dto): WorkSchedule
     {
-        return WorkSchedule::with(['doctorWorkSchedule', 'medicalCenterWorkSchedule'])
-            ->when(!$withExpired, function ($q) {
-                $q->where(function ($q2) {
-                    $q2->where('effective_to_date', '>=', Carbon::today())
-                        ->orWhereNull('effective_to_date');
-                });
-            })
-            ->orderBy('created_at', 'desc')->paginate($per_page);
+        return WorkSchedule::create($dto->toArray());
     }
-    public function createWorkSchedule(WorkScheduleDTO $dtoData): WorkSchedule
+    public function createDayWorkTime(DayWorkTimeDTO $dto): DayWorkTime
     {
-        return WorkSchedule::create($dtoData->toArray());
+        return DayWorkTime::create($dto->toArray());
     }
-    public function createDayWorkTime(DayWorkTimeDTO $dayWorkTimeDTO): DayWorkTime
-    {
-        return DayWorkTime::create($dayWorkTimeDTO->toArray());
-    }
-    public function createDoctorWorkSchedule(int $work_schedule_id, int $doctor_id): DoctorWorkSchedule
+    public function createDoctorWorkSchedule(int $workScheduleId, int $doctorId): DoctorWorkSchedule
     {
         return DoctorWorkSchedule::create([
-            'doctor_id' => $doctor_id,
-            'work_schedule_id' => $work_schedule_id,
+            'doctor_id' => $doctorId,
+            'work_schedule_id' => $workScheduleId,
         ]);
     }
-    public function createMedicalCenterWorkSchedule(int $work_schedule_id, int $made_by_admin_id): MedicalCenterWorkSchedule
+    public function createMedicalCenterWorkSchedule(int $workScheduleId, int $madeByAdminId): MedicalCenterWorkSchedule
     {
         return MedicalCenterWorkSchedule::create([
-            'work_schedule_id' => $work_schedule_id,
-            'made_by_admin_id' => $made_by_admin_id,
+            'work_schedule_id' => $workScheduleId,
+            'made_by_admin_id' => $madeByAdminId,
         ]);
     }
-    public function allAvailableTimesToBook(string $dateOfDay, int $doctorId, bool $failIfScheduleNotExists = true): Collection
+    public function allAvailableTimesToBook(string $dateOfDay, int $doctorId, bool $failIfScheduleNotExists = true)
     {
         $unavailabilityRepository = new UnavailabilityRepository();
         $d = Carbon::parse($dateOfDay)->format('Y-m-d');
@@ -213,7 +216,7 @@ class SchedulingRepository extends Repository implements SchedulingRepositoryInt
                             ->whereNull('effective_to_date');
                     });
             })
-            ->orderByRaw('effective_to_date IS NULL ASC');
+            ->orderByRaw('effective_to_date is null asc');
 
         if ($failIfScheduleNotExists)
             return $query->firstOrFail()->dayWorkTimes;

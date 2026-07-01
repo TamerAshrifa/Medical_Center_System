@@ -51,10 +51,7 @@ class PatientComplaintController extends Controller
 
         $response = $this->patientComplaintService->create(PatientComplaintDTO::fromRequest($validatedData));
 
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-        ], $response->statusCode);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -68,11 +65,9 @@ class PatientComplaintController extends Controller
     public function allPatientComplaints(int $patient_id)
     {
         $response = $this->patientComplaintService->allPatientComplaints($patient_id);
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -89,11 +84,9 @@ class PatientComplaintController extends Controller
 
         $response = $this->patientComplaintService->paginate($per_page, $with_reviewed);
 
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -106,11 +99,9 @@ class PatientComplaintController extends Controller
     public function show(int $id)
     {
         $response = $this->patientComplaintService->find($id);
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, false),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -123,12 +114,9 @@ class PatientComplaintController extends Controller
      */
     public function makePatientComplaintReviewed(string $reply, int $id)
     {
-        $response = $this->patientComplaintService->makePatientComplaintReviewed($reply, Auth::user()->admin->id, $id);
+        $response = $this->patientComplaintService->makeReviewed($reply, Auth::user()->admin->id, $id);
 
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-        ], $response->statusCode);
+        return $this->jsonResponse($response);
     }
 
 }

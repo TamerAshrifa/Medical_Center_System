@@ -2,24 +2,15 @@
 
 namespace App\Services;
 
-use App\Enums\UserRoleEnum;
-use Illuminate\Support\Facades\Auth;
-
 abstract class Service
 {
     public function __construct(
     ) {
     }
 
-    protected function getCurrentUserRole(): UserRoleEnum|null
-    {
-        return Auth::user()->role;
-    }
-
-    protected function getPaginationMessage($paginationRecords): array
+    protected function paginationMessage($paginationRecords): array
     {
         return [
-            'result' => 'Success',
             'current_page_number' => $paginationRecords->currentPage(),
             'last_page_number' => $paginationRecords->lastPage(),
             'items_per_page' => $paginationRecords->perPage(),

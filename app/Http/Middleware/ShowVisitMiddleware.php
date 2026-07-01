@@ -27,7 +27,7 @@ class ShowVisitMiddleware
             $user->patient->id != Visit::findOrFail($request->route('id'), ['appointment_id'])->appointment->patient_id
         )
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => 'Patients can\'t see other patients\' visits',
             ], 403);
 
@@ -36,7 +36,7 @@ class ShowVisitMiddleware
             !((new MedicalRecordAccessRepository())->hasAccess($request->route('id'), $user->doctor->id))
         )
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => 'Sorry, You don\'t have access permission to this visit',
             ], 403);
 

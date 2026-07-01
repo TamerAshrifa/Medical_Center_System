@@ -9,8 +9,6 @@ use App\Enums\UserRoleEnum;
 use App\Http\Requests\UnavailabilityController\StoreUnavailabilityRequest;
 use App\Http\Resources\Unavailability\UnavailabilityToAdminResource;
 use App\Http\Resources\Unavailability\UnavailabilityToDoctorResource;
-use App\Http\Resources\Unavailability\UnavailabilityToPatientResource;
-use App\Repositories\Interfaces\UnavailabilityRepositoryInterface;
 use App\Services\UnavailabilityService;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,7 +24,7 @@ class UnavailabilityController extends Controller
 
     private function resource($recordOrCollection, bool $isCollection)
     {
-        switch ($this->getCurrentUserRole()) {
+        switch ($this->currentUserRole()) {
             case UserRoleEnum::ADMIN:
                 return $isCollection ?
                     UnavailabilityToAdminResource::collection($recordOrCollection) :
@@ -66,15 +64,15 @@ class UnavailabilityController extends Controller
                 break;
             }
 
-        $response = $this->unavailabilityService->createUnavailability(
+        $response = $this->unavailabilityService->create(
             UnavailabilityDTO::fromRequest($validatedData),
             $user->role === UserRoleEnum::ADMIN ?
             $user->admin->id : $user->doctor->id
         );
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-        ], $response->statusCode);
+
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -88,11 +86,9 @@ class UnavailabilityController extends Controller
     public function paginateDoctorsUnavailabilities(bool $with_passed, int $per_page = 10)
     {
         $response = $this->unavailabilityService->paginateDoctorsUnavailabilities($with_passed, $per_page);
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -107,15 +103,13 @@ class UnavailabilityController extends Controller
     public function paginateDoctorUnavailabilities(bool $with_passed, int $per_page = 10, int $doctor_id)
     {
         $response = $this->unavailabilityService->paginateDoctorUnavailabilities($with_passed, $per_page, $doctor_id);
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
-     * View all unavailabilities of the medical center
+     * Paginate unavailabilities of the medical center
      * 
      * ###For: Web
      * Only admins are allowed to use this API. 
@@ -125,11 +119,9 @@ class UnavailabilityController extends Controller
     public function paginateMedicalUnavailabilities(bool $with_passed, int $per_page = 10)
     {
         $response = $this->unavailabilityService->paginateMedicalUnavailabilities($with_passed, $per_page);
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
 }

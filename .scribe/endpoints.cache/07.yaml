@@ -45,16 +45,16 @@ endpoints:
       date_of_day:
         custom: []
         name: date_of_day
-        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-06-28</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-07-01</code>.'
         required: true
-        example: '2107-07-27'
+        example: '2107-07-31'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      date_of_day: '2107-07-27'
+      date_of_day: '2107-07-31'
     fileParameters: []
     responses: []
     responseFields: []
@@ -108,16 +108,16 @@ endpoints:
       datetime:
         custom: []
         name: datetime
-        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-06-28 00:05</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-01 17:11</code>.'
         required: true
-        example: '2107-07-27'
+        example: '2107-07-31'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      datetime: '2107-07-27'
+      datetime: '2107-07-31'
     fileParameters: []
     responses: []
     responseFields: []
@@ -196,7 +196,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"result":"Fail","message":"Unauthenticated; A valid token is required"}'
+        content: '{"did_succeed":false,"message":"Unauthenticated; A valid token is required"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -291,7 +291,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"result":"Fail","message":"Unauthenticated; A valid token is required"}'
+        content: '{"did_succeed":false,"message":"Unauthenticated; A valid token is required"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -386,7 +386,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"result":"Fail","message":"Unauthenticated; A valid token is required"}'
+        content: '{"did_succeed":false,"message":"Unauthenticated; A valid token is required"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -445,7 +445,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"result":"Fail","message":"Unauthenticated; A valid token is required"}'
+        content: '{"did_succeed":false,"message":"Unauthenticated; A valid token is required"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -598,9 +598,9 @@ endpoints:
       actual_time:
         custom: []
         name: actual_time
-        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-06-28 00:00:00</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-01 00:00:00</code>.'
         required: true
-        example: '2107-07-27'
+        example: '2107-07-31'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -651,7 +651,7 @@ endpoints:
         nullable: true
         deprecated: false
     cleanBodyParameters:
-      actual_time: '2107-07-27'
+      actual_time: '2107-07-31'
       medical_diagnosis: mqeopfuudtdsufvyvddqa
       prescription: mniihfqcoynlazghdtqtq
       notes: xbajwbpilpmufinllwloa

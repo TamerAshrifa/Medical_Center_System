@@ -1,5 +1,5 @@
 {
-    "result": "Success",
+    "did_succeed": true,
     "message": {
         "base_message": "Patient added successfully"
     },
@@ -27,7 +27,7 @@
 
 // ⚠ Important Info: in the previous example was for a patient adding himself, if an admin was adding the patient, the previous response's data would be like:
 //{
-//    "result": "Success",
+//    "did_succeed": true,
 //    "message": {
 //        "base_message": "Patient added successfully"
 //    },

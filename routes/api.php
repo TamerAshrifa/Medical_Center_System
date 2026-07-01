@@ -3,6 +3,7 @@
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\DoctorSpecialityController;
 use App\Http\Controllers\MedicalRecordAccessController;
 use App\Http\Controllers\PatientComplaintController;
 use App\Http\Controllers\PatientController;
@@ -26,7 +27,7 @@ Route::middleware('throttle:3,1')->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->middleware('throttle:1,1');
-
+    // dd(true);
     // Users APIs
     Route::prefix('users/')->group(function () {
         Route::post('', [UserController::class, 'store'])->middleware('CheckAdmin');
@@ -40,9 +41,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('patients/')->group(function () {
         Route::post('', [PatientController::class, 'store'])->middleware('StorePatientMiddleware');
         Route::get('{per_page}', [PatientController::class, 'index'])->middleware('CheckAdmin');
-        Route::get('show/{patientId}', [PatientController::class, 'show']);
-        Route::put('{patientId}', [PatientController::class, 'update'])->middleware('CheckPatientOnly');
-        Route::delete('{patientId}', [PatientController::class, 'destroy'])->middleware('CheckAdmin');
+        Route::get('s/{id}', [PatientController::class, 'show'])->middleware('ShowPatientMiddleware');
+        Route::put('{id}', [PatientController::class, 'update'])->middleware(['CheckPatientOnly', 'UpdatePatientMiddleware']);
+        Route::delete('{id}', [PatientController::class, 'destroy'])->middleware('CheckAdmin');
     });
 
     // Room APIs
@@ -58,8 +59,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('doctors/')->group(function () {
         Route::post('', [DoctorController::class, 'store'])->middleware('CheckAdmin');
         Route::get('{per_page}', [DoctorController::class, 'index']);
-        Route::get('show/{doctorId}', [DoctorController::class, 'show']);
-        Route::put('{doctorId}', [DoctorController::class, 'update'])->middleware('CheckDoctorOnly');
+        Route::get('show/{doctor_id}', [DoctorController::class, 'show']);
+        Route::put('{doctor_id}', [DoctorController::class, 'update'])->middleware(['CheckDoctorOnly', 'UpdateDoctorMiddleware']);
         Route::delete('{doctorId}', [DoctorController::class, 'destroy'])->middleware('CheckAdmin');
     });
 
@@ -70,6 +71,17 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('show/{specialityId}', [SpecialityController::class, 'show']);
         Route::put('{specialityId}', [SpecialityController::class, 'update'])->middleware('CheckAdmin');
         Route::delete('{specialityId}', [SpecialityController::class, 'destroy'])->middleware('CheckAdmin');
+    });
+
+    // Doctor Speciality APIs
+    Route::prefix('dSpecialities/')->group(function () {
+        Route::post('', [DoctorSpecialityController::class, 'store'])->middleware('CheckDoctor');
+        Route::get('{per_page}', [DoctorSpecialityController::class, 'index'])->middleware('CheckAdmin');
+        Route::get('IFD/{doctor_id}', [DoctorSpecialityController::class, 'indexForDoctor']);
+        Route::get('IFS/{speciality_id}', [DoctorSpecialityController::class, 'indexForSpeciality']);
+        Route::get('s/{id}', [DoctorSpecialityController::class, 'show']);
+        Route::put('{id}', [DoctorSpecialityController::class, 'update'])->middleware(['CheckDoctor', 'UpdateDoctorSpecialityMiddleware']);
+        Route::delete('{id}', [DoctorSpecialityController::class, 'destroy'])->middleware(['CheckDoctor', 'DeleteDoctorSpecialityMiddleware']);
     });
 
     // Scheduling APIs
@@ -161,9 +173,8 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 });
 
-// User 1 (Admin 1) token: 1|5yz8yTJ9yqhotdgE70j1h4CrS8hYZcuvPb3y4r6ve18d47b2
+// User 1 (Admin 1) token: 5|O2aVQjjqtvEZbvDxUCxHrcrODpjAzFkkMFJ4aSTLefb9b6c6
 // User 2 (Doctor 1) token: 2|OqW3Z5QuX3tiPsuYSvWsVew3W3ffgqNVWRMOKERFc3af1da4
 // User 3 (Patient 1) token: 3|YBLVQMKuAUW6iBwzP0gPndcqKE1RXfo50SQjdqVoe62f23d9
 
 // User 8 (Doctor 2) token: 4|pKeOx148hrHuJd1CB7AF4azhUUwjWhsQ15MzfTxv7d859739
-

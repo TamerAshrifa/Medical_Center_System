@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Speciality;
 
-use App\Http\Resources\Doctor\DoctorToAdminResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,7 +17,6 @@ class SpecialityToPatientResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'doctors' => DoctorToAdminResource::collection($this->whenLoaded('doctors')),
         ];
     }
 }

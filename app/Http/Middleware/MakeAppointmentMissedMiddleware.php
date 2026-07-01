@@ -22,7 +22,7 @@ class MakeAppointmentMissedMiddleware
             Auth::user()->doctor->id
         )
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => 'Doctors can\'t modify other doctors\' appointments',
             ], 403);
 

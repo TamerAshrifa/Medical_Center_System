@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\DTOs\Unavailability\UnavailabilityDTO;
 use App\Enums\UnavailabilityTypeEnum;
-use App\GeneralClasses\Enums\ResponseStatusEnum;
+
 use App\GeneralClasses\Response;
 use App\Mail\DoctorApologizeToPatientsMail;
 use App\Mail\MedicalCenterApologizeToDoctorsMail;
@@ -28,37 +28,34 @@ class UnavailabilityService extends Service
     public function paginateDoctorsUnavailabilities(bool $withPassed, int $perPage = 10): Response
     {
         $records = $this->unavailabilityRepository->paginateDoctorsUnavailabilities($withPassed, $perPage);
-        $items = $records->items();
         return new Response(
-            ResponseStatusEnum::SUCCESS,
-            $this->getPaginationMessage($records),
-            $items
+            true,
+            $this->paginationMessage($records),
+            $records->items()
         );
     }
     public function paginateDoctorUnavailabilities(bool $withPassed = false, int $perPage = 10, $doctorId): Response
     {
         $records = $this->unavailabilityRepository->paginateDoctorUnavailabilities($withPassed, $perPage, $doctorId);
-        $items = $records->items();
         return new Response(
-            ResponseStatusEnum::SUCCESS,
-            $this->getPaginationMessage($records),
-            $items
+            true,
+            $this->paginationMessage($records),
+            $records->items()
         );
     }
     public function paginateMedicalUnavailabilities(bool $withPassed = false, int $perPage = 10): Response
     {
         $records = $this->unavailabilityRepository->paginateMedicalUnavailabilities($withPassed, $perPage);
 
-        $items = $records->items();
         return new Response(
-            ResponseStatusEnum::SUCCESS,
-            $this->getPaginationMessage($records),
-            $items
+            true,
+            $this->paginationMessage($records),
+            $records->items()
         );
     }
     private function sendEmailsByDoctor($emailsToApologizeToByDoctor, $unavailabilityStartDate, $unavailabilityEndDate, $makerId)
     {
-        $doctorFullName = $this->doctorRepository->getDoctorFullname($makerId);
+        $doctorFullName = $this->doctorRepository->fullname($makerId);
         foreach ($emailsToApologizeToByDoctor as $email)
             Mail::to($email)->send(new DoctorApologizeToPatientsMail(
                 $unavailabilityStartDate,
@@ -74,15 +71,15 @@ class UnavailabilityService extends Service
         foreach ($doctorsEmailsToApologizeTo as $email)
             Mail::to($email)->send(new MedicalCenterApologizeToDoctorsMail($unavailabilityStartDate, $unavailabilityEndDate));
     }
-    public function createUnavailability(UnavailabilityDTO $unavailabilityDTO, int $makerId): Response
+    public function create(UnavailabilityDTO $dto, int $makerId): Response
     {
-        $unavailabilityStartDate = Carbon::parse($unavailabilityDTO->from_date)->format('Y-m-d');
-        $unavailabilityEndDate = Carbon::parse($unavailabilityDTO->to_date)->format('Y-m-d');
+        $unavailabilityStartDate = Carbon::parse($dto->from_date)->format('Y-m-d');
+        $unavailabilityEndDate = Carbon::parse($dto->to_date)->format('Y-m-d');
 
-        if ($unavailabilityDTO->type == UnavailabilityTypeEnum::DOCTOR) {
+        if ($dto->type == UnavailabilityTypeEnum::DOCTOR) {
             if ($this->unavailabilityRepository->isThereConflictWithAnotherUnavailabilityForDoctor($unavailabilityStartDate, $unavailabilityEndDate, $makerId)) {
                 return new Response(
-                    ResponseStatusEnum::FAIL,
+                    false,
                     Response::messageToArray('Sorry, unavailability date range has conflicts with other exist unavailabilities, please make sure not to be conflicts and try again'),
                     null,
                     409
@@ -92,7 +89,7 @@ class UnavailabilityService extends Service
         } else {
             if ($this->unavailabilityRepository->isThereConflictWithAnotherUnavailabilityForMedicalCenter($unavailabilityStartDate, $unavailabilityEndDate)) {
                 return new Response(
-                    ResponseStatusEnum::FAIL,
+                    false,
                     Response::messageToArray('Sorry, unavailability date range has conflicts with other exist unavailabilities, please make sure not to be conflicts and try again'),
                     null,
                     409
@@ -101,10 +98,10 @@ class UnavailabilityService extends Service
             $emailsToApologizeTo = $this->appointmentRepository->allPendingAppointmentsEmailsInDateRange($unavailabilityStartDate, $unavailabilityEndDate);
         }
         try {
-            DB::transaction(function () use ($unavailabilityDTO, $makerId, $unavailabilityStartDate, $unavailabilityEndDate) {
-                $unavailability = $this->unavailabilityRepository->createUnavailability($unavailabilityDTO);
+            DB::transaction(function () use ($dto, $makerId, $unavailabilityStartDate, $unavailabilityEndDate) {
+                $unavailability = $this->unavailabilityRepository->createUnavailability($dto);
 
-                if ($unavailabilityDTO->type == UnavailabilityTypeEnum::DOCTOR) {
+                if ($dto->type == UnavailabilityTypeEnum::DOCTOR) {
                     $this->unavailabilityRepository->createDoctorUnavailability($unavailability->id, $makerId);
                     $this->appointmentRepository->cancelByDoctorAllDoctorPendingAppointmentsEmailsInDateRange($unavailabilityStartDate, $unavailabilityEndDate, $makerId);
                 } else {
@@ -114,19 +111,19 @@ class UnavailabilityService extends Service
             });
         } catch (\Exception $e) {
             return new Response(
-                ResponseStatusEnum::FAIL,
+                false,
                 Response::messageToArray($e->getMessage()),
                 null,
                 500
             );
         }
-        if ($unavailabilityDTO->type == UnavailabilityTypeEnum::DOCTOR)
+        if ($dto->type == UnavailabilityTypeEnum::DOCTOR)
             $this->sendEmailsByDoctor($emailsToApologizeTo, $unavailabilityStartDate, $unavailabilityEndDate, $makerId);
         else
             $this->sendEmailsByMedicalCenter($emailsToApologizeTo, $unavailabilityStartDate, $unavailabilityEndDate);
 
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             Response::messageToArray('Unavailability made successfully'),
             null,
             201

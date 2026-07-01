@@ -160,7 +160,7 @@ endpoints:
       -
         custom: []
         status: 201
-        content: "{\r\n  \"result\": \"success\",\r\n  \"message\": \"OTP-Code was sent to tamrashryft2@gmail.com successfully, please check your inbox\"\r\n}"
+        content: "{\r\n  \"did_succeed\": true,\r\n  \"message\": \"OTP-Code was sent to tamrashryft2@gmail.com successfully, please check your inbox\"\r\n}"
         headers: []
         description: ''
     responseFields: []
@@ -225,31 +225,31 @@ endpoints:
       -
         custom: []
         status: 200
-        content: "{\r\n    \"result\": \"Success\",\r\n    \"message\": \"Email verified successfully\",\r\n    \"token_or_reset_token\": \"5|9cc4ues9eb6rAXxanCXiPxICZcUFK6PgMl7IxcXXf287c850\"\r\n}"
+        content: "{\r\n    \"did_succeed\": true,\r\n    \"message\": \"Email verified successfully\",\r\n    \"token_or_reset_token\": \"5|9cc4ues9eb6rAXxanCXiPxICZcUFK6PgMl7IxcXXf287c850\"\r\n}"
         headers: []
         description: ''
       -
         custom: []
         status: 200
-        content: "{\r\n    \"result\": \"Success\",\r\n    \"message\": \"OTP-Code verified successfully, you can now reset your password\",\r\n    \"token_or_reset_token\": \"$2y$12$5MftcDSWXj5UTaxuYL3eTOI2iP6G6jSZ5Rv30Hvc6gh8OKvl.0j/K\"\r\n}"
+        content: "{\r\n    \"did_succeed\": true,\r\n    \"message\": \"OTP-Code verified successfully, you can now reset your password\",\r\n    \"token_or_reset_token\": \"$2y$12$5MftcDSWXj5UTaxuYL3eTOI2iP6G6jSZ5Rv30Hvc6gh8OKvl.0j/K\"\r\n}"
         headers: []
         description: ''
       -
         custom: []
         status: 400
-        content: " {\r\n    \"result\": \"Fail\",\r\n    \"message\": \"Invalid OTP-Code\"\r\n}"
+        content: " {\r\n    \"did_succeed\": false,\r\n    \"message\": \"Invalid OTP-Code\"\r\n}"
         headers: []
         description: ''
       -
         custom: []
         status: 400
-        content: "{\r\n    \"result\": \"Fail\",\r\n    \"message\": \"Sorry, this OTP-Code has expired, a new one was sent to your email, please check your inbox\"\r\n}"
+        content: "{\r\n    \"did_succeed\": false,\r\n    \"message\": \"Sorry, this OTP-Code has expired, a new one was sent to your email, please check your inbox\"\r\n}"
         headers: []
         description: ''
       -
         custom: []
         status: 400
-        content: "{\r\n    \"result\": \"Fail\",\r\n    \"message\": \"Email is already verified, you can login\"\r\n}"
+        content: "{\r\n    \"did_succeed\": false,\r\n    \"message\": \"Email is already verified, you can login\"\r\n}"
         headers: []
         description: ''
     responseFields: []
@@ -314,13 +314,13 @@ endpoints:
       -
         custom: []
         status: 200
-        content: "{\r\n    \"result\": \"Success\",\r\n    \"message\": \"OTP-Code was sent to tamrashryft2@gmail.com successfully, please check your inbox\"\r\n}"
+        content: "{\r\n    \"did_succeed\": true,\r\n    \"message\": \"OTP-Code was sent to tamrashryft2@gmail.com successfully, please check your inbox\"\r\n}"
         headers: []
         description: ''
       -
         custom: []
         status: 400
-        content: "{\r\n    \"result\": \"Fail\",\r\n    \"message\": \"Wrong email or password; Or the email is not verified, OTP-Code was sent to your email, please check your inbox\"\r\n}\r\n\r\n"
+        content: "{\r\n    \"did_succeed\": false,\r\n    \"message\": \"Wrong email or password; Or the email is not verified, OTP-Code was sent to your email, please check your inbox\"\r\n}\r\n\r\n"
         headers: []
         description: ''
     responseFields: []
@@ -373,7 +373,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: "{\r\n    \"result\": \"Success\",\r\n    \"message\": \"If the email exists, an OTP-Code was sent to it successfully, please check your gmail\"\r\n}\r\n"
+        content: "{\r\n    \"did_succeed\": true,\r\n    \"message\": \"If the email exists, an OTP-Code was sent to it successfully, please check your gmail\"\r\n}\r\n"
         headers: []
         description: ''
     responseFields: []
@@ -462,19 +462,19 @@ endpoints:
       -
         custom: []
         status: 200
-        content: "{\r\n    \"result\": \"Success\",\r\n    \"message\": \"Your password was updated successfully\",\r\n    \"token\": \"6|1rbJvOIdEoHxeSKIiT6L66vnQqvBrtXFIRaxDJApa25692ae\"\r\n}"
+        content: "{\r\n    \"did_succeed\": true,\r\n    \"message\": \"Your password was updated successfully\",\r\n    \"token\": \"6|1rbJvOIdEoHxeSKIiT6L66vnQqvBrtXFIRaxDJApa25692ae\"\r\n}"
         headers: []
         description: ''
       -
         custom: []
         status: 400
-        content: "{\r\n    \"result\": \"Fail\",\r\n    \"message\": \"Invalid reset-token\"\r\n}"
+        content: "{\r\n    \"did_succeed\": false,\r\n    \"message\": \"Invalid reset-token\"\r\n}"
         headers: []
         description: ''
       -
         custom: []
         status: 400
-        content: "{\r\n    \"result\": \"Fail\",\r\n    \"message\": \"Sorry, the reset-token has expired, a new OTP-Code was sent to your email, please check your inbox\"\r\n}"
+        content: "{\r\n    \"did_succeed\": false,\r\n    \"message\": \"Sorry, the reset-token has expired, a new OTP-Code was sent to your email, please check your inbox\"\r\n}"
         headers: []
         description: ''
     responseFields: []
@@ -516,7 +516,7 @@ endpoints:
       -
         custom: []
         status: 200
-        content: "{\r\n    \"result\": \"Success\",\r\n    \"message\": \"User logged-out successfully\"\r\n}"
+        content: "{\r\n    \"did_succeed\": true,\r\n    \"message\": \"User logged-out successfully\"\r\n}"
         headers: []
         description: ''
     responseFields: []

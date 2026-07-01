@@ -1,5 +1,5 @@
 {
-    "result": "Success",
+    "did_succeed": true,
     "message": {
         "base_message": "Room updated successfully"
     },

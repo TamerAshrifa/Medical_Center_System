@@ -6,15 +6,13 @@ use App\DTOs\Appointment\AppointmentDTO;
 use App\DTOs\Visit\VisitDTO;
 use App\Enums\AppointmentStatusEnum;
 use App\Enums\UserRoleEnum;
-use App\GeneralClasses\Enums\ResponseStatusEnum;
 use App\Http\Requests\AppointmentController\AllAvailableTimesToBookRequest;
 use App\Http\Requests\AppointmentController\MakeAppointmentAttendedRequest;
 use App\Http\Requests\AppointmentController\StoreRequest;
 use App\Http\Resources\Appointment\AppointmentToAdminResource;
 use App\Http\Resources\Appointment\AppointmentToDoctorResource;
 use App\Http\Resources\Appointment\AppointmentToPatientResource;
-use App\Repositories\DoctorRepository;
-use App\Repositories\Interfaces\AppointmentRepositoryInterface;
+use App\Repositories\Interfaces\DoctorRepositoryInterface;
 use App\Services\AppointmentService;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,7 +23,7 @@ class AppointmentController extends Controller
 {
     public function __construct(
         protected AppointmentService $appointmentService,
-        protected AppointmentRepositoryInterface $appointmentRepository,
+        protected DoctorRepositoryInterface $doctorRepository,
     ) {
     }
 
@@ -41,7 +39,7 @@ class AppointmentController extends Controller
     }
     private function selectIncludedEntities(?bool &$withPatient, ?bool &$withDoctor)
     {
-        switch ($this->getCurrentUserRole()) {
+        switch ($this->currentUserRole()) {
             case UserRoleEnum::ADMIN:
                 $withPatient = $withDoctor = true;
                 break;
@@ -60,7 +58,7 @@ class AppointmentController extends Controller
     }
     private function resource($appointmentOrCollectionOfIt, bool $isCollection)
     {
-        switch (Auth::user()->role) {
+        switch ($this->currentUserRole()) {
             case UserRoleEnum::ADMIN:
                 return $isCollection ?
                     AppointmentToAdminResource::collection($appointmentOrCollectionOfIt) :
@@ -79,6 +77,7 @@ class AppointmentController extends Controller
                     new AppointmentToPatientResource($appointmentOrCollectionOfIt);
         }
     }
+
     /**
      * View Available Times to book
      * 
@@ -89,21 +88,12 @@ class AppointmentController extends Controller
      */
     public function allAvailableTimesToBook(AllAvailableTimesToBookRequest $request, int $doctor_id)
     {
-        (new DoctorRepository())->getDoctorById($doctor_id, true);
+        $this->doctorRepository->find($doctor_id, true);
         $validatedDate = $request->validated();
 
         $response = $this->appointmentService->allAvailableTimesToBook($validatedDate['date_of_day'], $doctor_id);
+        return $this->jsonResponse($response);
 
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-
-        return response()->json([
-            'result' => $response->result,
-            'data' => $response->data,
-        ], $response->statusCode);
     }
 
     /**
@@ -117,26 +107,17 @@ class AppointmentController extends Controller
      */
     public function store(StoreRequest $request, int $doctor_id)
     {
-        (new DoctorRepository())->getDoctorById($doctor_id, true);
+        $this->doctorRepository->find($doctor_id, true);
 
-        $validatedData = [];
-        $validatedData['patient_id'] = Auth::user()->patient->id;
-        $validatedData['doctor_id'] = $doctor_id;
-        $validatedData['datetime'] = ($request->validated())['datetime'];
+        $validatedData = array_merge($request->validated(), [
+            'patient_id' => Auth::user()->patient->id,
+            'doctor_id' => $doctor_id,
+        ]);
 
         $response = $this->appointmentService->create(AppointmentDTO::fromRequest($validatedData));
-
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, false),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
 
@@ -154,18 +135,9 @@ class AppointmentController extends Controller
         $status = $this->validateStutus($status);
 
         $response = $this->appointmentService->paginate($status, $with_expired, $per_page);
-
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -184,18 +156,9 @@ class AppointmentController extends Controller
         $status = $this->validateStutus($status);
 
         $response = $this->appointmentService->paginateDoctorAppointments($status, $with_expired, $per_page, $doctor_id);
-
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -214,18 +177,9 @@ class AppointmentController extends Controller
         $status = $this->validateStutus($status);
 
         $response = $this->appointmentService->paginatePatientAppointments($status, $with_expired, $per_page, $patient_id);
-
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -241,18 +195,9 @@ class AppointmentController extends Controller
         $this->selectIncludedEntities($withPatient, $withDoctor);
 
         $response = $this->appointmentService->find(true, $withPatient, $withDoctor, $id);
-
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, false),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
 
@@ -266,12 +211,8 @@ class AppointmentController extends Controller
      */
     public function cancelAppointment(int $id)
     {
-        $response = $this->appointmentService->cancelAppointment($id);
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-        ], $response->statusCode);
+        $response = $this->appointmentService->cancel($id);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -285,11 +226,7 @@ class AppointmentController extends Controller
     {
         $response = $this->appointmentService->makeAppointmentMissed($id);
 
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-        ], $response->statusCode);
-
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -301,16 +238,15 @@ class AppointmentController extends Controller
      */
     public function makeAppointmentAttended(MakeAppointmentAttendedRequest $request, int $id)
     {
-        $validatedData = $request->validated();
-        $validatedData['appointment_id'] = $id;
+        $validatedData = array_merge($request->validated(), [
+            'appointment_id' => $id,
+        ]);
+
         $visitDTO = VisitDTO::fromRequest($validatedData);
 
         $response = $this->appointmentService->makeAppointmentAttended($visitDTO);
 
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-        ], $response->statusCode);
+        return $this->jsonResponse($response);
     }
 
 

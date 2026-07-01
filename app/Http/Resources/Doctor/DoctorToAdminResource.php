@@ -2,9 +2,6 @@
 
 namespace App\Http\Resources\Doctor;
 
-use App\Http\Resources\Admin\AdminToAdminResource;
-use App\Http\Resources\Room\RoomToAdminResource;
-use App\Http\Resources\User\UserToAdminResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,10 +16,14 @@ class DoctorToAdminResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user' => new UserToAdminResource($this->user),
+            'user_id' => $this->user_id,
+            'user_fullname' => $this->user->first_name . ' ' . $this->user->last_name,
             'appointment_duration' => $this->appointment_duration,
-            'room' => new RoomToAdminResource($this->room),
-            'added_by_admin' => new AdminToAdminResource($this->addedByAdmin),
+            'room_id' => $this->room_id,
+            'room_name' => $this->room->name,
+            'added_by_admin_id' => $this->added_by_admin_id,
+            'added_by_admin_fullname' => $this->addedByAdmin->user->first_name . ' ' .
+                $this->addedByAdmin->user->last_name,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];

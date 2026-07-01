@@ -4,24 +4,30 @@ namespace App\Repositories;
 
 use App\DTOs\PatientComplaint\PatientComplaintDTO;
 use App\Enums\PatientComplaintStatusEnum;
-use App\Models\MedicalRecordAccess;
 use App\Models\PatientComplaint;
 use App\Repositories\Interfaces\PatientComplaintRepositoryInterface;
 
 class PatientComplaintRepository extends Repository implements PatientComplaintRepositoryInterface
 {
-
-    public function paginate(int $per_page = 10, bool $withReviewed = true)
+    private $with = [
+        'patient:id,user_id',
+        'patient.user:id,first_name,last_name',
+        'reviewedByAdmin:id,user_id',
+        'reviewedByAdmin.user:id,first_name,last_name',
+    ];
+    public function paginate(int $perPage = 10, bool $withReviewed = true)
     {
-        return PatientComplaint::
-            when(!$withReviewed, fn($q) => $q->whereNot('status', PatientComplaintStatusEnum::REVIEWED->value))
+        return PatientComplaint::query()
+            ->with($this->with)
+            ->when(!$withReviewed, fn($q) => $q->whereNot('status', PatientComplaintStatusEnum::REVIEWED->value))
             ->orderByDesc('created_at')
-            ->paginate($per_page);
+            ->paginate($perPage);
     }
-    public function allPatientComplaints(int $patient_id)
+    public function allPatientComplaints(int $patientId)
     {
-        return PatientComplaint::
-            where('patient_id', $patient_id)
+        return PatientComplaint::query()
+            ->with($this->with)
+            ->where('patient_id', $patientId)
             ->orderByDesc('created_at')
             ->get();
     }
@@ -34,11 +40,11 @@ class PatientComplaintRepository extends Repository implements PatientComplaintR
     {
         return PatientComplaint::create($dto->toArray());
     }
-    public function makePatientComplaintReviewed(string $reply, int $reviewed_by_admin_id, int $id): bool
+    public function makePatientComplaintReviewed(string $reply, int $reviewedByAdminId, int $id): bool
     {
         return PatientComplaint::findOrFail($id)->update([
             'reply' => $reply,
-            'reviewed_by_admin_id' => $reviewed_by_admin_id,
+            'reviewed_by_admin_id' => $reviewedByAdminId,
             'status' => PatientComplaintStatusEnum::REVIEWED->value,
         ]);
     }

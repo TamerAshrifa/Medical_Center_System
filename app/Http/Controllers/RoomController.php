@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\DTOs\Room\RoomDTO;
 use App\DTOs\Room\RoomDTOUpdate;
+use App\Enums\UserRoleEnum;
 use App\Http\Requests\RoomController\StoreRoomRequest;
 use App\Http\Requests\RoomController\UpdateRoomRequest;
+use App\Http\Resources\Room\RoomToAdminResource;
+use App\Http\Resources\Room\RoomToDoctorResource;
+use App\Http\Resources\Room\RoomToPatientResource;
 use App\Services\RoomService;
 use Illuminate\Http\JsonResponse;
-use App\GeneralClasses\Enums\ResponseStatusEnum;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -20,7 +23,24 @@ class RoomController extends Controller
         protected RoomService $roomService,
     ) {
     }
+    private function resource($recordOrCollection, bool $isCollection)
+    {
+        switch ($this->currentUserRole()) {
+            case UserRoleEnum::ADMIN:
+                if ($isCollection)
+                    return RoomToAdminResource::collection($recordOrCollection);
+                return new RoomToAdminResource($recordOrCollection);
+            case UserRoleEnum::DOCTOR:
+                if ($isCollection)
+                    return RoomToDoctorResource::collection($recordOrCollection);
+                return new RoomToDoctorResource($recordOrCollection);
+            case UserRoleEnum::PATIENT:
+                if ($isCollection)
+                    return RoomToPatientResource::collection($recordOrCollection);
+                return new RoomToPatientResource($recordOrCollection);
 
+        }
+    }
     /**
      * Add New Room
      * 
@@ -30,22 +50,14 @@ class RoomController extends Controller
      */
     public function store(StoreRoomRequest $request): JsonResponse
     {
-        $roomData = $request->validated();
-        $roomData['last_update_by_admin_id'] = Auth::id();
-        $response = $this->roomService->addNewRoom(RoomDTO::fromRequest($roomData));
+        $roomData = array_merge($request->validated(), [
+            'last_update_by_admin_id' => Auth::id(),
+        ]);
+        $response = $this->roomService->add(RoomDTO::fromRequest($roomData));
 
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $response->data,
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -58,13 +70,11 @@ class RoomController extends Controller
      */
     public function index(int $per_page): JsonResponse
     {
-        $response = $this->roomService->getAllRoomsPaged($per_page);
+        $response = $this->roomService->paginate($per_page);
 
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $response->data,
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -79,19 +89,11 @@ class RoomController extends Controller
      */
     public function show(int $roomId): JsonResponse
     {
-        $response = $this->roomService->showRoom($roomId);
+        $response = $this->roomService->show($roomId);
 
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
-
-        return response()->json([
-            'result' => $response->result,
-            'data' => $response->data,
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -106,20 +108,11 @@ class RoomController extends Controller
      */
     public function update(UpdateRoomRequest $request, int $roomId): JsonResponse
     {
-        $response = $this->roomService->updateRoom(RoomDTOUpdate::fromRequest($request->validated()), $roomId);
+        $response = $this->roomService->update(RoomDTOUpdate::fromRequest($request->validated()), $roomId);
 
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $response->data,
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -133,14 +126,10 @@ class RoomController extends Controller
      */
     public function destroy(int $roomId)
     {
-        $response = $this->roomService->deleteRoom($roomId);
+        $response = $this->roomService->delete($roomId);
 
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
+        if (!$response->did_succeed)
+            return $this->jsonResponse($response);
 
         return response()->noContent(204);
     }

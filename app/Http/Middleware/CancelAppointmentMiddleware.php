@@ -23,7 +23,7 @@ class CancelAppointmentMiddleware
             Auth::user()->patient->id
         )
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => 'Patients can\'t cancel other patients\' appointments',
             ], 403);
 

@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\GeneralClasses\Enums\ResponseStatusEnum;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +19,7 @@ class StoreTransferMiddleware
         $refferingDoctorId = Auth::user()->doctor->id;
         if ($refferingDoctorId == $request->route('receiving_doctor_id')) {
             return response()->json([
-                'result' => ResponseStatusEnum::FAIL->value,
+                'did_succeed' => false->value,
                 'message' => [
                     'base_message' => 'Doctor can\'t transfer a patient to itself (To the same reffering doctor)'
                 ],

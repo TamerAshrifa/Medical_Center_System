@@ -6,7 +6,7 @@ use App\DTOs\DayWorkTime\DayWorkTimeDTO;
 use App\DTOs\WorkScheduleDTO\WorkScheduleDTO;
 use App\Enums\UserRoleEnum;
 use App\Enums\WorkScheduleTypeEnum;
-use App\GeneralClasses\Enums\ResponseStatusEnum;
+
 use App\GeneralClasses\Response;
 use App\Repositories\Interfaces\SchedulingRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
@@ -23,89 +23,37 @@ class SchedulingService extends Service
     public function allWeekDays()
     {
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             null,
             $this->schedulingRepository->allWeekDays()
         );
     }
-    public function paginateDoctorsWorkSchedules(bool $withExpired, int $per_page = 10): Response
+    public function paginateDoctorsWorkSchedules(bool $withExpired, int $perPage = 10): Response
     {
-        $doctorsWorkSchedules = $this->schedulingRepository->paginateDoctorsWorkSchedules($withExpired, $per_page);
-        $items = $doctorsWorkSchedules->items();
+        $records = $this->schedulingRepository->paginateDoctorsWorkSchedules($withExpired, $perPage);
         return new Response(
-            ResponseStatusEnum::SUCCESS,
-            [
-                "current_page_number" => $doctorsWorkSchedules->currentPage(),
-                "last_page_number" => $doctorsWorkSchedules->lastPage(),
-                "records_per_page" => $doctorsWorkSchedules->perPage(),
-                "next_page_url" => $doctorsWorkSchedules->nextPageUrl(),
-                "previous_page_url" => $doctorsWorkSchedules->previousPageUrl(),
-                "first_page_url" => $doctorsWorkSchedules->url(1),
-                "last_page_url" => $doctorsWorkSchedules->url($doctorsWorkSchedules->lastPage()),
-                "total_records_number" => $doctorsWorkSchedules->total(),
-            ],
-            $items
+            true,
+            $this->paginationMessage($records),
+            $records->items()
         );
     }
-    public function paginateMedicalCenterWorkSchedules(bool $withExpired = false, int $per_page = 10): Response
+    public function paginateMedicalCenterWorkSchedules(bool $withExpired = false, int $perPage = 10): Response
     {
-        $medicalCenterWorkSchedules = $this->schedulingRepository->paginateMedicalCenterWorkSchedules($withExpired, $per_page);
-        $items = $medicalCenterWorkSchedules->items();
+        $records = $this->schedulingRepository->paginateMedicalCenterWorkSchedules($withExpired, $perPage);
         return new Response(
-            ResponseStatusEnum::SUCCESS,
-            [
-                'current_page_number' => $medicalCenterWorkSchedules->currentPage(),
-                'last_page_number' => $medicalCenterWorkSchedules->lastPage(),
-                'records_per_page' => $medicalCenterWorkSchedules->perPage(),
-                'next_page_url' => $medicalCenterWorkSchedules->nextPageUrl(),
-                'previous_page_url' => $medicalCenterWorkSchedules->previousPageUrl(),
-                'first_page_url' => $medicalCenterWorkSchedules->url(1),
-                'last_page_url' => $medicalCenterWorkSchedules->url($medicalCenterWorkSchedules->lastPage()),
-                'total_records_number' => $medicalCenterWorkSchedules->total(),
-            ],
-            $items
+            true,
+            $this->paginationMessage($records),
+            $records->items()
         );
     }
-    // public function paginateWorkSchedules(bool $withExpired = false, int $per_page = 10): Response
-    // {
-    //     $workSchedules = $this->schedulingRepository->paginateWorkSchedules($per_page);
-    //     $items = $workSchedules->items();
-    //     return new Response(
-    //         ResponseStatusEnum::SUCCESS,
-    //         [
-    //             'result' => 'Success',
-    //             'current_page_number' => $workSchedules->currentPage(),
-    //             'last_page_number' => $workSchedules->lastPage(),
-    //             'records_per_page' => $workSchedules->perPage(),
-    //             'next_page_url' => $workSchedules->nextPageUrl(),
-    //             'previous_page_url' => $workSchedules->previousPageUrl(),
-    //             'first_page_url' => $workSchedules->url(1),
-    //             'last_page_url' => $workSchedules->url($workSchedules->lastPage()),
-    //             'total_records_number' => $workSchedules->total(),
-    //         ],
-    //         $items
-    //     );
-    // }
-
-
-    public function paginateDoctorWorkSchedules(int $doctorId, bool $withExpired = false, int $per_page = 10): Response
+    public function paginateDoctorWorkSchedules(int $doctorId, bool $withExpired = false, int $perPage = 10): Response
     {
-        $doctorWorkSchedules = $this->schedulingRepository->paginateDoctorWorkSchedules($doctorId, $withExpired, $per_page);
+        $records = $this->schedulingRepository->paginateDoctorWorkSchedules($doctorId, $withExpired, $perPage);
 
-        $items = $doctorWorkSchedules->items();
         return new Response(
-            ResponseStatusEnum::SUCCESS,
-            [
-                "current_page_number" => $doctorWorkSchedules->currentPage(),
-                "last_page_number" => $doctorWorkSchedules->lastPage(),
-                "records_per_page" => $doctorWorkSchedules->perPage(),
-                "next_page_url" => $doctorWorkSchedules->nextPageUrl(),
-                "previous_page_url" => $doctorWorkSchedules->previousPageUrl(),
-                "first_page_url" => $doctorWorkSchedules->url(1),
-                "last_page_url" => $doctorWorkSchedules->url($doctorWorkSchedules->lastPage()),
-                "total_records_number" => $doctorWorkSchedules->total(),
-            ],
-            $items
+            true,
+            $this->paginationMessage($records),
+            $records->items()
         );
     }
     private function handleDoctorWorkScheduleCreation(&$workScheduleDTO, &$dayWorkTimeDTOs, &$makerId, &$user)
@@ -225,31 +173,31 @@ class SchedulingService extends Service
         }
     }
     public function createWorkSchedule(
-        WorkScheduleDTO $workScheduleDTO,
+        WorkScheduleDTO $dto,
         array $dayWorkTimeDTOs,
         int $makerId,
     ): Response {
         foreach ($dayWorkTimeDTOs as $item)
             if (!$item instanceof DayWorkTimeDTO) {
                 return new Response(
-                    ResponseStatusEnum::FAIL,
+                    false,
                     Response::messageToArray('Back-End Error: Invalid data type in day work times array'),
                     null,
                     500
                 );
             }
 
-        $user = $this->userRepository->findById($makerId);
+        $user = $this->userRepository->find($makerId);
         try {
-            DB::transaction(function () use ($workScheduleDTO, $dayWorkTimeDTOs, $makerId, $user) {
+            DB::transaction(function () use ($dto, $dayWorkTimeDTOs, $makerId, $user) {
                 if ($user->role == UserRoleEnum::DOCTOR)
-                    $this->handleDoctorWorkScheduleCreation($workScheduleDTO, $dayWorkTimeDTOs, $makerId, $user);
+                    $this->handleDoctorWorkScheduleCreation($dto, $dayWorkTimeDTOs, $makerId, $user);
                 else if ($user->role == UserRoleEnum::ADMIN)
-                    $this->handleCenterWorkScheduleCreation($workScheduleDTO, $dayWorkTimeDTOs, $makerId);
+                    $this->handleCenterWorkScheduleCreation($dto, $dayWorkTimeDTOs, $makerId);
             });
         } catch (\Exception $e) {
             return new Response(
-                ResponseStatusEnum::FAIL,
+                false,
                 Response::messageToArray($e->getMessage()),
                 null,
                 500
@@ -257,7 +205,7 @@ class SchedulingService extends Service
         }
 
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             $user->role == UserRoleEnum::DOCTOR ?
             Response::messageToArray('The schedule has been successfully created. Please note that if there were any conflicts between the ' .
                 'added schedule and the existing medical center schedules, it has been adjusted to align with the center\'s work schedules, ' .
@@ -267,11 +215,10 @@ class SchedulingService extends Service
             201
         );
     }
-
     public function findWorkSchedule(int $id, $failIfNotExists = true): Response
     {
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             null,
             $this->schedulingRepository->findWorkSchedule($id, $failIfNotExists)
         );

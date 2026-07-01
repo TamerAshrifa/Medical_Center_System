@@ -30,7 +30,7 @@ class WorkScheduleController extends Controller
 
     private function weekDayResource($weekDayOrCollectionOfIt, bool $isCollection)
     {
-        switch (Auth::user()->role) {
+        switch ($this->currentUserRole()) {
             case UserRoleEnum::ADMIN:
                 return $isCollection ?
                     WeekDayToAdminResource::collection($weekDayOrCollectionOfIt) :
@@ -51,7 +51,7 @@ class WorkScheduleController extends Controller
     }
     private function workScheduleResource($recordOrCollection, bool $isCollection)
     {
-        switch (Auth::user()->role) {
+        switch ($this->currentUserRole()) {
             case UserRoleEnum::ADMIN:
                 return $isCollection ?
                     WorkScheduleToAdminResource::collection($recordOrCollection) :
@@ -66,6 +66,7 @@ class WorkScheduleController extends Controller
                     new WorkScheduleToDoctorResource($recordOrCollection);
         }
     }
+
     /**
      * Creating a Work Scheduling
      * 
@@ -100,11 +101,7 @@ class WorkScheduleController extends Controller
             $user->role === UserRoleEnum::ADMIN ?
             $user->admin->id : $user->doctor->id
         );
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-        ], $response->statusCode);
-
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -116,10 +113,9 @@ class WorkScheduleController extends Controller
     public function indexWeekDays()
     {
         $response = $this->schedulingService->allWeekDays();
-        return response()->json([
-            'result' => $response->result,
-            'data' => $this->weekDayResource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->weekDayResource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -133,11 +129,9 @@ class WorkScheduleController extends Controller
     public function paginateDoctorsWorkSchedules(bool $with_expired, int $per_page = 10)
     {
         $response = $this->schedulingService->paginateDoctorsWorkSchedules($with_expired, $per_page);
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->workScheduleResource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->workScheduleResource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
 
@@ -152,11 +146,9 @@ class WorkScheduleController extends Controller
     public function paginateMedicalCenterWorkSchedules(bool $with_expired, int $per_page = 10)
     {
         $response = $this->schedulingService->paginateMedicalCenterWorkSchedules($with_expired, $per_page);
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->workScheduleResource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->workScheduleResource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
 
@@ -172,11 +164,9 @@ class WorkScheduleController extends Controller
     public function paginateDoctorWorkSchedules(int $doctor_id, bool $with_expired, int $per_page = 10)
     {
         $response = $this->schedulingService->paginateDoctorWorkSchedules($doctor_id, $with_expired, $per_page);
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->workScheduleResource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->workScheduleResource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -189,10 +179,9 @@ class WorkScheduleController extends Controller
     public function findWorkSchedule(int $id)
     {
         $response = $this->schedulingService->findWorkSchedule($id, true);
-        return response()->json([
-            'result' => $response->result,
-            'data' => $this->workScheduleResource($response->data, false),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->workScheduleResource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
 }

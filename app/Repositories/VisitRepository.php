@@ -9,46 +9,57 @@ use App\Repositories\Interfaces\VisitRepositoryInterface;
 
 class VisitRepository extends Repository implements VisitRepositoryInterface
 {
-    public function paginate(int $per_page = 10)
+    public function paginate(int $perPage = 10)
     {
         return Visit::
-            with(['appointment'])
+            with([
+                'appointment.patient:id,user_id',
+                'appointment.patient.user:id,first_name,last_name',
+                'appointment.doctor:id,user_id',
+                'appointment.doctor.user:id,first_name,last_name',
+            ])
             ->orderByDesc('created_at')
-            ->paginate($per_page);
+            ->paginate($perPage);
     }
-    public function paginatePatientVisits(int $per_page = 10, int $patient_id)
+    public function paginatePatientVisits(int $perPage = 10, int $patientId)
     {
         return Visit::
-            whereHas('appointment', fn($q) => $q->where('patient_id', $patient_id))
-            ->with(['appointment'])
+            whereHas('appointment', fn($q) => $q->where('patient_id', $patientId))
+            ->with([
+                'appointment.doctor:id,user_id',
+                'appointment.doctor.user:id,first_name,last_name',
+            ])
             ->orderByDesc('created_at')
-            ->paginate($per_page);
+            ->paginate($perPage);
     }
-    public function paginateDoctorVisits(int $per_page = 10, int $doctor_id)
+    public function paginateDoctorVisits(int $perPage = 10, int $doctorId)
     {
         return Visit::
-            whereHas('appointment', fn($q) => $q->where('doctor_id', $doctor_id))
-            ->with(['appointment'])
+            whereHas('appointment', fn($q) => $q->where('doctor_id', $doctorId))
+            ->with([
+                'appointment.patient:id,user_id',
+                'appointment.patient.user:id,first_name,last_name',
+            ])
             ->orderByDesc('created_at')
-            ->paginate($per_page);
+            ->paginate($perPage);
     }
     public function find($failIfNotExists = true, bool $withAppointment, int $id): Visit|null
     {
         $query = Visit::query()
-            ->when($withAppointment, fn($q) => $q->with(['appointment']));
+            ->when($withAppointment, fn($q) => $q->with([
+                'appointment.patient:id,user_id',
+                'appointment.patient.user:id,first_name,last_name',
+                'appointment.doctor:id,user_id',
+                'appointment.doctor.user:id,first_name,last_name',
+            ]));
         return $failIfNotExists ? $query->findOrFail($id) : $query->find($id);
     }
-    public function create(VisitDTO $dtoData): Visit
+    public function create(VisitDTO $dto): Visit
     {
-        return Visit::create($dtoData->toArray());
+        return Visit::create($dto->toArray());
     }
-    public function update(VisitDTOUpdate $dtoData, int $id): bool
+    public function update(VisitDTOUpdate $dto, int $id): bool
     {
-        return Visit::findOrFail($id)->update($dtoData->toArray());
+        return Visit::findOrFail($id)->update($dto->toArray());
     }
-    public function exists(int $appointment_id): bool
-    {
-        return Visit::where('appointment_id', $appointment_id)->exists();
-    }
-
 }

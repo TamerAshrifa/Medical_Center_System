@@ -20,7 +20,7 @@ class CheckDoctorMiddleware
         $doctor = Auth::user();
         if (!($doctor->role == UserRoleEnum::DOCTOR || $doctor->role == UserRoleEnum::ADMIN))
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => 'Only doctors and admins allowed',
             ], 403);
 

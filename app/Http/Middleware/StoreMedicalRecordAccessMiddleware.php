@@ -21,7 +21,7 @@ class StoreMedicalRecordAccessMiddleware
         $visitPatientId = Visit::findOrFail($request->route('visit_id'))->appointment->patient_id;
         if ($patientId != $visitPatientId)
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => 'Sorry, You can\'t give access permission to a non-yours visit',
             ], 403);
 

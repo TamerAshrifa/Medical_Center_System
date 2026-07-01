@@ -1,5 +1,5 @@
 {
-    "result": "Success",
+    "did_succeed": true,
     "data": {
         "id": 3,
         "name": "Room 3"
@@ -8,7 +8,7 @@
 
 // ⚠ Important Info: The previous example was for a patient logged-in, if an admin was logged-in, the previous response's data would be like:
 //{
-//    "result": "Success",
+//    "did_succeed": true,
 //    "data": {
 //        "id": 3,
 //        "name": "Room 3",

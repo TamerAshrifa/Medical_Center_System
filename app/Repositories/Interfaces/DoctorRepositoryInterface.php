@@ -2,28 +2,26 @@
 
 namespace App\Repositories\Interfaces;
 
-use App\GeneralClasses\Response;
 use App\Models\Doctor;
 
 interface DoctorRepositoryInterface extends RepositoryInterface
 {
-    public function addNewDoctor(array $doctorData): Response;
-    public function getAllDoctorsPaged(
-        int $per_page = 10,
-        bool $isWithRoom = false,
-        bool $isWithAdderAdmin = false,
-        bool $isWithUser = false,
-    ): Response;
-    public function getDoctorById(
+    public function add(array $doctorData): Doctor;
+    public function paginate(
+        int $perPage = 10,
+        bool $withRoom = false,
+        bool $withAdderAdmin = false,
+        bool $withUser = false,
+    );
+
+    public function find(
         int $doctorId,
         bool $failIfNotExists = true,
-        bool $isWithRoom = false,
-        bool $isWithAdderAdmin = false,
-        bool $isWithUser = false,
-    );
-    public function deleteDoctor(Doctor &$doctor): Response;
-    public function getDoctorAppointmentDuration(int $doctorId, bool $failIfDoctorNotExists = true): int;
+        bool $withRoom = false,
+        bool $withAdderAdmin = false,
+        bool $withUser = false,
+    ): Doctor;
+    public function delete(Doctor &$doctor): bool;
     public function allDoctorsEmails();
-    public function getDoctorFullname(int $doctorId): string;
-
+    public function fullname(int $id): string;
 }

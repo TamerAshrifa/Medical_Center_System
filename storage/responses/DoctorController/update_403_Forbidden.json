@@ -1,4 +1,4 @@
 {
-    "result": "Fail",
+    "did_succeed": false,
     "message": "Doctors can't update other doctors information"
 }

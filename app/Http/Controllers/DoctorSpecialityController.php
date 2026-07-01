@@ -12,7 +12,6 @@ use App\Http\Resources\DoctorSpeciality\DoctorSpecialityToDoctorResource;
 use App\Http\Resources\DoctorSpeciality\DoctorSpecialityToOwnerResource;
 use App\Http\Resources\DoctorSpeciality\DoctorSpecialityToPatientResource;
 use App\Services\DoctorSpecialityService;
-use App\GeneralClasses\Enums\ResponseStatusEnum;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -20,9 +19,14 @@ use Illuminate\Support\Facades\Auth;
  */
 class DoctorSpecialityController extends Controller
 {
+    public function __construct(
+        protected DoctorSpecialityService $doctorSpecialityService,
+    ) {
+    }
+
     private function resource(&$doctorSpecialityOrCollectionOfIt, bool $isCollection)
     {
-        switch ($this->getCurrentUserRole()) {
+        switch ($this->currentUserRole()) {
             case UserRoleEnum::ADMIN:
                 if ($isCollection)
                     return DoctorSpecialityToAdminResource::collection($doctorSpecialityOrCollectionOfIt);
@@ -52,10 +56,6 @@ class DoctorSpecialityController extends Controller
                 return new DoctorSpecialityToPatientResource($doctorSpecialityOrCollectionOfIt);
         }
     }
-    public function __construct(
-        protected DoctorSpecialityService $doctorSpecialityService,
-    ) {
-    }
 
     /**
      * Add New Speciality to a Doctor
@@ -65,26 +65,19 @@ class DoctorSpecialityController extends Controller
      */
     public function store(StoreDoctorSpecialityRequest $request)
     {
-        $doctorData = $request->validated();
-        $doctorData['doctor_id'] = Auth::id();
+        $doctorData = array_merge($request->validated(), [
+            'doctor_id' => Auth::id()
+        ]);
 
         $response = $this->doctorSpecialityService->create(DoctorSpecialityDTO::fromRequest($doctorData));
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
 
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, false),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
     /**
-     * View All Doctors' Specialities
+     * Paginate Doctors' Specialities
      * 
      * ###For: Web
      * Only admins are allowed to use this API.
@@ -94,15 +87,13 @@ class DoctorSpecialityController extends Controller
     {
         $response = $this->doctorSpecialityService->paginate($per_page);
 
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
-     * View All Specialities of a Doctor
+     * All Specialities of a Doctor
      * 
      * ###For: Mobile(Patient, Doctor), Web
      * Everyone in the system is allowed to use this API.
@@ -110,38 +101,34 @@ class DoctorSpecialityController extends Controller
      * ###⚠ Important Info 2: If the logged-in user is the owner doctor himself, the response's "data" field content would have more details than what other doctors can see!
      * @urlParam doctorId integer required min:1 
      */
-    public function indexForDoctor(int $doctorId)
+    public function indexForDoctor(int $doctor_id)
     {
-        $response = $this->doctorSpecialityService->allForDoctor($doctorId);
+        $response = $this->doctorSpecialityService->allForDoctor($doctor_id);
 
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
-     * View All Doctors of a Speciality
+     * All Doctors of a Speciality
      * 
      * ###For: Mobile(Patient, Doctor), Web
      * Everyone in the system is allowed to use this API.
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
      * @urlParam specialityId integer required min:1 
      */
-    public function indexForSpeciality(int $specialityId)
+    public function indexForSpeciality(int $speciality_id)
     {
-        $response = $this->doctorSpecialityService->allForSpeciality($specialityId);
+        $response = $this->doctorSpecialityService->allForSpeciality($speciality_id);
 
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
-     * View a Specified Doctor_Speciality
+     * View a Specified Doctor-Speciality
      * 
      * ###For: Mobile(Patient - Doctor), Web
      * Everyone in the system is allowed to use this API.
@@ -153,17 +140,9 @@ class DoctorSpecialityController extends Controller
     {
         $response = $this->doctorSpecialityService->find($id);
 
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
-
-        return response()->json([
-            'result' => $response->result,
-            'data' => $this->resource($response->data, false),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -175,30 +154,12 @@ class DoctorSpecialityController extends Controller
      */
     public function update(UpdateDoctorSpecialityRequest $request, int $id)
     {
-        if (Auth::user()->doctor->id != $this->doctorSpecialityService->find($id)->data->doctor_id) {
-            return response()->json([
-                'result' => 'Fail',
-                'message' => 'Doctors can only edit their own specialities'
-            ], 403);
-        }
-
         $response = $this->doctorSpecialityService->update(
             $id,
             DoctorSpecialityDTOUpdate::fromRequest($request->validated()),
         );
 
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $response->data,
-        ], $response->statusCode);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -211,13 +172,8 @@ class DoctorSpecialityController extends Controller
     public function destroy(int $id)
     {
         $response = $this->doctorSpecialityService->delete($id);
-
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
+        if (!$response->did_succeed)
+            return $this->jsonResponse($response);
 
         return response()->noContent(204);
     }

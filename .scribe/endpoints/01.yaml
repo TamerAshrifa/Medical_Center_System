@@ -85,9 +85,9 @@ endpoints:
       date_of_birth:
         custom: []
         name: date_of_birth
-        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date before <code>2026-06-28</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date before <code>2026-07-01</code>.'
         required: true
-        example: '2020-10-23'
+        example: '2020-10-27'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -132,7 +132,7 @@ endpoints:
       email: russel.bert@example.net
       password: 'dl4m{o,+'
       phone: qamniihfqcoynlazg
-      date_of_birth: '2020-10-23'
+      date_of_birth: '2020-10-27'
       gender: true
       username: mqeopfuudtdsufvyv
     fileParameters:
@@ -190,7 +190,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"result":"Fail","message":"Unauthenticated; A valid token is required"}'
+        content: '{"did_succeed":false,"message":"Unauthenticated; A valid token is required"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -249,7 +249,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"result":"Fail","message":"Unauthenticated; A valid token is required"}'
+        content: '{"did_succeed":false,"message":"Unauthenticated; A valid token is required"}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -339,7 +339,7 @@ endpoints:
         name: date_of_birth
         description: 'Must be a valid date in the format <code>Y-m-d</code>.'
         required: false
-        example: '2026-06-28'
+        example: '2026-07-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -382,7 +382,7 @@ endpoints:
       first_name: vmq
       last_name: eop
       phone: fuudtdsufvyvddqam
-      date_of_birth: '2026-06-28'
+      date_of_birth: '2026-07-01'
       gender: true
       username: niihfqcoynlazghdt
     fileParameters:

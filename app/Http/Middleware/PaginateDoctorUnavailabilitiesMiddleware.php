@@ -21,7 +21,7 @@ class PaginateDoctorUnavailabilitiesMiddleware
         if ($user->role == UserRoleEnum::DOCTOR)
             if ($request->route('doctor_id') != $user->doctor->id)
                 return response()->json([
-                    'result' => 'Fail',
+                    'did_succeed' => false,
                     'message' => 'Doctors can\'t see other doctors\' unavailabilities',
                 ], 403);
 

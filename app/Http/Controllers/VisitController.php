@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\DTOs\Visit\VisitDTOUpdate;
 use App\Enums\UserRoleEnum;
-use App\GeneralClasses\Enums\ResponseStatusEnum;
 use App\Http\Requests\VisitController\UpdateVisitRequest;
 use App\Http\Resources\Visit\VisitToAdminResource;
 use App\Http\Resources\Visit\VisitToDoctorResource;
@@ -19,7 +18,7 @@ class VisitController extends Controller
 
     private function resource($visitOrCollectionOfIt, bool $isCollection)
     {
-        switch ($this->getCurrentUserRole()) {
+        switch ($this->currentUserRole()) {
             case UserRoleEnum::ADMIN:
                 return $isCollection ?
                     VisitToAdminResource::collection($visitOrCollectionOfIt) :
@@ -56,17 +55,9 @@ class VisitController extends Controller
     {
         $response = $this->visitService->paginate($per_page);
 
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -82,17 +73,9 @@ class VisitController extends Controller
     {
         $response = $this->visitService->paginateDoctorVisits($per_page, $doctor_id);
 
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -108,17 +91,9 @@ class VisitController extends Controller
     {
         $response = $this->visitService->paginatePatientVisits($per_page, $patient_id);
 
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, true),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -133,17 +108,9 @@ class VisitController extends Controller
     {
         $response = $this->visitService->find(true, true, $id);
 
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $this->resource($response->data, false),
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -157,16 +124,9 @@ class VisitController extends Controller
     {
         $response = $this->visitService->update(VisitDTOUpdate::fromRequest($request->validated()), $id);
 
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
 }

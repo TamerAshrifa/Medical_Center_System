@@ -21,7 +21,7 @@ class DestroyMedicalRecordAccessMiddleware
 
         if (Auth::user()->patient->id != $ownerPatientId)
             return response()->json([
-                'result' => 'Fail',
+                'did_succeed' => false,
                 'message' => 'Patients can\'t revoke other patients\' given access permissions',
             ], 403);
 

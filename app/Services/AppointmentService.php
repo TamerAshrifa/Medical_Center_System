@@ -6,13 +6,10 @@ use App\DTOs\Appointment\AppointmentDTO;
 use App\DTOs\MedicalRecordAccess\MedicalRecordAccessDTO;
 use App\DTOs\Visit\VisitDTO;
 use App\Enums\AppointmentStatusEnum;
-use App\GeneralClasses\Enums\ResponseStatusEnum;
 use App\GeneralClasses\Response;
 use App\Models\Appointment;
-use App\Repositories\DoctorRepository;
 use App\Repositories\Interfaces\AppointmentRepositoryInterface;
 use App\Repositories\Interfaces\UnavailabilityRepositoryInterface;
-use App\Repositories\Interfaces\VisitRepositoryInterface;
 use App\Repositories\SchedulingRepository;
 use App\Repositories\VisitRepository;
 use Carbon\Carbon;
@@ -22,95 +19,58 @@ class AppointmentService extends Service
 {
     public function __construct(
         protected AppointmentRepositoryInterface $appointmentRepository,
-        protected VisitRepositoryInterface $visitRepositoryInterface,
-        protected SchedulingService $schedulingService,
         protected MedicalRecordAccessService $medicalRecordAccessService,
         protected SchedulingRepository $schedulingRepository,
-        protected DoctorRepository $doctorRepository,
         protected VisitRepository $visitRepository,
         protected UnavailabilityRepositoryInterface $unavailabilityRepository,
-
     ) {
     }
-    public function paginate(?AppointmentStatusEnum $status, bool $with_expired = false, int $per_page = 10): Response
+    public function paginate(?AppointmentStatusEnum $status, bool $withExpired = false, int $perPage = 10): Response
     {
-        $appointments = $this->appointmentRepository->paginate($status, $with_expired, $per_page);
-        $items = $appointments->items();
+        $records = $this->appointmentRepository->paginate($status, $withExpired, $perPage);
         return new Response(
-            ResponseStatusEnum::SUCCESS,
-            [
-                "result" => "Success",
-                "current_page_number" => $appointments->currentPage(),
-                "last_page_number" => $appointments->lastPage(),
-                "records_per_page" => $appointments->perPage(),
-                "next_page_url" => $appointments->nextPageUrl(),
-                "previous_page_url" => $appointments->previousPageUrl(),
-                "first_page_url" => $appointments->url(1),
-                "last_page_url" => $appointments->url($appointments->lastPage()),
-                "total_records_number" => $appointments->total(),
-            ],
-            $items
+            true,
+            $this->paginationMessage($records),
+            $records->items()
         );
     }
-    public function paginateDoctorAppointments(?AppointmentStatusEnum $status, bool $with_expired = false, int $per_page = 10, int $doctor_id): Response
+    public function paginateDoctorAppointments(?AppointmentStatusEnum $status, bool $withExpired = false, int $perPage = 10, int $doctorId): Response
     {
-        $appointments = $this->appointmentRepository->paginateDoctorAppointments($status, $with_expired, $per_page, $doctor_id);
-        $items = $appointments->items();
+        $records = $this->appointmentRepository->paginateDoctorAppointments($status, $withExpired, $perPage, $doctorId);
         return new Response(
-            ResponseStatusEnum::SUCCESS,
-            [
-                "result" => "Success",
-                "current_page_number" => $appointments->currentPage(),
-                "last_page_number" => $appointments->lastPage(),
-                "records_per_page" => $appointments->perPage(),
-                "next_page_url" => $appointments->nextPageUrl(),
-                "previous_page_url" => $appointments->previousPageUrl(),
-                "first_page_url" => $appointments->url(1),
-                "last_page_url" => $appointments->url($appointments->lastPage()),
-                "total_records_number" => $appointments->total(),
-            ],
-            $items
+            true,
+            $this->paginationMessage($records),
+            $records->items()
         );
     }
-    public function paginatePatientAppointments(?AppointmentStatusEnum $status, bool $with_expired = false, int $per_page = 10, int $patient_id): Response
+    public function paginatePatientAppointments(?AppointmentStatusEnum $status, bool $withExpired = false, int $perPage = 10, int $patientId): Response
     {
-        $appointments = $this->appointmentRepository->paginatePatientAppointments($status, $with_expired, $per_page, $patient_id);
-        $items = $appointments->items();
+        $records = $this->appointmentRepository->paginatePatientAppointments($status, $withExpired, $perPage, $patientId);
         return new Response(
-            ResponseStatusEnum::SUCCESS,
-            [
-                "result" => "Success",
-                "current_page_number" => $appointments->currentPage(),
-                "last_page_number" => $appointments->lastPage(),
-                "records_per_page" => $appointments->perPage(),
-                "next_page_url" => $appointments->nextPageUrl(),
-                "previous_page_url" => $appointments->previousPageUrl(),
-                "first_page_url" => $appointments->url(1),
-                "last_page_url" => $appointments->url($appointments->lastPage()),
-                "total_records_number" => $appointments->total(),
-            ],
-            $items
+            true,
+            $this->paginationMessage($records),
+            $records->items()
         );
     }
-    public function create(AppointmentDTO $appointmentDTO): Response
+    public function create(AppointmentDTO $dto): Response
     {
         if (
             $this->appointmentRepository->exists(
-                $appointmentDTO->doctor_id,
-                $appointmentDTO->datetime,
+                $dto->doctor_id,
+                $dto->datetime,
                 AppointmentStatusEnum::PENDING
             )
         ) {
             return new Response(
-                ResponseStatusEnum::FAIL,
+                false,
                 Response::messageToArray('Sorry, This appointment time was already taken, please book at another time'),
                 null,
                 409
             );
         }
-        if ($this->unavailabilityRepository->isMedicalCenterUnavailability(Carbon::parse($appointmentDTO->datetime)->format('Y-m-d'))) {
+        if ($this->unavailabilityRepository->isMedicalCenterUnavailability(Carbon::parse($dto->datetime)->format('Y-m-d'))) {
             return new Response(
-                ResponseStatusEnum::FAIL,
+                false,
                 Response::messageToArray('Sorry, The medical center has a vacation time on this date, please book at available time'),
                 null,
                 409
@@ -118,12 +78,12 @@ class AppointmentService extends Service
         }
         if (
             $this->unavailabilityRepository->isDoctorUnavailability(
-                Carbon::parse($appointmentDTO->datetime)->format('Y-m-d'),
-                $appointmentDTO->doctor_id
+                Carbon::parse($dto->datetime)->format('Y-m-d'),
+                $dto->doctor_id
             )
         ) {
             return new Response(
-                ResponseStatusEnum::FAIL,
+                false,
                 Response::messageToArray('Sorry, The doctor has a vacation time on this date, please book at available time'),
                 null,
                 409
@@ -131,86 +91,52 @@ class AppointmentService extends Service
         }
 
 
-        $availableTimesResponse = $this->allAvailableTimesToBook($appointmentDTO->datetime, $appointmentDTO->doctor_id);
-        if ($availableTimesResponse->result != ResponseStatusEnum::SUCCESS)
+        $availableTimesResponse = $this->allAvailableTimesToBook($dto->datetime, $dto->doctor_id);
+        if ($availableTimesResponse->did_succeed != true)
             return new Response(
-                ResponseStatusEnum::FAIL,
+                false,
                 Response::messageToArray('Sorry, This appointment time isn\'t available to book'),
                 null,
                 409
             );
         $availableTimes = $availableTimesResponse->data;
-        if (!in_array(Carbon::parse($appointmentDTO->datetime)->format('H:i'), $availableTimes))
+        if (!in_array(Carbon::parse($dto->datetime)->format('H:i'), $availableTimes))
             return new Response(
-                ResponseStatusEnum::FAIL,
+                false,
                 Response::messageToArray('Sorry, This appointment time can\'t be booked, please select a time from available times to book with the doctor'),
                 null,
                 409
             );
 
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             Response::messageToArray('Appointment booked successfully'),
-            $this->appointmentRepository->create($appointmentDTO),
+            $this->appointmentRepository->create($dto),
             201
         );
     }
     public function find($failIfNotExists, bool $withPatient, bool $withDoctor, int $id): Response
     {
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             null,
             $this->appointmentRepository->find($failIfNotExists, $withPatient, $withDoctor, $id)
         );
     }
-    public function cancelAppointment(int $id): Response
+    public function cancel(int $id): Response
     {
         $didCancelled = $this->appointmentRepository->updateAppointmentStatus(AppointmentStatusEnum::CANCELLED, $id);
 
         if (!$didCancelled)
             return new Response(
-                ResponseStatusEnum::FAIL,
+                false,
                 Response::messageToArray('Failed to cancel the appointment, please try again'),
                 null,
                 500
             );
 
         return new Response(
-            ResponseStatusEnum::SUCCESS,
-            Response::messageToArray('Appointment cancelled successfully'),
-        );
-    }
-    public function cancelAppointmentByDoctor(int $id): Response
-    {
-        $didCancelled = $this->appointmentRepository->updateAppointmentStatus(AppointmentStatusEnum::CANCELLED_BY_DOCTOR, $id);
-
-        if (!$didCancelled)
-            return new Response(
-                ResponseStatusEnum::FAIL,
-                Response::messageToArray('Failed to cancel the appointment, please try again'),
-                null,
-                500
-            );
-
-        return new Response(
-            ResponseStatusEnum::SUCCESS,
-            Response::messageToArray('Appointment cancelled successfully'),
-        );
-    }
-    public function cancelAppointmentByMedicalCenter(int $id): Response
-    {
-        $didCancelled = $this->appointmentRepository->updateAppointmentStatus(AppointmentStatusEnum::CANCELLED_BY_MEDICAL_CENTER, $id);
-
-        if (!$didCancelled)
-            return new Response(
-                ResponseStatusEnum::FAIL,
-                Response::messageToArray('Failed to cancel the appointment, please try again'),
-                null,
-                500
-            );
-
-        return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             Response::messageToArray('Appointment cancelled successfully'),
         );
     }
@@ -220,33 +146,33 @@ class AppointmentService extends Service
 
         if (!$didSucceed)
             return new Response(
-                ResponseStatusEnum::FAIL,
+                false,
                 Response::messageToArray('Failed to make the appointment missed, please try again'),
                 null,
                 500
             );
 
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             Response::messageToArray('Appointment was made missed successfully'),
         );
     }
-    public function makeAppointmentAttended(VisitDTO $dataDTO): Response
+    public function makeAppointmentAttended(VisitDTO $dto): Response
     {
-        if ($this->appointmentRepository->isAttended($dataDTO->appointment_id)) {
+        if ($this->appointmentRepository->isAttended($dto->appointment_id)) {
             return new Response(
-                ResponseStatusEnum::NOTHING,
+                true,
                 Response::messageToArray('This appointment was already made attended'),
             );
         }
 
         try {
-            DB::transaction(function () use ($dataDTO) {
-                $this->appointmentRepository->updateAppointmentStatus(AppointmentStatusEnum::ATTENDED, $dataDTO->appointment_id);
+            DB::transaction(function () use ($dto) {
+                $this->appointmentRepository->updateAppointmentStatus(AppointmentStatusEnum::ATTENDED, $dto->appointment_id);
 
-                $createdVisitId = $this->visitRepository->create($dataDTO)->id;
+                $createdVisitId = $this->visitRepository->create($dto)->id;
 
-                $appointment = Appointment::findOrFail($dataDTO->appointment_id, ['patient_id', 'doctor_id']);
+                $appointment = Appointment::findOrFail($dto->appointment_id, ['patient_id', 'doctor_id']);
 
                 $this->medicalRecordAccessService->create(MedicalRecordAccessDTO::fromRequest([
                     'visit_id' => $createdVisitId,
@@ -256,7 +182,7 @@ class AppointmentService extends Service
             });
         } catch (\Throwable $e) {
             return new Response(
-                ResponseStatusEnum::FAIL,
+                false,
                 Response::messageToArray($e->getMessage()),
                 null,
                 500
@@ -264,7 +190,7 @@ class AppointmentService extends Service
         }
 
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             Response::messageToArray('Appointment attended successfully, a visit was made'),
         );
     }
@@ -275,7 +201,7 @@ class AppointmentService extends Service
 
         if ($dayWorkTimes->isEmpty())
             return new Response(
-                ResponseStatusEnum::NOTHING,
+                false,
                 Response::messageToArray('Sorry, doctor is not available on the specified day'),
             );
 
@@ -289,11 +215,11 @@ class AppointmentService extends Service
 
         if (!$dayWorkTime)
             return new Response(
-                ResponseStatusEnum::NOTHING,
+                false,
                 Response::messageToArray('Sorry, doctor is not available on the specified day'),
             );
 
-        $appointment_duration = $this->doctorRepository->getDoctorAppointmentDuration($doctorId);
+        $appointment_duration = $this->appointmentRepository->doctorAppointmentDuration($doctorId);
         $dayTime = $dayWorkTime->start_time->copy();
         $availableTimes = [];
 
@@ -303,7 +229,7 @@ class AppointmentService extends Service
         }
 
         if (empty($availableTimes))
-            return new Response(ResponseStatusEnum::SUCCESS, null, []);
+            return new Response(true, null, []);
 
         $appointments = $this->appointmentRepository->getBookedAppointmentsOfDoctorInDate($dateOfDay, $doctorId);
 
@@ -316,7 +242,7 @@ class AppointmentService extends Service
                 ));
         }
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             null,
             $availableTimes
         );

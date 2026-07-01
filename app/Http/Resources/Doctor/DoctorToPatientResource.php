@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources\Doctor;
 
-use App\Http\Resources\Room\RoomToPatientResource;
-use App\Http\Resources\User\UserToPatientResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,9 +16,11 @@ class DoctorToPatientResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user' => new UserToPatientResource($this->user),
+            'user_id' => $this->user_id,
+            'user_fullname' => $this->user->first_name . ' ' . $this->user->last_name,
             'appointment_duration' => $this->appointment_duration,
-            'room' => new RoomToPatientResource($this->room),
+            'room_id' => $this->room_id,
+            'room_name' => $this->room->name,
         ];
     }
 }

@@ -8,30 +8,31 @@ use App\Repositories\Interfaces\MedicalRecordAccessRepositoryInterface;
 
 class MedicalRecordAccessRepository extends Repository implements MedicalRecordAccessRepositoryInterface
 {
-    public function paginatePatientMedicalRecordAccesses(int $per_page = 10, bool $withUnactive = true, int $patient_id)
+    public function paginatePatientMedicalRecordAccesses(int $perPage = 10, bool $withUnactive = true, int $patientId)
     {
+
         return MedicalRecordAccess::
-            where('patient_id', $patient_id)
+            where('patient_id', $patientId)
             ->when(!$withUnactive, fn($q) => $q->whereNot('is_active', false))
             ->orderByDesc('created_at')
-            ->paginate($per_page);
+            ->paginate($perPage);
     }
-    public function paginateDoctorMedicalRecordAccesses(int $per_page = 10, bool $withUnactive = true, int $doctor_id)
+    public function paginateDoctorMedicalRecordAccesses(int $perPage = 10, bool $withUnactive = true, int $doctorId)
     {
         return MedicalRecordAccess::
-            where('can_accessed_by_doctor_id', $doctor_id)
+            where('can_accessed_by_doctor_id', $doctorId)
             ->when(!$withUnactive, fn($q) => $q->whereNot('is_active', false))
             ->orderByDesc('created_at')
-            ->paginate($per_page);
+            ->paginate($perPage);
     }
 
-    public function paginateVisitMedicalRecordAccesses(int $per_page = 10, bool $withUnactive = true, int $visit_id)
+    public function paginateVisitMedicalRecordAccesses(int $perPage = 10, bool $withUnactive = true, int $visitId)
     {
-        return MedicalRecordAccess::
-            where('visit_id', $visit_id)
+        return MedicalRecordAccess::query()
+            ->where('visit_id', $visitId)
             ->when(!$withUnactive, fn($q) => $q->whereNot('is_active', false))
             ->orderByDesc('created_at')
-            ->paginate($per_page);
+            ->paginate($perPage);
     }
 
 
@@ -43,42 +44,50 @@ class MedicalRecordAccessRepository extends Repository implements MedicalRecordA
         bool $withDoctor = false,
         int $id
     ): MedicalRecordAccess|null {
+
         $includedEntities = [];
         if ($withVisit)
-            $includedEntities[] = 'visit';
+            $includedEntities[] = 'visit:id,actual_time';
+
         if ($withPatient)
-            $includedEntities[] = 'patient';
+            $includedEntities = array_merge($includedEntities, [
+                'patient:id,user_id',
+                'patient.user:id,first_name,last_name',
+            ]);
         if ($withDoctor)
-            $includedEntities[] = 'doctor';
+            $includedEntities = array_merge($includedEntities, [
+                'doctor:id,user_id',
+                'doctor.user:id,first_name,last_name',
+            ]);
 
         $query = MedicalRecordAccess::query()
             ->when(!$withUnactive, fn($q) => $q->whereNot('is_active', false))
             ->when(!empty($includedEntities), fn($q) => $q->with($includedEntities));
         return $failIfNotExists ? $query->findOrFail($id) : $query->find($id);
     }
-    public function create(MedicalRecordAccessDTO $dtoData): MedicalRecordAccess
+    public function create(MedicalRecordAccessDTO $dto): MedicalRecordAccess
     {
-        return MedicalRecordAccess::create($dtoData->toArray());
+        return MedicalRecordAccess::create($dto->toArray());
     }
     public function unactive(int $id): bool
     {
         return MedicalRecordAccess::findOrFail($id)->update(['is_active' => false]);
     }
 
-    public function exists(int $visit_id, int $patient_id, int $can_accessed_by_doctor_id): bool
+    public function exists(int $visitId, int $patientId, int $canAccessedByDoctorId): bool
     {
-        return MedicalRecordAccess::
-            where('visit_id', $visit_id)
-            ->where('patient_id', $patient_id)
-            ->where('can_accessed_by_doctor_id', $can_accessed_by_doctor_id)
+        return MedicalRecordAccess::query()
+            ->where('visit_id', $visitId)
+            ->where('patient_id', $patientId)
+            ->where('can_accessed_by_doctor_id', $canAccessedByDoctorId)
             ->where('is_active', true)
             ->exists();
     }
-    public function hasAccess(int $visit_id, int $doctor_id): bool
+    public function hasAccess(int $visitId, int $doctorId): bool
     {
-        return MedicalRecordAccess::
-            where('visit_id', $visit_id)
-            ->where('can_accessed_by_doctor_id', $doctor_id)
+        return MedicalRecordAccess::query()
+            ->where('visit_id', $visitId)
+            ->where('can_accessed_by_doctor_id', $doctorId)
             ->where('is_active', true)
             ->exists();
     }

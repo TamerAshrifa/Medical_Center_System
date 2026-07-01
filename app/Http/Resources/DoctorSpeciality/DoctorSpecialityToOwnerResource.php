@@ -15,9 +15,11 @@ class DoctorSpecialityToOwnerResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
         return [
             'id' => $this->id,
-            'speciality' => new SpecialityToAdminResource($this->speciality),
+            'speciality_id' => $this->speciality_id,
+            'speciality_name' => $this->speciality->name,
             'experience_starting_date' => $this->experience_starting_date->format('Y-m-d'),
             'view_experience' => $this->view_experience,
         ];

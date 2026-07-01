@@ -15,7 +15,7 @@ class UserToAdminResource extends JsonResource
     public function toArray(Request $request): array
     {
 
-        $email_verified_at = $this->email_verified_at ?
+        $emailVerifiedAt = $this->email_verified_at ?
             $this->email_verified_at->format('Y-m-d H:i:s') :
             null;
         return [
@@ -29,7 +29,7 @@ class UserToAdminResource extends JsonResource
             'photo' => $this->photo,
             'username' => $this->username,
             'role' => $this->role,
-            'email_verified_at' => $email_verified_at,
+            'email_verified_at' => $emailVerifiedAt,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];

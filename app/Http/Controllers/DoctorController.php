@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\DTOs\Doctor\DoctorDTO;
 use App\DTOs\Doctor\DoctorDTOUpdate;
+use App\Enums\UserRoleEnum;
 use App\Http\Requests\DoctorController\StoreDoctorRequest;
 use App\Http\Requests\DoctorController\UpdateDoctorRequest;
+use App\Http\Resources\Doctor\DoctorToAdminResource;
+use App\Http\Resources\Doctor\DoctorToDoctorResource;
+use App\Http\Resources\Doctor\DoctorToPatientResource;
 use App\Services\DoctorService;
-use App\GeneralClasses\Enums\ResponseStatusEnum;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -20,6 +23,25 @@ class DoctorController extends Controller
         protected DoctorService $doctorService,
     ) {
     }
+
+    private function resource(&$recordOrCollection, bool $isCollection)
+    {
+        switch ($this->currentUserRole()) {
+            case UserRoleEnum::ADMIN:
+                if ($isCollection)
+                    return DoctorToAdminResource::collection($recordOrCollection);
+                return new DoctorToAdminResource($recordOrCollection);
+            case UserRoleEnum::PATIENT:
+                if ($isCollection)
+                    return DoctorToPatientResource::collection($recordOrCollection);
+                return new DoctorToPatientResource($recordOrCollection);
+            case UserRoleEnum::DOCTOR:
+                if ($isCollection)
+                    return DoctorToDoctorResource::collection($recordOrCollection);
+                return new DoctorToDoctorResource($recordOrCollection);
+        }
+    }
+
     /**
      * Add New Doctor
      * 
@@ -30,22 +52,14 @@ class DoctorController extends Controller
      */
     public function store(StoreDoctorRequest $request)
     {
-        $doctorData = $request->validated();
-        $doctorData['added_by_admin_id'] = Auth::id();
-        $response = $this->doctorService->addNewDoctor(DoctorDTO::fromRequest($doctorData));
+        $doctorData = array_merge($request->validated(), [
+            'added_by_admin_id' => Auth::user()->admin->id
+        ]);
+        $response = $this->doctorService->add(DoctorDTO::fromRequest($doctorData));
 
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $response->data,
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -59,13 +73,11 @@ class DoctorController extends Controller
      */
     public function index(int $per_page)
     {
-        $response = $this->doctorService->getAllDoctorsPaged($per_page);
+        $response = $this->doctorService->paginate($per_page, $this->currentUserRole());
 
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $response->data,
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, true);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -74,25 +86,17 @@ class DoctorController extends Controller
      * ###For: Mobile(Patient - Doctor), Web
      * Everyone in the system is allowed to use this API.
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
-     * @urlParam doctorId integer required min:1 
+     * @urlParam doctor_id integer required 
      * @responseFile 200 storage/responses/DoctorController/show_200_OK.json
      * @responseFile 404 storage/responses/DoctorController/show_404_Not_Found.json
      */
-    public function show(int $doctorId)
+    public function show(int $doctor_id)
     {
-        $response = $this->doctorService->showDoctor($doctorId);
+        $response = $this->doctorService->show($doctor_id, $this->currentUserRole());
 
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
-
-        return response()->json([
-            'result' => $response->result,
-            'data' => $response->data,
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -106,32 +110,16 @@ class DoctorController extends Controller
      * @responseFile 403 storage/responses/DoctorController/update_403_Forbidden.json
      * @responseFile 404 storage/responses/DoctorController/update_404_Not_Found.json
      */
-    public function update(UpdateDoctorRequest $request, int $doctorId)
+    public function update(UpdateDoctorRequest $request, int $doctor_id)
     {
-        if (Auth::user()->doctor->id != $doctorId) {
-            return response()->json([
-                'result' => 'Fail',
-                'message' => 'Doctors can\'t update other doctors information'
-            ], 403);
-        }
-
-        $response = $this->doctorService->updateDoctor(
+        $response = $this->doctorService->update(
             DoctorDTOUpdate::fromRequest($request->validated()),
-            $doctorId
+            $doctor_id
         );
 
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
-
-        return response()->json([
-            'result' => $response->result,
-            'message' => $response->message,
-            'data' => $response->data,
-        ], $response->statusCode);
+        if ($response->data)
+            $response->data = $this->resource($response->data, false);
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -145,14 +133,10 @@ class DoctorController extends Controller
      */
     public function destroy(int $doctorId)
     {
-        $response = $this->doctorService->deleteDoctor($doctorId);
+        $response = $this->doctorService->delete($doctorId);
 
-        if ($response->result != ResponseStatusEnum::SUCCESS) {
-            return response()->json([
-                'result' => $response->result,
-                'message' => $response->message,
-            ], $response->statusCode);
-        }
+        if (!$response->did_succeed)
+            return $this->jsonResponse($response);
 
         return response()->noContent(204);
     }

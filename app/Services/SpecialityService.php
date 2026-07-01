@@ -5,11 +5,7 @@ namespace App\Services;
 use App\DTOs\Speciality\SpecialityDTO;
 use App\DTOs\Speciality\SpecialityDTOUpdate;
 use App\Enums\UserRoleEnum;
-use App\GeneralClasses\Enums\ResponseStatusEnum;
 use App\GeneralClasses\Response;
-use App\Http\Resources\Speciality\SpecialityToAdminResource;
-use App\Http\Resources\Speciality\SpecialityToDoctorResource;
-use App\Http\Resources\Speciality\SpecialityToPatientResource;
 use App\Repositories\Interfaces\SpecialityRepositoryInterface;
 
 class SpecialityService extends Service
@@ -21,159 +17,88 @@ class SpecialityService extends Service
 
     private function fillIncludedEntities(
         UserRoleEnum $role,
-        bool &$isWithAdderAdmin,
-        bool &$isWithDoctors,
+        bool &$withAdderAdmin,
+        bool &$withDoctors,
     ): void {
         switch ($role) {
             case UserRoleEnum::ADMIN:
-                $isWithAdderAdmin = $isWithDoctors = true;
+                $withAdderAdmin = $withDoctors = true;
                 break;
             case UserRoleEnum::PATIENT:
-                $isWithAdderAdmin = $isWithDoctors = false;
+                $withAdderAdmin = $withDoctors = false;
                 break;
             case UserRoleEnum::DOCTOR:
-                $isWithAdderAdmin = $isWithDoctors = false;
+                $withAdderAdmin = $withDoctors = false;
                 break;
         }
     }
-    private function getSpecialityResource(&$specialityOrCollectionOfIt, bool $isCollection)
-    {
-        switch ($this->getCurrentUserRole()) {
-            case UserRoleEnum::ADMIN:
-                if ($isCollection)
-                    return SpecialityToAdminResource::collection($specialityOrCollectionOfIt);
-                return new SpecialityToAdminResource($specialityOrCollectionOfIt);
-            case UserRoleEnum::PATIENT:
-                if ($isCollection)
-                    return SpecialityToPatientResource::collection($specialityOrCollectionOfIt);
-                return new SpecialityToPatientResource($specialityOrCollectionOfIt);
-            case UserRoleEnum::DOCTOR:
-                if ($isCollection)
-                    return SpecialityToDoctorResource::collection($specialityOrCollectionOfIt);
-                return new SpecialityToDoctorResource($specialityOrCollectionOfIt);
-        }
-    }
-    public function getAllSpecialitiesPaged(int $per_page = 10): Response
+    public function paginate(int $perPage = 10, UserRoleEnum $userRole): Response
     {
         $isWithAdderAdmin = $isWithDoctors = false;
-        $this->fillIncludedEntities($this->getCurrentUserRole(), $isWithAdderAdmin, $isWithDoctors);
-        $response = $this->specialityRepository->getAllSpecialitiesPaged($per_page, $isWithAdderAdmin, $isWithDoctors);
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
+        $this->fillIncludedEntities($userRole, $isWithAdderAdmin, $isWithDoctors);
 
-        $specialities = $response->data;
+        $records = $this->specialityRepository->paginate($perPage, $isWithAdderAdmin, $isWithDoctors);
 
-        $items = $specialities->items();
         return new Response(
-            ResponseStatusEnum::SUCCESS,
-            [
-                'result' => 'Success',
-                'current_page_number' => $specialities->currentPage(),
-                'last_page_number' => $specialities->lastPage(),
-                'specialities_per_page' => $specialities->perPage(),
-                'next_page_url' => $specialities->nextPageUrl(),
-                'previous_page_url' => $specialities->previousPageUrl(),
-                'first_page_url' => $specialities->url(1),
-                'last_page_url' => $specialities->url($specialities->lastPage()),
-                'total_specialities_number' => $specialities->total(),
-            ],
-            $this->getSpecialityResource($items, true),
+            true,
+            $this->paginationMessage($records),
+            $records->items(),
+            true,
         );
     }
-    public function addNewSpeciality(SpecialityDTO $specialityDTO): Response
+    public function add(SpecialityDTO $dto): Response
     {
-        $response = $this->specialityRepository->addNewSpeciality($specialityDTO->toArray());
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
-
-        $addedSpeciality = $response->data;
-
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             Response::messageToArray('Speciality added successfully'),
-            $this->getSpecialityResource($addedSpeciality, false),
+            $this->specialityRepository->add($dto->toArray()),
             201
         );
     }
-    public function showSpeciality(int $specialityId): Response
+    public function show(int $id, UserRoleEnum $userRole): Response
     {
         $isWithAdderAdmin = $isWithDoctors = false;
-        $this->fillIncludedEntities($this->getCurrentUserRole(), $isWithAdderAdmin, $isWithDoctors);
-        $response = $this->specialityRepository->getSpecialityById($specialityId, $isWithAdderAdmin, $isWithDoctors);
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
-
-        $speciality = $response->data;
-        if ($speciality == null) {
-            return new Response(
-                ResponseStatusEnum::FAIL,
-                Response::messageToArray('Speciality not found'),
-                null,
-                404
-            );
-        }
+        $this->fillIncludedEntities($userRole, $isWithAdderAdmin, $isWithDoctors);
 
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             null,
-            $this->getSpecialityResource($speciality, false),
+            $this->specialityRepository->find($id, $isWithAdderAdmin, $isWithDoctors),
         );
     }
-    public function updateSpeciality(SpecialityDTOUpdate $specialityDTO, int $specialityId): Response
+    public function update(SpecialityDTOUpdate $dto, int $id): Response
     {
-        $response = $this->specialityRepository->getSpecialityById($specialityId);
+        $speciality = $this->specialityRepository->find($id);
 
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
-
-        $speciality = $response->data;
-        if ($speciality == null) {
-            return new Response(
-                ResponseStatusEnum::FAIL,
-                Response::messageToArray('Speciality not found'),
-                null,
-                404
-            );
-        }
-
-        $specialityArray = $specialityDTO->toArray();
+        $specialityArray = $dto->toArray();
         $speciality->fill($specialityArray);
         if (!$speciality->isDirty()) {
             return new Response(
-                ResponseStatusEnum::NOTHING,
+                true,
                 Response::messageToArray('No changes detected'),
             );
         }
 
         $speciality->save();
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             Response::messageToArray('Speciality updated successfully'),
-            $this->getSpecialityResource($speciality, false),
+            $speciality,
         );
     }
-    public function deleteSpeciality(int $specialityId): Response
+    public function delete(int $id): Response
     {
-        $response = $this->specialityRepository->getSpecialityById($specialityId);
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
+        $speciality = $this->specialityRepository->find($id);
 
-        $speciality = $response->data;
-        if ($speciality == null) {
+        if (!$this->specialityRepository->delete($speciality))
             return new Response(
-                ResponseStatusEnum::FAIL,
-                Response::messageToArray('Speciality not found'),
+                false,
+                Response::messageToArray('Failed to delete speciality, please try again'),
                 null,
-                404
+                500
             );
-        }
-
-        $response = $this->specialityRepository->deleteSpeciality($speciality);
-        if ($response->result != ResponseStatusEnum::SUCCESS)
-            return $response;
-
         return new Response(
-            ResponseStatusEnum::SUCCESS,
+            true,
             null,
             null,
             204
