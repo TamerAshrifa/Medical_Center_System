@@ -73,7 +73,7 @@ class AuthService extends Service
     }
     public function forgotPassword(string $email): Response
     {
-        $user = $this->userRepo->findByEmail($email, false)->data;
+        $user = $this->userRepo->findByEmail($email, false);
 
         if ($user == null) {
             return new Response(
