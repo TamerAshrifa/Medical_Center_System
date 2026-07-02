@@ -72,11 +72,22 @@ class AppointmentRepository extends Repository implements AppointmentRepositoryI
     }
     function updateAppointmentStatus(AppointmentStatusEnum $status, int $id): bool
     {
-        return $this->find(true, false, false, $id)->update(['status' => $status->value]) > 0;
+        $updateArray = ['status' => $status->value];
+        if (
+            $status != AppointmentStatusEnum::PENDING &&
+            $status != AppointmentStatusEnum::ATTENDED
+        )
+            $updateArray = array_merge($updateArray, [
+                'active_booking_key' => null,
+            ]);
+
+        return $this->find(true, false, false, $id)->update($updateArray) > 0;
     }
     public function create(AppointmentDTO $dto): Appointment
     {
-        return Appointment::create($dto->toArray());
+        return Appointment::create(array_merge($dto->toArray(), [
+            'active_booking_key' => $dto->doctor_id . ' - ' . $dto->datetime,
+        ]));
     }
     public function exists(int $doctorId, string $datetime, AppointmentStatusEnum $status): bool
     {
@@ -122,7 +133,10 @@ class AppointmentRepository extends Repository implements AppointmentRepositoryI
             ->where('status', AppointmentStatusEnum::PENDING->value)
             ->whereDate('datetime', '>=', $startDate)
             ->whereDate('datetime', '<=', $endDate)
-            ->update(['status' => AppointmentStatusEnum::CANCELLED_BY_MEDICAL_CENTER->value]);
+            ->update([
+                'status' => AppointmentStatusEnum::CANCELLED_BY_MEDICAL_CENTER->value,
+                'active_booking_key' => null,
+            ]);
     }
 
     public function allDoctorPendingAppointmentsEmailsInDateRange(string $startDate, string $endDate, int $doctorId)
@@ -148,7 +162,10 @@ class AppointmentRepository extends Repository implements AppointmentRepositoryI
             ->where('status', AppointmentStatusEnum::PENDING->value)
             ->whereDate('datetime', '>=', $startDate)
             ->whereDate('datetime', '<=', $endDate)
-            ->update(['status' => AppointmentStatusEnum::CANCELLED_BY_DOCTOR->value]);
+            ->update([
+                'status' => AppointmentStatusEnum::CANCELLED_BY_DOCTOR->value,
+                'active_booking_key' => null,
+            ]);
     }
     public function doctorAppointmentDuration(int $doctorId, bool $failIfDoctorNotExists = true): int
     {

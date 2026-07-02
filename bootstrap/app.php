@@ -37,6 +37,7 @@ use App\Http\Middleware\UpdatePatientMiddleware;
 use App\Http\Middleware\UpdateVisitMiddleware;
 use App\Models\ExceptionLog;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -159,6 +160,16 @@ return Application::configure(basePath: dirname(__DIR__))
                 'did_succeed' => false,
                 'message' => Response::messageToArray('Not found'),
             ], 404);
+        });
+
+        $exceptions->render(function (UniqueConstraintViolationException $e, $request) {
+            if (str_contains($e->errorInfo[2], 'appointments_active_booking_key_unique'))
+                return response()->json([
+                    'did_succeed' => false,
+                    'message' => Response::messageToArray('Sorry, this appointment time was already booked, please try booking at another time'),
+                ], 409);
+
+            throw $e;
         });
 
         $exceptions->render(function (QueryException $e, $request) {

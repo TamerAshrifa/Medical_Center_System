@@ -66,7 +66,7 @@ class DoctorSpecialityController extends Controller
     public function store(StoreDoctorSpecialityRequest $request)
     {
         $doctorData = array_merge($request->validated(), [
-            'doctor_id' => Auth::id()
+            'doctor_id' => Auth::user()->doctor->id,
         ]);
 
         $response = $this->doctorSpecialityService->create(DoctorSpecialityDTO::fromRequest($doctorData));

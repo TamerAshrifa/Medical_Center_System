@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->foreignId('doctor_id')->constrained()->restrictOnDelete();
             $table->dateTime('datetime');
             $table->enum('status', array_column(AppointmentStatusEnum::cases(), 'value'))->default(AppointmentStatusEnum::PENDING);
+            $table->string('active_booking_key')->unique('appointments_active_booking_key_unique')->nullable();
             // $table->unique(['doctor_id', 'datetime', 'status']);
             $table->timestamps();
         });
