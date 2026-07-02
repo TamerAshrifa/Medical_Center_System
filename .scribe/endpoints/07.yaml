@@ -54,7 +54,7 @@ endpoints:
         name: view_experience
         description: ''
         required: true
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -63,7 +63,7 @@ endpoints:
     cleanBodyParameters:
       speciality_id: 17
       experience_starting_date: '2026-07-02'
-      view_experience: false
+      view_experience: true
     fileParameters: []
     responses: []
     responseFields: []
@@ -118,7 +118,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"did_succeed":false,"message":"Unauthenticated; A valid token is required"}'
+        content: '{"did_succeed":false,"message":{"base_message":"Unauthenticated; A valid token is required"}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -190,7 +190,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"did_succeed":false,"message":"Unauthenticated; A valid token is required"}'
+        content: '{"did_succeed":false,"message":{"base_message":"Unauthenticated; A valid token is required"}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -261,7 +261,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"did_succeed":false,"message":"Unauthenticated; A valid token is required"}'
+        content: '{"did_succeed":false,"message":{"base_message":"Unauthenticated; A valid token is required"}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -321,7 +321,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"did_succeed":false,"message":"Unauthenticated; A valid token is required"}'
+        content: '{"did_succeed":false,"message":{"base_message":"Unauthenticated; A valid token is required"}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json

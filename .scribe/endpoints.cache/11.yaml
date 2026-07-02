@@ -133,7 +133,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"did_succeed":false,"message":"Unauthenticated; A valid token is required"}'
+        content: '{"did_succeed":false,"message":{"base_message":"Unauthenticated; A valid token is required"}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -216,7 +216,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"did_succeed":false,"message":"Unauthenticated; A valid token is required"}'
+        content: '{"did_succeed":false,"message":{"base_message":"Unauthenticated; A valid token is required"}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -299,7 +299,7 @@ endpoints:
       -
         custom: []
         status: 401
-        content: '{"did_succeed":false,"message":"Unauthenticated; A valid token is required"}'
+        content: '{"did_succeed":false,"message":{"base_message":"Unauthenticated; A valid token is required"}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json

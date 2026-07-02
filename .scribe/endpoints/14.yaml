@@ -34,7 +34,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-07-02 00:00:00</code>.'
         required: true
-        example: '2107-07-31'
+        example: '2107-08-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -45,7 +45,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>from_date</code>.'
         required: true
-        example: '2107-07-31'
+        example: '2107-08-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -76,8 +76,8 @@ endpoints:
         nullable: true
         deprecated: false
     cleanBodyParameters:
-      from_date: '2107-07-31'
-      to_date: '2107-07-31'
+      from_date: '2107-08-01'
+      to_date: '2107-08-01'
       reason_type: vacation
       justification: consequatur
     fileParameters: []
@@ -146,7 +146,7 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{"did_succeed":false,"message":"Not found"}'
+        content: '{"did_succeed":false,"message":{"base_message":"Not found"}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -228,7 +228,7 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{"did_succeed":false,"message":"Not found"}'
+        content: '{"did_succeed":false,"message":{"base_message":"Not found"}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -298,7 +298,7 @@ endpoints:
       -
         custom: []
         status: 404
-        content: '{"did_succeed":false,"message":"Not found"}'
+        content: '{"did_succeed":false,"message":{"base_message":"Not found"}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json

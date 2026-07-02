@@ -497,7 +497,7 @@ acounts for them in the appropriate table and permissions; After an admin makes,
     --form "gender="\
     --form "username=mqeopfuudtdsufvyv"\
     --form "password_confirmation=consequatur"\
-    --form "photo=@C:\Users\USER\AppData\Local\Temp\phpA642.tmp" </code></pre></div>
+    --form "photo=@C:\Users\USER\AppData\Local\Temp\php1A0.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -730,7 +730,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\phpA642.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php1A0.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>password_confirmation</code></b>&nbsp;&nbsp;
@@ -1621,10 +1621,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "email=russel.bert@example.net"\
     --form "password=dl4m{o,+"\
     --form "phone=qamniihfqcoynlazg"\
-    --form "date_of_birth=2020-10-27"\
-    --form "gender="\
+    --form "date_of_birth=2020-10-28"\
+    --form "gender=1"\
     --form "username=mqeopfuudtdsufvyv"\
-    --form "photo=@C:\Users\USER\AppData\Local\Temp\phpA681.tmp" </code></pre></div>
+    --form "photo=@C:\Users\USER\AppData\Local\Temp\php1DF.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -1644,8 +1644,8 @@ body.append('last_name', 'eop');
 body.append('email', 'russel.bert@example.net');
 body.append('password', 'dl4m{o,+');
 body.append('phone', 'qamniihfqcoynlazg');
-body.append('date_of_birth', '2020-10-27');
-body.append('gender', '');
+body.append('date_of_birth', '2020-10-28');
+body.append('gender', '1');
 body.append('username', 'mqeopfuudtdsufvyv');
 body.append('photo', document.querySelector('input[name="photo"]').files[0]);
 
@@ -1810,10 +1810,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date_of_birth"                data-endpoint="POSTapi-users"
-               value="2020-10-27"
+               value="2020-10-28"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date before <code>2026-07-02</code>. Example: <code>2020-10-27</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date before <code>2026-07-02</code>. Example: <code>2020-10-28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -1835,7 +1835,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>username</code></b>&nbsp;&nbsp;
@@ -1859,7 +1859,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\phpA681.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php1DF.tmp</code></p>
         </div>
         </form>
 
@@ -1918,7 +1918,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -2076,7 +2078,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -2234,7 +2238,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -2361,7 +2367,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "date_of_birth=2026-07-02"\
     --form "gender="\
     --form "username=niihfqcoynlazghdt"\
-    --form "photo=@C:\Users\USER\AppData\Local\Temp\phpA6D0.tmp" </code></pre></div>
+    --form "photo=@C:\Users\USER\AppData\Local\Temp\php23E.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2583,7 +2589,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\phpA6D0.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php23E.tmp</code></p>
         </div>
         </form>
 
@@ -3293,7 +3299,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -5827,7 +5835,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -7750,12 +7760,12 @@ and the admin can create work schedules for medical center.</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"effective_from_date\": \"2107-07-31\",
+    \"effective_from_date\": \"2107-08-01\",
     \"days\": [
         {
             \"weekday_id\": 2,
-            \"start_time\": \"02:24\",
-            \"end_time\": \"02:24\"
+            \"start_time\": \"15:49\",
+            \"end_time\": \"15:49\"
         }
     ]
 }"
@@ -7774,12 +7784,12 @@ const headers = {
 };
 
 let body = {
-    "effective_from_date": "2107-07-31",
+    "effective_from_date": "2107-08-01",
     "days": [
         {
             "weekday_id": 2,
-            "start_time": "02:24",
-            "end_time": "02:24"
+            "start_time": "15:49",
+            "end_time": "15:49"
         }
     ]
 };
@@ -7885,10 +7895,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="effective_from_date"                data-endpoint="POSTapi-schedules"
-               value="2107-07-31"
+               value="2107-08-01"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after <code>2026-07-02</code>. Example: <code>2107-07-31</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after <code>2026-07-02</code>. Example: <code>2107-08-01</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
         <details>
@@ -7919,10 +7929,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="days.0.start_time"                data-endpoint="POSTapi-schedules"
-               value="02:24"
+               value="15:49"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>H:i</code>. Example: <code>02:24</code></p>
+<p>Must be a valid date in the format <code>H:i</code>. Example: <code>15:49</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>end_time</code></b>&nbsp;&nbsp;
@@ -7931,10 +7941,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="days.0.end_time"                data-endpoint="POSTapi-schedules"
-               value="02:24"
+               value="15:49"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>H:i</code>. Example: <code>02:24</code></p>
+<p>Must be a valid date in the format <code>H:i</code>. Example: <code>15:49</code></p>
                     </div>
                                     </details>
         </div>
@@ -7995,7 +8005,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -8139,7 +8151,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -8308,7 +8322,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -8477,7 +8493,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -8628,7 +8646,7 @@ View all available times to book with a specific doctor</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"date_of_day\": \"2107-07-31\"
+    \"date_of_day\": \"2107-08-01\"
 }"
 </code></pre></div>
 
@@ -8645,7 +8663,7 @@ const headers = {
 };
 
 let body = {
-    "date_of_day": "2107-07-31"
+    "date_of_day": "2107-08-01"
 };
 
 fetch(url, {
@@ -8762,10 +8780,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date_of_day"                data-endpoint="POSTapi-appointments--doctor_id-"
-               value="2107-07-31"
+               value="2107-08-01"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-07-02</code>. Example: <code>2107-07-31</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-07-02</code>. Example: <code>2107-08-01</code></p>
         </div>
         </form>
 
@@ -8791,7 +8809,7 @@ the date of day he wanna book in</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"datetime\": \"2107-07-31\"
+    \"datetime\": \"2107-08-01\"
 }"
 </code></pre></div>
 
@@ -8808,7 +8826,7 @@ const headers = {
 };
 
 let body = {
-    "datetime": "2107-07-31"
+    "datetime": "2107-08-01"
 };
 
 fetch(url, {
@@ -8925,10 +8943,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="datetime"                data-endpoint="POSTapi-appointments-s--doctor_id-"
-               value="2107-07-31"
+               value="2107-08-01"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 02:24</code>. Example: <code>2107-07-31</code></p>
+<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 15:49</code>. Example: <code>2107-08-01</code></p>
         </div>
         </form>
 
@@ -8987,7 +9005,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -9169,7 +9189,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -9363,7 +9385,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -9557,7 +9581,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -9959,7 +9985,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"actual_time\": \"2107-07-31\",
+    \"actual_time\": \"2107-08-01\",
     \"medical_diagnosis\": \"mqeopfuudtdsufvyvddqa\",
     \"prescription\": \"mniihfqcoynlazghdtqtq\",
     \"notes\": \"xbajwbpilpmufinllwloa\",
@@ -9980,7 +10006,7 @@ const headers = {
 };
 
 let body = {
-    "actual_time": "2107-07-31",
+    "actual_time": "2107-08-01",
     "medical_diagnosis": "mqeopfuudtdsufvyvddqa",
     "prescription": "mniihfqcoynlazghdtqtq",
     "notes": "xbajwbpilpmufinllwloa",
@@ -10101,10 +10127,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="actual_time"                data-endpoint="POSTapi-appointments-aA--id-"
-               value="2107-07-31"
+               value="2107-08-01"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 00:00:00</code>. Example: <code>2107-07-31</code></p>
+<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 00:00:00</code>. Example: <code>2107-08-01</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>medical_diagnosis</code></b>&nbsp;&nbsp;
@@ -10215,7 +10241,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -10373,7 +10401,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -10543,7 +10573,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -10713,7 +10745,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -11230,7 +11264,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -11412,7 +11448,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -11594,7 +11632,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -12068,7 +12108,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -12225,7 +12267,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -12383,7 +12427,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;HTTP request method not allowed, The GET method is not supported for route api/complaint/17/17. Supported methods: POST.&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;HTTP request method not allowed, The GET method is not supported for route api/complaint/17/17. Supported methods: POST.&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -12674,7 +12720,7 @@ Everyone in the system is allowed to use this API</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"datetime\": \"2107-07-31\"
+    \"datetime\": \"2107-08-01\"
 }"
 </code></pre></div>
 
@@ -12691,7 +12737,7 @@ const headers = {
 };
 
 let body = {
-    "datetime": "2107-07-31"
+    "datetime": "2107-08-01"
 };
 
 fetch(url, {
@@ -12808,10 +12854,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="datetime"                data-endpoint="POSTapi-transfer--transfer_id-"
-               value="2107-07-31"
+               value="2107-08-01"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 02:24</code>. Example: <code>2107-07-31</code></p>
+<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 15:49</code>. Example: <code>2107-08-01</code></p>
         </div>
         </form>
 
@@ -12836,7 +12882,7 @@ Everyone in the system is allowed to use this API</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"datetime\": \"2107-07-31\"
+    \"datetime\": \"2107-08-01\"
 }"
 </code></pre></div>
 
@@ -12853,7 +12899,7 @@ const headers = {
 };
 
 let body = {
-    "datetime": "2107-07-31"
+    "datetime": "2107-08-01"
 };
 
 fetch(url, {
@@ -12970,10 +13016,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="datetime"                data-endpoint="POSTapi-transfer-ch--transfer_id-"
-               value="2107-07-31"
+               value="2107-08-01"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 02:24</code>. Example: <code>2107-07-31</code></p>
+<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 15:49</code>. Example: <code>2107-08-01</code></p>
         </div>
         </form>
 
@@ -13205,7 +13251,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -13362,7 +13410,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;HTTP request method not allowed, The GET method is not supported for route api/transfer/17/17. Supported methods: POST.&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;HTTP request method not allowed, The GET method is not supported for route api/transfer/17/17. Supported methods: POST.&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -13532,7 +13582,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Not found&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Not found&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -13702,7 +13754,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Not found&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Not found&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -13884,7 +13938,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Not found&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Not found&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -14036,8 +14092,8 @@ and the admin can create unavailability for medical center.</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"from_date\": \"2107-07-31\",
-    \"to_date\": \"2107-07-31\",
+    \"from_date\": \"2107-08-01\",
+    \"to_date\": \"2107-08-01\",
     \"reason_type\": \"vacation\",
     \"justification\": \"consequatur\"
 }"
@@ -14056,8 +14112,8 @@ const headers = {
 };
 
 let body = {
-    "from_date": "2107-07-31",
-    "to_date": "2107-07-31",
+    "from_date": "2107-08-01",
+    "to_date": "2107-08-01",
     "reason_type": "vacation",
     "justification": "consequatur"
 };
@@ -14163,10 +14219,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="POSTapi-unavailability"
-               value="2107-07-31"
+               value="2107-08-01"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-07-02 00:00:00</code>. Example: <code>2107-07-31</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-07-02 00:00:00</code>. Example: <code>2107-08-01</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -14175,10 +14231,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="to_date"                data-endpoint="POSTapi-unavailability"
-               value="2107-07-31"
+               value="2107-08-01"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>from_date</code>. Example: <code>2107-07-31</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>from_date</code>. Example: <code>2107-08-01</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>reason_type</code></b>&nbsp;&nbsp;
@@ -14263,7 +14319,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Not found&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Not found&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -14432,7 +14490,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Not found&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Not found&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -14613,7 +14673,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Not found&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Not found&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -14753,7 +14815,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"speciality_id\": 17,
     \"experience_starting_date\": \"2026-07-02\",
-    \"view_experience\": false
+    \"view_experience\": true
 }"
 </code></pre></div>
 
@@ -14772,7 +14834,7 @@ const headers = {
 let body = {
     "speciality_id": 17,
     "experience_starting_date": "2026-07-02",
-    "view_experience": false
+    "view_experience": true
 };
 
 fetch(url, {
@@ -14913,7 +14975,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
         </form>
 
@@ -14972,7 +15034,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -15131,7 +15195,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -15301,7 +15367,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -15472,7 +15540,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -15959,7 +16029,9 @@ access-control-allow-origin: *
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
