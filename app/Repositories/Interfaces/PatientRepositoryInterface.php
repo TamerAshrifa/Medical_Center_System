@@ -10,7 +10,7 @@ interface PatientRepositoryInterface extends RepositoryInterface
     public function paginate(int $perPage = 10);
     public function findWithUser(int $id, bool $failIfNotExists = true): Patient;
     public function find(int $id, bool $failIfNotExists = true): Patient;
-    public function deletePatient(Patient $patient): bool;
+    public function delete(Patient $patient): bool;
     public function search(string $searchWord);
 
 }

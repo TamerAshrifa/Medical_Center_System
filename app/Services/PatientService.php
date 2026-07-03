@@ -91,14 +91,9 @@ class PatientService extends Service
         }
 
         try {
-            DB::transaction(function () use ($patient, $user) {
-                if (
-                    !$this->patientRepository->deletePatient($patient) ||
-                    !$this->userRepository->deleteByObject($user)
-                )
-                    throw new \Exception('Failed to Delete patient, please try again');
-            });
-        } catch (\Throwable $e) {
+            if (!$this->patientRepository->delete($patient))
+                throw new \LogicException('Failed to Delete patient, please try again');
+        } catch (\LogicException $e) {
             return new Response(
                 false,
                 Response::messageToArray($e->getMessage()),

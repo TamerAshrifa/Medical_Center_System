@@ -38,7 +38,7 @@ class PatientRepository extends Repository implements PatientRepositoryInterface
             Patient::findOrFail($id) :
             Patient::find($id);
     }
-    public function deletePatient(Patient $patient): bool
+    public function delete(Patient $patient): bool
     {
         $user = $patient->user;
         try {

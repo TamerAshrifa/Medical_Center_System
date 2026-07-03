@@ -497,7 +497,7 @@ acounts for them in the appropriate table and permissions; After an admin makes,
     --form "gender="\
     --form "username=mqeopfuudtdsufvyv"\
     --form "password_confirmation=consequatur"\
-    --form "photo=@C:\Users\USER\AppData\Local\Temp\php1A0.tmp" </code></pre></div>
+    --form "photo=@C:\Users\USER\AppData\Local\Temp\php2B80.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -730,7 +730,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php1A0.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php2B80.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>password_confirmation</code></b>&nbsp;&nbsp;
@@ -1622,9 +1622,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "password=dl4m{o,+"\
     --form "phone=qamniihfqcoynlazg"\
     --form "date_of_birth=2020-10-28"\
-    --form "gender=1"\
+    --form "gender="\
     --form "username=mqeopfuudtdsufvyv"\
-    --form "photo=@C:\Users\USER\AppData\Local\Temp\php1DF.tmp" </code></pre></div>
+    --form "photo=@C:\Users\USER\AppData\Local\Temp\php2BC0.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -1645,7 +1645,7 @@ body.append('email', 'russel.bert@example.net');
 body.append('password', 'dl4m{o,+');
 body.append('phone', 'qamniihfqcoynlazg');
 body.append('date_of_birth', '2020-10-28');
-body.append('gender', '1');
+body.append('gender', '');
 body.append('username', 'mqeopfuudtdsufvyv');
 body.append('photo', document.querySelector('input[name="photo"]').files[0]);
 
@@ -1835,7 +1835,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>username</code></b>&nbsp;&nbsp;
@@ -1859,7 +1859,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php1DF.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php2BC0.tmp</code></p>
         </div>
         </form>
 
@@ -2365,9 +2365,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "last_name=eop"\
     --form "phone=fuudtdsufvyvddqam"\
     --form "date_of_birth=2026-07-02"\
-    --form "gender="\
+    --form "gender=1"\
     --form "username=niihfqcoynlazghdt"\
-    --form "photo=@C:\Users\USER\AppData\Local\Temp\php23E.tmp" </code></pre></div>
+    --form "photo=@C:\Users\USER\AppData\Local\Temp\php2C0F.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2386,7 +2386,7 @@ body.append('first_name', 'vmq');
 body.append('last_name', 'eop');
 body.append('phone', 'fuudtdsufvyvddqam');
 body.append('date_of_birth', '2026-07-02');
-body.append('gender', '');
+body.append('gender', '1');
 body.append('username', 'niihfqcoynlazghdt');
 body.append('photo', document.querySelector('input[name="photo"]').files[0]);
 
@@ -2565,7 +2565,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>username</code></b>&nbsp;&nbsp;
@@ -2589,7 +2589,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php23E.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php2C0F.tmp</code></p>
         </div>
         </form>
 
@@ -7764,8 +7764,8 @@ and the admin can create work schedules for medical center.</p>
     \"days\": [
         {
             \"weekday_id\": 2,
-            \"start_time\": \"15:49\",
-            \"end_time\": \"15:49\"
+            \"start_time\": \"17:58\",
+            \"end_time\": \"17:58\"
         }
     ]
 }"
@@ -7788,8 +7788,8 @@ let body = {
     "days": [
         {
             "weekday_id": 2,
-            "start_time": "15:49",
-            "end_time": "15:49"
+            "start_time": "17:58",
+            "end_time": "17:58"
         }
     ]
 };
@@ -7929,10 +7929,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="days.0.start_time"                data-endpoint="POSTapi-schedules"
-               value="15:49"
+               value="17:58"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>H:i</code>. Example: <code>15:49</code></p>
+<p>Must be a valid date in the format <code>H:i</code>. Example: <code>17:58</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>end_time</code></b>&nbsp;&nbsp;
@@ -7941,10 +7941,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="days.0.end_time"                data-endpoint="POSTapi-schedules"
-               value="15:49"
+               value="17:58"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>H:i</code>. Example: <code>15:49</code></p>
+<p>Must be a valid date in the format <code>H:i</code>. Example: <code>17:58</code></p>
                     </div>
                                     </details>
         </div>
@@ -8946,7 +8946,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="2107-08-01"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 15:49</code>. Example: <code>2107-08-01</code></p>
+<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 17:58</code>. Example: <code>2107-08-01</code></p>
         </div>
         </form>
 
@@ -12857,7 +12857,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="2107-08-01"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 15:49</code>. Example: <code>2107-08-01</code></p>
+<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 17:58</code>. Example: <code>2107-08-01</code></p>
         </div>
         </form>
 
@@ -13019,7 +13019,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="2107-08-01"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 15:49</code>. Example: <code>2107-08-01</code></p>
+<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-02 17:58</code>. Example: <code>2107-08-01</code></p>
         </div>
         </form>
 
