@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('error_message');
             $table->string('file')->nullable();
             $table->string('line')->nullable();
-            $table->string('track')->nullable();
+            $table->longText('track')->nullable();
             $table->timestamps();
         });
     }
