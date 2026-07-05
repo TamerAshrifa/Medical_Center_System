@@ -43,7 +43,6 @@ class SpecialityService extends Service
             true,
             $this->paginationMessage($records),
             $records->items(),
-            true,
         );
     }
     public function add(SpecialityDTO $dto): Response

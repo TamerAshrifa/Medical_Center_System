@@ -160,7 +160,11 @@ endpoints:
       -
         custom: []
         status: 201
-        content: "{\r\n  \"did_succeed\": true,\r\n  \"message\": \"OTP-Code was sent to tamrashryft2@gmail.com successfully, please check your inbox\"\r\n}"
+        content: |-
+          {
+            "did_succeed": true,
+            "message": "OTP-Code was sent to tamrashryft2@gmail.com successfully, please check your inbox"
+          }
         headers: []
         description: ''
     responseFields: []
@@ -225,31 +229,53 @@ endpoints:
       -
         custom: []
         status: 200
-        content: "{\r\n    \"did_succeed\": true,\r\n    \"message\": \"Email verified successfully\",\r\n    \"token_or_reset_token\": \"5|9cc4ues9eb6rAXxanCXiPxICZcUFK6PgMl7IxcXXf287c850\"\r\n}"
+        content: |-
+          {
+              "did_succeed": true,
+              "message": "Email verified successfully",
+              "token_or_reset_token": "5|9cc4ues9eb6rAXxanCXiPxICZcUFK6PgMl7IxcXXf287c850"
+          }
         headers: []
         description: ''
       -
         custom: []
         status: 200
-        content: "{\r\n    \"did_succeed\": true,\r\n    \"message\": \"OTP-Code verified successfully, you can now reset your password\",\r\n    \"token_or_reset_token\": \"$2y$12$5MftcDSWXj5UTaxuYL3eTOI2iP6G6jSZ5Rv30Hvc6gh8OKvl.0j/K\"\r\n}"
+        content: |-
+          {
+              "did_succeed": true,
+              "message": "OTP-Code verified successfully, you can now reset your password",
+              "token_or_reset_token": "$2y$12$5MftcDSWXj5UTaxuYL3eTOI2iP6G6jSZ5Rv30Hvc6gh8OKvl.0j/K"
+          }
         headers: []
         description: ''
       -
         custom: []
         status: 400
-        content: " {\r\n    \"did_succeed\": false,\r\n    \"message\": \"Invalid OTP-Code\"\r\n}"
+        content: |2-
+           {
+              "did_succeed": false,
+              "message": "Invalid OTP-Code"
+          }
         headers: []
         description: ''
       -
         custom: []
         status: 400
-        content: "{\r\n    \"did_succeed\": false,\r\n    \"message\": \"Sorry, this OTP-Code has expired, a new one was sent to your email, please check your inbox\"\r\n}"
+        content: |-
+          {
+              "did_succeed": false,
+              "message": "Sorry, this OTP-Code has expired, a new one was sent to your email, please check your inbox"
+          }
         headers: []
         description: ''
       -
         custom: []
         status: 400
-        content: "{\r\n    \"did_succeed\": false,\r\n    \"message\": \"Email is already verified, you can login\"\r\n}"
+        content: |-
+          {
+              "did_succeed": false,
+              "message": "Email is already verified, you can login"
+          }
         headers: []
         description: ''
     responseFields: []
@@ -314,13 +340,22 @@ endpoints:
       -
         custom: []
         status: 200
-        content: "{\r\n    \"did_succeed\": true,\r\n    \"message\": \"OTP-Code was sent to tamrashryft2@gmail.com successfully, please check your inbox\"\r\n}"
+        content: |-
+          {
+              "did_succeed": true,
+              "message": "OTP-Code was sent to tamrashryft2@gmail.com successfully, please check your inbox"
+          }
         headers: []
         description: ''
       -
         custom: []
         status: 400
-        content: "{\r\n    \"did_succeed\": false,\r\n    \"message\": \"Wrong email or password; Or the email is not verified, OTP-Code was sent to your email, please check your inbox\"\r\n}\r\n\r\n"
+        content: |+
+          {
+              "did_succeed": false,
+              "message": "Wrong email or password; Or the email is not verified, OTP-Code was sent to your email, please check your inbox"
+          }
+
         headers: []
         description: ''
     responseFields: []
@@ -373,7 +408,11 @@ endpoints:
       -
         custom: []
         status: 200
-        content: "{\r\n    \"did_succeed\": true,\r\n    \"message\": \"If the email exists, an OTP-Code was sent to it successfully, please check your gmail\"\r\n}\r\n"
+        content: |
+          {
+              "did_succeed": true,
+              "message": "If the email exists, an OTP-Code was sent to it successfully, please check your gmail"
+          }
         headers: []
         description: ''
     responseFields: []
@@ -462,19 +501,32 @@ endpoints:
       -
         custom: []
         status: 200
-        content: "{\r\n    \"did_succeed\": true,\r\n    \"message\": \"Your password was updated successfully\",\r\n    \"token\": \"6|1rbJvOIdEoHxeSKIiT6L66vnQqvBrtXFIRaxDJApa25692ae\"\r\n}"
+        content: |-
+          {
+              "did_succeed": true,
+              "message": "Your password was updated successfully",
+              "token": "6|1rbJvOIdEoHxeSKIiT6L66vnQqvBrtXFIRaxDJApa25692ae"
+          }
         headers: []
         description: ''
       -
         custom: []
         status: 400
-        content: "{\r\n    \"did_succeed\": false,\r\n    \"message\": \"Invalid reset-token\"\r\n}"
+        content: |-
+          {
+              "did_succeed": false,
+              "message": "Invalid reset-token"
+          }
         headers: []
         description: ''
       -
         custom: []
         status: 400
-        content: "{\r\n    \"did_succeed\": false,\r\n    \"message\": \"Sorry, the reset-token has expired, a new OTP-Code was sent to your email, please check your inbox\"\r\n}"
+        content: |-
+          {
+              "did_succeed": false,
+              "message": "Sorry, the reset-token has expired, a new OTP-Code was sent to your email, please check your inbox"
+          }
         headers: []
         description: ''
     responseFields: []
@@ -516,7 +568,11 @@ endpoints:
       -
         custom: []
         status: 200
-        content: "{\r\n    \"did_succeed\": true,\r\n    \"message\": \"User logged-out successfully\"\r\n}"
+        content: |-
+          {
+              "did_succeed": true,
+              "message": "User logged-out successfully"
+          }
         headers: []
         description: ''
     responseFields: []

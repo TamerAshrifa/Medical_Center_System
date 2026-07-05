@@ -134,7 +134,119 @@ endpoints:
       -
         custom: []
         status: 200
-        content: "{\r\n  \"did_succeed\": true,\r\n  \"message\": {\r\n    \"did_succeed\": true,\r\n    \"current_page_number\": 1,\r\n    \"last_page_number\": 3,\r\n    \"patients_per_page\": 4,\r\n    \"next_page_url\": \"http://127.0.0.1:8000/api/patients/4?page=2\",\r\n    \"previous_page_url\": null,\r\n    \"first_page_url\": \"http://127.0.0.1:8000/api/patients/4?page=1\",\r\n    \"last_page_url\": \"http://127.0.0.1:8000/api/patients/4?page=3\",\r\n    \"total_patients_number\": 11\r\n  },\r\n  \"data\": [\r\n    {\r\n      \"id\": 14,\r\n      \"allergies\": \"consequatur\",\r\n      \"chronic_diseases\": \"consequatur\",\r\n      \"user\": {\r\n        \"id\": 31,\r\n        \"first_name\": \"vmq\",\r\n        \"last_name\": \"eop\",\r\n        \"email\": \"tamrashryft2@gmail.com\",\r\n        \"phone\": \"+963999999999\",\r\n        \"date_of_birth\": \"2004-06-13T21:00:00.000000Z\",\r\n        \"gender\": \"Male\",\r\n        \"photo\": null,\r\n        \"username\": \"hdtqtqxbajwbpilpm\",\r\n        \"role\": \"patient\",\r\n        \"email_verified_at\": \"2026-06-05T21:12:22.000000Z\",\r\n        \"created_at\": \"2026-06-05T21:11:12.000000Z\",\r\n        \"last_update_at\": \"2026-06-06T16:46:19.000000Z\"\r\n      },\r\n      \"blood_type_id\": {\r\n        \"id\": 4,\r\n        \"name\": \"A+\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": 1,\r\n      \"allergies\": null,\r\n      \"chronic_diseases\": null,\r\n      \"user\": {\r\n        \"id\": 16,\r\n        \"first_name\": \"Casey Marvin\",\r\n        \"last_name\": \"Prof. Isabell Christiansen\",\r\n        \"email\": \"miller.oconnell@example.org\",\r\n        \"phone\": \"+1.678.499.5508\",\r\n        \"date_of_birth\": \"1982-11-05T22:00:00.000000Z\",\r\n        \"gender\": \"Male\",\r\n        \"photo\": null,\r\n        \"username\": \"khickle\",\r\n        \"role\": \"patient\",\r\n        \"email_verified_at\": null,\r\n        \"created_at\": \"2026-06-05T21:11:01.000000Z\",\r\n        \"last_update_at\": \"2026-06-05T21:11:04.000000Z\"\r\n      },\r\n      \"blood_type_id\": {\r\n        \"id\": 4,\r\n        \"name\": \"A+\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"allergies\": null,\r\n      \"chronic_diseases\": null,\r\n      \"user\": {\r\n        \"id\": 17,\r\n        \"first_name\": \"Miss Elsie Volkman MD\",\r\n        \"last_name\": \"Prof. Jarred Nolan Jr.\",\r\n        \"email\": \"dickens.misael@example.org\",\r\n        \"phone\": \"(830) 299-4184\",\r\n        \"date_of_birth\": \"2005-08-05T21:00:00.000000Z\",\r\n        \"gender\": \"Female\",\r\n        \"photo\": null,\r\n        \"username\": \"uconn\",\r\n        \"role\": \"patient\",\r\n        \"email_verified_at\": null,\r\n        \"created_at\": \"2026-06-05T21:11:01.000000Z\",\r\n        \"last_update_at\": \"2026-06-05T21:11:04.000000Z\"\r\n      },\r\n      \"blood_type_id\": {\r\n        \"id\": 8,\r\n        \"name\": \"AB+\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": 3,\r\n      \"allergies\": null,\r\n      \"chronic_diseases\": null,\r\n      \"user\": {\r\n        \"id\": 18,\r\n        \"first_name\": \"Flossie Herzog I\",\r\n        \"last_name\": \"Estella Schaefer\",\r\n        \"email\": \"kunze.giovanna@example.com\",\r\n        \"phone\": \"1-862-842-2212\",\r\n        \"date_of_birth\": \"1993-06-19T21:00:00.000000Z\",\r\n        \"gender\": \"Male\",\r\n        \"photo\": null,\r\n        \"username\": \"goodwin.rosie\",\r\n        \"role\": \"patient\",\r\n        \"email_verified_at\": null,\r\n        \"created_at\": \"2026-06-05T21:11:01.000000Z\",\r\n        \"last_update_at\": \"2026-06-05T21:11:04.000000Z\"\r\n      },\r\n      \"blood_type_id\": {\r\n        \"id\": 4,\r\n        \"name\": \"A+\"\r\n      }\r\n    }\r\n  ]\r\n}"
+        content: |-
+          {
+            "did_succeed": true,
+            "message": {
+              "did_succeed": true,
+              "current_page_number": 1,
+              "last_page_number": 3,
+              "patients_per_page": 4,
+              "next_page_url": "http://127.0.0.1:8000/api/patients/4?page=2",
+              "previous_page_url": null,
+              "first_page_url": "http://127.0.0.1:8000/api/patients/4?page=1",
+              "last_page_url": "http://127.0.0.1:8000/api/patients/4?page=3",
+              "total_patients_number": 11
+            },
+            "data": [
+              {
+                "id": 14,
+                "allergies": "consequatur",
+                "chronic_diseases": "consequatur",
+                "user": {
+                  "id": 31,
+                  "first_name": "vmq",
+                  "last_name": "eop",
+                  "email": "tamrashryft2@gmail.com",
+                  "phone": "+963999999999",
+                  "date_of_birth": "2004-06-13T21:00:00.000000Z",
+                  "gender": "Male",
+                  "photo": null,
+                  "username": "hdtqtqxbajwbpilpm",
+                  "role": "patient",
+                  "email_verified_at": "2026-06-05T21:12:22.000000Z",
+                  "created_at": "2026-06-05T21:11:12.000000Z",
+                  "last_update_at": "2026-06-06T16:46:19.000000Z"
+                },
+                "blood_type_id": {
+                  "id": 4,
+                  "name": "A+"
+                }
+              },
+              {
+                "id": 1,
+                "allergies": null,
+                "chronic_diseases": null,
+                "user": {
+                  "id": 16,
+                  "first_name": "Casey Marvin",
+                  "last_name": "Prof. Isabell Christiansen",
+                  "email": "miller.oconnell@example.org",
+                  "phone": "+1.678.499.5508",
+                  "date_of_birth": "1982-11-05T22:00:00.000000Z",
+                  "gender": "Male",
+                  "photo": null,
+                  "username": "khickle",
+                  "role": "patient",
+                  "email_verified_at": null,
+                  "created_at": "2026-06-05T21:11:01.000000Z",
+                  "last_update_at": "2026-06-05T21:11:04.000000Z"
+                },
+                "blood_type_id": {
+                  "id": 4,
+                  "name": "A+"
+                }
+              },
+              {
+                "id": 2,
+                "allergies": null,
+                "chronic_diseases": null,
+                "user": {
+                  "id": 17,
+                  "first_name": "Miss Elsie Volkman MD",
+                  "last_name": "Prof. Jarred Nolan Jr.",
+                  "email": "dickens.misael@example.org",
+                  "phone": "(830) 299-4184",
+                  "date_of_birth": "2005-08-05T21:00:00.000000Z",
+                  "gender": "Female",
+                  "photo": null,
+                  "username": "uconn",
+                  "role": "patient",
+                  "email_verified_at": null,
+                  "created_at": "2026-06-05T21:11:01.000000Z",
+                  "last_update_at": "2026-06-05T21:11:04.000000Z"
+                },
+                "blood_type_id": {
+                  "id": 8,
+                  "name": "AB+"
+                }
+              },
+              {
+                "id": 3,
+                "allergies": null,
+                "chronic_diseases": null,
+                "user": {
+                  "id": 18,
+                  "first_name": "Flossie Herzog I",
+                  "last_name": "Estella Schaefer",
+                  "email": "kunze.giovanna@example.com",
+                  "phone": "1-862-842-2212",
+                  "date_of_birth": "1993-06-19T21:00:00.000000Z",
+                  "gender": "Male",
+                  "photo": null,
+                  "username": "goodwin.rosie",
+                  "role": "patient",
+                  "email_verified_at": null,
+                  "created_at": "2026-06-05T21:11:01.000000Z",
+                  "last_update_at": "2026-06-05T21:11:04.000000Z"
+                },
+                "blood_type_id": {
+                  "id": 4,
+                  "name": "A+"
+                }
+              }
+            ]
+          }
         headers: []
         description: ''
     responseFields: []
@@ -190,19 +302,56 @@ endpoints:
       -
         custom: []
         status: 200
-        content: "{\r\n    \"did_succeed\": true,\r\n    \"data\": {\r\n        \"id\": 14,\r\n        \"allergies\": \"consequatur\",\r\n        \"chronic_diseases\": \"consequatur\",\r\n        \"user\": {\r\n            \"id\": 31,\r\n            \"first_name\": \"vmq\",\r\n            \"last_name\": \"eop\",\r\n            \"email\": \"tamrashryft2@gmail.com\",\r\n            \"phone\": \"+963999999999\",\r\n            \"date_of_birth\": \"2004-06-13T21:00:00.000000Z\",\r\n            \"gender\": \"Male\",\r\n            \"photo\": null,\r\n            \"username\": \"hdtqtqxbajwbpilpm\",\r\n            \"role\": \"patient\",\r\n            \"email_verified_at\": \"2026-06-05T21:12:22.000000Z\",\r\n            \"created_at\": \"2026-06-05T21:11:12.000000Z\",\r\n            \"last_update_at\": \"2026-06-06T16:46:19.000000Z\"\r\n        },\r\n        \"blood_type_id\": {\r\n            \"id\": 4,\r\n            \"name\": \"A+\"\r\n        }\r\n    }\r\n}\r\n\r\n// ⚠ Important info: The response's \"data\" field content would change based on the logged-in user role! the previous example logged-in user role was ADMIN."
+        content: |-
+          {
+              "did_succeed": true,
+              "data": {
+                  "id": 14,
+                  "allergies": "consequatur",
+                  "chronic_diseases": "consequatur",
+                  "user": {
+                      "id": 31,
+                      "first_name": "vmq",
+                      "last_name": "eop",
+                      "email": "tamrashryft2@gmail.com",
+                      "phone": "+963999999999",
+                      "date_of_birth": "2004-06-13T21:00:00.000000Z",
+                      "gender": "Male",
+                      "photo": null,
+                      "username": "hdtqtqxbajwbpilpm",
+                      "role": "patient",
+                      "email_verified_at": "2026-06-05T21:12:22.000000Z",
+                      "created_at": "2026-06-05T21:11:12.000000Z",
+                      "last_update_at": "2026-06-06T16:46:19.000000Z"
+                  },
+                  "blood_type_id": {
+                      "id": 4,
+                      "name": "A+"
+                  }
+              }
+          }
+
+          // ⚠ Important info: The response's "data" field content would change based on the logged-in user role! the previous example logged-in user role was ADMIN.
         headers: []
         description: ''
       -
         custom: []
         status: 403
-        content: "{\r\n    \"did_succeed\": false,\r\n    \"message\": \"Patients can't see other patients information\"\r\n}"
+        content: |-
+          {
+              "did_succeed": false,
+              "message": "Patients can't see other patients information"
+          }
         headers: []
         description: ''
       -
         custom: []
         status: 404
-        content: "{\r\n    \"did_succeed\": false,\r\n    \"data\": \"Patient not found\"\r\n}"
+        content: |-
+          {
+              "did_succeed": false,
+              "data": "Patient not found"
+          }
         headers: []
         description: ''
     responseFields: []
@@ -364,25 +513,63 @@ endpoints:
       -
         custom: []
         status: 200
-        content: "{\r\n  \"did_succeed\": true,\r\n  \"data\": \"No changes detected\"\r\n}"
+        content: |-
+          {
+            "did_succeed": true,
+            "data": "No changes detected"
+          }
         headers: []
         description: ''
       -
         custom: []
         status: 200
-        content: "{\r\n  \"did_succeed\": true,\r\n  \"message\": {\r\n    \"base_message\": \"Patient updated successfully\"\r\n  },\r\n  \"data\": {\r\n    \"id\": 14,\r\n    \"allergies\": \"dasf\",\r\n    \"chronic_diseases\": \"dddddddddd\",\r\n    \"user\": {\r\n      \"id\": 31,\r\n      \"first_name\": \"vmq\",\r\n      \"last_name\": \"eop\",\r\n      \"email\": \"tamrashryft2@gmail.com\",\r\n      \"phone\": \"+963999999999\",\r\n      \"date_of_birth\": \"2004-06-13T21:00:00.000000Z\",\r\n      \"gender\": \"Male\",\r\n      \"photo\": null,\r\n      \"username\": \"hdtqtqxbajwbpilpm\",\r\n    },\r\n    \"blood_type_id\": {\r\n      \"id\": 1,\r\n      \"name\": \"Not_Determined\"\r\n    }\r\n  }\r\n}"
+        content: |-
+          {
+            "did_succeed": true,
+            "message": {
+              "base_message": "Patient updated successfully"
+            },
+            "data": {
+              "id": 14,
+              "allergies": "dasf",
+              "chronic_diseases": "dddddddddd",
+              "user": {
+                "id": 31,
+                "first_name": "vmq",
+                "last_name": "eop",
+                "email": "tamrashryft2@gmail.com",
+                "phone": "+963999999999",
+                "date_of_birth": "2004-06-13T21:00:00.000000Z",
+                "gender": "Male",
+                "photo": null,
+                "username": "hdtqtqxbajwbpilpm",
+              },
+              "blood_type_id": {
+                "id": 1,
+                "name": "Not_Determined"
+              }
+            }
+          }
         headers: []
         description: ''
       -
         custom: []
         status: 403
-        content: "{\r\n    \"did_succeed\": false,\r\n    \"message\": \"Patients can't update other patients information\"\r\n}"
+        content: |-
+          {
+              "did_succeed": false,
+              "message": "Patients can't update other patients information"
+          }
         headers: []
         description: ''
       -
         custom: []
         status: 404
-        content: "{\r\n    \"did_succeed\": false,\r\n    \"data\": \"Patient not found\"\r\n}"
+        content: |-
+          {
+              "did_succeed": false,
+              "data": "Patient not found"
+          }
         headers: []
         description: ''
     responseFields: []
@@ -443,7 +630,11 @@ endpoints:
       -
         custom: []
         status: 404
-        content: "{\r\n    \"did_succeed\": false,\r\n    \"data\": \"Patient not found\"\r\n}"
+        content: |-
+          {
+              "did_succeed": false,
+              "data": "Patient not found"
+          }
         headers: []
         description: ''
     responseFields: []
