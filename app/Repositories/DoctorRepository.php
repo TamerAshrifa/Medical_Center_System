@@ -9,7 +9,7 @@ use DB;
 
 class DoctorRepository extends Repository implements DoctorRepositoryInterface
 {
-    private function getIncludedEntities(bool $withRoom, bool $withAdderAdmin, bool $withUser): array
+    private function includedEntities(bool $withRoom, bool $withAdderAdmin, bool $withUser): array
     {
         $included = [];
         if ($withRoom)
@@ -30,12 +30,14 @@ class DoctorRepository extends Repository implements DoctorRepositoryInterface
     }
     public function paginate(
         int $perPage = 10,
+        bool $withUnactive = true,
         bool $withRoom = false,
         bool $withAdderAdmin = false,
         bool $withUser = false,
     ) {
         return Doctor::query()
-            ->with($this->getIncludedEntities($withRoom, $withAdderAdmin, $withUser))
+            ->with($this->includedEntities($withRoom, $withAdderAdmin, $withUser))
+            ->when(!$withUnactive, fn($q) => $q->where('is_active', false))
             ->orderBy('created_at', 'desc')
             ->paginate($perPage);
     }
@@ -48,7 +50,7 @@ class DoctorRepository extends Repository implements DoctorRepositoryInterface
         bool $withUser = false,
     ): Doctor {
         $query = Doctor::query()
-            ->with($this->getIncludedEntities($withRoom, $withAdderAdmin, $withUser));
+            ->with($this->includedEntities($withRoom, $withAdderAdmin, $withUser));
         return $failIfNotExists ?
             $query->findOrFail($doctorId) :
             $query->find($doctorId);
@@ -83,19 +85,36 @@ class DoctorRepository extends Repository implements DoctorRepositoryInterface
     public function allDoctorsEmails()
     {
         return Doctor::query()
+            ->where('is_active', true)
             ->join('users', 'doctors.user_id', '=', 'users.id')
             ->pluck('users.email');
     }
 
-    public function search(string $searchWord)
+    public function search(string $searchWord, bool $isSearcherAdmin)
     {
         return Doctor::query()
             ->with('user:id,first_name,last_name')
             ->whereHas('user', function ($q) use ($searchWord) {
                 $q->where('role', UserRoleEnum::DOCTOR->value)
-                    ->where('first_name', 'LIKE', "%$searchWord%");
+                    ->where('first_name', 'like', "%$searchWord%");
             })
+            ->when(!$isSearcherAdmin, fn($q) => $q->where('is_active', true))
             ->get();
+    }
+
+    public function deactivate(int $id): bool
+    {
+        return Doctor::where('id', $id)->update([
+            'is_active' => false,
+            'room_id' => null,
+        ]) > 0;
+    }
+    public function activate(int $id, bool $roomId): bool
+    {
+        return Doctor::where('id', $id)->update([
+            'is_active' => true,
+            'room_id' => $roomId,
+        ]) > 0;
     }
 
 }

@@ -51,8 +51,10 @@ Route::middleware('auth:sanctum')->group(function () {
     // Admin APIs
     Route::prefix('admins/')->middleware('CheckAdmin')->group(function () {
         Route::get('{search_word}', [AdminController::class, 'search']);
-        Route::post('{user_id}', [AdminController::class, 'store']);
         Route::post('u/{id}', [AdminController::class, 'destroy']);
+        Route::put('u/{id}', [AdminController::class, 'activate']);
+        Route::post('m/m', [AdminController::class, 'monthlyReport']);
+        Route::post('{user_id}', [AdminController::class, 'store']);
     });
 
     // Room APIs
@@ -67,10 +69,12 @@ Route::middleware('auth:sanctum')->group(function () {
     // Doctor APIs
     Route::prefix('doctors/')->group(function () {
         Route::post('', [DoctorController::class, 'store'])->middleware('CheckAdmin');
-        Route::get('{per_page}', [DoctorController::class, 'index']);
+        Route::get('{per_page}/{with_unactive}', [DoctorController::class, 'index']);
         Route::get('s/{doctor_id}', [DoctorController::class, 'show']);
         Route::get('se/{search_word}', [DoctorController::class, 'search']);
         Route::put('{doctor_id}', [DoctorController::class, 'update'])->middleware(['CheckDoctorOnly', 'UpdateDoctorMiddleware']);
+        Route::put('d/{id}', [DoctorController::class, 'deactivate'])->middleware('CheckAdmin');
+        Route::put('a/{id}/{room_id}', [DoctorController::class, 'activate'])->middleware('CheckAdmin');
         Route::delete('{doctorId}', [DoctorController::class, 'destroy'])->middleware('CheckAdmin');
     });
 
@@ -98,7 +102,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('schedules/')->group(function () {
         Route::post('', [WorkScheduleController::class, 'store'])->middleware('CheckDoctor');
         Route::get('WDs', [WorkScheduleController::class, 'indexWeekDays']);
-        Route::get('DsWS/{with_expired}/{per_page}', [WorkScheduleController::class, 'paginateDoctorsWorkSchedules'])->middleware('CheckAdmin');
+        Route::get('DsWS/{with_expired}/{with_unactive_doctors}/{per_page}', [WorkScheduleController::class, 'paginateDoctorsWorkSchedules'])->middleware('CheckAdmin');
         Route::get('MCWS/{with_expired}/{per_page}', [WorkScheduleController::class, 'paginateMedicalCenterWorkSchedules'])->middleware('CheckAdmin');
         Route::get('DWS/{doctor_id}/{with_expired}/{per_page}', [WorkScheduleController::class, 'paginateDoctorWorkSchedules'])->middleware(['CheckDoctor', 'PaginateDoctorWorkSchedulesMiddleware']);
     });
@@ -173,7 +177,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Unavailability APIs
     Route::prefix('unavailability/')->group(function () {
-        Route::post('', [UnavailabilityController::class, 'store'])->middleware(['CheckDoctor']);
+        Route::post('maker_id', [UnavailabilityController::class, 'store'])->middleware(['CheckDoctor', 'StoreUnavailabilityMiddleware']);
         Route::get('{with_passed}/{per_page}', [UnavailabilityController::class, 'paginateDoctorsUnavailabilities'])
             ->whereNumber('per_page')->where('with_passed', '0|1|true|false')->middleware(['CheckAdmin']);
         Route::get('{with_passed}/{per_page}/{doctor_id}', [UnavailabilityController::class, 'paginateDoctorUnavailabilities'])

@@ -20,14 +20,15 @@ class SchedulingRepository extends Repository implements SchedulingRepositoryInt
     {
         return WeekDay::all();
     }
-    public function paginateDoctorsWorkSchedules(bool $withExpired = false, int $perPage = 10)
+    public function paginateDoctorsWorkSchedules(bool $withExpired = false, bool $withUnactiveDoctors = false, int $perPage = 10)
     {
         return WorkSchedule::whereHas('doctorWorkSchedule')
             ->with([
                 'doctorWorkSchedule',
-                'doctorWorkSchedule.doctor:id,user_id',
+                'doctorWorkSchedule.doctor:id,user_id,is_active',
                 'doctorWorkSchedule.doctor.user:id,first_name,last_name',
             ])
+            ->when(!$withUnactiveDoctors, fn($q) => $q->whereHas('doctorWorkSchedule.doctor', fn($q2) => $q2->where('is_active', true)))
             ->where('type', WorkScheduleTypeEnum::DOCTOR->value)
             ->orderBy('created_at', 'desc')
             ->when(!$withExpired, function ($q) {

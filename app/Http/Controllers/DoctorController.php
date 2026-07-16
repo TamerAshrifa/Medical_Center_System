@@ -69,11 +69,19 @@ class DoctorController extends Controller
      * Everyone in the system is allowed to use this API.
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
      * @urlParam per_page integer required The number of doctors shown in each page. Defaults to 10. 
+     * @urlParam with_unactive boolean required Getting Doctors with unactive ones or only the actives?
      * @responseFile 200 storage/responses/DoctorController/index_200_OK.json
      */
-    public function index(int $per_page)
+    public function index(int $per_page, bool $with_unactive)
     {
-        $response = $this->doctorService->paginate($per_page, $this->currentUserRole());
+        $userRole = $this->currentUserRole();
+        if (
+            $userRole == UserRoleEnum::PATIENT ||
+            $userRole == UserRoleEnum::DOCTOR
+        )
+            $with_unactive = false;
+
+        $response = $this->doctorService->paginate($per_page, $with_unactive, $userRole);
 
         if ($response->data)
             $response->data = $this->resource($response->data, true);
@@ -109,7 +117,8 @@ class DoctorController extends Controller
      */
     public function search(string $search_word)
     {
-        $response = $this->doctorService->search($search_word);
+        $isSearcherAdmin = $this->currentUserRole() == UserRoleEnum::ADMIN;
+        $response = $this->doctorService->search($search_word, $isSearcherAdmin);
 
         if ($response->data)
             $response->data = $this->resource($response->data, true);
@@ -156,6 +165,35 @@ class DoctorController extends Controller
             return $this->jsonResponse($response);
 
         return response()->noContent(204);
+    }
+
+    /**
+     * Deactivate a Doctor
+     * 
+     * ###For: Web
+     * Only admins are allowed to use this API.
+     * @urlParam id integer required The ID of doctor
+     */
+    public function deactivate(int $id)
+    {
+        $response = $this->doctorService->deactivate($id);
+
+        return $this->jsonResponse($response);
+    }
+
+    /**
+     * Activate a Doctor
+     * 
+     * ###For: Web
+     * Only admins are allowed to use this API.
+     * @urlParam id integer required The ID of doctor
+     * @urlParam room_id integer required The ID of room to assign the doctor to
+     */
+    public function activate(int $id, bool $room_id)
+    {
+        $response = $this->doctorService->activate($id, $room_id);
+
+        return $this->jsonResponse($response);
     }
 
 }

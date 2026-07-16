@@ -70,4 +70,33 @@ class AdminService extends Service
         );
     }
 
+    public function activate(int $id): Response
+    {
+        $wasActivated = $this->adminRepository->activate($id);
+        if (!$wasActivated) {
+            return new Response(
+                false,
+                Response::messageToArray('Admin wasn\'t activated successfully, please try again'),
+                null,
+                500
+            );
+        }
+
+        return new Response(
+            true,
+            Response::messageToArray('Admin was activated successfully'),
+        );
+    }
+
+
+    public function monthlyReport(string $dateOfMonth): Response
+    {
+        return new Response(
+            true,
+            null,
+            $this->adminRepository->monthlyReport($dateOfMonth),
+        );
+    }
+
+
 }

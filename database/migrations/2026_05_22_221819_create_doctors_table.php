@@ -10,8 +10,9 @@ return new class extends Migration {
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('room_id')->constrained()->restrictOnDelete();
+            $table->foreignId('room_id')->nullable()->constrained()->restrictOnDelete();
             $table->integer('appointment_duration')->unsigned();
+            $table->boolean('is_active')->default(true);
             $table->foreignId('added_by_admin_id')->constrained('admins')->restrictOnDelete();
             $table->timestamps();
         });

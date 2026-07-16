@@ -13,7 +13,7 @@ use App\Models\WorkSchedule;
 interface SchedulingRepositoryInterface extends RepositoryInterface
 {
     public function allWeekDays();
-    public function paginateDoctorsWorkSchedules(bool $withExpired = false, int $perPage = 10);
+    public function paginateDoctorsWorkSchedules(bool $withExpired = false, bool $withUnactiveDoctors = false, int $perPage = 10);
     public function paginateDoctorWorkSchedules(int $doctorId, bool $withExpired = false, int $perPage = 10);
     public function paginateMedicalCenterWorkSchedules(bool $withExpired = false, int $perPage = 10);
     public function allMedicalCenterWorkSchedules(bool $withExpired = false, bool $withMedicalCenterWorkSchedule = false, bool $withDayWorkTimes = false);

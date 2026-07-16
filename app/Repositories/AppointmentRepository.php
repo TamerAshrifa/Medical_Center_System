@@ -78,7 +78,7 @@ class AppointmentRepository extends Repository implements AppointmentRepositoryI
             $status != AppointmentStatusEnum::ATTENDED
         )
             $updateArray = array_merge($updateArray, [
-                'active_booking_key' => null,
+                'booking_key' => null,
             ]);
 
         return $this->find(true, false, false, $id)->update($updateArray) > 0;
@@ -86,7 +86,7 @@ class AppointmentRepository extends Repository implements AppointmentRepositoryI
     public function create(AppointmentDTO $dto): Appointment
     {
         return Appointment::create(array_merge($dto->toArray(), [
-            'active_booking_key' => $dto->doctor_id . ' - ' . $dto->datetime,
+            'booking_key' => $dto->doctor_id . ' - ' . $dto->datetime,
         ]));
     }
     public function exists(int $doctorId, string $datetime, AppointmentStatusEnum $status): bool
@@ -96,12 +96,10 @@ class AppointmentRepository extends Repository implements AppointmentRepositoryI
             ->where('status', $status->value)
             ->exists();
     }
-
     public function isAttended(int $id): bool
     {
         return Appointment::where('id', $id)->whereHas('visit')->exists();
     }
-
     public function getBookedAppointmentsOfDoctorInDate(string $dateOfDay, int $doctorId)
     {
         return Appointment::query()
@@ -114,7 +112,6 @@ class AppointmentRepository extends Repository implements AppointmentRepositoryI
             ])
             ->get('datetime');
     }
-
     public function allPendingAppointmentsEmailsInDateRange(string $startDate, string $endDate)
     {
         return Appointment::query()
@@ -126,7 +123,6 @@ class AppointmentRepository extends Repository implements AppointmentRepositoryI
             ->distinct()
             ->pluck('users.email');
     }
-
     public function cancelByMedicalCenterAllPendingAppointmentsEmailsInDateRange(string $startDate, string $endDate)
     {
         return Appointment::query()
@@ -135,10 +131,9 @@ class AppointmentRepository extends Repository implements AppointmentRepositoryI
             ->whereDate('datetime', '<=', $endDate)
             ->update([
                 'status' => AppointmentStatusEnum::CANCELLED_BY_MEDICAL_CENTER->value,
-                'active_booking_key' => null,
+                'booking_key' => null,
             ]);
     }
-
     public function allDoctorPendingAppointmentsEmailsInDateRange(string $startDate, string $endDate, int $doctorId)
     {
         return Appointment::query()
@@ -151,7 +146,6 @@ class AppointmentRepository extends Repository implements AppointmentRepositoryI
             ->distinct()
             ->pluck('users.email');
     }
-
     public function cancelByDoctorAllDoctorPendingAppointmentsEmailsInDateRange(
         string $startDate,
         string $endDate,
@@ -164,7 +158,7 @@ class AppointmentRepository extends Repository implements AppointmentRepositoryI
             ->whereDate('datetime', '<=', $endDate)
             ->update([
                 'status' => AppointmentStatusEnum::CANCELLED_BY_DOCTOR->value,
-                'active_booking_key' => null,
+                'booking_key' => null,
             ]);
     }
     public function doctorAppointmentDuration(int $doctorId, bool $failIfDoctorNotExists = true): int

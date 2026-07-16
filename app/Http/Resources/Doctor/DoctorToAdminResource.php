@@ -19,6 +19,7 @@ class DoctorToAdminResource extends JsonResource
             'user_id' => $this->user_id,
             'user_fullname' => $this->user->first_name . ' ' . $this->user->last_name,
             'appointment_duration' => $this->appointment_duration,
+            'is_active' => $this->is_active,
             'room_id' => $this->room_id,
             'room_name' => $this->room->name,
             'added_by_admin_id' => $this->added_by_admin_id,

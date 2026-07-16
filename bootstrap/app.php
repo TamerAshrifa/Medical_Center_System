@@ -31,6 +31,7 @@ use App\Http\Middleware\ShowVisitMiddleware;
 use App\Http\Middleware\StoreMedicalRecordAccessMiddleware;
 use App\Http\Middleware\StorePatientMiddleware;
 use App\Http\Middleware\StoreTransferMiddleware;
+use App\Http\Middleware\StoreUnavailabilityMiddleware;
 use App\Http\Middleware\UpdateDoctorMiddleware;
 use App\Http\Middleware\UpdateDoctorSpecialityMiddleware;
 use App\Http\Middleware\UpdatePatientMiddleware;
@@ -98,6 +99,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'UpdateDoctorSpecialityMiddleware' => UpdateDoctorSpecialityMiddleware::class,
             'ShowPatientMiddleware' => ShowPatientMiddleware::class,
             'UpdatePatientMiddleware' => UpdatePatientMiddleware::class,
+            'StoreUnavailabilityMiddleware' => StoreUnavailabilityMiddleware::class,
         ]);
 
     })
@@ -140,7 +142,6 @@ return Application::configure(basePath: dirname(__DIR__))
                 'message' => Response::messageToArray('HTTP request method not allowed, ' . $e->getMessage()),
             ], 405);
         });
-
         $exceptions->render(function (ModelNotFoundException $e, $request) {
             return response()->json([
                 'did_succeed' => false,
@@ -163,7 +164,7 @@ return Application::configure(basePath: dirname(__DIR__))
         });
 
         $exceptions->render(function (UniqueConstraintViolationException $e, $request) {
-            if (str_contains($e->errorInfo[2], 'appointments_active_booking_key_unique'))
+            if (str_contains($e->errorInfo[2], 'appointments_booking_key_unique'))
                 return response()->json([
                     'did_succeed' => false,
                     'message' => Response::messageToArray('Sorry, this appointment time was already booked, please try booking at another time'),

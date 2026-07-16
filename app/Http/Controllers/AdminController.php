@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminController\MonthlyReportRequest;
 use App\Http\Resources\Admin\AdminToAdminResource;
 use App\Services\AdminService;
 use Illuminate\Support\Facades\Auth;
@@ -56,6 +57,34 @@ class AdminController extends Controller
     public function destroy(int $id)
     {
         $response = $this->adminService->unactive($id);
+
+        return $this->jsonResponse($response);
+    }
+
+    /**
+     * Activate an admin
+     * 
+     * ###For: Web
+     * Only admins are allowed to use this API
+     * @urlParam id integer required The ID number of admin to activate
+     */
+    public function activate(int $id)
+    {
+        $response = $this->adminService->activate($id);
+
+        return $this->jsonResponse($response);
+    }
+
+    /**
+     * Monthly report of the medical center
+     * 
+     * ###For: Web
+     * Only admins are allowed to use this API. 
+     * date_of_month is the date of the month for which to generate the report
+     */
+    public function monthlyReport(MonthlyReportRequest $request)
+    {
+        $response = $this->adminService->monthlyReport($request->validated()['date_of_month']);
 
         return $this->jsonResponse($response);
     }

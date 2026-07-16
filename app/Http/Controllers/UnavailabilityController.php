@@ -47,14 +47,20 @@ class UnavailabilityController extends Controller
      * Only admins and doctors are allowed to use this API.
      * Creating a new unavailability by a doctor or admin, the doctor can create his own unavailability, 
      * and the admin can create unavailability for medical center.
+     * @urlParam maker_id integer required The ID number, Doctor App assigns the ID of the doctor (The doctor_id 
+     * not the user_id of the doctor!!). For the Web App, if the admin is creating an unavailability for the 
+     * Medical Center, then the app assigns the ID of the admin (The admin_id not the user_id of the admin!!), 
+     * and for if the admin is creating an unavailability for a doctor, then the app assigns the ID of that doctor 
+     * (The doctor_id not the user_id of the doctor!!).
      */
-    public function store(StoreUnavailabilityRequest $request)
+    public function store(StoreUnavailabilityRequest $request, int $maker_id)
     {
         $user = Auth::user();
 
         $validatedData = array_merge($request->validated(), [
-            'type' => $user->role == UserRoleEnum::ADMIN ?
-                UnavailabilityTypeEnum::MEDICAL_CENTER : UnavailabilityTypeEnum::DOCTOR,
+            'type' => ($user->role == UserRoleEnum::ADMIN && $user->admin->id == $maker_id) ?
+                UnavailabilityTypeEnum::MEDICAL_CENTER :
+                UnavailabilityTypeEnum::DOCTOR,
         ]);
 
         $cases = UnavailabilityReasonTypeEnum::cases();
@@ -66,14 +72,15 @@ class UnavailabilityController extends Controller
 
         $response = $this->unavailabilityService->create(
             UnavailabilityDTO::fromRequest($validatedData),
-            $user->role === UserRoleEnum::ADMIN ?
-            $user->admin->id : $user->doctor->id
+            $maker_id
         );
 
         if ($response->data)
             $response->data = $this->resource($response->data, false);
         return $this->jsonResponse($response);
     }
+
+
 
     /**
      * Paginate unavailabilities of all doctors

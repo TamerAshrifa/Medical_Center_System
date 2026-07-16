@@ -28,9 +28,9 @@ class SchedulingService extends Service
             $this->schedulingRepository->allWeekDays()
         );
     }
-    public function paginateDoctorsWorkSchedules(bool $withExpired, int $perPage = 10): Response
+    public function paginateDoctorsWorkSchedules(bool $withExpired, bool $withUnactiveDoctors, int $perPage = 10): Response
     {
-        $records = $this->schedulingRepository->paginateDoctorsWorkSchedules($withExpired, $perPage);
+        $records = $this->schedulingRepository->paginateDoctorsWorkSchedules($withExpired, $withUnactiveDoctors, $perPage);
         return new Response(
             true,
             $this->paginationMessage($records),

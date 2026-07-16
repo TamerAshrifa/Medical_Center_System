@@ -22,7 +22,7 @@ class AppointmentSeeder extends Seeder
                 'patient_id' => $i,
                 'doctor_id' => 1,
                 'datetime' => $datetime,
-                'active_booking_key' => 1 . ' - ' . $datetime,
+                'booking_key' => 1 . ' - ' . $datetime,
                 'status' => $i <= 2 ?
                     AppointmentStatusEnum::ATTENDED->value :
                     AppointmentStatusEnum::PENDING->value,

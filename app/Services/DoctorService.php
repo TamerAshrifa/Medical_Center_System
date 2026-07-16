@@ -6,6 +6,8 @@ use App\DTOs\Doctor\DoctorDTO;
 use App\DTOs\Doctor\DoctorDTOUpdate;
 use App\Enums\UserRoleEnum;
 use App\GeneralClasses\Response;
+use App\Models\Doctor;
+use App\Models\Room;
 use App\Repositories\Interfaces\DoctorRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use DB;
@@ -33,11 +35,11 @@ class DoctorService extends Service
                 break;
         }
     }
-    public function paginate(int $perPage = 10, UserRoleEnum $currentUserRole): Response
+    public function paginate(int $perPage = 10, bool $withUnactive = false, UserRoleEnum $currentUserRole): Response
     {
         $isWithRoom = $isWithAdderAdmin = false;
         $this->fillIncludedEntities($isWithRoom, $isWithAdderAdmin, $currentUserRole);
-        $records = $this->doctorRepository->paginate($perPage, $isWithRoom, $isWithAdderAdmin);
+        $records = $this->doctorRepository->paginate($perPage, $withUnactive, $isWithRoom, $isWithAdderAdmin);
 
         return new Response(
             true,
@@ -121,12 +123,50 @@ class DoctorService extends Service
 
         return new Response(true, null, null, 204);
     }
-    public function search(string $searchWord): Response
+    public function search(string $searchWord, bool $isSearcherAdmin): Response
     {
         return new Response(
             true,
             null,
-            $this->doctorRepository->search($searchWord),
+            $this->doctorRepository->search($searchWord, $isSearcherAdmin),
         );
     }
+
+    public function deactivate(int $id): Response
+    {
+        return $this->doctorRepository->deactivate($id) ?
+            new Response(
+                true,
+                Response::messageToArray('Doctor deactivated successfully'),
+            ) :
+            new Response(
+                false,
+                Response::messageToArray('Failed to deactivate the doctor, please try again'),
+                null,
+                500
+            );
+    }
+    public function activate(int $id, $roomId): Response
+    {
+        if (!Room::findOrFail($roomId)->doctor)
+            new Response(
+                false,
+                Response::messageToArray('Sorry, the room is already occupied by another doctor, please select another room'),
+                null,
+                409
+            );
+
+        return $this->doctorRepository->activate($id, $roomId) ?
+            new Response(
+                true,
+                Response::messageToArray('Doctor activated successfully'),
+            ) :
+            new Response(
+                false,
+                Response::messageToArray('Failed to activate the doctor, please try again'),
+                null,
+                500
+            );
+    }
+
 }

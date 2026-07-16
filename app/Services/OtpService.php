@@ -129,8 +129,10 @@ class OtpService extends Service
         }
 
         if (
-            $user->role == UserRoleEnum::ADMIN &&
-            !$user->admin->is_active
+            ($user->role == UserRoleEnum::ADMIN &&
+                !$user->admin->is_active) ||
+            ($user->role == UserRoleEnum::DOCTOR &&
+                !$user->doctor->is_active)
         )
             return new Response(
                 false,

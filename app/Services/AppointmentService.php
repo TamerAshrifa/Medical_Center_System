@@ -8,6 +8,7 @@ use App\DTOs\Visit\VisitDTO;
 use App\Enums\AppointmentStatusEnum;
 use App\GeneralClasses\Response;
 use App\Models\Appointment;
+use App\Models\Doctor;
 use App\Repositories\Interfaces\AppointmentRepositoryInterface;
 use App\Repositories\Interfaces\UnavailabilityRepositoryInterface;
 use App\Repositories\SchedulingRepository;
@@ -89,7 +90,6 @@ class AppointmentService extends Service
                 409
             );
         }
-
 
         $availableTimesResponse = $this->allAvailableTimesToBook($dto->datetime, $dto->doctor_id);
         if (!$availableTimesResponse->did_succeed)
@@ -196,6 +196,12 @@ class AppointmentService extends Service
     }
     public function allAvailableTimesToBook(string $dateOfDay, int $doctorId): Response
     {
+        if (!Doctor::where('id', $doctorId)->valueOrFail('is_active'))
+            return new Response(
+                false,
+                Response::messageToArray('Sorry, doctor is no more available in the medical center'),
+            );
+
         $dateOfDay = Carbon::parse($dateOfDay)->format('Y-m-d');
         $dayWorkTimes = $this->schedulingRepository->allAvailableTimesToBook($dateOfDay, $doctorId, false);
 
