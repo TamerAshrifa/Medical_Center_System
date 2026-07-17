@@ -45,16 +45,16 @@ endpoints:
       datetime:
         custom: []
         name: datetime
-        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-17 02:41</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-17 16:42</code>.'
         required: true
-        example: '2107-08-15'
+        example: '2107-08-16'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      datetime: '2107-08-15'
+      datetime: '2107-08-16'
     fileParameters: []
     responses: []
     responseFields: []
@@ -107,16 +107,16 @@ endpoints:
       datetime:
         custom: []
         name: datetime
-        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-17 02:41</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-17 16:42</code>.'
         required: true
-        example: '2107-08-15'
+        example: '2107-08-16'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      datetime: '2107-08-15'
+      datetime: '2107-08-16'
     fileParameters: []
     responses: []
     responseFields: []

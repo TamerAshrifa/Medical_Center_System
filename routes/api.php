@@ -92,7 +92,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('', [DoctorSpecialityController::class, 'store'])->middleware('CheckDoctor');
         Route::get('{per_page}', [DoctorSpecialityController::class, 'index'])->middleware('CheckAdmin');
         Route::get('IFD/{doctor_id}', [DoctorSpecialityController::class, 'indexForDoctor']);
-        Route::get('IFS/{speciality_id}', [DoctorSpecialityController::class, 'indexForSpeciality']);
+        Route::get('IFS/{speciality_id}/{active_doctors_only}', [DoctorSpecialityController::class, 'indexForSpeciality']);
         Route::get('s/{id}', [DoctorSpecialityController::class, 'show']);
         Route::put('{id}', [DoctorSpecialityController::class, 'update'])->middleware(['CheckDoctor', 'UpdateDoctorSpecialityMiddleware']);
         Route::delete('{id}', [DoctorSpecialityController::class, 'destroy'])->middleware(['CheckDoctor', 'DeleteDoctorSpecialityMiddleware']);

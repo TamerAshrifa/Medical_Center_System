@@ -54,7 +54,7 @@ endpoints:
         name: view_experience
         description: ''
         required: true
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -63,7 +63,7 @@ endpoints:
     cleanBodyParameters:
       speciality_id: 17
       experience_starting_date: '2026-07-17'
-      view_experience: true
+      view_experience: false
     fileParameters: []
     responses: []
     responseFields: []
@@ -208,7 +208,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/dSpecialities/IFS/{speciality_id}'
+    uri: 'api/dSpecialities/IFS/{speciality_id}/{active_doctors_only}'
     metadata:
       custom: []
       groupName: 'Doctor_Speciality APIs'
@@ -230,17 +230,6 @@ endpoints:
       speciality_id:
         custom: []
         name: speciality_id
-        description: 'The ID of the speciality.'
-        required: true
-        example: consequatur
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-      specialityId:
-        custom: []
-        name: specialityId
         description: 'min:1'
         required: true
         example: 17
@@ -249,9 +238,20 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      active_doctors_only:
+        custom: []
+        name: active_doctors_only
+        description: 'Boolean Value, If true, only active doctors would be shown, otherwise all doctors would be shown. This parameter is only for admins, for Doctors and Patients APPs, The App should always assign false without asking the user.'
+        required: true
+        example: consequatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanUrlParameters:
-      speciality_id: consequatur
-      specialityId: 17
+      speciality_id: 17
+      active_doctors_only: consequatur
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -389,7 +389,7 @@ endpoints:
         name: view_experience
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -397,7 +397,7 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       experience_starting_date: '2026-07-17'
-      view_experience: true
+      view_experience: false
     fileParameters: []
     responses: []
     responseFields: []

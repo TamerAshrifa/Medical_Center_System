@@ -32,12 +32,12 @@ class DoctorSpecialityService extends Service
             $this->doctorSpecialityRepository->allForDoctor($doctorId)
         );
     }
-    public function allForSpeciality(int $specialityId): Response
+    public function allForSpeciality(int $specialityId, bool $activeDoctorsOnly): Response
     {
         return new Response(
             true,
             null,
-            $this->doctorSpecialityRepository->allForSpeciality($specialityId)
+            $this->doctorSpecialityRepository->allForSpeciality($specialityId, $activeDoctorsOnly)
         );
     }
     public function create(DoctorSpecialityDTO $dto): Response

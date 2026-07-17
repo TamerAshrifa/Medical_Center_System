@@ -27,6 +27,6 @@ interface DoctorSpecialityRepositoryInterface extends RepositoryInterface
 
     public function allForDoctor(int $doctorId);
 
-    public function allForSpeciality(int $specialityId);
+    public function allForSpeciality(int $specialityId, bool $activeDoctorsOnly);
 
 }

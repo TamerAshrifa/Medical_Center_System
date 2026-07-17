@@ -68,9 +68,14 @@ class DoctorSpecialityRepository extends Repository implements DoctorSpecialityR
             ->where('doctor_id', $doctorId)
             ->get();
     }
-    public function allForSpeciality(int $specialityId)
+    public function allForSpeciality(int $specialityId, bool $activeDoctorsOnly)
     {
+
         return DoctorSpeciality::query()
+            ->when($activeDoctorsOnly, fn($q) => $q->whereHas(
+                'doctor',
+                fn($q) => $q->where('is_active', true)
+            ))
             ->with([
                 'doctor:id,user_id',
                 'doctor.user:id,first_name,last_name',

@@ -116,11 +116,14 @@ class DoctorSpecialityController extends Controller
      * ###For: Mobile(Patient, Doctor), Web
      * Everyone in the system is allowed to use this API.
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
-     * @urlParam specialityId integer required min:1 
+     * @urlParam speciality_id integer required min:1 
+     * @urlParam active_doctors_only required Boolean Value, If true, only active doctors would be shown, otherwise all doctors would be shown. This parameter is only for admins, for Doctors and Patients APPs, The App should always assign false without asking the user.
      */
-    public function indexForSpeciality(int $speciality_id)
+    public function indexForSpeciality(int $speciality_id, bool $active_doctors_only)
     {
-        $response = $this->doctorSpecialityService->allForSpeciality($speciality_id);
+        if ($this->currentUserRole() != UserRoleEnum::ADMIN)
+            $active_doctors_only = true;
+        $response = $this->doctorSpecialityService->allForSpeciality($speciality_id, $active_doctors_only);
 
         if ($response->data)
             $response->data = $this->resource($response->data, true);

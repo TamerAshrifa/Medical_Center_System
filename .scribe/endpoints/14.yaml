@@ -51,7 +51,7 @@ endpoints:
         name: from_date
         description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-07-17 00:00:00</code>.'
         required: true
-        example: '2107-08-15'
+        example: '2107-08-16'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -62,7 +62,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>from_date</code>.'
         required: true
-        example: '2107-08-15'
+        example: '2107-08-16'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -73,7 +73,7 @@ endpoints:
         name: reason_type
         description: ''
         required: true
-        example: other
+        example: vacation
         type: string
         enumValues:
           - vacation
@@ -93,9 +93,9 @@ endpoints:
         nullable: true
         deprecated: false
     cleanBodyParameters:
-      from_date: '2107-08-15'
-      to_date: '2107-08-15'
-      reason_type: other
+      from_date: '2107-08-16'
+      to_date: '2107-08-16'
+      reason_type: vacation
       justification: consequatur
     fileParameters: []
     responses: []
