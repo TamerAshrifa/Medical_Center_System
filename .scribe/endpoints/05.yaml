@@ -167,7 +167,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/doctors/{per_page}'
+    uri: 'api/doctors/{per_page}/{with_unactive}'
     metadata:
       custom: []
       groupName: 'Doctor APIs'
@@ -197,8 +197,20 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
+      with_unactive:
+        custom: []
+        name: with_unactive
+        description: 'boolean required Getting Doctors with unactive ones or only the actives?'
+        required: false
+        example: consequatur
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
     cleanUrlParameters:
       per_page: 17
+      with_unactive: consequatur
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -818,6 +830,116 @@ endpoints:
           }
         headers: []
         description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/doctors/d/{id}'
+    metadata:
+      custom: []
+      groupName: 'Doctor APIs'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Deactivate a Doctor'
+      description: |-
+        ###For: Web
+        Only admins are allowed to use this API.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of doctor'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 17
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/doctors/a/{id}/{room_id}'
+    metadata:
+      custom: []
+      groupName: 'Doctor APIs'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Activate a Doctor'
+      description: |-
+        ###For: Web
+        Only admins are allowed to use this API.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of doctor'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      room_id:
+        custom: []
+        name: room_id
+        description: 'The ID of room to assign the doctor to'
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 17
+      room_id: 17
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
     responseFields: []
     auth:
       - headers

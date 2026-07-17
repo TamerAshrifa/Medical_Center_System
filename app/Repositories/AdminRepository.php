@@ -43,25 +43,27 @@ class AdminRepository extends Repository implements AdminRepositoryInterface
     }
     public function monthlyReport(string $dateOfMonth): array
     {
-        $dateOfMonth = Carbon::parse($dateOfMonth);
-        $start = $dateOfMonth->startOfMonth();
-        $end = $dateOfMonth->endOfMonth();
+        $dDateOfMonth = Carbon::parse($dateOfMonth);
+        $dDateOfMonth->startOfMonth();
+        $start = $dDateOfMonth->copy();
+        $dDateOfMonth->endOfMonth();
+        $end = $dDateOfMonth->copy();
 
         return [
             'new_patients_count' => Patient::whereBetween('created_at', [$start, $end])->count(),
             'appointments_count' => $appointmentsCount = Appointment::whereBetween('datetime', [$start, $end])->count(),
             'visits_count' => $visitsCount = Visit::whereBetween('actual_time', [$start, $end])->count(),
-            'conversion_rate' => $appointmentsCount > 0 ? ($visitsCount / $appointmentsCount) * 100 : 0,
-            'peak_hours' => Appointment::selectRaw('HOUR(datetime) as hour, COUNT(*) as total')
+            'visits_to_appointments_rate' => $appointmentsCount > 0 ? ($visitsCount / $appointmentsCount) * 100 . '%' : '0%',
+            'peak_hours' => Appointment::selectRaw('HOUR(datetime) as hour, COUNT(*) as total_appointments_at_that_hour')
                 ->whereBetween('datetime', [$start, $end])
                 ->groupBy('hour')
-                ->orderByDesc('total')
+                ->orderByDesc('total_appointments_at_that_hour')
                 ->limit(3)
                 ->get(),
-            'busy_days' => Appointment::selectRaw('DATE(datetime) as day, COUNT(*) as total')
+            'busy_days' => Appointment::selectRaw('DATE(datetime) as day, COUNT(*) as total_appointments_at_that_day')
                 ->whereBetween('datetime', [$start, $end])
                 ->groupBy('day')
-                ->orderByDesc('total')
+                ->orderByDesc('total_appointments_at_that_day')
                 ->limit(3)
                 ->get(),
             'transfers_count' => Transfer::whereBetween('created_at', [$start, $end])->count(),

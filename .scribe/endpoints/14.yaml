@@ -5,7 +5,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/unavailability
+    uri: api/unavailability/maker_id
     metadata:
       custom: []
       groupName: 'Unavailability APIs'
@@ -24,17 +24,34 @@ endpoints:
       Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
+    urlParameters:
+      maker_id:
+        custom: []
+        name: maker_id
+        description: |-
+          The ID number, Doctor App assigns the ID of the doctor (The doctor_id
+          not the user_id of the doctor!!). For the Web App, if the admin is creating an unavailability for the
+          Medical Center, then the app assigns the ID of the admin (The admin_id not the user_id of the admin!!),
+          and for if the admin is creating an unavailability for a doctor, then the app assigns the ID of that doctor
+          (The doctor_id not the user_id of the doctor!!).
+        required: true
+        example: 17
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      maker_id: 17
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
       from_date:
         custom: []
         name: from_date
-        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-07-05 00:00:00</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-07-17 00:00:00</code>.'
         required: true
-        example: '2107-08-04'
+        example: '2107-08-15'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -45,7 +62,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>from_date</code>.'
         required: true
-        example: '2107-08-04'
+        example: '2107-08-15'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -56,7 +73,7 @@ endpoints:
         name: reason_type
         description: ''
         required: true
-        example: vacation
+        example: other
         type: string
         enumValues:
           - vacation
@@ -76,9 +93,9 @@ endpoints:
         nullable: true
         deprecated: false
     cleanBodyParameters:
-      from_date: '2107-08-04'
-      to_date: '2107-08-04'
-      reason_type: vacation
+      from_date: '2107-08-15'
+      to_date: '2107-08-15'
+      reason_type: other
       justification: consequatur
     fileParameters: []
     responses: []

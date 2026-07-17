@@ -7,6 +7,9 @@ use App\Http\Resources\Admin\AdminToAdminResource;
 use App\Services\AdminService;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @group Admin APIs
+ */
 class AdminController extends Controller
 {
     public function __construct(

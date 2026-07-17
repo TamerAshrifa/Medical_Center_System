@@ -27,14 +27,13 @@ class MonthlyReportRequest extends FormRequest
      */
     public function rules(): array
     {
-        $earliest_month = WorkSchedule::query()
+        $earliest_month = Carbon::parse(WorkSchedule::query()
             ->where('type', WorkScheduleTypeEnum::MEDICAL_CENTER->value)
             ->orderBy('effective_from_date')
             ->firstOrFail()
-            ->value('effective_from_date');
+            ->value('effective_from_date'))->format('Y-m');
         // $today = Carbon::now()->subMonth()->format('Y-m');
         $late_month = Carbon::now()->format('Y-m');
-
         return [
             'date_of_month' => [
                 'required',

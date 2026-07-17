@@ -45,7 +45,7 @@ endpoints:
         name: experience_starting_date
         description: 'Must be a valid date in the format <code>Y-m-d</code>.'
         required: true
-        example: '2026-07-05'
+        example: '2026-07-17'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -56,7 +56,7 @@ endpoints:
         name: view_experience
         description: ''
         required: true
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -64,8 +64,8 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       speciality_id: 17
-      experience_starting_date: '2026-07-05'
-      view_experience: false
+      experience_starting_date: '2026-07-17'
+      view_experience: true
     fileParameters: []
     responses: []
     responseFields: []
@@ -380,7 +380,7 @@ endpoints:
         name: experience_starting_date
         description: 'Must be a valid date in the format <code>Y-m-d</code>.'
         required: false
-        example: '2026-07-05'
+        example: '2026-07-17'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -391,15 +391,15 @@ endpoints:
         name: view_experience
         description: ''
         required: false
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      experience_starting_date: '2026-07-05'
-      view_experience: false
+      experience_starting_date: '2026-07-17'
+      view_experience: true
     fileParameters: []
     responses: []
     responseFields: []
