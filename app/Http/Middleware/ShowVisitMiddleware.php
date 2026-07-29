@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Enums\UserRoleEnum;
 use App\Models\Visit;
-use App\Repositories\MedicalRecordAccessRepository;
+use App\Repositories\Interfaces\MedicalRecordAccessRepositoryInterface;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ShowVisitMiddleware
 {
+    public function __construct(
+        protected MedicalRecordAccessRepositoryInterface $medicalRecordAccessRepository,
+    ) {
+    }
+
     /**
      * Handle an incoming request.
      *
@@ -33,7 +38,7 @@ class ShowVisitMiddleware
 
         if (
             $user->role == UserRoleEnum::DOCTOR &&
-            !((new MedicalRecordAccessRepository())->hasAccess($request->route('id'), $user->doctor->id))
+            !($this->medicalRecordAccessRepository->hasAccess($request->route('id'), $user->doctor->id))
         )
             return response()->json([
                 'did_succeed' => false,

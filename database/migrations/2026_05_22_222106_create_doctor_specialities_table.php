@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('doctor_id')->constrained()->cascadeOnDelete();
             $table->foreignId('speciality_id')->constrained()->restrictOnDelete();
+            $table->unique(['doctor_id', 'speciality_id']);
             $table->date('experience_starting_date');
             $table->boolean('view_experience');
             $table->timestamps();

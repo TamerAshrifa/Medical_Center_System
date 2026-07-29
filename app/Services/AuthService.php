@@ -20,6 +20,7 @@ class AuthService extends Service
         protected OtpService $otpService,
         protected ResetPasswordTokenRepositoryInterface $resetPasswordTokenRepo
     ) {
+        parent::__construct();
     }
     public function register(UserDTO $dto): Response
     {

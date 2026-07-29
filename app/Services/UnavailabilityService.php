@@ -23,29 +23,30 @@ class UnavailabilityService extends Service
         protected DoctorRepositoryInterface $doctorRepository,
         protected AppointmentRepositoryInterface $appointmentRepository,
     ) {
+        parent::__construct();
     }
 
-    public function paginateDoctorsUnavailabilities(bool $withPassed, int $perPage = 10): Response
+    public function paginateDoctorsUnavailabilities(bool $withPassed): Response
     {
-        $records = $this->unavailabilityRepository->paginateDoctorsUnavailabilities($withPassed, $perPage);
+        $records = $this->unavailabilityRepository->paginateDoctorsUnavailabilities($withPassed, $this->perPage);
         return new Response(
             true,
             $this->paginationMessage($records),
             $records->items()
         );
     }
-    public function paginateDoctorUnavailabilities(bool $withPassed = false, int $perPage = 10, $doctorId): Response
+    public function paginateDoctorUnavailabilities(bool $withPassed = false, $doctorId): Response
     {
-        $records = $this->unavailabilityRepository->paginateDoctorUnavailabilities($withPassed, $perPage, $doctorId);
+        $records = $this->unavailabilityRepository->paginateDoctorUnavailabilities($withPassed, $this->perPage, $doctorId);
         return new Response(
             true,
             $this->paginationMessage($records),
             $records->items()
         );
     }
-    public function paginateMedicalUnavailabilities(bool $withPassed = false, int $perPage = 10): Response
+    public function paginateMedicalUnavailabilities(bool $withPassed = false): Response
     {
-        $records = $this->unavailabilityRepository->paginateMedicalUnavailabilities($withPassed, $perPage);
+        $records = $this->unavailabilityRepository->paginateMedicalUnavailabilities($withPassed, $this->perPage);
 
         return new Response(
             true,
@@ -97,26 +98,19 @@ class UnavailabilityService extends Service
             }
             $emailsToApologizeTo = $this->appointmentRepository->allPendingAppointmentsEmailsInDateRange($unavailabilityStartDate, $unavailabilityEndDate);
         }
-        try {
-            DB::transaction(function () use ($dto, $makerId, $unavailabilityStartDate, $unavailabilityEndDate) {
-                $unavailability = $this->unavailabilityRepository->createUnavailability($dto);
 
-                if ($dto->type == UnavailabilityTypeEnum::DOCTOR) {
-                    $this->unavailabilityRepository->createDoctorUnavailability($unavailability->id, $makerId);
-                    $this->appointmentRepository->cancelByDoctorAllDoctorPendingAppointmentsEmailsInDateRange($unavailabilityStartDate, $unavailabilityEndDate, $makerId);
-                } else {
-                    $this->unavailabilityRepository->createMedicalCenterUnavailability($unavailability->id, $makerId);
-                    $this->appointmentRepository->cancelByMedicalCenterAllPendingAppointmentsEmailsInDateRange($unavailabilityStartDate, $unavailabilityEndDate);
-                }
-            });
-        } catch (\Exception $e) {
-            return new Response(
-                false,
-                Response::messageToArray($e->getMessage()),
-                null,
-                500
-            );
-        }
+        DB::transaction(function () use ($dto, $makerId, $unavailabilityStartDate, $unavailabilityEndDate) {
+            $unavailability = $this->unavailabilityRepository->createUnavailability($dto);
+
+            if ($dto->type == UnavailabilityTypeEnum::DOCTOR) {
+                $this->unavailabilityRepository->createDoctorUnavailability($unavailability->id, $makerId);
+                $this->appointmentRepository->cancelByDoctorAllDoctorPendingAppointmentsEmailsInDateRange($unavailabilityStartDate, $unavailabilityEndDate, $makerId);
+            } else {
+                $this->unavailabilityRepository->createMedicalCenterUnavailability($unavailability->id, $makerId);
+                $this->appointmentRepository->cancelByMedicalCenterAllPendingAppointmentsEmailsInDateRange($unavailabilityStartDate, $unavailabilityEndDate);
+            }
+        });
+
         if ($dto->type == UnavailabilityTypeEnum::DOCTOR)
             $this->sendEmailsByDoctor($emailsToApologizeTo, $unavailabilityStartDate, $unavailabilityEndDate, $makerId);
         else

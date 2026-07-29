@@ -12,6 +12,7 @@ class PatientComplaintService extends Service
     public function __construct(
         protected PatientComplaintRepositoryInterface $patientComplaintRepository,
     ) {
+        parent::__construct();
     }
     public function allPatientComplaints(int $patientId): Response
     {
@@ -21,9 +22,9 @@ class PatientComplaintService extends Service
             $this->patientComplaintRepository->allPatientComplaints($patientId),
         );
     }
-    public function paginate(int $perPage = 10, bool $withReviewed): Response
+    public function paginate(bool $withReviewed): Response
     {
-        $records = $this->patientComplaintRepository->paginate($perPage, $withReviewed);
+        $records = $this->patientComplaintRepository->paginate($this->perPage, $withReviewed);
         return new Response(
             true,
             $this->paginationMessage($records),

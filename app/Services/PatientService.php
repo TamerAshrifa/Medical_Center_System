@@ -18,11 +18,12 @@ class PatientService extends Service
         protected PatientRepositoryInterface $patientRepository,
         protected UserRepositoryInterface $userRepository,
     ) {
+        parent::__construct();
     }
 
-    public function paginate(int $perPage = 10): Response
+    public function paginate(): Response
     {
-        $records = $this->patientRepository->paginate($perPage);
+        $records = $this->patientRepository->paginate($this->perPage);
         return new Response(
             true,
             $this->paginationMessage($records),

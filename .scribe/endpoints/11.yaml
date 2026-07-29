@@ -66,7 +66,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/access/DA/{per_page}/{with_unactive}/{doctor_id}'
+    uri: 'api/access/DA/{with_unactive}/{doctor_id}'
     metadata:
       custom: []
       groupName: 'Medical Record Access APIs (Access Permission APIs)'
@@ -85,17 +85,6 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      per_page:
-        custom: []
-        name: per_page
-        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
       with_unactive:
         custom: []
         name: with_unactive
@@ -119,7 +108,6 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      per_page: 17
       with_unactive: 17
       doctor_id: 17
     queryParameters: []
@@ -149,7 +137,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/access/PA/{per_page}/{with_unactive}/{patient_id}'
+    uri: 'api/access/PA/{with_unactive}/{patient_id}'
     metadata:
       custom: []
       groupName: 'Medical Record Access APIs (Access Permission APIs)'
@@ -168,17 +156,6 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      per_page:
-        custom: []
-        name: per_page
-        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
       with_unactive:
         custom: []
         name: with_unactive
@@ -202,7 +179,6 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      per_page: 17
       with_unactive: 17
       patient_id: 17
     queryParameters: []
@@ -232,7 +208,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/access/VA/{per_page}/{with_unactive}/{visit_id}'
+    uri: 'api/access/VA/{with_unactive}/{visit_id}'
     metadata:
       custom: []
       groupName: 'Medical Record Access APIs (Access Permission APIs)'
@@ -251,17 +227,6 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      per_page:
-        custom: []
-        name: per_page
-        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
       with_unactive:
         custom: []
         name: with_unactive
@@ -285,7 +250,6 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      per_page: 17
       with_unactive: 17
       visit_id: 17
     queryParameters: []

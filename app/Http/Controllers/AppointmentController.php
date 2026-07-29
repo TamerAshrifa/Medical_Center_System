@@ -27,7 +27,7 @@ class AppointmentController extends Controller
     ) {
     }
 
-    private function validateStutus(?string $status): AppointmentStatusEnum|null
+    private function validateStatus(?string $status): AppointmentStatusEnum|null
     {
         if (!$status || $status == "")
             return null;
@@ -128,13 +128,12 @@ class AppointmentController extends Controller
      * Only admins are allowed to use this API
      * @urlParam status string required Status should be null or one of [pending - cancelled - cancelled_by_doctor - cancelled_by_medical_center - missed - attended]
      * @urlParam with_expired integer required Boolean value means does the admin want all of appointments to be showen even with expired ones or only non-expired appointments?
-     * @urlParam per_page integer required min:1 The number of items be shown in each page. Defaults to 10. 
      */
-    public function paginate(string $status = null, bool $with_expired = false, int $per_page = 10)
+    public function paginate(string $status = null, bool $with_expired = false)
     {
-        $status = $this->validateStutus($status);
+        $status = $this->validateStatus($status);
 
-        $response = $this->appointmentService->paginate($status, $with_expired, $per_page);
+        $response = $this->appointmentService->paginate($status, $with_expired);
         if ($response->data)
             $response->data = $this->resource($response->data, true);
         return $this->jsonResponse($response);
@@ -148,14 +147,13 @@ class AppointmentController extends Controller
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
      * @urlParam status string required Status should be null or one of [pending - cancelled - cancelled_by_doctor - cancelled_by_medical_center - missed - attended]
      * @urlParam with_expired integer required Boolean value means does the admin want all of appointments to be showen even with expired ones or only non-expired appointments?
-     * @urlParam per_page integer required min:1 The number of items be shown in each page. Defaults to 10. 
      * @urlParam doctor_id integer required min:1 The ID number of doctor to view it's appointments 
      */
-    public function paginateDoctorAppointments(string $status = null, bool $with_expired = false, int $per_page = 10, int $doctor_id)
+    public function paginateDoctorAppointments(string $status = null, bool $with_expired = false, int $doctor_id)
     {
-        $status = $this->validateStutus($status);
+        $status = $this->validateStatus($status);
 
-        $response = $this->appointmentService->paginateDoctorAppointments($status, $with_expired, $per_page, $doctor_id);
+        $response = $this->appointmentService->paginateDoctorAppointments($status, $with_expired, $doctor_id);
         if ($response->data)
             $response->data = $this->resource($response->data, true);
         return $this->jsonResponse($response);
@@ -169,14 +167,13 @@ class AppointmentController extends Controller
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
      * @urlParam status string required Status should be null or one of [pending - cancelled - cancelled_by_doctor - cancelled_by_medical_center - missed - attended]
      * @urlParam with_expired integer required Boolean value means does the admin want all of appointments to be showen even with expired ones or only non-expired appointments?
-     * @urlParam per_page integer required min:1 The number of items be shown in each page. Defaults to 10. 
      * @urlParam patient_id integer required min:1 The ID number of patient to view it's appointments 
      */
-    public function paginatePatientAppointments(string $status = null, bool $with_expired = false, int $per_page = 10, int $patient_id)
+    public function paginatePatientAppointments(string $status = null, bool $with_expired = false, int $patient_id)
     {
-        $status = $this->validateStutus($status);
+        $status = $this->validateStatus($status);
 
-        $response = $this->appointmentService->paginatePatientAppointments($status, $with_expired, $per_page, $patient_id);
+        $response = $this->appointmentService->paginatePatientAppointments($status, $with_expired, $patient_id);
         if ($response->data)
             $response->data = $this->resource($response->data, true);
         return $this->jsonResponse($response);

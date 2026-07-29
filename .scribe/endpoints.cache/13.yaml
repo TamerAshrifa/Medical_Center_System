@@ -45,16 +45,16 @@ endpoints:
       datetime:
         custom: []
         name: datetime
-        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-17 16:42</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-29 03:41</code>.'
         required: true
-        example: '2107-08-16'
+        example: '2107-08-27'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      datetime: '2107-08-16'
+      datetime: '2107-08-27'
     fileParameters: []
     responses: []
     responseFields: []
@@ -107,16 +107,16 @@ endpoints:
       datetime:
         custom: []
         name: datetime
-        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-17 16:42</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-29 03:41</code>.'
         required: true
-        example: '2107-08-16'
+        example: '2107-08-27'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      datetime: '2107-08-16'
+      datetime: '2107-08-27'
     fileParameters: []
     responses: []
     responseFields: []
@@ -262,7 +262,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/transfer/{per_page}/{with_attended}'
+    uri: 'api/transfer/{with_attended}'
     metadata:
       custom: []
       groupName: 'Transfer APIs'
@@ -280,17 +280,6 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      per_page:
-        custom: []
-        name: per_page
-        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
       with_attended:
         custom: []
         name: with_attended
@@ -303,7 +292,6 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      per_page: 17
       with_attended: 17
     queryParameters: []
     cleanQueryParameters: []
@@ -314,7 +302,7 @@ endpoints:
       -
         custom: []
         status: 405
-        content: '{"did_succeed":false,"message":{"base_message":"HTTP request method not allowed, The GET method is not supported for route api\/transfer\/17\/17. Supported methods: POST."}}'
+        content: '{"did_succeed":false,"message":{"base_message":"HTTP request method not allowed, The GET method is not supported for route api\/transfer\/17. Supported methods: POST."}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -403,7 +391,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/transfer/pRef/{per_page}/{with_attended}/{doctor_id}'
+    uri: 'api/transfer/pRef/{with_attended}/{doctor_id}'
     metadata:
       custom: []
       groupName: 'Transfer APIs'
@@ -422,17 +410,6 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      per_page:
-        custom: []
-        name: per_page
-        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
       with_attended:
         custom: []
         name: with_attended
@@ -456,7 +433,6 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      per_page: 17
       with_attended: 17
       doctor_id: 17
     queryParameters: []
@@ -486,7 +462,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/transfer/pRec/{per_page}/{with_attended}/{doctor_id}'
+    uri: 'api/transfer/pRec/{with_attended}/{doctor_id}'
     metadata:
       custom: []
       groupName: 'Transfer APIs'
@@ -505,17 +481,6 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      per_page:
-        custom: []
-        name: per_page
-        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
       with_attended:
         custom: []
         name: with_attended
@@ -539,7 +504,6 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      per_page: 17
       with_attended: 17
       doctor_id: 17
     queryParameters: []

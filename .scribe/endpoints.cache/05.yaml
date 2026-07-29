@@ -169,7 +169,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/doctors/{per_page}/{with_unactive}'
+    uri: 'api/doctors/{with_unactive}'
     metadata:
       custom: []
       groupName: 'Doctor APIs'
@@ -188,17 +188,6 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      per_page:
-        custom: []
-        name: per_page
-        description: 'The number of doctors shown in each page. Defaults to 10.'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
       with_unactive:
         custom: []
         name: with_unactive
@@ -211,7 +200,6 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      per_page: 17
       with_unactive: consequatur
     queryParameters: []
     cleanQueryParameters: []

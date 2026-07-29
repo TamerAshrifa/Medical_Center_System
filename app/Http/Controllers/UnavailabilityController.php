@@ -88,11 +88,10 @@ class UnavailabilityController extends Controller
      * ###For: Web
      * Only admins are allowed to use this API.
      * @urlParam with_passed integer required Boolean value means does the user want all of unavailabilities to be showen even with the ones from the past?
-     * @urlParam per_page integer required The number of items shown in each page, Defaults to 10. 
      */
-    public function paginateDoctorsUnavailabilities(bool $with_passed, int $per_page = 10)
+    public function paginateDoctorsUnavailabilities(bool $with_passed)
     {
-        $response = $this->unavailabilityService->paginateDoctorsUnavailabilities($with_passed, $per_page);
+        $response = $this->unavailabilityService->paginateDoctorsUnavailabilities($with_passed);
         if ($response->data)
             $response->data = $this->resource($response->data, true);
         return $this->jsonResponse($response);
@@ -104,12 +103,11 @@ class UnavailabilityController extends Controller
      * ###For: Web, Mobile(Doctor)
      * Only admins and doctors are allowed to use this API.
      * @urlParam with_passed integer required Boolean value means does the user want all of unavailabilities to be showen even with the ones from the past?
-     * @urlParam per_page integer required The number of items shown in each page, Defaults to 10. 
      * @urlParam doctor_id integer required The ID of the doctor to view his unavailabilities 
      */
-    public function paginateDoctorUnavailabilities(bool $with_passed, int $per_page = 10, int $doctor_id)
+    public function paginateDoctorUnavailabilities(bool $with_passed, int $doctor_id)
     {
-        $response = $this->unavailabilityService->paginateDoctorUnavailabilities($with_passed, $per_page, $doctor_id);
+        $response = $this->unavailabilityService->paginateDoctorUnavailabilities($with_passed, $doctor_id);
         if ($response->data)
             $response->data = $this->resource($response->data, true);
         return $this->jsonResponse($response);
@@ -121,11 +119,10 @@ class UnavailabilityController extends Controller
      * ###For: Web
      * Only admins are allowed to use this API. 
      * @urlParam with_passed integer required Boolean value means does the admin want all of unavailabilities to be showen even with the ones from the past?
-     * @urlParam per_page integer required The number of items shown in each page, Defaults to 10. 
      */
-    public function paginateMedicalUnavailabilities(bool $with_passed, int $per_page = 10)
+    public function paginateMedicalUnavailabilities(bool $with_passed)
     {
-        $response = $this->unavailabilityService->paginateMedicalUnavailabilities($with_passed, $per_page);
+        $response = $this->unavailabilityService->paginateMedicalUnavailabilities($with_passed);
         if ($response->data)
             $response->data = $this->resource($response->data, true);
         return $this->jsonResponse($response);

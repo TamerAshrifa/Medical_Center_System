@@ -76,12 +76,11 @@ class TransferController extends Controller
      * 
      * ###For: Web
      * Only admins are allowed to use this API
-     * @urlParam per_page integer required min:1 The number of items be shown in each page. Defaults to 10. 
      * @urlParam with_attended integer required Boolean value means does the admin want all of transfers to be showen even with attended ones?
      */
-    public function paginate(int $per_page = 10, bool $with_attended)
+    public function paginate(bool $with_attended)
     {
-        $response = $this->transferService->paginate($per_page, $with_attended);
+        $response = $this->transferService->paginate($with_attended);
 
         if ($response->data)
             $response->data = $this->resource($response->data, true);
@@ -112,13 +111,12 @@ class TransferController extends Controller
      * ###For: Web, Mobile(Doctor)
      * Only admins and doctors are allowed to use this API
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
-     * @urlParam per_page integer required min:1 The number of items be shown in each page. Defaults to 10. 
      * @urlParam with_attended integer required Boolean value means does the admin want all of transfers to be showen even with attended ones?
      * @urlParam doctor_id integer required
      */
-    public function paginateReferredTransfers(int $per_page = 10, bool $with_attended, int $doctor_id)
+    public function paginateReferredTransfers(bool $with_attended, int $doctor_id)
     {
-        $response = $this->transferService->paginateReferredTransfers($per_page, $with_attended, $doctor_id);
+        $response = $this->transferService->paginateReferredTransfers($with_attended, $doctor_id);
 
         if ($response->data)
             $response->data = $this->resource($response->data, true);
@@ -131,13 +129,12 @@ class TransferController extends Controller
      * ###For: Web, Mobile(Doctor)
      * Only admins and doctors are allowed to use this API
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
-     * @urlParam per_page integer required min:1 The number of items be shown in each page. Defaults to 10. 
      * @urlParam with_attended integer required Boolean value means does the admin want all of transfers to be showen even with attended ones?
      * @urlParam doctor_id integer required
      */
-    public function paginateReceivedTransfers(int $per_page = 10, bool $with_attended, int $doctor_id)
+    public function paginateReceivedTransfers(bool $with_attended, int $doctor_id)
     {
-        $response = $this->transferService->paginateReceivedTransfers($per_page, $with_attended, $doctor_id);
+        $response = $this->transferService->paginateReceivedTransfers($with_attended, $doctor_id);
 
         if ($response->data)
             $response->data = $this->resource($response->data, true);

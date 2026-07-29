@@ -19,6 +19,7 @@ class SchedulingService extends Service
         protected SchedulingRepositoryInterface $schedulingRepository,
         protected UserRepositoryInterface $userRepository,
     ) {
+        parent::__construct();
     }
     public function allWeekDays()
     {
@@ -28,27 +29,27 @@ class SchedulingService extends Service
             $this->schedulingRepository->allWeekDays()
         );
     }
-    public function paginateDoctorsWorkSchedules(bool $withExpired, bool $withUnactiveDoctors, int $perPage = 10): Response
+    public function paginateDoctorsWorkSchedules(bool $withExpired, bool $withUnactiveDoctors): Response
     {
-        $records = $this->schedulingRepository->paginateDoctorsWorkSchedules($withExpired, $withUnactiveDoctors, $perPage);
+        $records = $this->schedulingRepository->paginateDoctorsWorkSchedules($withExpired, $withUnactiveDoctors, $this->perPage);
         return new Response(
             true,
             $this->paginationMessage($records),
             $records->items()
         );
     }
-    public function paginateMedicalCenterWorkSchedules(bool $withExpired = false, int $perPage = 10): Response
+    public function paginateMedicalCenterWorkSchedules(bool $withExpired = false): Response
     {
-        $records = $this->schedulingRepository->paginateMedicalCenterWorkSchedules($withExpired, $perPage);
+        $records = $this->schedulingRepository->paginateMedicalCenterWorkSchedules($withExpired, $this->perPage);
         return new Response(
             true,
             $this->paginationMessage($records),
             $records->items()
         );
     }
-    public function paginateDoctorWorkSchedules(int $doctorId, bool $withExpired = false, int $perPage = 10): Response
+    public function paginateDoctorWorkSchedules(int $doctorId, bool $withExpired = false): Response
     {
-        $records = $this->schedulingRepository->paginateDoctorWorkSchedules($doctorId, $withExpired, $perPage);
+        $records = $this->schedulingRepository->paginateDoctorWorkSchedules($doctorId, $withExpired, $this->perPage);
 
         return new Response(
             true,
@@ -188,21 +189,13 @@ class SchedulingService extends Service
             }
 
         $user = $this->userRepository->find($makerId);
-        try {
-            DB::transaction(function () use ($dto, $dayWorkTimeDTOs, $makerId, $user) {
-                if ($user->role == UserRoleEnum::DOCTOR)
-                    $this->handleDoctorWorkScheduleCreation($dto, $dayWorkTimeDTOs, $makerId, $user);
-                else if ($user->role == UserRoleEnum::ADMIN)
-                    $this->handleCenterWorkScheduleCreation($dto, $dayWorkTimeDTOs, $makerId);
-            });
-        } catch (\Exception $e) {
-            return new Response(
-                false,
-                Response::messageToArray($e->getMessage()),
-                null,
-                500
-            );
-        }
+
+        DB::transaction(function () use ($dto, $dayWorkTimeDTOs, $makerId, $user) {
+            if ($user->role == UserRoleEnum::DOCTOR)
+                $this->handleDoctorWorkScheduleCreation($dto, $dayWorkTimeDTOs, $makerId, $user);
+            else if ($user->role == UserRoleEnum::ADMIN)
+                $this->handleCenterWorkScheduleCreation($dto, $dayWorkTimeDTOs, $makerId);
+        });
 
         return new Response(
             true,

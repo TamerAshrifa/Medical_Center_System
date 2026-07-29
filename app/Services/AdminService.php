@@ -14,6 +14,7 @@ class AdminService extends Service
         protected AdminRepositoryInterface $adminRepository,
         protected UserRepositoryInterface $userRepository,
     ) {
+        parent::__construct();
     }
     public function search(string $searchWord): Response
     {

@@ -125,11 +125,10 @@ class WorkScheduleController extends Controller
      * Only admins are allowed to use this API
      * @urlParam with_expired integer required Boolean value means does the user want all of schedules to be showen even with expired ones or only non-expired schedules?
      * @urlParam with_unactive_doctors integer required Boolean value means does the Admin want all of schedules to be showen even with of the unactive doctors?
-     * @urlParam per_page integer required min:1 The number of items shown in each page. Defaults to 10. 
      */
-    public function paginateDoctorsWorkSchedules(bool $with_expired, bool $with_unactive_doctors, int $per_page = 10)
+    public function paginateDoctorsWorkSchedules(bool $with_expired, bool $with_unactive_doctors)
     {
-        $response = $this->schedulingService->paginateDoctorsWorkSchedules($with_expired, $with_unactive_doctors, $per_page);
+        $response = $this->schedulingService->paginateDoctorsWorkSchedules($with_expired, $with_unactive_doctors);
         if ($response->data)
             $response->data = $this->workScheduleResource($response->data, true);
         return $this->jsonResponse($response);
@@ -141,11 +140,10 @@ class WorkScheduleController extends Controller
      * ###For: Web
      * Only admins are allowed to use this API
      * @urlParam with_expired integer required Boolean value means does the user want all of schedules to be showen even with expired ones or only non-expired schedules?
-     * @urlParam per_page integer required min:1 The number of items shown in each page. Defaults to 10. 
      */
-    public function paginateMedicalCenterWorkSchedules(bool $with_expired, int $per_page = 10)
+    public function paginateMedicalCenterWorkSchedules(bool $with_expired)
     {
-        $response = $this->schedulingService->paginateMedicalCenterWorkSchedules($with_expired, $per_page);
+        $response = $this->schedulingService->paginateMedicalCenterWorkSchedules($with_expired);
         if ($response->data)
             $response->data = $this->workScheduleResource($response->data, true);
         return $this->jsonResponse($response);
@@ -159,11 +157,10 @@ class WorkScheduleController extends Controller
      * Only admins and doctors are allowed to use this API
      * @urlParam doctor_id integer required min:1 The ID of the doctor to view his schedules 
      * @urlParam with_expired integer required Boolean value means does the user want all of schedules to be showen even with expired ones or only non-expired schedules?
-     * @urlParam per_page integer required The number of items shown in each page. Defaults to 10. 
      */
-    public function paginateDoctorWorkSchedules(int $doctor_id, bool $with_expired, int $per_page = 10)
+    public function paginateDoctorWorkSchedules(int $doctor_id, bool $with_expired)
     {
-        $response = $this->schedulingService->paginateDoctorWorkSchedules($doctor_id, $with_expired, $per_page);
+        $response = $this->schedulingService->paginateDoctorWorkSchedules($doctor_id, $with_expired);
         if ($response->data)
             $response->data = $this->workScheduleResource($response->data, true);
         return $this->jsonResponse($response);

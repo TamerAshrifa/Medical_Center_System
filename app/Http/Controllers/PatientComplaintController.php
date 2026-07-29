@@ -76,13 +76,12 @@ class PatientComplaintController extends Controller
      * ###For: Web
      * Only admins are allowed to use this API
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
-     * @urlParam per_page integer required min:1 The number of items be shown in each page. Defaults to 10. 
      * @urlParam with_reviewed integer required Boolean value means does the admin want all of the complaints to be showen even with reviewed ones?
      */
-    public function paginate(int $per_page = 10, bool $with_reviewed)
+    public function paginate(bool $with_reviewed)
     {
 
-        $response = $this->patientComplaintService->paginate($per_page, $with_reviewed);
+        $response = $this->patientComplaintService->paginate($with_reviewed);
 
         if ($response->data)
             $response->data = $this->resource($response->data, true);

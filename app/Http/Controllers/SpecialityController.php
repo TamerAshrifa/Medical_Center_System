@@ -65,12 +65,11 @@ class SpecialityController extends Controller
      * ###For: Mobile(Patient - Doctor), Web
      * Everyone in the system is allowed to use this API.
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
-     * @urlParam per_page integer required The number of specialities shown in each page. Defaults to 10. 
      * @responseFile 200 storage/responses/SpecialityController/index_200_OK.json
      */
-    public function index(int $per_page): JsonResponse
+    public function index(): JsonResponse
     {
-        $response = $this->specialityService->paginate($per_page, $this->currentUserRole());
+        $response = $this->specialityService->paginate($this->currentUserRole());
 
         if ($response->data)
             $response->data = $this->resource($response->data, true);

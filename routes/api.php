@@ -32,7 +32,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Users APIs
     Route::prefix('users/')->group(function () {
         Route::post('', [UserController::class, 'store'])->middleware('CheckAdmin');
-        Route::get('{per_page}', [UserController::class, 'index'])->middleware('CheckAdmin');
+        Route::get('', [UserController::class, 'index'])->middleware('CheckAdmin');
         Route::get('s/{id}', [UserController::class, 'show']);
         Route::get('se/{search_word}', [UserController::class, 'searchForNonRoledUser']);
         Route::put('{id}', [UserController::class, 'update']);
@@ -41,7 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Patient APIs
     Route::prefix('patients/')->group(function () {
         Route::post('', [PatientController::class, 'store'])->middleware('StorePatientMiddleware');
-        Route::get('{per_page}', [PatientController::class, 'index'])->middleware('CheckAdmin');
+        Route::get('', [PatientController::class, 'index'])->middleware('CheckAdmin');
         Route::get('s/{id}', [PatientController::class, 'show'])->middleware('ShowPatientMiddleware');
         Route::get('se/{search_word}', [PatientController::class, 'search'])->middleware(['CheckDoctor']);
         Route::put('{id}', [PatientController::class, 'update'])->middleware(['CheckPatientOnly', 'UpdatePatientMiddleware']);
@@ -60,7 +60,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Room APIs
     Route::prefix('rooms/')->group(function () {
         Route::post('', [RoomController::class, 'store'])->middleware('CheckAdmin');
-        Route::get('{per_page}', [RoomController::class, 'index'])->middleware('CheckAdmin');
+        Route::get('', [RoomController::class, 'index'])->middleware('CheckAdmin');
         Route::get('s/{roomId}', [RoomController::class, 'show']);
         Route::put('{roomId}', [RoomController::class, 'update'])->middleware('CheckAdmin');
         Route::delete('{roomId}', [RoomController::class, 'destroy'])->middleware('CheckAdmin');
@@ -69,7 +69,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Doctor APIs
     Route::prefix('doctors/')->group(function () {
         Route::post('', [DoctorController::class, 'store'])->middleware('CheckAdmin');
-        Route::get('{per_page}/{with_unactive}', [DoctorController::class, 'index']);
+        Route::get('{with_unactive}', [DoctorController::class, 'index']);
         Route::get('s/{doctor_id}', [DoctorController::class, 'show']);
         Route::get('se/{search_word}', [DoctorController::class, 'search']);
         Route::put('{doctor_id}', [DoctorController::class, 'update'])->middleware(['CheckDoctorOnly', 'UpdateDoctorMiddleware']);
@@ -81,7 +81,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Specialities APIs
     Route::prefix('specialities/')->group(function () {
         Route::post('', [SpecialityController::class, 'store'])->middleware('CheckAdmin');
-        Route::get('{per_page}', [SpecialityController::class, 'index']);
+        Route::get('', [SpecialityController::class, 'index']);
         Route::get('s/{specialityId}', [SpecialityController::class, 'show']);
         Route::put('{specialityId}', [SpecialityController::class, 'update'])->middleware('CheckAdmin');
         Route::delete('{specialityId}', [SpecialityController::class, 'destroy'])->middleware('CheckAdmin');
@@ -90,7 +90,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Doctor Speciality APIs
     Route::prefix('dSpecialities/')->group(function () {
         Route::post('', [DoctorSpecialityController::class, 'store'])->middleware('CheckDoctor');
-        Route::get('{per_page}', [DoctorSpecialityController::class, 'index'])->middleware('CheckAdmin');
+        Route::get('', [DoctorSpecialityController::class, 'index'])->middleware('CheckAdmin');
         Route::get('IFD/{doctor_id}', [DoctorSpecialityController::class, 'indexForDoctor']);
         Route::get('IFS/{speciality_id}/{active_doctors_only}', [DoctorSpecialityController::class, 'indexForSpeciality']);
         Route::get('s/{id}', [DoctorSpecialityController::class, 'show']);
@@ -102,18 +102,18 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('schedules/')->group(function () {
         Route::post('', [WorkScheduleController::class, 'store'])->middleware('CheckDoctor');
         Route::get('WDs', [WorkScheduleController::class, 'indexWeekDays']);
-        Route::get('DsWS/{with_expired}/{with_unactive_doctors}/{per_page}', [WorkScheduleController::class, 'paginateDoctorsWorkSchedules'])->middleware('CheckAdmin');
-        Route::get('MCWS/{with_expired}/{per_page}', [WorkScheduleController::class, 'paginateMedicalCenterWorkSchedules'])->middleware('CheckAdmin');
-        Route::get('DWS/{doctor_id}/{with_expired}/{per_page}', [WorkScheduleController::class, 'paginateDoctorWorkSchedules'])->middleware(['CheckDoctor', 'PaginateDoctorWorkSchedulesMiddleware']);
+        Route::get('DsWS/{with_expired}/{with_unactive_doctors}', [WorkScheduleController::class, 'paginateDoctorsWorkSchedules'])->middleware('CheckAdmin');
+        Route::get('MCWS/{with_expired}', [WorkScheduleController::class, 'paginateMedicalCenterWorkSchedules'])->middleware('CheckAdmin');
+        Route::get('DWS/{doctor_id}/{with_expired}', [WorkScheduleController::class, 'paginateDoctorWorkSchedules'])->middleware(['CheckDoctor', 'PaginateDoctorWorkSchedulesMiddleware']);
     });
 
     // Appointment APIs
     Route::prefix('appointments/')->group(function () {
         Route::post('{doctor_id}', [AppointmentController::class, 'allAvailableTimesToBook'])->middleware('CheckPatientOnly');
         Route::post('s/{doctor_id}', [AppointmentController::class, 'store'])->middleware('CheckPatientOnly');
-        Route::get('{status}/{with_expired}/{per_page}', [AppointmentController::class, 'paginate'])->middleware('CheckAdmin');
-        Route::get('DA/{status}/{with_expired}/{per_page}/{doctor_id}', [AppointmentController::class, 'paginateDoctorAppointments'])->middleware(['CheckDoctor', 'PaginateDoctorAppointmentsMiddleware']);
-        Route::get('PA/{status}/{with_expired}/{per_page}/{patient_id}', [AppointmentController::class, 'paginatePatientAppointments'])->middleware('CheckPatient');
+        Route::get('{status}/{with_expired}', [AppointmentController::class, 'paginate'])->middleware('CheckAdmin');
+        Route::get('DA/{status}/{with_expired}/{doctor_id}', [AppointmentController::class, 'paginateDoctorAppointments'])->middleware(['CheckDoctor', 'PaginateDoctorAppointmentsMiddleware']);
+        Route::get('PA/{status}/{with_expired}/{patient_id}', [AppointmentController::class, 'paginatePatientAppointments'])->middleware(['CheckPatient', 'PaginatePatientAppointmentsMiddleware']);
         Route::get('{id}', [AppointmentController::class, 'show'])->middleware('ShowAppointmentMiddleware');
 
         Route::post('cA/{id}', [AppointmentController::class, 'cancelAppointment'])->middleware(['CheckPatientOnly', 'CancelAppointmentMiddleware']);
@@ -123,9 +123,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Visits APIs
     Route::prefix('visits/')->group(function () {
-        Route::get('{per_page}', [VisitController::class, 'paginate'])->middleware('CheckAdmin');
-        Route::get('DV/{per_page}/{doctor_id}', [VisitController::class, 'paginateDoctorVisits'])->middleware(['CheckDoctor', 'PaginateDoctorVisitsMiddleware']);
-        Route::get('PV/{per_page}/{patient_id}', [VisitController::class, 'paginatePatientVisits'])->middleware(['CheckPatient', 'PaginatePatientVisitsMiddleware']);
+        Route::get('', [VisitController::class, 'paginate'])->middleware('CheckAdmin');
+        Route::get('DV/{doctor_id}', [VisitController::class, 'paginateDoctorVisits'])->middleware(['CheckDoctor', 'PaginateDoctorVisitsMiddleware']);
+        Route::get('PV/{patient_id}', [VisitController::class, 'paginatePatientVisits'])->middleware(['CheckPatient', 'PaginatePatientVisitsMiddleware']);
         Route::get('s/{id}', [VisitController::class, 'show'])->middleware('ShowVisitMiddleware');
         Route::post('{id}', [VisitController::class, 'update'])->middleware(['CheckDoctorOnly', 'UpdateVisitMiddleware']);
     });
@@ -133,9 +133,9 @@ Route::middleware('auth:sanctum')->group(function () {
     // Medical Record Access APIs (Access Permission APIs)
     Route::prefix('access/')->group(function () {
         Route::post('{doctor_id}/{visit_id}', [MedicalRecordAccessController::class, 'store'])->middleware(['CheckPatientOnly', 'StoreMedicalRecordAccessMiddleware']);
-        Route::get('DA/{per_page}/{with_unactive}/{doctor_id}', [MedicalRecordAccessController::class, 'paginateDoctorMedicalRecordAccesses'])->middleware(['CheckDoctor', 'PaginateDoctorMedicalRecordAccessesMiddleware']);
-        Route::get('PA/{per_page}/{with_unactive}/{patient_id}', [MedicalRecordAccessController::class, 'paginatePatientMedicalRecordAccesses'])->middleware(['CheckPatient', 'PaginatePatientMedicalRecordAccessesMiddleware']);
-        Route::get('VA/{per_page}/{with_unactive}/{visit_id}', [MedicalRecordAccessController::class, 'paginateVisitMedicalRecordAccesses'])->middleware(['CheckPatient', 'PaginateVisitMedicalRecordAccessesMiddleware']);
+        Route::get('DA/{with_unactive}/{doctor_id}', [MedicalRecordAccessController::class, 'paginateDoctorMedicalRecordAccesses'])->middleware(['CheckDoctor', 'PaginateDoctorMedicalRecordAccessesMiddleware']);
+        Route::get('PA/{with_unactive}/{patient_id}', [MedicalRecordAccessController::class, 'paginatePatientMedicalRecordAccesses'])->middleware(['CheckPatient', 'PaginatePatientMedicalRecordAccessesMiddleware']);
+        Route::get('VA/{with_unactive}/{visit_id}', [MedicalRecordAccessController::class, 'paginateVisitMedicalRecordAccesses'])->middleware(['CheckPatient', 'PaginateVisitMedicalRecordAccessesMiddleware']);
         Route::post('{id}', [MedicalRecordAccessController::class, 'destroy'])->middleware(['CheckPatientOnly', 'DestroyMedicalRecordAccessMiddleware']);
     });
 
@@ -144,8 +144,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('', [PatientComplaintController::class, 'store'])->middleware(['CheckPatientOnly', 'throttle:1,1']);
         Route::get('{patient_id}', [PatientComplaintController::class, 'allPatientComplaints'])->middleware(['CheckPatient', 'AllPatientComplaintsMiddleware']);
         Route::get('s/{id}', [PatientComplaintController::class, 'show'])->middleware(['CheckPatient', 'ShowPatientComplaintMiddleware']);
-        Route::get('{per_page}/{with_reviewed}', [PatientComplaintController::class, 'paginate'])
-            ->whereNumber('per_page')->where('with_reviewed', '0|1|true|false')->middleware(['CheckAdmin']);
+        Route::get('a/{with_reviewed}', [PatientComplaintController::class, 'paginate'])
+            ->where('with_reviewed', '0|1|true|false')->middleware(['CheckAdmin']);
         Route::post('{reply}/{id}', [PatientComplaintController::class, 'makePatientComplaintReviewed'])->middleware(['CheckAdmin']);
     });
 
@@ -162,27 +162,27 @@ Route::middleware('auth:sanctum')->group(function () {
             ->middleware(['CheckDoctorOnly', 'StoreTransferMiddleware']);
         Route::get('s/{id}', [TransferController::class, 'show'])->whereNumber('id')
             ->middleware(['ShowTransferMiddleware']);
-        Route::get('{per_page}/{with_attended}', [TransferController::class, 'paginate'])
-            ->whereNumber('per_page')->where('with_attended', '0|1|true|false')->middleware(['CheckAdmin']);
+        Route::get('{with_attended}', [TransferController::class, 'paginate'])
+            ->where('with_attended', '0|1|true|false')->middleware(['CheckAdmin']);
         Route::get('aP/{with_attended}/{patient_id}', [TransferController::class, 'allPatientTransfers'])
             ->whereNumber('patient_id')->where('with_attended', '0|1|true|false')
             ->middleware(['CheckPatient', 'AllPatientTransfersMiddleware']);
-        Route::get('pRef/{per_page}/{with_attended}/{doctor_id}', [TransferController::class, 'paginateReferredTransfers'])
-            ->whereNumber(['per_page', 'doctor_id'])->where('with_attended', '0|1|true|false')
+        Route::get('pRef/{with_attended}/{doctor_id}', [TransferController::class, 'paginateReferredTransfers'])
+            ->whereNumber(['doctor_id'])->where('with_attended', '0|1|true|false')
             ->middleware(['CheckDoctor', 'PaginateReferredTransfersMiddleware']);
-        Route::get('pRec/{per_page}/{with_attended}/{doctor_id}', [TransferController::class, 'paginateReceivedTransfers'])
-            ->whereNumber(['per_page', 'doctor_id'])->where('with_attended', '0|1|true|false')
+        Route::get('pRec/{with_attended}/{doctor_id}', [TransferController::class, 'paginateReceivedTransfers'])
+            ->whereNumber(['doctor_id'])->where('with_attended', '0|1|true|false')
             ->middleware(['CheckDoctor', 'PaginateReceivedTransfersMiddleware']);
     });
 
     // Unavailability APIs
     Route::prefix('unavailability/')->group(function () {
         Route::post('maker_id', [UnavailabilityController::class, 'store'])->middleware(['CheckDoctor', 'StoreUnavailabilityMiddleware']);
-        Route::get('{with_passed}/{per_page}', [UnavailabilityController::class, 'paginateDoctorsUnavailabilities'])
-            ->whereNumber('per_page')->where('with_passed', '0|1|true|false')->middleware(['CheckAdmin']);
-        Route::get('{with_passed}/{per_page}/{doctor_id}', [UnavailabilityController::class, 'paginateDoctorUnavailabilities'])
-            ->whereNumber(['per_page', 'doctor_id'])->where('with_passed', '0|1|true|false')->middleware(['CheckDoctor', 'PaginateDoctorUnavailabilitiesMiddleware']);
-        Route::get('m/{with_passed}/{per_page}', [UnavailabilityController::class, 'paginateMedicalUnavailabilities'])
-            ->whereNumber(['per_page'])->where('with_passed', '0|1|true|false')->middleware(['CheckAdmin']);
+        Route::get('{with_passed}', [UnavailabilityController::class, 'paginateDoctorsUnavailabilities'])
+            ->where('with_passed', '0|1|true|false')->middleware(['CheckAdmin']);
+        Route::get('{with_passed}/{doctor_id}', [UnavailabilityController::class, 'paginateDoctorUnavailabilities'])
+            ->whereNumber(['doctor_id'])->where('with_passed', '0|1|true|false')->middleware(['CheckDoctor', 'PaginateDoctorUnavailabilitiesMiddleware']);
+        Route::get('m/{with_passed}', [UnavailabilityController::class, 'paginateMedicalUnavailabilities'])
+            ->where('with_passed', '0|1|true|false')->middleware(['CheckAdmin']);
     });
 });

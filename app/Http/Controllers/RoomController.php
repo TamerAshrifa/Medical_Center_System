@@ -65,12 +65,11 @@ class RoomController extends Controller
      * 
      * ###For: Web
      * Only admins are allowed to use this API.
-     * @urlParam per_page integer required The number of rooms shown in each page. Defaults to 10. 
      * @responseFile 201 storage/responses/RoomController/index_200_OK.json
      */
-    public function index(int $per_page): JsonResponse
+    public function index(): JsonResponse
     {
-        $response = $this->roomService->paginate($per_page);
+        $response = $this->roomService->paginate();
 
         if ($response->data)
             $response->data = $this->resource($response->data, true);

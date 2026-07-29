@@ -70,13 +70,12 @@ class MedicalRecordAccessController extends Controller
      * ###For: Web, Mobile(Doctor)
      * Only admins and doctors are allowed to use this API
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
-     * @urlParam per_page integer required min:1 The number of items be shown in each page. Defaults to 10. 
      * @urlParam with_unactive integer required Boolean value means does the admin want all of permission accesses to be showen even with unactivated ones? Doctores only allowed to see with unactive ones.
      * @urlParam doctor_id integer required min:1 The ID number of doctor to view it's permission accesses 
      */
-    public function paginateDoctorMedicalRecordAccesses(int $per_page = 10, bool $with_unactive, int $doctor_id)
+    public function paginateDoctorMedicalRecordAccesses(bool $with_unactive, int $doctor_id)
     {
-        $response = $this->medicalRecordAccessService->paginateDoctorMedicalRecordAccesses($per_page, $with_unactive, $doctor_id);
+        $response = $this->medicalRecordAccessService->paginateDoctorMedicalRecordAccesses($with_unactive, $doctor_id);
 
         if ($response->data)
             $response->data = $this->resource($response->data, true);
@@ -89,13 +88,12 @@ class MedicalRecordAccessController extends Controller
      * ###For: Web, Mobile(Patient)
      * Only admins and patients are allowed to use this API
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
-     * @urlParam per_page integer required min:1 The number of items be shown in each page. Defaults to 10. 
      * @urlParam with_unactive integer required Boolean value means does the user want all of permission accesses to be showen even with unactivated ones?
      * @urlParam patient_id integer required min:1 The ID number of patient to view all permissions given by him 
      */
-    public function paginatePatientMedicalRecordAccesses(int $per_page = 10, bool $with_unactive, int $patient_id)
+    public function paginatePatientMedicalRecordAccesses(bool $with_unactive, int $patient_id)
     {
-        $response = $this->medicalRecordAccessService->paginatePatientMedicalRecordAccesses($per_page, $with_unactive, $patient_id);
+        $response = $this->medicalRecordAccessService->paginatePatientMedicalRecordAccesses($with_unactive, $patient_id);
 
         if ($response->data)
             $response->data = $this->resource($response->data, true);
@@ -109,13 +107,12 @@ class MedicalRecordAccessController extends Controller
      * ###For: Web, Mobile(Patient)
      * Only admins and patients are allowed to use this API
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
-     * @urlParam per_page integer required min:1 The number of items be shown in each page. Defaults to 10. 
      * @urlParam with_unactive integer required Boolean value means does the user want all of permission accesses to be showen even with unactivated ones?
      * @urlParam visit_id integer required min:1 The ID number of visit to view who have access to it 
      */
-    public function paginateVisitMedicalRecordAccesses(int $per_page = 10, bool $with_unactive, int $visit_id)
+    public function paginateVisitMedicalRecordAccesses(bool $with_unactive, int $visit_id)
     {
-        $response = $this->medicalRecordAccessService->paginateVisitMedicalRecordAccesses($per_page, $with_unactive, $visit_id);
+        $response = $this->medicalRecordAccessService->paginateVisitMedicalRecordAccesses($with_unactive, $visit_id);
 
         if ($response->data)
             $response->data = $this->resource($response->data, true);

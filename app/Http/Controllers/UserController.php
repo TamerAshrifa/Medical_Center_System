@@ -79,11 +79,10 @@ class UserController extends Controller
      * 
      * ###For: Web
      * Only admins are allowed to use this API. There is a middleware CheckAdmin on this API route
-     * @urlParam per_page integer required The number of rooms shown in each page. Defaults to 10. 
      */
-    public function index(int $per_page): JsonResponse
+    public function index(): JsonResponse
     {
-        $response = $this->userService->paginate($per_page);
+        $response = $this->userService->paginate();
 
         if ($response->data)
             $response->data = $this->resource($response->data, true);

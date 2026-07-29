@@ -68,11 +68,10 @@ class DoctorController extends Controller
      * ###For: Mobile(Patient - Doctor), Web
      * Everyone in the system is allowed to use this API.
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
-     * @urlParam per_page integer required The number of doctors shown in each page. Defaults to 10. 
      * @urlParam with_unactive boolean required Getting Doctors with unactive ones or only the actives?
      * @responseFile 200 storage/responses/DoctorController/index_200_OK.json
      */
-    public function index(int $per_page, bool $with_unactive)
+    public function index(bool $with_unactive)
     {
         $userRole = $this->currentUserRole();
         if (
@@ -81,7 +80,7 @@ class DoctorController extends Controller
         )
             $with_unactive = false;
 
-        $response = $this->doctorService->paginate($per_page, $with_unactive, $userRole);
+        $response = $this->doctorService->paginate($with_unactive, $userRole);
 
         if ($response->data)
             $response->data = $this->resource($response->data, true);

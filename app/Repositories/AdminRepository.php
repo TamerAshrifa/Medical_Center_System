@@ -70,26 +70,4 @@ class AdminRepository extends Repository implements AdminRepositoryInterface
             'complaints_count' => PatientComplaint::whereBetween('created_at', [$start, $end])->count(),
         ];
     }
-
-
 }
-
-
-/*
-   'appointments_per_doctor' => $appointmentsPerDoctor =
-                Appointment::query()
-                    ->select([
-                        'appointments.doctor_id',
-                        'users.first_name as doctor_first_name',
-                        'users.last_name as doctor_last_name'
-                    ])
-                    ->selectRaw('COUNT(*) as total')
-                    ->whereBetween('appointments.datetime', [$start, $end])
-                    ->groupBy('appointments.doctor_id', 'users.first_name', 'users.last_name')
-                    //  ->groupBy('appointments.doctor_id')
-                    ->join('doctors', 'appointments.doctor_id', '=', 'doctors.id')
-                    ->join('users', 'doctors.user_id', '=', 'users.id')
-
-                    ->get(),
-
-*/

@@ -32,9 +32,9 @@ endpoints:
       effective_from_date:
         custom: []
         name: effective_from_date
-        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after <code>2026-07-17</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after <code>2026-07-29</code>.'
         required: true
-        example: '2107-08-16'
+        example: '2107-08-27'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -68,7 +68,7 @@ endpoints:
         name: 'days[].start_time'
         description: 'Must be a valid date in the format <code>H:i</code>.'
         required: true
-        example: '16:42'
+        example: '03:41'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -79,19 +79,19 @@ endpoints:
         name: 'days[].end_time'
         description: 'Must be a valid date in the format <code>H:i</code>.'
         required: true
-        example: '16:42'
+        example: '03:41'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      effective_from_date: '2107-08-16'
+      effective_from_date: '2107-08-27'
       days:
         -
           weekday_id: 2
-          start_time: '16:42'
-          end_time: '16:42'
+          start_time: '03:41'
+          end_time: '03:41'
     fileParameters: []
     responses: []
     responseFields: []
@@ -152,7 +152,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/schedules/DsWS/{with_expired}/{with_unactive_doctors}/{per_page}'
+    uri: 'api/schedules/DsWS/{with_expired}/{with_unactive_doctors}'
     metadata:
       custom: []
       groupName: 'Scheduling APIs'
@@ -192,21 +192,9 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      per_page:
-        custom: []
-        name: per_page
-        description: 'min:1 The number of items shown in each page. Defaults to 10.'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
     cleanUrlParameters:
       with_expired: 17
       with_unactive_doctors: 17
-      per_page: 17
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -234,7 +222,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/schedules/MCWS/{with_expired}/{per_page}'
+    uri: 'api/schedules/MCWS/{with_expired}'
     metadata:
       custom: []
       groupName: 'Scheduling APIs'
@@ -263,20 +251,8 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      per_page:
-        custom: []
-        name: per_page
-        description: 'min:1 The number of items shown in each page. Defaults to 10.'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
     cleanUrlParameters:
       with_expired: 17
-      per_page: 17
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -304,7 +280,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/schedules/DWS/{doctor_id}/{with_expired}/{per_page}'
+    uri: 'api/schedules/DWS/{doctor_id}/{with_expired}'
     metadata:
       custom: []
       groupName: 'Scheduling APIs'
@@ -344,21 +320,9 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      per_page:
-        custom: []
-        name: per_page
-        description: 'The number of items shown in each page. Defaults to 10.'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
     cleanUrlParameters:
       doctor_id: 17
       with_expired: 17
-      per_page: 17
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

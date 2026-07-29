@@ -4,15 +4,25 @@ namespace Database\Seeders;
 
 use App\Models\DoctorSpeciality;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 class DoctorSpecialitySeeder extends Seeder
 {
-    use HasFactory;
     public function run(): void
     {
-        for ($i = 0; $i <= 35; $i++)
-            DoctorSpeciality::factory()->create([
-                'doctor_id' => $i % 11 + 1,
-            ]);
+        for ($i = 0; $i <= 35; $i++) {
+            $doctorId = $i % 11 + 1;
+            $specialityId = ($i % 36) + 1;
+
+            DoctorSpeciality::firstOrCreate(
+                [
+                    'doctor_id' => $doctorId,
+                    'speciality_id' => $specialityId,
+                ],
+                [
+                    'experience_starting_date' => now()->subYears(rand(1, 10))->toDateString(),
+                    'view_experience' => fake()->boolean(),
+                ]
+            );
+        }
     }
 }

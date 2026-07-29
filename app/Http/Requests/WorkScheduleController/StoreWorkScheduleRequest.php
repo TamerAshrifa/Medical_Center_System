@@ -4,6 +4,7 @@ namespace App\Http\Requests\WorkScheduleController;
 
 use App\Enums\UserRoleEnum;
 use App\Models\Appointment;
+use App\Repositories\Interfaces\SchedulingRepositoryInterface;
 use App\Repositories\SchedulingRepository;
 use Carbon\Carbon;
 use Illuminate\Contracts\Validation\ValidationRule;
@@ -46,9 +47,8 @@ class StoreWorkScheduleRequest extends FormRequest
             'effective_from_date.after' => 'The effective from date field must be after today',
         ];
     }
-    private function handleGeneralValidation(Validator &$validator, $user): void
+    private function handleGeneralValidation(Validator &$validator, $user, SchedulingRepositoryInterface $schedulingRepository): void
     {
-        $schedulingRepository = new SchedulingRepository();
         $lastAppointmentDatetime = Appointment::max('datetime');
 
         if ($lastAppointmentDatetime && $this->has('effective_from_date')) {
@@ -93,9 +93,8 @@ class StoreWorkScheduleRequest extends FormRequest
         }
 
     }
-    private function handleAdminValidation(Validator &$validator): void
+    private function handleAdminValidation(Validator &$validator, SchedulingRepositoryInterface $schedulingRepository): void
     {
-        $schedulingRepository = new SchedulingRepository();
         if ($this->has(['effective_from_date']) && \DateTime::createFromFormat('Y-m-d', $this->input('effective_from_date'))) {
             $dbDates = $schedulingRepository->getDoctorsNotExpiredWorkSchedulesContainOrAfterDate(
                 Carbon::parse($this->input('effective_from_date'))->format('Y-m-d')
@@ -135,9 +134,8 @@ class StoreWorkScheduleRequest extends FormRequest
             }
         }
     }
-    private function handleDoctorValidation(Validator &$validator): void
+    private function handleDoctorValidation(Validator &$validator, SchedulingRepositoryInterface $schedulingRepository): void
     {
-        $schedulingRepository = new SchedulingRepository();
         $oldestActiveCenterWorkSchedule = $schedulingRepository->findOldestMedicalCenterWorkSchedule();
         if (!$oldestActiveCenterWorkSchedule)
             return;
@@ -160,17 +158,17 @@ class StoreWorkScheduleRequest extends FormRequest
 
 
     }
-    public function withValidator(Validator $validator): void
+    public function withValidator(Validator $validator, SchedulingRepositoryInterface $schedulingRepository): void
     {
-        $validator->after(function (Validator $validator) {
+        $validator->after(function (Validator $validator) use ($schedulingRepository) {
             $user = Auth::user();
 
-            $this->handleGeneralValidation($validator, $user);
+            $this->handleGeneralValidation($validator, $user, $schedulingRepository);
 
             if ($user->role === UserRoleEnum::DOCTOR)
-                $this->handleDoctorValidation($validator);
+                $this->handleDoctorValidation($validator, $schedulingRepository);
             else if ($user->role === UserRoleEnum::ADMIN)
-                $this->handleAdminValidation($validator);
+                $this->handleAdminValidation($validator, $schedulingRepository);
         });
     }
 }

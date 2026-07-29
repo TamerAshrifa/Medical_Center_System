@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\DTOs\User\DoctorSpecialityDTO;
-use App\DTOs\User\DoctorSpecialityDTOUpdate;
+use App\DTOs\DoctorSpeciality\DoctorSpecialityDTO;
+use App\DTOs\DoctorSpeciality\DoctorSpecialityDTOUpdate;
 
 use App\GeneralClasses\Response;
 use App\Repositories\Interfaces\DoctorSpecialityRepositoryInterface;
@@ -13,11 +13,12 @@ class DoctorSpecialityService extends Service
     public function __construct(
         protected DoctorSpecialityRepositoryInterface $doctorSpecialityRepository,
     ) {
+        parent::__construct();
     }
 
-    public function paginate(int $perPage = 10): Response
+    public function paginate(): Response
     {
-        $records = $this->doctorSpecialityRepository->paginate($perPage);
+        $records = $this->doctorSpecialityRepository->paginate($this->perPage);
         return new Response(
             true,
             $this->paginationMessage($records),

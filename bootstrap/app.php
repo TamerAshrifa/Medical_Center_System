@@ -7,6 +7,7 @@ use App\Http\Middleware\CheckAdminMiddleware;
 use App\Http\Middleware\CheckDoctorMiddleware;
 use App\Http\Middleware\CheckDoctorOnlyMiddleware;
 use App\Http\Middleware\CheckPatientOnlyMiddleware;
+use App\Http\Middleware\DeleteDoctorSpecialityMiddleware;
 use App\Http\Middleware\DestroyMedicalRecordAccessMiddleware;
 use App\Http\Middleware\MakeAnotherAppointmentForTransferMiddleware;
 use App\Http\Middleware\MakeAppointmentAttendedMiddleware;
@@ -15,10 +16,10 @@ use App\Http\Middleware\MakeAppointmentMissedMiddleware;
 use App\Http\Middleware\PaginateDoctorAppointmentsMiddleware;
 use App\Http\Middleware\PaginateDoctorMedicalRecordAccessesMiddleware;
 use App\Http\Middleware\PaginateDoctorUnavailabilitiesMiddleware;
+use App\Http\Middleware\PaginatePatientAppointmentsMiddleware;
 use App\Http\Middleware\PaginatePatientMedicalRecordAccessesMiddleware;
 use App\Http\Middleware\PaginateDoctorVisitsMiddleware;
 use App\Http\Middleware\PaginateDoctorWorkSchedulesMiddleware;
-use App\Http\Middleware\PaginatePatientAppointments;
 use App\Http\Middleware\PaginatePatientVisitsMiddleware;
 use App\Http\Middleware\PaginateReceivedTransfersMiddleware;
 use App\Http\Middleware\PaginateReferredTransfersMiddleware;
@@ -71,7 +72,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'CheckPatientOnly' => CheckPatientOnlyMiddleware::class,
             'PaginateDoctorWorkSchedulesMiddleware' => PaginateDoctorWorkSchedulesMiddleware::class,
             'PaginateDoctorAppointmentsMiddleware' => PaginateDoctorAppointmentsMiddleware::class,
-            'PaginatePatientAppointments' => PaginatePatientAppointments::class,
+            'PaginatePatientAppointmentsMiddleware' => PaginatePatientAppointmentsMiddleware::class,
             'ShowAppointmentMiddleware' => ShowAppointmentMiddleware::class,
             'CancelAppointmentMiddleware' => CancelAppointmentMiddleware::class,
             'MakeAppointmentMissedMiddleware' => MakeAppointmentMissedMiddleware::class,
@@ -100,6 +101,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'ShowPatientMiddleware' => ShowPatientMiddleware::class,
             'UpdatePatientMiddleware' => UpdatePatientMiddleware::class,
             'StoreUnavailabilityMiddleware' => StoreUnavailabilityMiddleware::class,
+            'DeleteDoctorSpecialityMiddleware' => DeleteDoctorSpecialityMiddleware::class,
+
+
         ]);
 
     })

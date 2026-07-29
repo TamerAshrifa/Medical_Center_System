@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\AuthController;
 
-use Carbon\Carbon;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 

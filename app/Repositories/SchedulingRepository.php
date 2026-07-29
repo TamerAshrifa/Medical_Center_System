@@ -11,11 +11,17 @@ use App\Models\MedicalCenterWorkSchedule;
 use App\Models\WeekDay;
 use App\Models\WorkSchedule;
 use App\Repositories\Interfaces\SchedulingRepositoryInterface;
+use App\Repositories\Interfaces\UnavailabilityRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 
 class SchedulingRepository extends Repository implements SchedulingRepositoryInterface
 {
+    public function __construct(
+        protected UnavailabilityRepositoryInterface $unavailabilityRepository,
+    ) {
+    }
+
     public function allWeekDays()
     {
         return WeekDay::all();
@@ -196,11 +202,10 @@ class SchedulingRepository extends Repository implements SchedulingRepositoryInt
     }
     public function allAvailableTimesToBook(string $dateOfDay, int $doctorId, bool $failIfScheduleNotExists = true)
     {
-        $unavailabilityRepository = new UnavailabilityRepository();
         $d = Carbon::parse($dateOfDay)->format('Y-m-d');
         if (
-            $unavailabilityRepository->isMedicalCenterUnavailability($d) ||
-            $unavailabilityRepository->isDoctorUnavailability($d, $doctorId)
+            $this->unavailabilityRepository->isMedicalCenterUnavailability($d) ||
+            $this->unavailabilityRepository->isDoctorUnavailability($d, $doctorId)
         )
             return Collection::empty();
 

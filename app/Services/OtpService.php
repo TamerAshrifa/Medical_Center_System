@@ -7,7 +7,6 @@ use App\Enums\OtpTypeEnum;
 use App\Enums\UserRoleEnum;
 use App\GeneralClasses\Response;
 use App\Mail\SendOtpMail;
-use App\Models\Admin;
 use App\Models\Otp;
 use App\Models\User;
 use Carbon\Carbon;
@@ -21,6 +20,7 @@ class OtpService extends Service
 {
     public function __construct(protected UserRepositoryInterface $repo_User)
     {
+        parent::__construct();
     }
     public function sendOtpToUser(string $email, int $userId, OtpTypeEnum $type): Response
     {

@@ -25,28 +25,29 @@ class AppointmentService extends Service
         protected VisitRepository $visitRepository,
         protected UnavailabilityRepositoryInterface $unavailabilityRepository,
     ) {
+        parent::__construct();
     }
-    public function paginate(?AppointmentStatusEnum $status, bool $withExpired = false, int $perPage = 10): Response
+    public function paginate(?AppointmentStatusEnum $status, bool $withExpired = false): Response
     {
-        $records = $this->appointmentRepository->paginate($status, $withExpired, $perPage);
+        $records = $this->appointmentRepository->paginate($status, $withExpired, $this->perPage);
         return new Response(
             true,
             $this->paginationMessage($records),
             $records->items()
         );
     }
-    public function paginateDoctorAppointments(?AppointmentStatusEnum $status, bool $withExpired = false, int $perPage = 10, int $doctorId): Response
+    public function paginateDoctorAppointments(?AppointmentStatusEnum $status, bool $withExpired = false, int $doctorId): Response
     {
-        $records = $this->appointmentRepository->paginateDoctorAppointments($status, $withExpired, $perPage, $doctorId);
+        $records = $this->appointmentRepository->paginateDoctorAppointments($status, $withExpired, $this->perPage, $doctorId);
         return new Response(
             true,
             $this->paginationMessage($records),
             $records->items()
         );
     }
-    public function paginatePatientAppointments(?AppointmentStatusEnum $status, bool $withExpired = false, int $perPage = 10, int $patientId): Response
+    public function paginatePatientAppointments(?AppointmentStatusEnum $status, bool $withExpired = false, int $patientId): Response
     {
-        $records = $this->appointmentRepository->paginatePatientAppointments($status, $withExpired, $perPage, $patientId);
+        $records = $this->appointmentRepository->paginatePatientAppointments($status, $withExpired, $this->perPage, $patientId);
         return new Response(
             true,
             $this->paginationMessage($records),
@@ -166,28 +167,21 @@ class AppointmentService extends Service
             );
         }
 
-        try {
-            DB::transaction(function () use ($dto) {
-                $this->appointmentRepository->updateAppointmentStatus(AppointmentStatusEnum::ATTENDED, $dto->appointment_id);
 
-                $createdVisitId = $this->visitRepository->create($dto)->id;
+        DB::transaction(function () use ($dto) {
+            $this->appointmentRepository->updateAppointmentStatus(AppointmentStatusEnum::ATTENDED, $dto->appointment_id);
 
-                $appointment = Appointment::findOrFail($dto->appointment_id, ['patient_id', 'doctor_id']);
+            $createdVisitId = $this->visitRepository->create($dto)->id;
 
-                $this->medicalRecordAccessService->create(MedicalRecordAccessDTO::fromRequest([
-                    'visit_id' => $createdVisitId,
-                    'patient_id' => $appointment->patient_id,
-                    'can_accessed_by_doctor_id' => $appointment->doctor_id,
-                ]));
-            });
-        } catch (\Throwable $e) {
-            return new Response(
-                false,
-                Response::messageToArray($e->getMessage()),
-                null,
-                500
-            );
-        }
+            $appointment = Appointment::findOrFail($dto->appointment_id, ['patient_id', 'doctor_id']);
+
+            $this->medicalRecordAccessService->create(MedicalRecordAccessDTO::fromRequest([
+                'visit_id' => $createdVisitId,
+                'patient_id' => $appointment->patient_id,
+                'can_accessed_by_doctor_id' => $appointment->doctor_id,
+            ]));
+        });
+
 
         return new Response(
             true,

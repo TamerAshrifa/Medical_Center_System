@@ -14,10 +14,11 @@ class MedicalRecordAccessService extends Service
     public function __construct(
         protected MedicalRecordAccessRepositoryInterface $medicalRecordAccessRepository,
     ) {
+        parent::__construct();
     }
-    public function paginateDoctorMedicalRecordAccesses(int $perPage = 10, bool $withUnactive, int $doctorId): Response
+    public function paginateDoctorMedicalRecordAccesses(bool $withUnactive, int $doctorId): Response
     {
-        $records = $this->medicalRecordAccessRepository->paginateDoctorMedicalRecordAccesses($perPage, $withUnactive, $doctorId);
+        $records = $this->medicalRecordAccessRepository->paginateDoctorMedicalRecordAccesses($this->perPage, $withUnactive, $doctorId);
         $items = $records->items();
         return new Response(
             true,
@@ -25,9 +26,9 @@ class MedicalRecordAccessService extends Service
             $items
         );
     }
-    public function paginatePatientMedicalRecordAccesses(int $perPage = 10, bool $withUnactive, int $patientId): Response
+    public function paginatePatientMedicalRecordAccesses(bool $withUnactive, int $patientId): Response
     {
-        $records = $this->medicalRecordAccessRepository->paginatePatientMedicalRecordAccesses($perPage, $withUnactive, $patientId);
+        $records = $this->medicalRecordAccessRepository->paginatePatientMedicalRecordAccesses($this->perPage, $withUnactive, $patientId);
         $items = $records->items();
         return new Response(
             true,
@@ -35,9 +36,9 @@ class MedicalRecordAccessService extends Service
             $items
         );
     }
-    public function paginateVisitMedicalRecordAccesses(int $perPage = 10, bool $withUnactive, int $visitId): Response
+    public function paginateVisitMedicalRecordAccesses(bool $withUnactive, int $visitId): Response
     {
-        $records = $this->medicalRecordAccessRepository->paginateVisitMedicalRecordAccesses($perPage, $withUnactive, $visitId);
+        $records = $this->medicalRecordAccessRepository->paginateVisitMedicalRecordAccesses($this->perPage, $withUnactive, $visitId);
         $items = $records->items();
         return new Response(
             true,

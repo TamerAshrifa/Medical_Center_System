@@ -103,7 +103,7 @@ endpoints:
         name: gender
         description: ''
         required: true
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -149,7 +149,7 @@ endpoints:
       password: 'dl4m{o,+'
       phone: '+963999999999'
       date_of_birth: '2004-06-14'
-      gender: true
+      gender: false
       username: mqeopfuudtdsufvyv
       password_confirmation: consequatur
     fileParameters:

@@ -10,7 +10,7 @@ use App\Http\Requests\AuthController\ResetPasswordRequest;
 use App\Http\Requests\AuthController\VerifyOtpRequest;
 use App\Models\Otp;
 use App\Services\OtpService;
-use App\services\AuthService;
+use App\Services\AuthService;
 use App\DTOs\User\UserDTO;
 use Laravel\Sanctum\PersonalAccessToken;
 

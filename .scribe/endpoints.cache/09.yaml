@@ -45,16 +45,16 @@ endpoints:
       date_of_day:
         custom: []
         name: date_of_day
-        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-07-17</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-07-29</code>.'
         required: true
-        example: '2107-08-16'
+        example: '2107-08-27'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      date_of_day: '2107-08-16'
+      date_of_day: '2107-08-27'
     fileParameters: []
     responses: []
     responseFields: []
@@ -108,16 +108,16 @@ endpoints:
       datetime:
         custom: []
         name: datetime
-        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-17 16:42</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-29 03:41</code>.'
         required: true
-        example: '2107-08-16'
+        example: '2107-08-27'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      datetime: '2107-08-16'
+      datetime: '2107-08-27'
     fileParameters: []
     responses: []
     responseFields: []
@@ -132,7 +132,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/appointments/{status}/{with_expired}/{per_page}'
+    uri: 'api/appointments/{status}/{with_expired}'
     metadata:
       custom: []
       groupName: 'Appointment APIs'
@@ -172,21 +172,9 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      per_page:
-        custom: []
-        name: per_page
-        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
     cleanUrlParameters:
       status: consequatur
       with_expired: 17
-      per_page: 17
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -214,7 +202,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/appointments/DA/{status}/{with_expired}/{per_page}/{doctor_id}'
+    uri: 'api/appointments/DA/{status}/{with_expired}/{doctor_id}'
     metadata:
       custom: []
       groupName: 'Appointment APIs'
@@ -255,17 +243,6 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      per_page:
-        custom: []
-        name: per_page
-        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
       doctor_id:
         custom: []
         name: doctor_id
@@ -280,7 +257,6 @@ endpoints:
     cleanUrlParameters:
       status: consequatur
       with_expired: 17
-      per_page: 17
       doctor_id: 17
     queryParameters: []
     cleanQueryParameters: []
@@ -309,7 +285,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/appointments/PA/{status}/{with_expired}/{per_page}/{patient_id}'
+    uri: 'api/appointments/PA/{status}/{with_expired}/{patient_id}'
     metadata:
       custom: []
       groupName: 'Appointment APIs'
@@ -350,17 +326,6 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-      per_page:
-        custom: []
-        name: per_page
-        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
       patient_id:
         custom: []
         name: patient_id
@@ -375,7 +340,6 @@ endpoints:
     cleanUrlParameters:
       status: consequatur
       with_expired: 17
-      per_page: 17
       patient_id: 17
     queryParameters: []
     cleanQueryParameters: []
@@ -598,9 +562,9 @@ endpoints:
       actual_time:
         custom: []
         name: actual_time
-        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-17 00:00:00</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-29 00:00:00</code>.'
         required: true
-        example: '2107-08-16'
+        example: '2107-08-27'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -651,7 +615,7 @@ endpoints:
         nullable: true
         deprecated: false
     cleanBodyParameters:
-      actual_time: '2107-08-16'
+      actual_time: '2107-08-27'
       medical_diagnosis: mqeopfuudtdsufvyvddqa
       prescription: mniihfqcoynlazghdtqtq
       notes: xbajwbpilpmufinllwloa

@@ -2,8 +2,8 @@
 
 namespace App\Repositories\Interfaces;
 
-use App\DTOs\User\DoctorSpecialityDTO;
-use App\DTOs\User\DoctorSpecialityDTOUpdate;
+use App\DTOs\DoctorSpeciality\DoctorSpecialityDTO;
+use App\DTOs\DoctorSpeciality\DoctorSpecialityDTOUpdate;
 use App\Models\DoctorSpeciality;
 
 interface DoctorSpecialityRepositoryInterface extends RepositoryInterface

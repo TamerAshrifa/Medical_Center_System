@@ -4,12 +4,17 @@ namespace App\Repositories;
 
 use App\Enums\UserRoleEnum;
 use App\Models\Patient;
-use App\Models\User;
 use App\Repositories\Interfaces\PatientRepositoryInterface;
+use App\Repositories\Interfaces\UserRepositoryInterface;
 use DB;
 
 class PatientRepository extends Repository implements PatientRepositoryInterface
 {
+    public function __construct(
+        protected UserRepositoryInterface $userRepository,
+    ) {
+    }
+
     public function add(array $patientData): Patient
     {
         return Patient::create($patientData);
@@ -43,7 +48,7 @@ class PatientRepository extends Repository implements PatientRepositoryInterface
         $user = $patient->user;
         try {
             return DB::transaction(function () use ($patient, $user) {
-                if (!$patient->delete() || !((new UserRepository())->deleteByObject($user)))
+                if (!$patient->delete() || !($this->userRepository->deleteByObject($user)))
                     throw new \LogicException();
                 return true;
             });

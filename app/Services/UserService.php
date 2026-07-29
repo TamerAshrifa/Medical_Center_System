@@ -13,11 +13,12 @@ class UserService extends Service
     public function __construct(
         protected UserRepositoryInterface $userRepository,
     ) {
+        parent::__construct();
     }
 
-    public function paginate(int $perPage = 10): Response
+    public function paginate(): Response
     {
-        $records = $this->userRepository->paginate($perPage);
+        $records = $this->userRepository->paginate($this->perPage);
         return new Response(
             true,
             $this->paginationMessage($records),

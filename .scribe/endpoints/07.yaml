@@ -43,7 +43,7 @@ endpoints:
         name: experience_starting_date
         description: 'Must be a valid date in the format <code>Y-m-d</code>.'
         required: true
-        example: '2026-07-17'
+        example: '2026-07-29'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -54,7 +54,7 @@ endpoints:
         name: view_experience
         description: ''
         required: true
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -62,8 +62,8 @@ endpoints:
         deprecated: false
     cleanBodyParameters:
       speciality_id: 17
-      experience_starting_date: '2026-07-17'
-      view_experience: false
+      experience_starting_date: '2026-07-29'
+      view_experience: true
     fileParameters: []
     responses: []
     responseFields: []
@@ -78,7 +78,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/dSpecialities/{per_page}'
+    uri: api/dSpecialities
     metadata:
       custom: []
       groupName: 'Doctor_Speciality APIs'
@@ -95,20 +95,8 @@ endpoints:
       Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters:
-      per_page:
-        custom: []
-        name: per_page
-        description: 'The number of doctors shown in each page. Defaults to 10.'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      per_page: 17
+    urlParameters: []
+    cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -378,7 +366,7 @@ endpoints:
         name: experience_starting_date
         description: 'Must be a valid date in the format <code>Y-m-d</code>.'
         required: false
-        example: '2026-07-17'
+        example: '2026-07-29'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -396,7 +384,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      experience_starting_date: '2026-07-17'
+      experience_starting_date: '2026-07-29'
       view_experience: false
     fileParameters: []
     responses: []

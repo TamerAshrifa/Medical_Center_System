@@ -173,7 +173,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/complaint/{per_page}/{with_reviewed}'
+    uri: 'api/complaint/{with_reviewed}'
     metadata:
       custom: []
       groupName: 'Patient Complaint APIs'
@@ -192,17 +192,6 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      per_page:
-        custom: []
-        name: per_page
-        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
       with_reviewed:
         custom: []
         name: with_reviewed
@@ -215,7 +204,6 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      per_page: 17
       with_reviewed: 17
     queryParameters: []
     cleanQueryParameters: []
@@ -225,8 +213,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 405
-        content: '{"did_succeed":false,"message":{"base_message":"HTTP request method not allowed, The GET method is not supported for route api\/complaint\/17\/17. Supported methods: POST."}}'
+        status: 401
+        content: '{"did_succeed":false,"message":{"base_message":"Unauthenticated; A valid token is required"}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json

@@ -14,11 +14,12 @@ class RoomService extends Service
     public function __construct(
         protected RoomRepositoryInterface $roomRepository,
     ) {
+        parent::__construct();
     }
 
-    public function paginate(int $perPage = 10): Response
+    public function paginate(): Response
     {
-        $records = $this->roomRepository->paginate($perPage);
+        $records = $this->roomRepository->paginate($this->perPage);
         return new Response(
             true,
             $this->paginationMessage($records),

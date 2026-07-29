@@ -5,10 +5,17 @@ namespace App\Repositories;
 use App\Enums\UserRoleEnum;
 use App\Models\Doctor;
 use App\Repositories\Interfaces\DoctorRepositoryInterface;
+use App\Repositories\Interfaces\UserRepositoryInterface;
 use DB;
 
 class DoctorRepository extends Repository implements DoctorRepositoryInterface
 {
+    public function __construct(
+        protected UserRepositoryInterface $userRepository,
+    ) {
+    }
+
+
     private function includedEntities(bool $withRoom, bool $withAdderAdmin, bool $withUser): array
     {
         $included = [];
@@ -60,7 +67,7 @@ class DoctorRepository extends Repository implements DoctorRepositoryInterface
         $user = $doctor->user;
         try {
             return DB::transaction(function () use ($doctor, $user) {
-                if (!$doctor->delete() || !((new UserRepository())->deleteByObject($user)))
+                if (!$doctor->delete() || !($this->userRepository->deleteByObject($user)))
                     throw new \LogicException();
                 return true;
             });

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\DTOs\User\DoctorSpecialityDTO;
-use App\DTOs\User\DoctorSpecialityDTOUpdate;
+use App\DTOs\DoctorSpeciality\DoctorSpecialityDTO;
+use App\DTOs\DoctorSpeciality\DoctorSpecialityDTOUpdate;
 use App\Enums\UserRoleEnum;
 use App\Http\Requests\DoctorSpeciality\StoreDoctorSpecialityRequest;
 use App\Http\Requests\DoctorSpeciality\UpdateDoctorSpecialityRequest;
@@ -81,11 +81,10 @@ class DoctorSpecialityController extends Controller
      * 
      * ###For: Web
      * Only admins are allowed to use this API.
-     * @urlParam per_page integer required The number of doctors shown in each page. Defaults to 10. 
      */
-    public function index(int $per_page)
+    public function index()
     {
-        $response = $this->doctorSpecialityService->paginate($per_page);
+        $response = $this->doctorSpecialityService->paginate();
 
         if ($response->data)
             $response->data = $this->resource($response->data, true);

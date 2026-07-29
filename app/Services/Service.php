@@ -4,8 +4,10 @@ namespace App\Services;
 
 abstract class Service
 {
+    protected $perPage;
     public function __construct(
     ) {
+        $this->perPage = 10;
     }
 
     protected function paginationMessage($paginationRecords): array

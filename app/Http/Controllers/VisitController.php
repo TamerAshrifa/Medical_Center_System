@@ -49,11 +49,10 @@ class VisitController extends Controller
      * 
      * ###For: Web
      * Only admins are allowed to use this API
-     * @urlParam per_page integer required min:1 The number of items be shown in each page. Defaults to 10. 
      */
-    public function paginate(int $per_page = 10)
+    public function paginate()
     {
-        $response = $this->visitService->paginate($per_page);
+        $response = $this->visitService->paginate();
 
         if ($response->data)
             $response->data = $this->resource($response->data, true);
@@ -66,12 +65,11 @@ class VisitController extends Controller
      * ###For: Web, Mobile(Doctor)
      * Only admins and doctors are allowed to use this API
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
-     * @urlParam per_page integer required min:1 The number of items be shown in each page. Defaults to 10. 
      * @urlParam doctor_id integer required min:1 The ID number of doctor to view it's visits 
      */
-    public function paginateDoctorVisits(int $per_page = 10, int $doctor_id)
+    public function paginateDoctorVisits(int $doctor_id)
     {
-        $response = $this->visitService->paginateDoctorVisits($per_page, $doctor_id);
+        $response = $this->visitService->paginateDoctorVisits($doctor_id);
 
         if ($response->data)
             $response->data = $this->resource($response->data, true);
@@ -84,12 +82,11 @@ class VisitController extends Controller
      * ###For: Web, Mobile(Patient)
      * Only admins and patients are allowed to use this API
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
-     * @urlParam per_page integer required min:1 The number of items be shown in each page. Defaults to 10. 
      * @urlParam patient_id integer required min:1 The ID number of patient to view it's visits 
      */
-    public function paginatePatientVisits(int $per_page = 10, int $patient_id)
+    public function paginatePatientVisits(int $patient_id)
     {
-        $response = $this->visitService->paginatePatientVisits($per_page, $patient_id);
+        $response = $this->visitService->paginatePatientVisits($patient_id);
 
         if ($response->data)
             $response->data = $this->resource($response->data, true);

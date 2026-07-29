@@ -12,10 +12,11 @@ class VisitService extends Service
     public function __construct(
         protected VisitRepositoryInterface $visitRepositoryInterface,
     ) {
+        parent::__construct();
     }
-    public function paginate(int $perPage = 10): Response
+    public function paginate(): Response
     {
-        $records = $this->visitRepositoryInterface->paginate($perPage);
+        $records = $this->visitRepositoryInterface->paginate($this->perPage);
 
         return new Response(
             true,
@@ -23,9 +24,9 @@ class VisitService extends Service
             $records->items()
         );
     }
-    public function paginateDoctorVisits(int $perPage = 10, int $doctorId): Response
+    public function paginateDoctorVisits(int $doctorId): Response
     {
-        $records = $this->visitRepositoryInterface->paginateDoctorVisits($perPage, $doctorId);
+        $records = $this->visitRepositoryInterface->paginateDoctorVisits($this->perPage, $doctorId);
 
         return new Response(
             true,
@@ -33,9 +34,9 @@ class VisitService extends Service
             $records->items()
         );
     }
-    public function paginatePatientVisits(int $perPage = 10, int $patientId): Response
+    public function paginatePatientVisits(int $patientId): Response
     {
-        $records = $this->visitRepositoryInterface->paginatePatientVisits($perPage, $patientId);
+        $records = $this->visitRepositoryInterface->paginatePatientVisits($this->perPage, $patientId);
 
         return new Response(
             true,

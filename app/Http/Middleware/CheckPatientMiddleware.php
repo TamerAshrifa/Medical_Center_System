@@ -3,12 +3,10 @@
 namespace App\Http\Middleware;
 
 use App\Enums\UserRoleEnum;
-use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
-use Laravel\Sanctum\PersonalAccessToken;
 
 class CheckPatientMiddleware
 {

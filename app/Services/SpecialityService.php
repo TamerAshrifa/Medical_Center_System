@@ -13,6 +13,7 @@ class SpecialityService extends Service
     public function __construct(
         protected SpecialityRepositoryInterface $specialityRepository,
     ) {
+        parent::__construct();
     }
 
     private function fillIncludedEntities(
@@ -32,12 +33,12 @@ class SpecialityService extends Service
                 break;
         }
     }
-    public function paginate(int $perPage = 10, UserRoleEnum $userRole): Response
+    public function paginate(UserRoleEnum $userRole): Response
     {
         $isWithAdderAdmin = $isWithDoctors = false;
         $this->fillIncludedEntities($userRole, $isWithAdderAdmin, $isWithDoctors);
 
-        $records = $this->specialityRepository->paginate($perPage, $isWithAdderAdmin, $isWithDoctors);
+        $records = $this->specialityRepository->paginate($this->perPage, $isWithAdderAdmin, $isWithDoctors);
 
         return new Response(
             true,

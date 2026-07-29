@@ -91,7 +91,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/specialities/{per_page}'
+    uri: api/specialities
     metadata:
       custom: []
       groupName: 'Speciality APIs'
@@ -109,20 +109,8 @@ endpoints:
       Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters:
-      per_page:
-        custom: []
-        name: per_page
-        description: 'The number of specialities shown in each page. Defaults to 10.'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      per_page: 17
+    urlParameters: []
+    cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

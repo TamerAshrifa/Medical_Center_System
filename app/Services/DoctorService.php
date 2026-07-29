@@ -18,6 +18,7 @@ class DoctorService extends Service
         protected DoctorRepositoryInterface $doctorRepository,
         protected UserRepositoryInterface $userRepository
     ) {
+        parent::__construct();
     }
 
     private function fillIncludedEntities(bool &$withRoom, bool &$withAdderAdmin, UserRoleEnum $currentUserRole): void
@@ -35,11 +36,11 @@ class DoctorService extends Service
                 break;
         }
     }
-    public function paginate(int $perPage = 10, bool $withUnactive = false, UserRoleEnum $currentUserRole): Response
+    public function paginate(bool $withUnactive = false, UserRoleEnum $currentUserRole): Response
     {
         $isWithRoom = $isWithAdderAdmin = false;
         $this->fillIncludedEntities($isWithRoom, $isWithAdderAdmin, $currentUserRole);
-        $records = $this->doctorRepository->paginate($perPage, $withUnactive, $isWithRoom, $isWithAdderAdmin);
+        $records = $this->doctorRepository->paginate($this->perPage, $withUnactive, $isWithRoom, $isWithAdderAdmin);
 
         return new Response(
             true,

@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\DTOs\Appointment\AppointmentDTO;
 use App\DTOs\Transfer\TransferDTO;
-
 use App\GeneralClasses\Response;
 use App\Mail\TransferToDoctorAppointmentChangedMail;
 use App\Mail\TransferToDoctorMail;
@@ -21,28 +20,29 @@ class TransferService extends Service
         protected TransferRepositoryInterface $transferRepository,
         protected AppointmentService $appointmentService,
     ) {
+        parent::__construct();
     }
-    public function paginateReferredTransfers(int $perPage = 10, bool $withAttended, int $doctorId): Response
+    public function paginateReferredTransfers(bool $withAttended, int $doctorId): Response
     {
-        $records = $this->transferRepository->paginateReferredTransfers($perPage, $withAttended, $doctorId);
+        $records = $this->transferRepository->paginateReferredTransfers($this->perPage, $withAttended, $doctorId);
         return new Response(
             true,
             $this->paginationMessage($records),
             $records->items()
         );
     }
-    public function paginateReceivedTransfers(int $perPage = 10, bool $withAttended, int $doctorId): Response
+    public function paginateReceivedTransfers(bool $withAttended, int $doctorId): Response
     {
-        $records = $this->transferRepository->paginateReceivedTransfers($perPage, $withAttended, $doctorId);
+        $records = $this->transferRepository->paginateReceivedTransfers($this->perPage, $withAttended, $doctorId);
         return new Response(
             true,
             $this->paginationMessage($records),
             $records->items()
         );
     }
-    public function paginate(int $perPage = 10, bool $withAttended): Response
+    public function paginate(bool $withAttended): Response
     {
-        $records = $this->transferRepository->paginate($withAttended, $perPage);
+        $records = $this->transferRepository->paginate($withAttended, $this->perPage);
         return new Response(
             true,
             $this->paginationMessage($records),

@@ -5,7 +5,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/visits/{per_page}'
+    uri: api/visits
     metadata:
       custom: []
       groupName: 'Visit APIs'
@@ -22,20 +22,8 @@ endpoints:
       Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
-    urlParameters:
-      per_page:
-        custom: []
-        name: per_page
-        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
-    cleanUrlParameters:
-      per_page: 17
+    urlParameters: []
+    cleanUrlParameters: []
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -63,7 +51,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/visits/DV/{per_page}/{doctor_id}'
+    uri: 'api/visits/DV/{doctor_id}'
     metadata:
       custom: []
       groupName: 'Visit APIs'
@@ -82,17 +70,6 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      per_page:
-        custom: []
-        name: per_page
-        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
       doctor_id:
         custom: []
         name: doctor_id
@@ -105,7 +82,6 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      per_page: 17
       doctor_id: 17
     queryParameters: []
     cleanQueryParameters: []
@@ -134,7 +110,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/visits/PV/{per_page}/{patient_id}'
+    uri: 'api/visits/PV/{patient_id}'
     metadata:
       custom: []
       groupName: 'Visit APIs'
@@ -153,17 +129,6 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      per_page:
-        custom: []
-        name: per_page
-        description: 'min:1 The number of items be shown in each page. Defaults to 10.'
-        required: true
-        example: 17
-        type: integer
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        deprecated: false
       patient_id:
         custom: []
         name: patient_id
@@ -176,7 +141,6 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      per_page: 17
       patient_id: 17
     queryParameters: []
     cleanQueryParameters: []
