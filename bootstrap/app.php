@@ -126,7 +126,7 @@ return Application::configure(basePath: dirname(__DIR__))
             ], 429);
         });
 
-        $exceptions->render(function (TransportExceptioN $e, $request) {
+        $exceptions->render(function (TransportException $e, $request) {
             return response()->json([
                 'did_succeed' => false,
                 'message' => Response::messageToArray('No internet connection'),

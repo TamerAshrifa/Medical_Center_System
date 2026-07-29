@@ -188,7 +188,7 @@ class DoctorController extends Controller
      * @urlParam id integer required The ID of doctor
      * @urlParam room_id integer required The ID of room to assign the doctor to
      */
-    public function activate(int $id, bool $room_id)
+    public function activate(int $id, int $room_id)
     {
         $response = $this->doctorService->activate($id, $room_id);
 

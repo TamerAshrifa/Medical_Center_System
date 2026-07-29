@@ -27,6 +27,15 @@ class ShowVisitMiddleware
 
         $user = Auth::user();
 
+        if (!$user->role)
+            return response()->json([
+                'did_succeed' => false,
+                'message' => 'Unauthorized',
+            ], 403);
+
+        if ($user->role == UserRoleEnum::ADMIN)
+            return $next($request);
+
         if (
             $user->role == UserRoleEnum::PATIENT &&
             $user->patient->id != Visit::findOrFail($request->route('id'), ['appointment_id'])->appointment->patient_id

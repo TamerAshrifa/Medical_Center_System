@@ -22,7 +22,15 @@ class ShowAppointmentMiddleware
         if ($response instanceof JsonResponse && $response->getStatusCode() == 200) {
             $user = Auth::user();
             $data = $response->getData(true); // array
-            if ($user->role == UserRoleEnum::PATIENT && $user->patient->id != ($data['data'])['patient_id'])
+
+            if (!$user->role)
+                return response()->json([
+                    'did_succeed' => false,
+                    'message' => 'Unauthorized',
+                ], 403);
+            else if ($user->role == UserRoleEnum::ADMIN)
+                return $response;
+            else if ($user->role == UserRoleEnum::PATIENT && $user->patient->id != ($data['data'])['patient_id'])
                 return response()->json([
                     'did_succeed' => false,
                     'message' => 'Patients can\'t see other patients\' appointments',

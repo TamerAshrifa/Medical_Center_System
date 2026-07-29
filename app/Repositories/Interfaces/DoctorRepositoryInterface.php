@@ -27,6 +27,6 @@ interface DoctorRepositoryInterface extends RepositoryInterface
     public function fullname(int $id): string;
     public function search(string $searchWord, bool $isSearcherAdmin);
     public function deactivate(int $id): bool;
-    public function activate(int $id, bool $roomId): bool;
+    public function activate(int $id, int $roomId): bool;
 
 }

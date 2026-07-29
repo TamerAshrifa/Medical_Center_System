@@ -26,6 +26,14 @@ class ShowPatientMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $loggedUser = Auth::user();
+        if (!$loggedUser->role)
+            return response()->json([
+                'did_succeed' => false,
+                'message' => 'Unauthorized',
+            ], 403);
+
+        if ($loggedUser->role == UserRoleEnum::ADMIN)
+            return $next($request);
 
         if ($loggedUser->role == UserRoleEnum::PATIENT)
             if ($loggedUser->patient->id != $request->route('id'))

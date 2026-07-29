@@ -116,7 +116,7 @@ class DoctorRepository extends Repository implements DoctorRepositoryInterface
             'room_id' => null,
         ]) > 0;
     }
-    public function activate(int $id, bool $roomId): bool
+    public function activate(int $id, int $roomId): bool
     {
         return Doctor::where('id', $id)->update([
             'is_active' => true,
