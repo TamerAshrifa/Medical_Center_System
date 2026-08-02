@@ -3,16 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Enums\OtpTypeEnum;
+use App\Enums\UserRoleEnum;
 use App\Http\Requests\AuthController\ForgotPasswordRequest;
 use App\Http\Requests\AuthController\LoginRequest;
 use App\Http\Requests\AuthController\RegisterRequest;
 use App\Http\Requests\AuthController\ResetPasswordRequest;
 use App\Http\Requests\AuthController\VerifyOtpRequest;
+use App\Http\Resources\User\UserToAdminResource;
+use App\Http\Resources\User\UserToDoctorResource;
+use App\Http\Resources\User\UserToPatientResource;
 use App\Models\Otp;
 use App\Services\OtpService;
 use App\Services\AuthService;
 use App\DTOs\User\UserDTO;
-use Laravel\Sanctum\PersonalAccessToken;
+// use Laravel\Sanctum\PersonalAccessToken;
 
 /**
  * @group Authentication APIs
@@ -29,6 +33,19 @@ class AuthController extends Controller
     ) {
     }
 
+    private function resource($record)
+    {
+        switch ($record->role) {
+            case UserRoleEnum::ADMIN:
+                return new UserToAdminResource($record);
+            case UserRoleEnum::DOCTOR:
+                return new UserToDoctorResource($record);
+            case UserRoleEnum::PATIENT:
+                return new UserToPatientResource($record);
+        }
+    }
+
+
     /**
      * Register New User
      * 
@@ -37,7 +54,6 @@ class AuthController extends Controller
      * @bodyParam date_of_birth string required Must be a valid date. Example: 2004-06-14
      * @bodyParam password_confirmation string required Must be as same as the entered password.
      * @bodyParam phone string required Must be a valid phone number. Example: +963999999999
-     * @responseFile 201 storage/responses/AuthController/register_201_Created.json
      */
     public function register(RegisterRequest $request)
     {
@@ -47,6 +63,8 @@ class AuthController extends Controller
 
         $response = $this->userService->register(UserDTO::fromRequest($userData));
 
+        $response->data['user'] = $this->resource($response->data['user']);
+
         return $this->jsonResponse($response);
     }
 
@@ -55,11 +73,6 @@ class AuthController extends Controller
      * 
      * ###For: Mobile (Patient - Doctor), Web
      * @unauthenticated
-     * @responseFile 200 storage/responses/AuthController/verifyOtp_200_OK.json
-     * @responseFile 200 storage/responses/AuthController/verifyOtp_200_2_OK.json
-     * @responseFile 400 storage/responses/AuthController/verifyOtp_400_Bad_Reqeust.json
-     * @responseFile 400 storage/responses/AuthController/verifyOtp_400_2_Bad_Reqeust.json
-     * @responseFile 400 storage/responses/AuthController/verifyOtp_400_3_Bad_Reqeust.json
      */
     public function verifyOtp(VerifyOtpRequest $request)
     {
@@ -75,19 +88,21 @@ class AuthController extends Controller
         if (!$response->did_succeed)
             return $this->jsonResponse($response);
 
+        $response->data['user'] = $this->resource($response->data['user']);
+
         if ($isForgetOtp)
             return response()->json([
                 'did_succeed' => $response->did_succeed,
                 'message' => $response->message,
-                'user_id' => PersonalAccessToken::findToken($response->data)->tokenable->id,
-                'reset_token' => $response->data,
+                // 'user_id' => PersonalAccessToken::findToken($response->data)->tokenable->id,
+                'reset_token_and_user' => $response->data,
             ], $response->statusCode);
 
         return response()->json([
             'did_succeed' => $response->did_succeed,
             'message' => $response->message,
-            'user_id' => PersonalAccessToken::findToken($response->data)->tokenable->id,
-            'token' => $response->data,
+            // 'user_id' => PersonalAccessToken::findToken($response->data)->tokenable->id,
+            'token_and_user' => $response->data,
         ], $response->statusCode);
     }
 
@@ -96,8 +111,6 @@ class AuthController extends Controller
      * 
      * ###For: Mobile (Patient - Doctor), Web
      * @unauthenticated
-     * @responseFile 200 storage/responses/AuthController/login_200_OK.json
-     * @responseFile 400 storage/responses/AuthController/login_400_Bad_Request.json
      */
     public function login(LoginRequest $request)
     {
@@ -110,7 +123,6 @@ class AuthController extends Controller
      * 
      * ###For: Mobile (Patient - Doctor), Web
      * @unauthenticated
-     * @responseFile 200 storage/responses/AuthController/forgotPassword_200_OK.json
      */
     public function forgotPassword(ForgotPasswordRequest $request)
     {
@@ -124,9 +136,6 @@ class AuthController extends Controller
      * ###For: Mobile (Patient - Doctor), Web
      * @unauthenticated
      * @bodyParam password_confirmation string required Must be as same as the entered password.
-     * @responseFile 200 storage/responses/AuthController/resetPassword_200_OK.json
-     * @responseFile 400 storage/responses/AuthController/resetPassword_400_Bad_Request.json
-     * @responseFile 400 storage/responses/AuthController/resetPassword_400_2_Bad_Request.json
      */
     public function resetPassword(ResetPasswordRequest $request)
     {
@@ -134,11 +143,13 @@ class AuthController extends Controller
         if (!$response->did_succeed)
             return $this->jsonResponse($response);
 
+        $response->data['user'] = $this->resource($response->data['user']);
+
         return response()->json([
             'did_succeed' => $response->did_succeed,
             'message' => $response->message,
-            'user_id' => PersonalAccessToken::findToken($response->data)->tokenable->id,
-            'token' => $response->data,
+            // 'user_id' => PersonalAccessToken::findToken($response->data)->tokenable->id,
+            'token_and_user' => $response->data,
         ], $response->statusCode);
     }
 
@@ -146,7 +157,6 @@ class AuthController extends Controller
      * Logout User
      * 
      * ###For: Mobile (Patient - Doctor), Web
-     * @responseFile 200 storage/responses/AuthController/logout_200_OK.json
      */
     public function logout()
     {

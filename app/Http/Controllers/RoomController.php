@@ -46,7 +46,6 @@ class RoomController extends Controller
      * 
      * ###For: Web
      * Only admins are allowed to use this API.
-     * @responseFile 201 storage/responses/RoomController/store_201_Created.json
      */
     public function store(StoreRoomRequest $request): JsonResponse
     {
@@ -65,7 +64,6 @@ class RoomController extends Controller
      * 
      * ###For: Web
      * Only admins are allowed to use this API.
-     * @responseFile 201 storage/responses/RoomController/index_200_OK.json
      */
     public function index(): JsonResponse
     {
@@ -83,8 +81,6 @@ class RoomController extends Controller
      * Everyone in the system is allowed to use this API.
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
      * @urlParam roomId integer required min:1 
-     * @responseFile 404 storage/responses/RoomController/store_404_Not_Found.json
-     * @responseFile 200 storage/responses/RoomController/show_200_OK.json
      */
     public function show(int $roomId): JsonResponse
     {
@@ -101,9 +97,6 @@ class RoomController extends Controller
      * ###For: Web
      * Only admins are allowed to use this API.
      * @urlParam roomId integer required min:1
-     * @responseFile 404 storage/responses/RoomController/update_404_Not_Found.json
-     * @responseFile 200 storage/responses/RoomController/update_200_OK.json
-     * @responseFile 200 storage/responses/RoomController/update_200_2_OK.json
      */
     public function update(UpdateRoomRequest $request, int $roomId): JsonResponse
     {
@@ -120,8 +113,6 @@ class RoomController extends Controller
      * ###For: Web
      * Only admins are allowed to use this API.
      * @urlParam roomId integer required min:1
-     * @responseFile 404 storage/responses/RoomController/destroy_404_Not_Found.json
-     * @responseFile 204 storage/responses/RoomController/destroy_204_No_Content.json
      */
     public function destroy(int $roomId)
     {

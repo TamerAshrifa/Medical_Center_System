@@ -47,8 +47,6 @@ class DoctorController extends Controller
      * 
      * ###For: Web
      * Only admins are allowed to use this API.
-     * @responseFile 201 storage/responses/DoctorController/store_201_Created.json
-     * @responseFile 409 storage/responses/DoctorController/store_409_Conflict.json
      */
     public function store(StoreDoctorRequest $request)
     {
@@ -69,7 +67,6 @@ class DoctorController extends Controller
      * Everyone in the system is allowed to use this API.
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
      * @urlParam with_unactive boolean required Getting Doctors with unactive ones or only the actives?
-     * @responseFile 200 storage/responses/DoctorController/index_200_OK.json
      */
     public function index(bool $with_unactive)
     {
@@ -94,8 +91,6 @@ class DoctorController extends Controller
      * Everyone in the system is allowed to use this API.
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
      * @urlParam doctor_id integer required 
-     * @responseFile 200 storage/responses/DoctorController/show_200_OK.json
-     * @responseFile 404 storage/responses/DoctorController/show_404_Not_Found.json
      */
     public function show(int $doctor_id)
     {
@@ -130,10 +125,6 @@ class DoctorController extends Controller
      * ###For: Mobile(Doctor)
      * Only doctors are allowed to use this API.
      * @urlParam doctorId integer required min:1 
-     * @responseFile 200 storage/responses/DoctorController/update_200_OK.json
-     * @responseFile 200 storage/responses/DoctorController/update_200_2_OK.json
-     * @responseFile 403 storage/responses/DoctorController/update_403_Forbidden.json
-     * @responseFile 404 storage/responses/DoctorController/update_404_Not_Found.json
      */
     public function update(UpdateDoctorRequest $request, int $doctor_id)
     {
@@ -153,8 +144,6 @@ class DoctorController extends Controller
      * ###For: Web
      * Only admins are allowed to use this API.
      * @urlParam doctorId integer required min:1 
-     * @responseFile 204 storage/responses/DoctorController/destroy_204_No_Content.json
-     * @responseFile 404 storage/responses/DoctorController/destroy_404_Not_Found.json
      */
     public function destroy(int $doctorId)
     {

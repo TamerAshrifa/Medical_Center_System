@@ -45,7 +45,6 @@ class SpecialityController extends Controller
      * 
      * ###For: Web
      * Only admins are allowed to use this API. There is a middleware CheckAdmin on this API route
-     * @responseFile 201 storage/responses/SpecialityController/store_201_Created.json
      */
     public function store(StoreSpecialityRequest $request): JsonResponse
     {
@@ -65,7 +64,6 @@ class SpecialityController extends Controller
      * ###For: Mobile(Patient - Doctor), Web
      * Everyone in the system is allowed to use this API.
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
-     * @responseFile 200 storage/responses/SpecialityController/index_200_OK.json
      */
     public function index(): JsonResponse
     {
@@ -83,8 +81,6 @@ class SpecialityController extends Controller
      * Everyone in the system is allowed to use this API.
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
      * @urlParam specialityId integer required min:1 
-     * @responseFile 404 storage/responses/SpecialityController/show_404_Not_Found.json
-     * @responseFile 200 storage/responses/SpecialityController/show_200_OK.json
      */
     public function show(int $specialityId): JsonResponse
     {
@@ -101,9 +97,6 @@ class SpecialityController extends Controller
      * ###For: Web
      * Only admins are allowed to use this API.
      * @urlParam specialityId integer required min:1 
-     * @responseFile 404 storage/responses/SpecialityController/update_404_Not_Found.json
-     * @responseFile 200 storage/responses/SpecialityController/update_200_OK.json
-     * @responseFile 200 storage/responses/SpecialityController/update_200_2_OK.json
      */
     public function update(UpdateSpecialityRequest $request, int $specialityId): JsonResponse
     {
@@ -123,8 +116,6 @@ class SpecialityController extends Controller
      * ###For: Web
      * Only admins are allowed to use this API.
      * @urlParam specialityId integer required min:1 
-     * @responseFile 404 storage/responses/SpecialityController/destroy_404_Not_Found.json
-     * @responseFile 204 storage/responses/SpecialityController/destroy_204_No_Content.json
      */
 
     public function destroy(int $specialityId)

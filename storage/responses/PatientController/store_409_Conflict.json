@@ -1,9 +1,0 @@
-// This response be returned when:
-// The user which being tried to add already has a role (PATIENT - ADMIN - DOCTOR).
-
-{
-    "did_succeed": false,
-    "message": "User is already a patient, it can\'t be modified"
-}
-
-// In the previous example the user-role was patient, so the response was "already a patient", other cases are: "already a patient" - "already a patient"

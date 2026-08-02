@@ -51,9 +51,9 @@ endpoints:
       from_date:
         custom: []
         name: from_date
-        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-07-29 00:00:00</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-08-02 00:00:00</code>.'
         required: true
-        example: '2107-08-27'
+        example: '2107-09-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -64,7 +64,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>from_date</code>.'
         required: true
-        example: '2107-08-27'
+        example: '2107-09-01'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -95,8 +95,8 @@ endpoints:
         nullable: true
         deprecated: false
     cleanBodyParameters:
-      from_date: '2107-08-27'
-      to_date: '2107-08-27'
+      from_date: '2107-09-01'
+      to_date: '2107-09-01'
       reason_type: other
       justification: consequatur
     fileParameters: []

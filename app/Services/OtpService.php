@@ -69,7 +69,10 @@ class OtpService extends Service
         return new Response(
             true,
             Response::messageToArray('Email verified successfully'),
-            $user->createToken('auth_token')->plainTextToken,
+            [
+                'token' => $user->createToken('auth_token')->plainTextToken,
+                'user' => $user,
+            ]
         );
     }
     private function _processLoginVerify(User $user, Otp $otpRecord): Response
@@ -82,7 +85,10 @@ class OtpService extends Service
         return new Response(
             true,
             Response::messageToArray($message),
-            $user->createToken('auth_token')->plainTextToken,
+            [
+                'token' => $user->createToken('auth_token')->plainTextToken,
+                'user' => $user,
+            ]
         );
     }
     private function _processForgotPasswordVerify(User $user, Otp $otpRecord): Response

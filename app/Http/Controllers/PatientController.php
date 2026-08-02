@@ -12,7 +12,6 @@ use App\Http\Resources\Patient\PatientToDoctorResource;
 use App\Http\Resources\Patient\PatientToItselfResource;
 use App\Models\User;
 use App\Services\PatientService;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * @group Patient APIs
@@ -69,7 +68,6 @@ class PatientController extends Controller
      * 
      * ###For: Web
      * Only admins are allowed to use this API.
-     * @responseFile 200 storage/responses/PatientController/index_200_OK.json
      */
     public function index()
     {
@@ -87,9 +85,6 @@ class PatientController extends Controller
      * Everyone in the system can use this API, but patients can only see their own information
      * ###⚠ Important Info: The response's "data" field content would change based on the logged-in user role!
      * @urlParam id integer required min:1
-     * @responseFile 403 storage/responses/PatientController/show_403_Forbidden.json
-     * @responseFile 404 storage/responses/PatientController/show_404_Not_Found.json
-     * @responseFile 200 storage/responses/PatientController/show_200_OK.json
      */
     public function show(int $id)
     {
@@ -106,10 +101,6 @@ class PatientController extends Controller
      * ###For: Mobile (Patient)
      * Only patients are allowed to use this API.
      * @urlParam patientId integer required min:1
-     * @responseFile 403 storage/responses/PatientController/update_403_Forbidden.json
-     * @responseFile 404 storage/responses/PatientController/update_404_Not_Found.json
-     * @responseFile 200 storage/responses/PatientController/update_200_OK.json
-     * @responseFile 200 storage/responses/PatientController/update_200_2_OK.json
      */
     public function update(UpdatePatientRequest $request, int $id)
     {
@@ -129,8 +120,6 @@ class PatientController extends Controller
      * ###For: Web
      * Only admins are allowed to use this API.
      * @urlParam id integer required
-     * @responseFile 404 storage/responses/PatientController/destroy_404_Not_Found.json
-     * @responseFile 204 storage/responses/PatientController/destroy_204_No_Content.json
      */
     public function destroy(int $id)
     {

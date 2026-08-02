@@ -156,17 +156,7 @@ endpoints:
       password_confirmation: consequatur
     fileParameters:
       photo: null
-    responses:
-      -
-        custom: []
-        status: 201
-        content: |-
-          {
-            "did_succeed": true,
-            "message": "OTP-Code was sent to tamrashryft2@gmail.com successfully, please check your inbox"
-          }
-        headers: []
-        description: ''
+    responses: []
     responseFields: []
     auth: []
     controller: null
@@ -225,59 +215,7 @@ endpoints:
       email: qkunze@example.com
       otp_code: 17
     fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-              "did_succeed": true,
-              "message": "Email verified successfully",
-              "token_or_reset_token": "5|9cc4ues9eb6rAXxanCXiPxICZcUFK6PgMl7IxcXXf287c850"
-          }
-        headers: []
-        description: ''
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-              "did_succeed": true,
-              "message": "OTP-Code verified successfully, you can now reset your password",
-              "token_or_reset_token": "$2y$12$5MftcDSWXj5UTaxuYL3eTOI2iP6G6jSZ5Rv30Hvc6gh8OKvl.0j/K"
-          }
-        headers: []
-        description: ''
-      -
-        custom: []
-        status: 400
-        content: |2-
-           {
-              "did_succeed": false,
-              "message": "Invalid OTP-Code"
-          }
-        headers: []
-        description: ''
-      -
-        custom: []
-        status: 400
-        content: |-
-          {
-              "did_succeed": false,
-              "message": "Sorry, this OTP-Code has expired, a new one was sent to your email, please check your inbox"
-          }
-        headers: []
-        description: ''
-      -
-        custom: []
-        status: 400
-        content: |-
-          {
-              "did_succeed": false,
-              "message": "Email is already verified, you can login"
-          }
-        headers: []
-        description: ''
+    responses: []
     responseFields: []
     auth: []
     controller: null
@@ -336,28 +274,7 @@ endpoints:
       email_or_username: vmqeopfuudtdsufvyvddq
       password: OP>@;4
     fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-              "did_succeed": true,
-              "message": "OTP-Code was sent to tamrashryft2@gmail.com successfully, please check your inbox"
-          }
-        headers: []
-        description: ''
-      -
-        custom: []
-        status: 400
-        content: |+
-          {
-              "did_succeed": false,
-              "message": "Wrong email or password; Or the email is not verified, OTP-Code was sent to your email, please check your inbox"
-          }
-
-        headers: []
-        description: ''
+    responses: []
     responseFields: []
     auth: []
     controller: null
@@ -404,17 +321,7 @@ endpoints:
     cleanBodyParameters:
       email: qkunze@example.com
     fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |
-          {
-              "did_succeed": true,
-              "message": "If the email exists, an OTP-Code was sent to it successfully, please check your gmail"
-          }
-        headers: []
-        description: ''
+    responses: []
     responseFields: []
     auth: []
     controller: null
@@ -497,38 +404,7 @@ endpoints:
       new_password: mqeopfuudtdsufvyvddqamniihfqcoynlazghdtqtqxbajwbpilpmufinllwloauydlsmsjuryv
       password_confirmation: consequatur
     fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-              "did_succeed": true,
-              "message": "Your password was updated successfully",
-              "token": "6|1rbJvOIdEoHxeSKIiT6L66vnQqvBrtXFIRaxDJApa25692ae"
-          }
-        headers: []
-        description: ''
-      -
-        custom: []
-        status: 400
-        content: |-
-          {
-              "did_succeed": false,
-              "message": "Invalid reset-token"
-          }
-        headers: []
-        description: ''
-      -
-        custom: []
-        status: 400
-        content: |-
-          {
-              "did_succeed": false,
-              "message": "Sorry, the reset-token has expired, a new OTP-Code was sent to your email, please check your inbox"
-          }
-        headers: []
-        description: ''
+    responses: []
     responseFields: []
     auth: []
     controller: null
@@ -564,17 +440,7 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses:
-      -
-        custom: []
-        status: 200
-        content: |-
-          {
-              "did_succeed": true,
-              "message": "User logged-out successfully"
-          }
-        headers: []
-        description: ''
+    responses: []
     responseFields: []
     auth:
       - headers

@@ -334,8 +334,8 @@ Only admins are allowed to use this API.</a>
                                                                                 <li class="tocify-item level-2" data-unique="patient-complaint-apis-GETapi-complaint-s--id-">
                                 <a href="#patient-complaint-apis-GETapi-complaint-s--id-">Show a Patient-Complaint</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="patient-complaint-apis-GETapi-complaint--with_reviewed-">
-                                <a href="#patient-complaint-apis-GETapi-complaint--with_reviewed-">View all Patients' Complaints</a>
+                                                                                <li class="tocify-item level-2" data-unique="patient-complaint-apis-GETapi-complaint-a--with_reviewed-">
+                                <a href="#patient-complaint-apis-GETapi-complaint-a--with_reviewed-">View all Patients' Complaints</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="patient-complaint-apis-POSTapi-complaint--reply---id-">
                                 <a href="#patient-complaint-apis-POSTapi-complaint--reply---id-">Make a Patient-Complaint Reviewed</a>
@@ -451,7 +451,7 @@ Only admins are allowed to use this API.</a>
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: July 29, 2026</li>
+        <li>Last updated: August 2, 2026</li>
     </ul>
 </div>
 
@@ -509,7 +509,7 @@ acounts for them in the appropriate table and permissions; After an admin makes,
     --form "gender="\
     --form "username=mqeopfuudtdsufvyv"\
     --form "password_confirmation=consequatur"\
-    --form "photo=@C:\Users\USER\AppData\Local\Temp\php30E4.tmp" </code></pre></div>
+    --form "photo=@C:\Users\USER\AppData\Local\Temp\php451C.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -543,17 +543,7 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-r">
-            <blockquote>
-            <p>Example response (201):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
-    &quot;message&quot;: &quot;OTP-Code was sent to tamrashryft2@gmail.com successfully, please check your inbox&quot;
-}</code>
- </pre>
-    </span>
+</span>
 <span id="execution-results-POSTapi-r" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-r"></span>:
@@ -742,7 +732,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php30E4.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php451C.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>password_confirmation</code></b>&nbsp;&nbsp;
@@ -805,59 +795,7 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-v">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
-    &quot;message&quot;: &quot;Email verified successfully&quot;,
-    &quot;token_or_reset_token&quot;: &quot;5|9cc4ues9eb6rAXxanCXiPxICZcUFK6PgMl7IxcXXf287c850&quot;
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
-    &quot;message&quot;: &quot;OTP-Code verified successfully, you can now reset your password&quot;,
-    &quot;token_or_reset_token&quot;: &quot;$2y$12$5MftcDSWXj5UTaxuYL3eTOI2iP6G6jSZ5Rv30Hvc6gh8OKvl.0j/K&quot;
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (400):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Invalid OTP-Code&quot;
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (400):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Sorry, this OTP-Code has expired, a new one was sent to your email, please check your inbox&quot;
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (400):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Email is already verified, you can login&quot;
-}</code>
- </pre>
-    </span>
+</span>
 <span id="execution-results-POSTapi-v" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-v"></span>:
@@ -1003,27 +941,7 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-l">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
-    &quot;message&quot;: &quot;OTP-Code was sent to tamrashryft2@gmail.com successfully, please check your inbox&quot;
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (400):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Wrong email or password; Or the email is not verified, OTP-Code was sent to your email, please check your inbox&quot;
-}</code>
- </pre>
-    </span>
+</span>
 <span id="execution-results-POSTapi-l" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-l"></span>:
@@ -1167,17 +1085,7 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-f">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
-    &quot;message&quot;: &quot;If the email exists, an OTP-Code was sent to it successfully, please check your gmail&quot;
-}</code>
- </pre>
-    </span>
+</span>
 <span id="execution-results-POSTapi-f" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-f"></span>:
@@ -1315,38 +1223,7 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-re">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
-    &quot;message&quot;: &quot;Your password was updated successfully&quot;,
-    &quot;token&quot;: &quot;6|1rbJvOIdEoHxeSKIiT6L66vnQqvBrtXFIRaxDJApa25692ae&quot;
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (400):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Invalid reset-token&quot;
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (400):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Sorry, the reset-token has expired, a new OTP-Code was sent to your email, please check your inbox&quot;
-}</code>
- </pre>
-    </span>
+</span>
 <span id="execution-results-POSTapi-re" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-re"></span>:
@@ -1509,17 +1386,7 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-logout">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
-    &quot;message&quot;: &quot;User logged-out successfully&quot;
-}</code>
- </pre>
-    </span>
+</span>
 <span id="execution-results-POSTapi-logout" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-logout"></span>:
@@ -1633,10 +1500,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "email=russel.bert@example.net"\
     --form "password=dl4m{o,+"\
     --form "phone=qamniihfqcoynlazg"\
-    --form "date_of_birth=2020-11-23"\
-    --form "gender="\
+    --form "date_of_birth=2020-11-28"\
+    --form "gender=1"\
     --form "username=mqeopfuudtdsufvyv"\
-    --form "photo=@C:\Users\USER\AppData\Local\Temp\php3114.tmp" </code></pre></div>
+    --form "photo=@C:\Users\USER\AppData\Local\Temp\php47DC.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -1656,8 +1523,8 @@ body.append('last_name', 'eop');
 body.append('email', 'russel.bert@example.net');
 body.append('password', 'dl4m{o,+');
 body.append('phone', 'qamniihfqcoynlazg');
-body.append('date_of_birth', '2020-11-23');
-body.append('gender', '');
+body.append('date_of_birth', '2020-11-28');
+body.append('gender', '1');
 body.append('username', 'mqeopfuudtdsufvyv');
 body.append('photo', document.querySelector('input[name="photo"]').files[0]);
 
@@ -1822,10 +1689,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date_of_birth"                data-endpoint="POSTapi-users"
-               value="2020-11-23"
+               value="2020-11-28"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date before <code>2026-07-29</code>. Example: <code>2020-11-23</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date before <code>2026-08-02</code>. Example: <code>2020-11-28</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -1847,7 +1714,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>username</code></b>&nbsp;&nbsp;
@@ -1871,7 +1738,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php3114.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php47DC.tmp</code></p>
         </div>
         </form>
 
@@ -2363,10 +2230,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "first_name=vmq"\
     --form "last_name=eop"\
     --form "phone=fuudtdsufvyvddqam"\
-    --form "date_of_birth=2026-07-29"\
-    --form "gender=1"\
+    --form "date_of_birth=2026-08-02"\
+    --form "gender="\
     --form "username=niihfqcoynlazghdt"\
-    --form "photo=@C:\Users\USER\AppData\Local\Temp\php3172.tmp" </code></pre></div>
+    --form "photo=@C:\Users\USER\AppData\Local\Temp\php4E36.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2384,8 +2251,8 @@ const body = new FormData();
 body.append('first_name', 'vmq');
 body.append('last_name', 'eop');
 body.append('phone', 'fuudtdsufvyvddqam');
-body.append('date_of_birth', '2026-07-29');
-body.append('gender', '1');
+body.append('date_of_birth', '2026-08-02');
+body.append('gender', '');
 body.append('username', 'niihfqcoynlazghdt');
 body.append('photo', document.querySelector('input[name="photo"]').files[0]);
 
@@ -2539,10 +2406,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date_of_birth"                data-endpoint="PUTapi-users--id-"
-               value="2026-07-29"
+               value="2026-08-02"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Example: <code>2026-07-29</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Example: <code>2026-08-02</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -2564,7 +2431,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>username</code></b>&nbsp;&nbsp;
@@ -2588,7 +2455,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php3172.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php4E36.tmp</code></p>
         </div>
         </form>
 
@@ -2830,121 +2697,22 @@ fetch(url, {
 
 <span id="example-responses-GETapi-patients">
             <blockquote>
-            <p>Example response (200):</p>
+            <p>Example response (401):</p>
         </blockquote>
-                <pre>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: {
-        &quot;did_succeed&quot;: true,
-        &quot;current_page_number&quot;: 1,
-        &quot;last_page_number&quot;: 3,
-        &quot;patients_per_page&quot;: 4,
-        &quot;next_page_url&quot;: &quot;http://127.0.0.1:8000/api/patients/4?page=2&quot;,
-        &quot;previous_page_url&quot;: null,
-        &quot;first_page_url&quot;: &quot;http://127.0.0.1:8000/api/patients/4?page=1&quot;,
-        &quot;last_page_url&quot;: &quot;http://127.0.0.1:8000/api/patients/4?page=3&quot;,
-        &quot;total_patients_number&quot;: 11
-    },
-    &quot;data&quot;: [
-        {
-            &quot;id&quot;: 14,
-            &quot;allergies&quot;: &quot;consequatur&quot;,
-            &quot;chronic_diseases&quot;: &quot;consequatur&quot;,
-            &quot;user&quot;: {
-                &quot;id&quot;: 31,
-                &quot;first_name&quot;: &quot;vmq&quot;,
-                &quot;last_name&quot;: &quot;eop&quot;,
-                &quot;email&quot;: &quot;tamrashryft2@gmail.com&quot;,
-                &quot;phone&quot;: &quot;+963999999999&quot;,
-                &quot;date_of_birth&quot;: &quot;2004-06-13T21:00:00.000000Z&quot;,
-                &quot;gender&quot;: &quot;Male&quot;,
-                &quot;photo&quot;: null,
-                &quot;username&quot;: &quot;hdtqtqxbajwbpilpm&quot;,
-                &quot;role&quot;: &quot;patient&quot;,
-                &quot;email_verified_at&quot;: &quot;2026-06-05T21:12:22.000000Z&quot;,
-                &quot;created_at&quot;: &quot;2026-06-05T21:11:12.000000Z&quot;,
-                &quot;last_update_at&quot;: &quot;2026-06-06T16:46:19.000000Z&quot;
-            },
-            &quot;blood_type_id&quot;: {
-                &quot;id&quot;: 4,
-                &quot;name&quot;: &quot;A+&quot;
-            }
-        },
-        {
-            &quot;id&quot;: 1,
-            &quot;allergies&quot;: null,
-            &quot;chronic_diseases&quot;: null,
-            &quot;user&quot;: {
-                &quot;id&quot;: 16,
-                &quot;first_name&quot;: &quot;Casey Marvin&quot;,
-                &quot;last_name&quot;: &quot;Prof. Isabell Christiansen&quot;,
-                &quot;email&quot;: &quot;miller.oconnell@example.org&quot;,
-                &quot;phone&quot;: &quot;+1.678.499.5508&quot;,
-                &quot;date_of_birth&quot;: &quot;1982-11-05T22:00:00.000000Z&quot;,
-                &quot;gender&quot;: &quot;Male&quot;,
-                &quot;photo&quot;: null,
-                &quot;username&quot;: &quot;khickle&quot;,
-                &quot;role&quot;: &quot;patient&quot;,
-                &quot;email_verified_at&quot;: null,
-                &quot;created_at&quot;: &quot;2026-06-05T21:11:01.000000Z&quot;,
-                &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-            },
-            &quot;blood_type_id&quot;: {
-                &quot;id&quot;: 4,
-                &quot;name&quot;: &quot;A+&quot;
-            }
-        },
-        {
-            &quot;id&quot;: 2,
-            &quot;allergies&quot;: null,
-            &quot;chronic_diseases&quot;: null,
-            &quot;user&quot;: {
-                &quot;id&quot;: 17,
-                &quot;first_name&quot;: &quot;Miss Elsie Volkman MD&quot;,
-                &quot;last_name&quot;: &quot;Prof. Jarred Nolan Jr.&quot;,
-                &quot;email&quot;: &quot;dickens.misael@example.org&quot;,
-                &quot;phone&quot;: &quot;(830) 299-4184&quot;,
-                &quot;date_of_birth&quot;: &quot;2005-08-05T21:00:00.000000Z&quot;,
-                &quot;gender&quot;: &quot;Female&quot;,
-                &quot;photo&quot;: null,
-                &quot;username&quot;: &quot;uconn&quot;,
-                &quot;role&quot;: &quot;patient&quot;,
-                &quot;email_verified_at&quot;: null,
-                &quot;created_at&quot;: &quot;2026-06-05T21:11:01.000000Z&quot;,
-                &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-            },
-            &quot;blood_type_id&quot;: {
-                &quot;id&quot;: 8,
-                &quot;name&quot;: &quot;AB+&quot;
-            }
-        },
-        {
-            &quot;id&quot;: 3,
-            &quot;allergies&quot;: null,
-            &quot;chronic_diseases&quot;: null,
-            &quot;user&quot;: {
-                &quot;id&quot;: 18,
-                &quot;first_name&quot;: &quot;Flossie Herzog I&quot;,
-                &quot;last_name&quot;: &quot;Estella Schaefer&quot;,
-                &quot;email&quot;: &quot;kunze.giovanna@example.com&quot;,
-                &quot;phone&quot;: &quot;1-862-842-2212&quot;,
-                &quot;date_of_birth&quot;: &quot;1993-06-19T21:00:00.000000Z&quot;,
-                &quot;gender&quot;: &quot;Male&quot;,
-                &quot;photo&quot;: null,
-                &quot;username&quot;: &quot;goodwin.rosie&quot;,
-                &quot;role&quot;: &quot;patient&quot;,
-                &quot;email_verified_at&quot;: null,
-                &quot;created_at&quot;: &quot;2026-06-05T21:11:01.000000Z&quot;,
-                &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-            },
-            &quot;blood_type_id&quot;: {
-                &quot;id&quot;: 4,
-                &quot;name&quot;: &quot;A+&quot;
-            }
-        }
-    ]
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -3076,58 +2844,22 @@ fetch(url, {
 
 <span id="example-responses-GETapi-patients-s--id-">
             <blockquote>
-            <p>Example response (200):</p>
+            <p>Example response (401):</p>
         </blockquote>
-                <pre>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
-    &quot;data&quot;: {
-        &quot;id&quot;: 14,
-        &quot;allergies&quot;: &quot;consequatur&quot;,
-        &quot;chronic_diseases&quot;: &quot;consequatur&quot;,
-        &quot;user&quot;: {
-            &quot;id&quot;: 31,
-            &quot;first_name&quot;: &quot;vmq&quot;,
-            &quot;last_name&quot;: &quot;eop&quot;,
-            &quot;email&quot;: &quot;tamrashryft2@gmail.com&quot;,
-            &quot;phone&quot;: &quot;+963999999999&quot;,
-            &quot;date_of_birth&quot;: &quot;2004-06-13T21:00:00.000000Z&quot;,
-            &quot;gender&quot;: &quot;Male&quot;,
-            &quot;photo&quot;: null,
-            &quot;username&quot;: &quot;hdtqtqxbajwbpilpm&quot;,
-            &quot;role&quot;: &quot;patient&quot;,
-            &quot;email_verified_at&quot;: &quot;2026-06-05T21:12:22.000000Z&quot;,
-            &quot;created_at&quot;: &quot;2026-06-05T21:11:12.000000Z&quot;,
-            &quot;last_update_at&quot;: &quot;2026-06-06T16:46:19.000000Z&quot;
-        },
-        &quot;blood_type_id&quot;: {
-            &quot;id&quot;: 4,
-            &quot;name&quot;: &quot;A+&quot;
-        }
+    &quot;did_succeed&quot;: false,
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
     }
-}
-
-// ⚠ Important info: The response&#039;s &quot;data&quot; field content would change based on the logged-in user role! the previous example logged-in user role was ADMIN.</code>
- </pre>
-            <blockquote>
-            <p>Example response (403):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Patients can&#039;t see other patients information&quot;
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (404):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: false,
-    &quot;data&quot;: &quot;Patient not found&quot;
 }</code>
  </pre>
     </span>
@@ -3442,69 +3174,7 @@ fetch(url, {
 </span>
 
 <span id="example-responses-PUTapi-patients--id-">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
-    &quot;data&quot;: &quot;No changes detected&quot;
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-  &quot;did_succeed&quot;: true,
-  &quot;message&quot;: {
-    &quot;base_message&quot;: &quot;Patient updated successfully&quot;
-  },
-  &quot;data&quot;: {
-    &quot;id&quot;: 14,
-    &quot;allergies&quot;: &quot;dasf&quot;,
-    &quot;chronic_diseases&quot;: &quot;dddddddddd&quot;,
-    &quot;user&quot;: {
-      &quot;id&quot;: 31,
-      &quot;first_name&quot;: &quot;vmq&quot;,
-      &quot;last_name&quot;: &quot;eop&quot;,
-      &quot;email&quot;: &quot;tamrashryft2@gmail.com&quot;,
-      &quot;phone&quot;: &quot;+963999999999&quot;,
-      &quot;date_of_birth&quot;: &quot;2004-06-13T21:00:00.000000Z&quot;,
-      &quot;gender&quot;: &quot;Male&quot;,
-      &quot;photo&quot;: null,
-      &quot;username&quot;: &quot;hdtqtqxbajwbpilpm&quot;,
-    },
-    &quot;blood_type_id&quot;: {
-      &quot;id&quot;: 1,
-      &quot;name&quot;: &quot;Not_Determined&quot;
-    }
-  }
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (403):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Patients can&#039;t update other patients information&quot;
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (404):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: false,
-    &quot;data&quot;: &quot;Patient not found&quot;
-}</code>
- </pre>
-    </span>
+</span>
 <span id="execution-results-PUTapi-patients--id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PUTapi-patients--id-"></span>:
@@ -3693,23 +3363,7 @@ fetch(url, {
 </span>
 
 <span id="example-responses-DELETEapi-patients--id-">
-            <blockquote>
-            <p>Example response (204):</p>
-        </blockquote>
-                <pre>
-<code>Empty response</code>
- </pre>
-            <blockquote>
-            <p>Example response (404):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: false,
-    &quot;data&quot;: &quot;Patient not found&quot;
-}</code>
- </pre>
-    </span>
+</span>
 <span id="execution-results-DELETEapi-patients--id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-DELETEapi-patients--id-"></span>:
@@ -3863,43 +3517,7 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-rooms">
-            <blockquote>
-            <p>Example response (201):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
-    &quot;message&quot;: {
-        &quot;base_message&quot;: &quot;Room added successfully&quot;
-    },
-    &quot;data&quot;: {
-        &quot;id&quot;: 31,
-        &quot;name&quot;: &quot;AB2678&quot;,
-        &quot;monthly_rent&quot;: 250,
-        &quot;last_update_by_admin&quot;: {
-            &quot;id&quot;: 1,
-            &quot;user&quot;: {
-                &quot;id&quot;: 1,
-                &quot;first_name&quot;: &quot;Tamer&quot;,
-                &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                &quot;phone&quot;: &quot;0988138665&quot;,
-                &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                &quot;gender&quot;: &quot;Male&quot;,
-                &quot;photo&quot;: null,
-                &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                &quot;role&quot;: &quot;admin&quot;,
-                &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-            },
-            &quot;added_by_admin_id&quot;: null
-        }
-    }
-}</code>
- </pre>
-    </span>
+</span>
 <span id="execution-results-POSTapi-rooms" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-rooms"></span>:
@@ -4052,121 +3670,22 @@ fetch(url, {
 
 <span id="example-responses-GETapi-rooms">
             <blockquote>
-            <p>Example response (201):</p>
+            <p>Example response (401):</p>
         </blockquote>
-                <pre>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: {
-        &quot;did_succeed&quot;: true,
-        &quot;current_page_number&quot;: 1,
-        &quot;last_page_number&quot;: 8,
-        &quot;rooms_per_page&quot;: 4,
-        &quot;next_page_url&quot;: &quot;http://127.0.0.1:8000/api/rooms/4?page=2&quot;,
-        &quot;previous_page_url&quot;: null,
-        &quot;first_page_url&quot;: &quot;http://127.0.0.1:8000/api/rooms/4?page=1&quot;,
-        &quot;last_page_url&quot;: &quot;http://127.0.0.1:8000/api/rooms/4?page=8&quot;,
-        &quot;total_rooms_number&quot;: 31
-    },
-    &quot;data&quot;: [
-        {
-            &quot;id&quot;: 31,
-            &quot;name&quot;: &quot;AB2678&quot;,
-            &quot;monthly_rent&quot;: &quot;250.00&quot;,
-            &quot;last_update_by_admin&quot;: {
-                &quot;id&quot;: 1,
-                &quot;user&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;first_name&quot;: &quot;Tamer&quot;,
-                    &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                    &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                    &quot;phone&quot;: &quot;0988138665&quot;,
-                    &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                    &quot;gender&quot;: &quot;Male&quot;,
-                    &quot;photo&quot;: null,
-                    &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                    &quot;role&quot;: &quot;admin&quot;,
-                    &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                },
-                &quot;added_by_admin_id&quot;: null
-            }
-        },
-        {
-            &quot;id&quot;: 1,
-            &quot;name&quot;: &quot;Room 1&quot;,
-            &quot;monthly_rent&quot;: &quot;1479.00&quot;,
-            &quot;last_update_by_admin&quot;: {
-                &quot;id&quot;: 1,
-                &quot;user&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;first_name&quot;: &quot;Tamer&quot;,
-                    &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                    &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                    &quot;phone&quot;: &quot;0988138665&quot;,
-                    &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                    &quot;gender&quot;: &quot;Male&quot;,
-                    &quot;photo&quot;: null,
-                    &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                    &quot;role&quot;: &quot;admin&quot;,
-                    &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                },
-                &quot;added_by_admin_id&quot;: null
-            }
-        },
-        {
-            &quot;id&quot;: 2,
-            &quot;name&quot;: &quot;Room 2&quot;,
-            &quot;monthly_rent&quot;: &quot;1154.00&quot;,
-            &quot;last_update_by_admin&quot;: {
-                &quot;id&quot;: 1,
-                &quot;user&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;first_name&quot;: &quot;Tamer&quot;,
-                    &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                    &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                    &quot;phone&quot;: &quot;0988138665&quot;,
-                    &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                    &quot;gender&quot;: &quot;Male&quot;,
-                    &quot;photo&quot;: null,
-                    &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                    &quot;role&quot;: &quot;admin&quot;,
-                    &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                },
-                &quot;added_by_admin_id&quot;: null
-            }
-        },
-        {
-            &quot;id&quot;: 3,
-            &quot;name&quot;: &quot;Room 3&quot;,
-            &quot;monthly_rent&quot;: &quot;1931.00&quot;,
-            &quot;last_update_by_admin&quot;: {
-                &quot;id&quot;: 1,
-                &quot;user&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;first_name&quot;: &quot;Tamer&quot;,
-                    &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                    &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                    &quot;phone&quot;: &quot;0988138665&quot;,
-                    &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                    &quot;gender&quot;: &quot;Male&quot;,
-                    &quot;photo&quot;: null,
-                    &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                    &quot;role&quot;: &quot;admin&quot;,
-                    &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                },
-                &quot;added_by_admin_id&quot;: null
-            }
-        }
-    ]
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
 }</code>
  </pre>
     </span>
@@ -4298,56 +3817,21 @@ fetch(url, {
 
 <span id="example-responses-GETapi-rooms-s--roomId-">
             <blockquote>
-            <p>Example response (200):</p>
+            <p>Example response (401):</p>
         </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
-    &quot;data&quot;: {
-        &quot;id&quot;: 3,
-        &quot;name&quot;: &quot;Room 3&quot;
-    }
-}
-
-// ⚠ Important Info: The previous example was for a patient logged-in, if an admin was logged-in, the previous response&#039;s data would be like:
-//{
-//    &quot;did_succeed&quot;: true,
-//    &quot;data&quot;: {
-//        &quot;id&quot;: 3,
-//        &quot;name&quot;: &quot;Room 3&quot;,
-//        &quot;monthly_rent&quot;: &quot;1931.00&quot;,
-//        &quot;last_update_by_admin&quot;: {
-//            &quot;id&quot;: 1,
-//            &quot;user&quot;: {
-//                &quot;id&quot;: 1,
-//                &quot;first_name&quot;: &quot;Tamer&quot;,
-//                &quot;last_name&quot;: &quot;Ashrifa&quot;,
-//                &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-//                &quot;phone&quot;: &quot;0988138665&quot;,
-//                &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-//                &quot;gender&quot;: &quot;Male&quot;,
-//                &quot;photo&quot;: null,
-//                &quot;username&quot;: &quot;TamerAshrifa&quot;,
-//                &quot;role&quot;: &quot;admin&quot;,
-//                &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-//                &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-//                &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-//            },
-//            &quot;added_by_admin_id&quot;: null
-//        }
-//    }
-//}</code>
- </pre>
-            <blockquote>
-            <p>Example response (404):</p>
-        </blockquote>
-                <pre>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
     &quot;message&quot;: {
-        &quot;base_message&quot;: &quot;Room not found&quot;
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
     }
 }</code>
  </pre>
@@ -4501,67 +3985,7 @@ fetch(url, {
 </span>
 
 <span id="example-responses-PUTapi-rooms--roomId-">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
-    &quot;message&quot;: {
-        &quot;base_message&quot;: &quot;No changes detected&quot;
-    }
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
-    &quot;message&quot;: {
-        &quot;base_message&quot;: &quot;Room updated successfully&quot;
-    },
-    &quot;data&quot;: {
-        &quot;id&quot;: 7,
-        &quot;name&quot;: &quot;yyyy&quot;,
-        &quot;monthly_rent&quot;: 2345,
-        &quot;last_update_by_admin&quot;: {
-            &quot;id&quot;: 1,
-            &quot;user&quot;: {
-                &quot;id&quot;: 1,
-                &quot;first_name&quot;: &quot;Tamer&quot;,
-                &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                &quot;phone&quot;: &quot;0988138665&quot;,
-                &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                &quot;gender&quot;: &quot;Male&quot;,
-                &quot;photo&quot;: null,
-                &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                &quot;role&quot;: &quot;admin&quot;,
-                &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-            },
-            &quot;added_by_admin_id&quot;: null
-        }
-    }
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (404):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: false,
-    &quot;message&quot;: {
-        &quot;base_message&quot;: &quot;Room not found&quot;
-    }
-}</code>
- </pre>
-    </span>
+</span>
 <span id="execution-results-PUTapi-rooms--roomId-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PUTapi-rooms--roomId-"></span>:
@@ -4726,25 +4150,7 @@ fetch(url, {
 </span>
 
 <span id="example-responses-DELETEapi-rooms--roomId-">
-            <blockquote>
-            <p>Example response (204):</p>
-        </blockquote>
-                <pre>
-<code>Empty response</code>
- </pre>
-            <blockquote>
-            <p>Example response (404):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: false,
-    &quot;message&quot;: {
-        &quot;base_message&quot;: &quot;Room not found&quot;
-    }
-}</code>
- </pre>
-    </span>
+</span>
 <span id="execution-results-DELETEapi-rooms--roomId-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-DELETEapi-rooms--roomId-"></span>:
@@ -4900,96 +4306,7 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-doctors">
-            <blockquote>
-            <p>Example response (201):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
-    &quot;message&quot;: {
-        &quot;base_message&quot;: &quot;Doctor added successfully&quot;
-    },
-    &quot;data&quot;: {
-        &quot;id&quot;: 11,
-        &quot;user&quot;: {
-            &quot;id&quot;: 29,
-            &quot;first_name&quot;: &quot;Miss Serenity Labadie III&quot;,
-            &quot;last_name&quot;: &quot;Stephanie Botsford&quot;,
-            &quot;email&quot;: &quot;heaney.emile@example.org&quot;,
-            &quot;phone&quot;: &quot;1-906-843-2633&quot;,
-            &quot;date_of_birth&quot;: &quot;1977-02-26T22:00:00.000000Z&quot;,
-            &quot;gender&quot;: &quot;Female&quot;,
-            &quot;photo&quot;: null,
-            &quot;username&quot;: &quot;cbuckridge&quot;,
-            &quot;role&quot;: &quot;doctor&quot;,
-            &quot;email_verified_at&quot;: null,
-            &quot;created_at&quot;: &quot;2026-06-05T21:11:03.000000Z&quot;,
-            &quot;last_update_at&quot;: &quot;2026-06-06T21:07:13.000000Z&quot;
-        },
-        &quot;appointment_duration&quot;: 45,
-        &quot;room&quot;: {
-            &quot;id&quot;: 17,
-            &quot;name&quot;: &quot;Room 17&quot;,
-            &quot;monthly_rent&quot;: &quot;1671.00&quot;,
-            &quot;last_update_by_admin&quot;: {
-                &quot;id&quot;: 1,
-                &quot;user&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;first_name&quot;: &quot;Tamer&quot;,
-                    &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                    &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                    &quot;phone&quot;: &quot;0988138665&quot;,
-                    &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                    &quot;gender&quot;: &quot;Male&quot;,
-                    &quot;photo&quot;: null,
-                    &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                    &quot;role&quot;: &quot;admin&quot;,
-                    &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                },
-                &quot;added_by_admin_id&quot;: null
-            }
-        },
-        &quot;added_by_admin&quot;: {
-            &quot;id&quot;: 1,
-            &quot;user&quot;: {
-                &quot;id&quot;: 1,
-                &quot;first_name&quot;: &quot;Tamer&quot;,
-                &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                &quot;phone&quot;: &quot;0988138665&quot;,
-                &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                &quot;gender&quot;: &quot;Male&quot;,
-                &quot;photo&quot;: null,
-                &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                &quot;role&quot;: &quot;admin&quot;,
-                &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-            },
-            &quot;added_by_admin_id&quot;: null
-        }
-    }
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (409):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">// This response be returned when:
-// The user which being tried to add already has a role.
-
-{
-    &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;User is already a patient, it can\&#039;t be modified&quot;
-}
-
-// In the previous example the user-role was patient, so the response was &quot;already a patient&quot;, other cases are: &quot;already a patient&quot; - &quot;already a patient&quot;</code>
- </pre>
-    </span>
+</span>
 <span id="execution-results-POSTapi-doctors" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-doctors"></span>:
@@ -5155,277 +4472,23 @@ fetch(url, {
 
 <span id="example-responses-GETapi-doctors--with_unactive-">
             <blockquote>
-            <p>Example response (200):</p>
+            <p>Example response (401):</p>
         </blockquote>
-                <pre>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: {
-        &quot;did_succeed&quot;: true,
-        &quot;current_page_number&quot;: 1,
-        &quot;last_page_number&quot;: 3,
-        &quot;doctors_per_page&quot;: 4,
-        &quot;next_page_url&quot;: &quot;http://127.0.0.1:8000/api/doctors/4?page=2&quot;,
-        &quot;previous_page_url&quot;: null,
-        &quot;first_page_url&quot;: &quot;http://127.0.0.1:8000/api/doctors/4?page=1&quot;,
-        &quot;last_page_url&quot;: &quot;http://127.0.0.1:8000/api/doctors/4?page=3&quot;,
-        &quot;total_doctors_number&quot;: 11
-    },
-    &quot;data&quot;: [
-        {
-            &quot;id&quot;: 11,
-            &quot;user&quot;: {
-                &quot;id&quot;: 29,
-                &quot;first_name&quot;: &quot;Miss Serenity Labadie III&quot;,
-                &quot;last_name&quot;: &quot;Stephanie Botsford&quot;,
-                &quot;email&quot;: &quot;heaney.emile@example.org&quot;,
-                &quot;phone&quot;: &quot;1-906-843-2633&quot;,
-                &quot;date_of_birth&quot;: &quot;1977-02-26T22:00:00.000000Z&quot;,
-                &quot;gender&quot;: &quot;Female&quot;,
-                &quot;photo&quot;: null,
-                &quot;username&quot;: &quot;cbuckridge&quot;,
-                &quot;role&quot;: &quot;doctor&quot;,
-                &quot;email_verified_at&quot;: null,
-                &quot;created_at&quot;: &quot;2026-06-05T21:11:03.000000Z&quot;,
-                &quot;last_update_at&quot;: &quot;2026-06-06T21:07:13.000000Z&quot;
-            },
-            &quot;appointment_duration&quot;: 45,
-            &quot;room&quot;: {
-                &quot;id&quot;: 17,
-                &quot;name&quot;: &quot;Room 17&quot;,
-                &quot;monthly_rent&quot;: &quot;1671.00&quot;,
-                &quot;last_update_by_admin&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;user&quot;: {
-                        &quot;id&quot;: 1,
-                        &quot;first_name&quot;: &quot;Tamer&quot;,
-                        &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                        &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                        &quot;phone&quot;: &quot;0988138665&quot;,
-                        &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                        &quot;gender&quot;: &quot;Male&quot;,
-                        &quot;photo&quot;: null,
-                        &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                        &quot;role&quot;: &quot;admin&quot;,
-                        &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                        &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                        &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                    },
-                    &quot;added_by_admin_id&quot;: null
-                }
-            },
-            &quot;added_by_admin&quot;: {
-                &quot;id&quot;: 1,
-                &quot;user&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;first_name&quot;: &quot;Tamer&quot;,
-                    &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                    &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                    &quot;phone&quot;: &quot;0988138665&quot;,
-                    &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                    &quot;gender&quot;: &quot;Male&quot;,
-                    &quot;photo&quot;: null,
-                    &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                    &quot;role&quot;: &quot;admin&quot;,
-                    &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                },
-                &quot;added_by_admin_id&quot;: null
-            }
-        },
-        {
-            &quot;id&quot;: 2,
-            &quot;user&quot;: {
-                &quot;id&quot;: 7,
-                &quot;first_name&quot;: &quot;Domenic Corkery&quot;,
-                &quot;last_name&quot;: &quot;Tomasa Schimmel&quot;,
-                &quot;email&quot;: &quot;thiel.kiel@example.com&quot;,
-                &quot;phone&quot;: &quot;+14807960787&quot;,
-                &quot;date_of_birth&quot;: &quot;2019-08-11T21:00:00.000000Z&quot;,
-                &quot;gender&quot;: &quot;Male&quot;,
-                &quot;photo&quot;: null,
-                &quot;username&quot;: &quot;azboncak&quot;,
-                &quot;role&quot;: &quot;doctor&quot;,
-                &quot;email_verified_at&quot;: null,
-                &quot;created_at&quot;: &quot;2026-06-05T21:10:59.000000Z&quot;,
-                &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-            },
-            &quot;appointment_duration&quot;: 15,
-            &quot;room&quot;: {
-                &quot;id&quot;: 2,
-                &quot;name&quot;: &quot;Room 2&quot;,
-                &quot;monthly_rent&quot;: &quot;1154.00&quot;,
-                &quot;last_update_by_admin&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;user&quot;: {
-                        &quot;id&quot;: 1,
-                        &quot;first_name&quot;: &quot;Tamer&quot;,
-                        &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                        &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                        &quot;phone&quot;: &quot;0988138665&quot;,
-                        &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                        &quot;gender&quot;: &quot;Male&quot;,
-                        &quot;photo&quot;: null,
-                        &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                        &quot;role&quot;: &quot;admin&quot;,
-                        &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                        &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                        &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                    },
-                    &quot;added_by_admin_id&quot;: null
-                }
-            },
-            &quot;added_by_admin&quot;: {
-                &quot;id&quot;: 1,
-                &quot;user&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;first_name&quot;: &quot;Tamer&quot;,
-                    &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                    &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                    &quot;phone&quot;: &quot;0988138665&quot;,
-                    &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                    &quot;gender&quot;: &quot;Male&quot;,
-                    &quot;photo&quot;: null,
-                    &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                    &quot;role&quot;: &quot;admin&quot;,
-                    &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                },
-                &quot;added_by_admin_id&quot;: null
-            }
-        },
-        {
-            &quot;id&quot;: 3,
-            &quot;user&quot;: {
-                &quot;id&quot;: 8,
-                &quot;first_name&quot;: &quot;Miss Loma Wehner PhD&quot;,
-                &quot;last_name&quot;: &quot;Prof. Thaddeus Greenholt I&quot;,
-                &quot;email&quot;: &quot;salvatore.anderson@example.org&quot;,
-                &quot;phone&quot;: &quot;848.496.2757&quot;,
-                &quot;date_of_birth&quot;: &quot;2008-12-25T22:00:00.000000Z&quot;,
-                &quot;gender&quot;: &quot;Female&quot;,
-                &quot;photo&quot;: null,
-                &quot;username&quot;: &quot;oupton&quot;,
-                &quot;role&quot;: &quot;doctor&quot;,
-                &quot;email_verified_at&quot;: null,
-                &quot;created_at&quot;: &quot;2026-06-05T21:10:59.000000Z&quot;,
-                &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-            },
-            &quot;appointment_duration&quot;: 15,
-            &quot;room&quot;: {
-                &quot;id&quot;: 3,
-                &quot;name&quot;: &quot;Room 3&quot;,
-                &quot;monthly_rent&quot;: &quot;1931.00&quot;,
-                &quot;last_update_by_admin&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;user&quot;: {
-                        &quot;id&quot;: 1,
-                        &quot;first_name&quot;: &quot;Tamer&quot;,
-                        &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                        &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                        &quot;phone&quot;: &quot;0988138665&quot;,
-                        &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                        &quot;gender&quot;: &quot;Male&quot;,
-                        &quot;photo&quot;: null,
-                        &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                        &quot;role&quot;: &quot;admin&quot;,
-                        &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                        &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                        &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                    },
-                    &quot;added_by_admin_id&quot;: null
-                }
-            },
-            &quot;added_by_admin&quot;: {
-                &quot;id&quot;: 1,
-                &quot;user&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;first_name&quot;: &quot;Tamer&quot;,
-                    &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                    &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                    &quot;phone&quot;: &quot;0988138665&quot;,
-                    &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                    &quot;gender&quot;: &quot;Male&quot;,
-                    &quot;photo&quot;: null,
-                    &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                    &quot;role&quot;: &quot;admin&quot;,
-                    &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                },
-                &quot;added_by_admin_id&quot;: null
-            }
-        },
-        {
-            &quot;id&quot;: 4,
-            &quot;user&quot;: {
-                &quot;id&quot;: 9,
-                &quot;first_name&quot;: &quot;Ruthie Donnelly&quot;,
-                &quot;last_name&quot;: &quot;Sadie Bashirian&quot;,
-                &quot;email&quot;: &quot;pacocha.luther@example.org&quot;,
-                &quot;phone&quot;: &quot;+1 (220) 537-2299&quot;,
-                &quot;date_of_birth&quot;: &quot;1989-06-10T21:00:00.000000Z&quot;,
-                &quot;gender&quot;: &quot;Female&quot;,
-                &quot;photo&quot;: null,
-                &quot;username&quot;: &quot;meta.weimann&quot;,
-                &quot;role&quot;: &quot;doctor&quot;,
-                &quot;email_verified_at&quot;: null,
-                &quot;created_at&quot;: &quot;2026-06-05T21:10:59.000000Z&quot;,
-                &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-            },
-            &quot;appointment_duration&quot;: 15,
-            &quot;room&quot;: {
-                &quot;id&quot;: 4,
-                &quot;name&quot;: &quot;Room 4&quot;,
-                &quot;monthly_rent&quot;: &quot;1580.00&quot;,
-                &quot;last_update_by_admin&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;user&quot;: {
-                        &quot;id&quot;: 1,
-                        &quot;first_name&quot;: &quot;Tamer&quot;,
-                        &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                        &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                        &quot;phone&quot;: &quot;0988138665&quot;,
-                        &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                        &quot;gender&quot;: &quot;Male&quot;,
-                        &quot;photo&quot;: null,
-                        &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                        &quot;role&quot;: &quot;admin&quot;,
-                        &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                        &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                        &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                    },
-                    &quot;added_by_admin_id&quot;: null
-                }
-            },
-            &quot;added_by_admin&quot;: {
-                &quot;id&quot;: 1,
-                &quot;user&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;first_name&quot;: &quot;Tamer&quot;,
-                    &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                    &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                    &quot;phone&quot;: &quot;0988138665&quot;,
-                    &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                    &quot;gender&quot;: &quot;Male&quot;,
-                    &quot;photo&quot;: null,
-                    &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                    &quot;role&quot;: &quot;admin&quot;,
-                    &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                },
-                &quot;added_by_admin_id&quot;: null
-            }
-        }
-    ]
-}
-
-// ⚠ Important Info: The response&#039;s &quot;data&quot; field content would change based on the logged-in user role!
-</code>
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
+}</code>
  </pre>
     </span>
 <span id="execution-results-GETapi-doctors--with_unactive-" hidden>
@@ -5569,87 +4632,21 @@ fetch(url, {
 
 <span id="example-responses-GETapi-doctors-s--doctor_id-">
             <blockquote>
-            <p>Example response (200):</p>
+            <p>Example response (401):</p>
         </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
-    &quot;data&quot;: {
-        &quot;id&quot;: 5,
-        &quot;user&quot;: {
-            &quot;id&quot;: 10,
-            &quot;first_name&quot;: &quot;Abagail Steuber&quot;,
-            &quot;last_name&quot;: &quot;Etha Reynolds&quot;,
-            &quot;email&quot;: &quot;demario.schaefer@example.net&quot;,
-            &quot;phone&quot;: &quot;(956) 585-9365&quot;,
-            &quot;date_of_birth&quot;: &quot;2025-08-16T21:00:00.000000Z&quot;,
-            &quot;gender&quot;: &quot;Male&quot;,
-            &quot;photo&quot;: null,
-            &quot;username&quot;: &quot;considine.clyde&quot;,
-            &quot;role&quot;: &quot;doctor&quot;,
-            &quot;email_verified_at&quot;: null,
-            &quot;created_at&quot;: &quot;2026-06-05T21:11:00.000000Z&quot;,
-            &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-        },
-        &quot;appointment_duration&quot;: 15,
-        &quot;room&quot;: {
-            &quot;id&quot;: 5,
-            &quot;name&quot;: &quot;Room 5&quot;,
-            &quot;monthly_rent&quot;: &quot;1884.00&quot;,
-            &quot;last_update_by_admin&quot;: {
-                &quot;id&quot;: 1,
-                &quot;user&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;first_name&quot;: &quot;Tamer&quot;,
-                    &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                    &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                    &quot;phone&quot;: &quot;0988138665&quot;,
-                    &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                    &quot;gender&quot;: &quot;Male&quot;,
-                    &quot;photo&quot;: null,
-                    &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                    &quot;role&quot;: &quot;admin&quot;,
-                    &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                },
-                &quot;added_by_admin_id&quot;: null
-            }
-        },
-        &quot;added_by_admin&quot;: {
-            &quot;id&quot;: 1,
-            &quot;user&quot;: {
-                &quot;id&quot;: 1,
-                &quot;first_name&quot;: &quot;Tamer&quot;,
-                &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                &quot;phone&quot;: &quot;0988138665&quot;,
-                &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                &quot;gender&quot;: &quot;Male&quot;,
-                &quot;photo&quot;: null,
-                &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                &quot;role&quot;: &quot;admin&quot;,
-                &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-            },
-            &quot;added_by_admin_id&quot;: null
-        }
-    }
-}
-
-// ⚠ Important Info: the previous example was for a patient logged-in, the response&#039;s data be changed based on logged-in user role</code>
- </pre>
-            <blockquote>
-            <p>Example response (404):</p>
-        </blockquote>
-                <pre>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
     &quot;message&quot;: {
-        &quot;base_message&quot;: &quot;Doctor not found&quot;
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
     }
 }</code>
  </pre>
@@ -5963,69 +4960,7 @@ fetch(url, {
 </span>
 
 <span id="example-responses-PUTapi-doctors--doctor_id-">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
-    &quot;data&quot;: &quot;No changes detected&quot;
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
-    &quot;message&quot;: {
-        &quot;base_message&quot;: &quot;Doctor updated successfully&quot;
-    },
-    &quot;data&quot;: {
-        &quot;id&quot;: 12,
-        &quot;user&quot;: {
-            &quot;id&quot;: 32,
-            &quot;first_name&quot;: &quot;vmq&quot;,
-            &quot;last_name&quot;: &quot;eop&quot;,
-            &quot;email&quot;: &quot;tamerashrifachat@gmail.com&quot;,
-            &quot;phone&quot;: &quot;+963999999&quot;,
-            &quot;date_of_birth&quot;: &quot;2004-06-13T21:00:00.000000Z&quot;,
-            &quot;gender&quot;: &quot;Male&quot;,
-            &quot;photo&quot;: null,
-            &quot;username&quot;: &quot;hbajwbpilpm&quot;
-        },
-        &quot;appointment_duration&quot;: 37,
-        &quot;room&quot;: {
-            &quot;id&quot;: 13,
-            &quot;name&quot;: &quot;Room 13&quot;,
-            &quot;monthly_rent&quot;: &quot;1644.00&quot;
-        }
-    }
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (403):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: false,
-    &quot;message&quot;: &quot;Doctors can&#039;t update other doctors information&quot;
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (404):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: false,
-    &quot;data&quot;: &quot;Doctor not found&quot;
-}</code>
- </pre>
-    </span>
+</span>
 <span id="execution-results-PUTapi-doctors--doctor_id-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PUTapi-doctors--doctor_id-"></span>:
@@ -6494,23 +5429,7 @@ fetch(url, {
 </span>
 
 <span id="example-responses-DELETEapi-doctors--doctorId-">
-            <blockquote>
-            <p>Example response (204):</p>
-        </blockquote>
-                <pre>
-<code>Empty response</code>
- </pre>
-            <blockquote>
-            <p>Example response (404):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: false,
-    &quot;data&quot;: &quot;Doctor not found&quot;
-}</code>
- </pre>
-    </span>
+</span>
 <span id="execution-results-DELETEapi-doctors--doctorId-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-DELETEapi-doctors--doctorId-"></span>:
@@ -6662,42 +5581,7 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-specialities">
-            <blockquote>
-            <p>Example response (201):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
-    &quot;message&quot;: {
-        &quot;base_message&quot;: &quot;Speciality added successfully&quot;
-    },
-    &quot;data&quot;: {
-        &quot;id&quot;: 37,
-        &quot;name&quot;: &quot;kkk&quot;,
-        &quot;added_by_admin&quot;: {
-            &quot;id&quot;: 1,
-            &quot;user&quot;: {
-                &quot;id&quot;: 1,
-                &quot;first_name&quot;: &quot;Tamer&quot;,
-                &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                &quot;phone&quot;: &quot;0988138665&quot;,
-                &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                &quot;gender&quot;: &quot;Male&quot;,
-                &quot;photo&quot;: null,
-                &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                &quot;role&quot;: &quot;admin&quot;,
-                &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-            },
-            &quot;added_by_admin_id&quot;: null
-        }
-    }
-}</code>
- </pre>
-    </span>
+</span>
 <span id="execution-results-POSTapi-specialities" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-specialities"></span>:
@@ -6839,375 +5723,23 @@ fetch(url, {
 
 <span id="example-responses-GETapi-specialities">
             <blockquote>
-            <p>Example response (200):</p>
+            <p>Example response (401):</p>
         </blockquote>
-                <pre>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
+    &quot;did_succeed&quot;: false,
     &quot;message&quot;: {
-        &quot;did_succeed&quot;: true,
-        &quot;current_page_number&quot;: 1,
-        &quot;last_page_number&quot;: 10,
-        &quot;specialities_per_page&quot;: 4,
-        &quot;next_page_url&quot;: &quot;http://127.0.0.1:8000/api/specialities/4?page=2&quot;,
-        &quot;previous_page_url&quot;: null,
-        &quot;first_page_url&quot;: &quot;http://127.0.0.1:8000/api/specialities/4?page=1&quot;,
-        &quot;last_page_url&quot;: &quot;http://127.0.0.1:8000/api/specialities/4?page=10&quot;,
-        &quot;total_specialities_number&quot;: 37
-    },
-    &quot;data&quot;: [
-        {
-            &quot;id&quot;: 37,
-            &quot;name&quot;: &quot;kkk&quot;,
-            &quot;added_by_admin&quot;: {
-                &quot;id&quot;: 1,
-                &quot;user&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;first_name&quot;: &quot;Tamer&quot;,
-                    &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                    &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                    &quot;phone&quot;: &quot;0988138665&quot;,
-                    &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                    &quot;gender&quot;: &quot;Male&quot;,
-                    &quot;photo&quot;: null,
-                    &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                    &quot;role&quot;: &quot;admin&quot;,
-                    &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                },
-                &quot;added_by_admin_id&quot;: null
-            },
-            &quot;doctors&quot;: []
-        },
-        {
-            &quot;id&quot;: 1,
-            &quot;name&quot;: &quot;Cardiology&quot;,
-            &quot;added_by_admin&quot;: {
-                &quot;id&quot;: 1,
-                &quot;user&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;first_name&quot;: &quot;Tamer&quot;,
-                    &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                    &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                    &quot;phone&quot;: &quot;0988138665&quot;,
-                    &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                    &quot;gender&quot;: &quot;Male&quot;,
-                    &quot;photo&quot;: null,
-                    &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                    &quot;role&quot;: &quot;admin&quot;,
-                    &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                },
-                &quot;added_by_admin_id&quot;: null
-            },
-            &quot;doctors&quot;: [
-                {
-                    &quot;id&quot;: 6,
-                    &quot;user&quot;: {
-                        &quot;id&quot;: 11,
-                        &quot;first_name&quot;: &quot;Prof. Victor Ratke&quot;,
-                        &quot;last_name&quot;: &quot;Nelle Becker&quot;,
-                        &quot;email&quot;: &quot;justus.bartoletti@example.com&quot;,
-                        &quot;phone&quot;: &quot;347-343-7723&quot;,
-                        &quot;date_of_birth&quot;: &quot;1986-04-30T21:00:00.000000Z&quot;,
-                        &quot;gender&quot;: &quot;Female&quot;,
-                        &quot;photo&quot;: null,
-                        &quot;username&quot;: &quot;emma.douglas&quot;,
-                        &quot;role&quot;: &quot;doctor&quot;,
-                        &quot;email_verified_at&quot;: null,
-                        &quot;created_at&quot;: &quot;2026-06-05T21:11:00.000000Z&quot;,
-                        &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                    },
-                    &quot;appointment_duration&quot;: 15,
-                    &quot;room&quot;: {
-                        &quot;id&quot;: 6,
-                        &quot;name&quot;: &quot;Room 6&quot;,
-                        &quot;monthly_rent&quot;: &quot;1982.00&quot;,
-                        &quot;last_update_by_admin&quot;: {
-                            &quot;id&quot;: 1,
-                            &quot;user&quot;: {
-                                &quot;id&quot;: 1,
-                                &quot;first_name&quot;: &quot;Tamer&quot;,
-                                &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                                &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                                &quot;phone&quot;: &quot;0988138665&quot;,
-                                &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                                &quot;gender&quot;: &quot;Male&quot;,
-                                &quot;photo&quot;: null,
-                                &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                                &quot;role&quot;: &quot;admin&quot;,
-                                &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                                &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                                &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                            },
-                            &quot;added_by_admin_id&quot;: null
-                        }
-                    },
-                    &quot;added_by_admin&quot;: {
-                        &quot;id&quot;: 1,
-                        &quot;user&quot;: {
-                            &quot;id&quot;: 1,
-                            &quot;first_name&quot;: &quot;Tamer&quot;,
-                            &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                            &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                            &quot;phone&quot;: &quot;0988138665&quot;,
-                            &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                            &quot;gender&quot;: &quot;Male&quot;,
-                            &quot;photo&quot;: null,
-                            &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                            &quot;role&quot;: &quot;admin&quot;,
-                            &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                            &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                            &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                        },
-                        &quot;added_by_admin_id&quot;: null
-                    }
-                },
-                {
-                    &quot;id&quot;: 5,
-                    &quot;user&quot;: {
-                        &quot;id&quot;: 10,
-                        &quot;first_name&quot;: &quot;Abagail Steuber&quot;,
-                        &quot;last_name&quot;: &quot;Etha Reynolds&quot;,
-                        &quot;email&quot;: &quot;demario.schaefer@example.net&quot;,
-                        &quot;phone&quot;: &quot;(956) 585-9365&quot;,
-                        &quot;date_of_birth&quot;: &quot;2025-08-16T21:00:00.000000Z&quot;,
-                        &quot;gender&quot;: &quot;Male&quot;,
-                        &quot;photo&quot;: null,
-                        &quot;username&quot;: &quot;considine.clyde&quot;,
-                        &quot;role&quot;: &quot;doctor&quot;,
-                        &quot;email_verified_at&quot;: null,
-                        &quot;created_at&quot;: &quot;2026-06-05T21:11:00.000000Z&quot;,
-                        &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                    },
-                    &quot;appointment_duration&quot;: 15,
-                    &quot;room&quot;: {
-                        &quot;id&quot;: 5,
-                        &quot;name&quot;: &quot;Room 5&quot;,
-                        &quot;monthly_rent&quot;: &quot;1884.00&quot;,
-                        &quot;last_update_by_admin&quot;: {
-                            &quot;id&quot;: 1,
-                            &quot;user&quot;: {
-                                &quot;id&quot;: 1,
-                                &quot;first_name&quot;: &quot;Tamer&quot;,
-                                &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                                &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                                &quot;phone&quot;: &quot;0988138665&quot;,
-                                &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                                &quot;gender&quot;: &quot;Male&quot;,
-                                &quot;photo&quot;: null,
-                                &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                                &quot;role&quot;: &quot;admin&quot;,
-                                &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                                &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                                &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                            },
-                            &quot;added_by_admin_id&quot;: null
-                        }
-                    },
-                    &quot;added_by_admin&quot;: {
-                        &quot;id&quot;: 1,
-                        &quot;user&quot;: {
-                            &quot;id&quot;: 1,
-                            &quot;first_name&quot;: &quot;Tamer&quot;,
-                            &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                            &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                            &quot;phone&quot;: &quot;0988138665&quot;,
-                            &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                            &quot;gender&quot;: &quot;Male&quot;,
-                            &quot;photo&quot;: null,
-                            &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                            &quot;role&quot;: &quot;admin&quot;,
-                            &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                            &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                            &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                        },
-                        &quot;added_by_admin_id&quot;: null
-                    }
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 2,
-            &quot;name&quot;: &quot;Dermatology&quot;,
-            &quot;added_by_admin&quot;: {
-                &quot;id&quot;: 1,
-                &quot;user&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;first_name&quot;: &quot;Tamer&quot;,
-                    &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                    &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                    &quot;phone&quot;: &quot;0988138665&quot;,
-                    &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                    &quot;gender&quot;: &quot;Male&quot;,
-                    &quot;photo&quot;: null,
-                    &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                    &quot;role&quot;: &quot;admin&quot;,
-                    &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                },
-                &quot;added_by_admin_id&quot;: null
-            },
-            &quot;doctors&quot;: []
-        },
-        {
-            &quot;id&quot;: 3,
-            &quot;name&quot;: &quot;Endocrinology&quot;,
-            &quot;added_by_admin&quot;: {
-                &quot;id&quot;: 1,
-                &quot;user&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;first_name&quot;: &quot;Tamer&quot;,
-                    &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                    &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                    &quot;phone&quot;: &quot;0988138665&quot;,
-                    &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                    &quot;gender&quot;: &quot;Male&quot;,
-                    &quot;photo&quot;: null,
-                    &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                    &quot;role&quot;: &quot;admin&quot;,
-                    &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                    &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                },
-                &quot;added_by_admin_id&quot;: null
-            },
-            &quot;doctors&quot;: [
-                {
-                    &quot;id&quot;: 10,
-                    &quot;user&quot;: {
-                        &quot;id&quot;: 15,
-                        &quot;first_name&quot;: &quot;Opal Volkman&quot;,
-                        &quot;last_name&quot;: &quot;Isaias Hahn&quot;,
-                        &quot;email&quot;: &quot;virgie76@example.net&quot;,
-                        &quot;phone&quot;: &quot;+1.804.782.6795&quot;,
-                        &quot;date_of_birth&quot;: &quot;2020-03-11T22:00:00.000000Z&quot;,
-                        &quot;gender&quot;: &quot;Female&quot;,
-                        &quot;photo&quot;: null,
-                        &quot;username&quot;: &quot;gwisoky&quot;,
-                        &quot;role&quot;: &quot;doctor&quot;,
-                        &quot;email_verified_at&quot;: null,
-                        &quot;created_at&quot;: &quot;2026-06-05T21:11:00.000000Z&quot;,
-                        &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                    },
-                    &quot;appointment_duration&quot;: 15,
-                    &quot;room&quot;: {
-                        &quot;id&quot;: 10,
-                        &quot;name&quot;: &quot;Room 10&quot;,
-                        &quot;monthly_rent&quot;: &quot;970.00&quot;,
-                        &quot;last_update_by_admin&quot;: {
-                            &quot;id&quot;: 1,
-                            &quot;user&quot;: {
-                                &quot;id&quot;: 1,
-                                &quot;first_name&quot;: &quot;Tamer&quot;,
-                                &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                                &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                                &quot;phone&quot;: &quot;0988138665&quot;,
-                                &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                                &quot;gender&quot;: &quot;Male&quot;,
-                                &quot;photo&quot;: null,
-                                &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                                &quot;role&quot;: &quot;admin&quot;,
-                                &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                                &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                                &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                            },
-                            &quot;added_by_admin_id&quot;: null
-                        }
-                    },
-                    &quot;added_by_admin&quot;: {
-                        &quot;id&quot;: 1,
-                        &quot;user&quot;: {
-                            &quot;id&quot;: 1,
-                            &quot;first_name&quot;: &quot;Tamer&quot;,
-                            &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                            &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                            &quot;phone&quot;: &quot;0988138665&quot;,
-                            &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                            &quot;gender&quot;: &quot;Male&quot;,
-                            &quot;photo&quot;: null,
-                            &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                            &quot;role&quot;: &quot;admin&quot;,
-                            &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                            &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                            &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                        },
-                        &quot;added_by_admin_id&quot;: null
-                    }
-                },
-                {
-                    &quot;id&quot;: 5,
-                    &quot;user&quot;: {
-                        &quot;id&quot;: 10,
-                        &quot;first_name&quot;: &quot;Abagail Steuber&quot;,
-                        &quot;last_name&quot;: &quot;Etha Reynolds&quot;,
-                        &quot;email&quot;: &quot;demario.schaefer@example.net&quot;,
-                        &quot;phone&quot;: &quot;(956) 585-9365&quot;,
-                        &quot;date_of_birth&quot;: &quot;2025-08-16T21:00:00.000000Z&quot;,
-                        &quot;gender&quot;: &quot;Male&quot;,
-                        &quot;photo&quot;: null,
-                        &quot;username&quot;: &quot;considine.clyde&quot;,
-                        &quot;role&quot;: &quot;doctor&quot;,
-                        &quot;email_verified_at&quot;: null,
-                        &quot;created_at&quot;: &quot;2026-06-05T21:11:00.000000Z&quot;,
-                        &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                    },
-                    &quot;appointment_duration&quot;: 15,
-                    &quot;room&quot;: {
-                        &quot;id&quot;: 5,
-                        &quot;name&quot;: &quot;Room 5&quot;,
-                        &quot;monthly_rent&quot;: &quot;1884.00&quot;,
-                        &quot;last_update_by_admin&quot;: {
-                            &quot;id&quot;: 1,
-                            &quot;user&quot;: {
-                                &quot;id&quot;: 1,
-                                &quot;first_name&quot;: &quot;Tamer&quot;,
-                                &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                                &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                                &quot;phone&quot;: &quot;0988138665&quot;,
-                                &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                                &quot;gender&quot;: &quot;Male&quot;,
-                                &quot;photo&quot;: null,
-                                &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                                &quot;role&quot;: &quot;admin&quot;,
-                                &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                                &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                                &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                            },
-                            &quot;added_by_admin_id&quot;: null
-                        }
-                    },
-                    &quot;added_by_admin&quot;: {
-                        &quot;id&quot;: 1,
-                        &quot;user&quot;: {
-                            &quot;id&quot;: 1,
-                            &quot;first_name&quot;: &quot;Tamer&quot;,
-                            &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                            &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                            &quot;phone&quot;: &quot;0988138665&quot;,
-                            &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                            &quot;gender&quot;: &quot;Male&quot;,
-                            &quot;photo&quot;: null,
-                            &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                            &quot;role&quot;: &quot;admin&quot;,
-                            &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                            &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                            &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                        },
-                        &quot;added_by_admin_id&quot;: null
-                    }
-                }
-            ]
-        }
-    ]
-}
-
-// ⚠ Important Info: The response&#039;s &quot;data&quot; field content would change based on the logged-in user role!
-</code>
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
+}</code>
  </pre>
     </span>
 <span id="execution-results-GETapi-specialities" hidden>
@@ -7338,174 +5870,21 @@ fetch(url, {
 
 <span id="example-responses-GETapi-specialities-s--specialityId-">
             <blockquote>
-            <p>Example response (200):</p>
+            <p>Example response (401):</p>
         </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
-    &quot;data&quot;: {
-        &quot;id&quot;: 17,
-        &quot;name&quot;: &quot;Urology&quot;,
-        &quot;added_by_admin&quot;: {
-            &quot;id&quot;: 1,
-            &quot;user&quot;: {
-                &quot;id&quot;: 1,
-                &quot;first_name&quot;: &quot;Tamer&quot;,
-                &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                &quot;phone&quot;: &quot;0988138665&quot;,
-                &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                &quot;gender&quot;: &quot;Male&quot;,
-                &quot;photo&quot;: null,
-                &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                &quot;role&quot;: &quot;admin&quot;,
-                &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-            },
-            &quot;added_by_admin_id&quot;: null
-        },
-        &quot;doctors&quot;: [
-            {
-                &quot;id&quot;: 2,
-                &quot;user&quot;: {
-                    &quot;id&quot;: 7,
-                    &quot;first_name&quot;: &quot;Domenic Corkery&quot;,
-                    &quot;last_name&quot;: &quot;Tomasa Schimmel&quot;,
-                    &quot;email&quot;: &quot;thiel.kiel@example.com&quot;,
-                    &quot;phone&quot;: &quot;+14807960787&quot;,
-                    &quot;date_of_birth&quot;: &quot;2019-08-11T21:00:00.000000Z&quot;,
-                    &quot;gender&quot;: &quot;Male&quot;,
-                    &quot;photo&quot;: null,
-                    &quot;username&quot;: &quot;azboncak&quot;,
-                    &quot;role&quot;: &quot;doctor&quot;,
-                    &quot;email_verified_at&quot;: null,
-                    &quot;created_at&quot;: &quot;2026-06-05T21:10:59.000000Z&quot;,
-                    &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                },
-                &quot;appointment_duration&quot;: 15,
-                &quot;room&quot;: {
-                    &quot;id&quot;: 2,
-                    &quot;name&quot;: &quot;Room 2&quot;,
-                    &quot;monthly_rent&quot;: &quot;1154.00&quot;,
-                    &quot;last_update_by_admin&quot;: {
-                        &quot;id&quot;: 1,
-                        &quot;user&quot;: {
-                            &quot;id&quot;: 1,
-                            &quot;first_name&quot;: &quot;Tamer&quot;,
-                            &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                            &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                            &quot;phone&quot;: &quot;0988138665&quot;,
-                            &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                            &quot;gender&quot;: &quot;Male&quot;,
-                            &quot;photo&quot;: null,
-                            &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                            &quot;role&quot;: &quot;admin&quot;,
-                            &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                            &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                            &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                        },
-                        &quot;added_by_admin_id&quot;: null
-                    }
-                },
-                &quot;added_by_admin&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;user&quot;: {
-                        &quot;id&quot;: 1,
-                        &quot;first_name&quot;: &quot;Tamer&quot;,
-                        &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                        &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                        &quot;phone&quot;: &quot;0988138665&quot;,
-                        &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                        &quot;gender&quot;: &quot;Male&quot;,
-                        &quot;photo&quot;: null,
-                        &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                        &quot;role&quot;: &quot;admin&quot;,
-                        &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                        &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                        &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                    },
-                    &quot;added_by_admin_id&quot;: null
-                }
-            },
-            {
-                &quot;id&quot;: 5,
-                &quot;user&quot;: {
-                    &quot;id&quot;: 10,
-                    &quot;first_name&quot;: &quot;Abagail Steuber&quot;,
-                    &quot;last_name&quot;: &quot;Etha Reynolds&quot;,
-                    &quot;email&quot;: &quot;demario.schaefer@example.net&quot;,
-                    &quot;phone&quot;: &quot;(956) 585-9365&quot;,
-                    &quot;date_of_birth&quot;: &quot;2025-08-16T21:00:00.000000Z&quot;,
-                    &quot;gender&quot;: &quot;Male&quot;,
-                    &quot;photo&quot;: null,
-                    &quot;username&quot;: &quot;considine.clyde&quot;,
-                    &quot;role&quot;: &quot;doctor&quot;,
-                    &quot;email_verified_at&quot;: null,
-                    &quot;created_at&quot;: &quot;2026-06-05T21:11:00.000000Z&quot;,
-                    &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                },
-                &quot;appointment_duration&quot;: 15,
-                &quot;room&quot;: {
-                    &quot;id&quot;: 5,
-                    &quot;name&quot;: &quot;Room 5&quot;,
-                    &quot;monthly_rent&quot;: &quot;1884.00&quot;,
-                    &quot;last_update_by_admin&quot;: {
-                        &quot;id&quot;: 1,
-                        &quot;user&quot;: {
-                            &quot;id&quot;: 1,
-                            &quot;first_name&quot;: &quot;Tamer&quot;,
-                            &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                            &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                            &quot;phone&quot;: &quot;0988138665&quot;,
-                            &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                            &quot;gender&quot;: &quot;Male&quot;,
-                            &quot;photo&quot;: null,
-                            &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                            &quot;role&quot;: &quot;admin&quot;,
-                            &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                            &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                            &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                        },
-                        &quot;added_by_admin_id&quot;: null
-                    }
-                },
-                &quot;added_by_admin&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;user&quot;: {
-                        &quot;id&quot;: 1,
-                        &quot;first_name&quot;: &quot;Tamer&quot;,
-                        &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                        &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                        &quot;phone&quot;: &quot;0988138665&quot;,
-                        &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                        &quot;gender&quot;: &quot;Male&quot;,
-                        &quot;photo&quot;: null,
-                        &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                        &quot;role&quot;: &quot;admin&quot;,
-                        &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                        &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                        &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-                    },
-                    &quot;added_by_admin_id&quot;: null
-                }
-            }
-        ]
-    }
-}
-
-// ⚠ Important Info: The response&#039;s &quot;data&quot; field content would change based on the logged-in user role!</code>
- </pre>
-            <blockquote>
-            <p>Example response (404):</p>
-        </blockquote>
-                <pre>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
     &quot;message&quot;: {
-        &quot;base_message&quot;: &quot;Speciality not found&quot;
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
     }
 }</code>
  </pre>
@@ -7657,66 +6036,7 @@ fetch(url, {
 </span>
 
 <span id="example-responses-PUTapi-specialities--specialityId-">
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
-    &quot;message&quot;: {
-        &quot;base_message&quot;: &quot;No changes detected&quot;
-    }
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (200):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: true,
-    &quot;message&quot;: {
-        &quot;base_message&quot;: &quot;Speciality updated successfully&quot;
-    },
-    &quot;data&quot;: {
-        &quot;id&quot;: 17,
-        &quot;name&quot;: &quot;ttttooootototott&quot;,
-        &quot;added_by_admin&quot;: {
-            &quot;id&quot;: 1,
-            &quot;user&quot;: {
-                &quot;id&quot;: 1,
-                &quot;first_name&quot;: &quot;Tamer&quot;,
-                &quot;last_name&quot;: &quot;Ashrifa&quot;,
-                &quot;email&quot;: &quot;tamrashryft@gmail.com&quot;,
-                &quot;phone&quot;: &quot;0988138665&quot;,
-                &quot;date_of_birth&quot;: &quot;2004-06-11T21:00:00.000000Z&quot;,
-                &quot;gender&quot;: &quot;Male&quot;,
-                &quot;photo&quot;: null,
-                &quot;username&quot;: &quot;TamerAshrifa&quot;,
-                &quot;role&quot;: &quot;admin&quot;,
-                &quot;email_verified_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                &quot;created_at&quot;: &quot;2026-06-05T21:10:58.000000Z&quot;,
-                &quot;last_update_at&quot;: &quot;2026-06-05T21:11:04.000000Z&quot;
-            },
-            &quot;added_by_admin_id&quot;: null
-        }
-    }
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (404):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: false,
-    &quot;message&quot;: {
-        &quot;base_message&quot;: &quot;Speciality not found&quot;
-    }
-}</code>
- </pre>
-    </span>
+</span>
 <span id="execution-results-PUTapi-specialities--specialityId-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-PUTapi-specialities--specialityId-"></span>:
@@ -7869,25 +6189,7 @@ fetch(url, {
 </span>
 
 <span id="example-responses-DELETEapi-specialities--specialityId-">
-            <blockquote>
-            <p>Example response (204):</p>
-        </blockquote>
-                <pre>
-<code>Empty response</code>
- </pre>
-            <blockquote>
-            <p>Example response (404):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json" style="max-height: 300px;">{
-    &quot;did_succeed&quot;: false,
-    &quot;message&quot;: {
-        &quot;base_message&quot;: &quot;Speciality not found&quot;
-    }
-}</code>
- </pre>
-    </span>
+</span>
 <span id="execution-results-DELETEapi-specialities--specialityId-" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-DELETEapi-specialities--specialityId-"></span>:
@@ -8012,12 +6314,12 @@ and the admin can create work schedules for medical center.</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"effective_from_date\": \"2107-08-27\",
+    \"effective_from_date\": \"2107-09-01\",
     \"days\": [
         {
             \"weekday_id\": 2,
-            \"start_time\": \"03:41\",
-            \"end_time\": \"03:41\"
+            \"start_time\": \"17:02\",
+            \"end_time\": \"17:02\"
         }
     ]
 }"
@@ -8036,12 +6338,12 @@ const headers = {
 };
 
 let body = {
-    "effective_from_date": "2107-08-27",
+    "effective_from_date": "2107-09-01",
     "days": [
         {
             "weekday_id": 2,
-            "start_time": "03:41",
-            "end_time": "03:41"
+            "start_time": "17:02",
+            "end_time": "17:02"
         }
     ]
 };
@@ -8147,10 +6449,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="effective_from_date"                data-endpoint="POSTapi-schedules"
-               value="2107-08-27"
+               value="2107-09-01"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after <code>2026-07-29</code>. Example: <code>2107-08-27</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after <code>2026-08-02</code>. Example: <code>2107-09-01</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
         <details>
@@ -8181,10 +6483,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="days.0.start_time"                data-endpoint="POSTapi-schedules"
-               value="03:41"
+               value="17:02"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>H:i</code>. Example: <code>03:41</code></p>
+<p>Must be a valid date in the format <code>H:i</code>. Example: <code>17:02</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>end_time</code></b>&nbsp;&nbsp;
@@ -8193,10 +6495,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="days.0.end_time"                data-endpoint="POSTapi-schedules"
-               value="03:41"
+               value="17:02"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>H:i</code>. Example: <code>03:41</code></p>
+<p>Must be a valid date in the format <code>H:i</code>. Example: <code>17:02</code></p>
                     </div>
                                     </details>
         </div>
@@ -8874,7 +7176,7 @@ View all available times to book with a specific doctor</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"date_of_day\": \"2107-08-27\"
+    \"date_of_day\": \"2107-09-01\"
 }"
 </code></pre></div>
 
@@ -8891,7 +7193,7 @@ const headers = {
 };
 
 let body = {
-    "date_of_day": "2107-08-27"
+    "date_of_day": "2107-09-01"
 };
 
 fetch(url, {
@@ -9008,10 +7310,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date_of_day"                data-endpoint="POSTapi-appointments--doctor_id-"
-               value="2107-08-27"
+               value="2107-09-01"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-07-29</code>. Example: <code>2107-08-27</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-08-02</code>. Example: <code>2107-09-01</code></p>
         </div>
         </form>
 
@@ -9037,7 +7339,7 @@ the date of day he wanna book in</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"datetime\": \"2107-08-27\"
+    \"datetime\": \"2107-09-01\"
 }"
 </code></pre></div>
 
@@ -9054,7 +7356,7 @@ const headers = {
 };
 
 let body = {
-    "datetime": "2107-08-27"
+    "datetime": "2107-09-01"
 };
 
 fetch(url, {
@@ -9171,10 +7473,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="datetime"                data-endpoint="POSTapi-appointments-s--doctor_id-"
-               value="2107-08-27"
+               value="2107-09-01"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-29 03:41</code>. Example: <code>2107-08-27</code></p>
+<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-08-02 17:02</code>. Example: <code>2107-09-01</code></p>
         </div>
         </form>
 
@@ -10177,7 +8479,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"actual_time\": \"2107-08-27\",
+    \"actual_time\": \"2107-09-01\",
     \"medical_diagnosis\": \"mqeopfuudtdsufvyvddqa\",
     \"prescription\": \"mniihfqcoynlazghdtqtq\",
     \"notes\": \"xbajwbpilpmufinllwloa\",
@@ -10198,7 +8500,7 @@ const headers = {
 };
 
 let body = {
-    "actual_time": "2107-08-27",
+    "actual_time": "2107-09-01",
     "medical_diagnosis": "mqeopfuudtdsufvyvddqa",
     "prescription": "mniihfqcoynlazghdtqtq",
     "notes": "xbajwbpilpmufinllwloa",
@@ -10319,10 +8621,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="actual_time"                data-endpoint="POSTapi-appointments-aA--id-"
-               value="2107-08-27"
+               value="2107-09-01"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-29 00:00:00</code>. Example: <code>2107-08-27</code></p>
+<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-08-02 00:00:00</code>. Example: <code>2107-09-01</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>medical_diagnosis</code></b>&nbsp;&nbsp;
@@ -12490,7 +10792,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
-                    <h2 id="patient-complaint-apis-GETapi-complaint--with_reviewed-">View all Patients&#039; Complaints</h2>
+                    <h2 id="patient-complaint-apis-GETapi-complaint-a--with_reviewed-">View all Patients&#039; Complaints</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -12500,13 +10802,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Only admins are allowed to use this API</p>
 <h3>⚠ Important Info: The response's "data" field content would change based on the logged-in user role!</h3>
 
-<span id="example-requests-GETapi-complaint--with_reviewed-">
+<span id="example-requests-GETapi-complaint-a--with_reviewed-">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://127.0.0.1:8000/api/complaint/17" \
+    --get "http://127.0.0.1:8000/api/complaint/a/17" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -12514,7 +10816,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://127.0.0.1:8000/api/complaint/17"
+    "http://127.0.0.1:8000/api/complaint/a/17"
 );
 
 const headers = {
@@ -12531,9 +10833,9 @@ fetch(url, {
 
 </span>
 
-<span id="example-responses-GETapi-complaint--with_reviewed-">
+<span id="example-responses-GETapi-complaint-a--with_reviewed-">
             <blockquote>
-            <p>Example response (401):</p>
+            <p>Example response (405):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -12547,48 +10849,48 @@ access-control-allow-origin: *
 <code class="language-json" style="max-height: 300px;">{
     &quot;did_succeed&quot;: false,
     &quot;message&quot;: {
-        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+        &quot;base_message&quot;: &quot;HTTP request method not allowed, The GET method is not supported for route api/complaint/a/17. Supported methods: POST.&quot;
     }
 }</code>
  </pre>
     </span>
-<span id="execution-results-GETapi-complaint--with_reviewed-" hidden>
+<span id="execution-results-GETapi-complaint-a--with_reviewed-" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-GETapi-complaint--with_reviewed-"></span>:
+                id="execution-response-status-GETapi-complaint-a--with_reviewed-"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-complaint--with_reviewed-"
+    <pre class="json"><code id="execution-response-content-GETapi-complaint-a--with_reviewed-"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-GETapi-complaint--with_reviewed-" hidden>
+<span id="execution-error-GETapi-complaint-a--with_reviewed-" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-complaint--with_reviewed-">
+    <pre><code id="execution-error-message-GETapi-complaint-a--with_reviewed-">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-GETapi-complaint--with_reviewed-" data-method="GET"
-      data-path="api/complaint/{with_reviewed}"
+<form id="form-GETapi-complaint-a--with_reviewed-" data-method="GET"
+      data-path="api/complaint/a/{with_reviewed}"
       data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-complaint--with_reviewed-', this);">
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-complaint-a--with_reviewed-', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-complaint--with_reviewed-"
-                    onclick="tryItOut('GETapi-complaint--with_reviewed-');">Try it out ⚡
+                    id="btn-tryout-GETapi-complaint-a--with_reviewed-"
+                    onclick="tryItOut('GETapi-complaint-a--with_reviewed-');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-complaint--with_reviewed-"
-                    onclick="cancelTryOut('GETapi-complaint--with_reviewed-');" hidden>Cancel 🛑
+                    id="btn-canceltryout-GETapi-complaint-a--with_reviewed-"
+                    onclick="cancelTryOut('GETapi-complaint-a--with_reviewed-');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-complaint--with_reviewed-"
+                    id="btn-executetryout-GETapi-complaint-a--with_reviewed-"
                     data-initial-text="Send Request 💥"
                     data-loading-text="⏱ Sending..."
                     hidden>Send Request 💥
@@ -12596,7 +10898,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </h3>
             <p>
             <small class="badge badge-green">GET</small>
-            <b><code>api/complaint/{with_reviewed}</code></b>
+            <b><code>api/complaint/a/{with_reviewed}</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
@@ -12605,7 +10907,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Authorization" class="auth-value"               data-endpoint="GETapi-complaint--with_reviewed-"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-complaint-a--with_reviewed-"
                value="Bearer {YOUR_AUTH_KEY}"
                data-component="header">
     <br>
@@ -12617,7 +10919,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-complaint--with_reviewed-"
+                              name="Content-Type"                data-endpoint="GETapi-complaint-a--with_reviewed-"
                value="application/json"
                data-component="header">
     <br>
@@ -12629,7 +10931,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-complaint--with_reviewed-"
+                              name="Accept"                data-endpoint="GETapi-complaint-a--with_reviewed-"
                value="application/json"
                data-component="header">
     <br>
@@ -12642,7 +10944,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="number" style="display: none"
-               step="any"               name="with_reviewed"                data-endpoint="GETapi-complaint--with_reviewed-"
+               step="any"               name="with_reviewed"                data-endpoint="GETapi-complaint-a--with_reviewed-"
                value="17"
                data-component="url">
     <br>
@@ -12827,7 +11129,7 @@ Everyone in the system is allowed to use this API</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"datetime\": \"2107-08-27\"
+    \"datetime\": \"2107-09-01\"
 }"
 </code></pre></div>
 
@@ -12844,7 +11146,7 @@ const headers = {
 };
 
 let body = {
-    "datetime": "2107-08-27"
+    "datetime": "2107-09-01"
 };
 
 fetch(url, {
@@ -12961,10 +11263,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="datetime"                data-endpoint="POSTapi-transfer--transfer_id-"
-               value="2107-08-27"
+               value="2107-09-01"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-29 03:41</code>. Example: <code>2107-08-27</code></p>
+<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-08-02 17:02</code>. Example: <code>2107-09-01</code></p>
         </div>
         </form>
 
@@ -12989,7 +11291,7 @@ Everyone in the system is allowed to use this API</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"datetime\": \"2107-08-27\"
+    \"datetime\": \"2107-09-01\"
 }"
 </code></pre></div>
 
@@ -13006,7 +11308,7 @@ const headers = {
 };
 
 let body = {
-    "datetime": "2107-08-27"
+    "datetime": "2107-09-01"
 };
 
 fetch(url, {
@@ -13123,10 +11425,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="datetime"                data-endpoint="POSTapi-transfer-ch--transfer_id-"
-               value="2107-08-27"
+               value="2107-09-01"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-07-29 03:41</code>. Example: <code>2107-08-27</code></p>
+<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-08-02 17:02</code>. Example: <code>2107-09-01</code></p>
         </div>
         </form>
 
@@ -14163,8 +12465,8 @@ and the admin can create unavailability for medical center.</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"from_date\": \"2107-08-27\",
-    \"to_date\": \"2107-08-27\",
+    \"from_date\": \"2107-09-01\",
+    \"to_date\": \"2107-09-01\",
     \"reason_type\": \"other\",
     \"justification\": \"consequatur\"
 }"
@@ -14183,8 +12485,8 @@ const headers = {
 };
 
 let body = {
-    "from_date": "2107-08-27",
-    "to_date": "2107-08-27",
+    "from_date": "2107-09-01",
+    "to_date": "2107-09-01",
     "reason_type": "other",
     "justification": "consequatur"
 };
@@ -14307,10 +12609,10 @@ and for if the admin is creating an unavailability for a doctor, then the app as
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="POSTapi-unavailability-maker_id"
-               value="2107-08-27"
+               value="2107-09-01"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-07-29 00:00:00</code>. Example: <code>2107-08-27</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-08-02 00:00:00</code>. Example: <code>2107-09-01</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -14319,10 +12621,10 @@ and for if the admin is creating an unavailability for a doctor, then the app as
  &nbsp;
                 <input type="text" style="display: none"
                               name="to_date"                data-endpoint="POSTapi-unavailability-maker_id"
-               value="2107-08-27"
+               value="2107-09-01"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>from_date</code>. Example: <code>2107-08-27</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>from_date</code>. Example: <code>2107-09-01</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>reason_type</code></b>&nbsp;&nbsp;
@@ -15306,7 +13608,7 @@ date_of_month is the date of the month for which to generate the report</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"date_of_month\": \"2107-08-22\"
+    \"date_of_month\": \"2107-08-31\"
 }"
 </code></pre></div>
 
@@ -15323,7 +13625,7 @@ const headers = {
 };
 
 let body = {
-    "date_of_month": "2107-08-22"
+    "date_of_month": "2107-08-31"
 };
 
 fetch(url, {
@@ -15427,10 +13729,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date_of_month"                data-endpoint="POSTapi-admins-m-m"
-               value="2107-08-22"
+               value="2107-08-31"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m</code>. Must be a date before or equal to <code>2026-07</code>. Must be a date after or equal to <code>2026-07</code>. Example: <code>2107-08-22</code></p>
+<p>Must be a valid date in the format <code>Y-m</code>. Must be a date before or equal to <code>2026-08</code>. Must be a date after or equal to <code>2026-08</code>. Example: <code>2107-08-31</code></p>
         </div>
         </form>
 
@@ -15599,8 +13901,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"speciality_id\": 17,
-    \"experience_starting_date\": \"2026-07-29\",
-    \"view_experience\": true
+    \"experience_starting_date\": \"2026-08-02\",
+    \"view_experience\": false
 }"
 </code></pre></div>
 
@@ -15618,8 +13920,8 @@ const headers = {
 
 let body = {
     "speciality_id": 17,
-    "experience_starting_date": "2026-07-29",
-    "view_experience": true
+    "experience_starting_date": "2026-08-02",
+    "view_experience": false
 };
 
 fetch(url, {
@@ -15735,10 +14037,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="experience_starting_date"                data-endpoint="POSTapi-dSpecialities"
-               value="2026-07-29"
+               value="2026-08-02"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Example: <code>2026-07-29</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Example: <code>2026-08-02</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>view_experience</code></b>&nbsp;&nbsp;
@@ -15760,7 +14062,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
         </form>
 
@@ -16436,7 +14738,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"experience_starting_date\": \"2026-07-29\",
+    \"experience_starting_date\": \"2026-08-02\",
     \"view_experience\": false
 }"
 </code></pre></div>
@@ -16454,7 +14756,7 @@ const headers = {
 };
 
 let body = {
-    "experience_starting_date": "2026-07-29",
+    "experience_starting_date": "2026-08-02",
     "view_experience": false
 };
 
@@ -16572,10 +14874,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="experience_starting_date"                data-endpoint="PUTapi-dSpecialities--id-"
-               value="2026-07-29"
+               value="2026-08-02"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Example: <code>2026-07-29</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Example: <code>2026-08-02</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>view_experience</code></b>&nbsp;&nbsp;

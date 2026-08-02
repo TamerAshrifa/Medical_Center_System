@@ -173,7 +173,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/complaint/{with_reviewed}'
+    uri: 'api/complaint/a/{with_reviewed}'
     metadata:
       custom: []
       groupName: 'Patient Complaint APIs'
@@ -213,8 +213,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 401
-        content: '{"did_succeed":false,"message":{"base_message":"Unauthenticated; A valid token is required"}}'
+        status: 405
+        content: '{"did_succeed":false,"message":{"base_message":"HTTP request method not allowed, The GET method is not supported for route api\/complaint\/a\/17. Supported methods: POST."}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
