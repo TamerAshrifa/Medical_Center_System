@@ -24,6 +24,7 @@ class UserToPatientResource extends JsonResource
             'gender' => $this->gender ? 'Male' : 'Female',
             'photo' => $this->photo,
             'username' => $this->username,
+            'role' => $this->role,
         ];
     }
 }
