@@ -42,10 +42,11 @@ class DoctorRepository extends Repository implements DoctorRepositoryInterface
         bool $withAdderAdmin = false,
         bool $withUser = false,
     ) {
+        // dd($withUnactive);
         return Doctor::query()
             ->with($this->includedEntities($withRoom, $withAdderAdmin, $withUser))
-            ->when(!$withUnactive, fn($q) => $q->where('is_active', false))
-            ->orderBy('created_at', 'desc')
+            ->when(!$withUnactive, fn($q) => $q->where('is_active', true))
+            ->orderBy('created_at')
             ->paginate($perPage);
     }
 

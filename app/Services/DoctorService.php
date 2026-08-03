@@ -40,7 +40,12 @@ class DoctorService extends Service
     {
         $isWithRoom = $isWithAdderAdmin = false;
         $this->fillIncludedEntities($isWithRoom, $isWithAdderAdmin, $currentUserRole);
-        $records = $this->doctorRepository->paginate($this->perPage, $withUnactive, $isWithRoom, $isWithAdderAdmin);
+        $records = $this->doctorRepository->paginate(
+            $this->perPage,
+            $withUnactive,
+            $isWithRoom,
+            $isWithAdderAdmin
+        );
 
         return new Response(
             true,
