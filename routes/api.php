@@ -53,10 +53,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('{search_word}', [AdminController::class, 'search']);
         Route::post('u/{id}', [AdminController::class, 'destroy']);
         Route::put('u/{id}', [AdminController::class, 'activate']);
-        Route::post('m/m', [AdminController::class, 'monthlyReport']);
+        Route::post('m/m', [AdminController::class, 'requestMonthlyReport'])->middleware('throttle:1,1');
         Route::post('{user_id}', [AdminController::class, 'store']);
+        Route::get('PMRs/m', [AdminController::class, 'paginateMonthlyReports']);
     });
-
     // Room APIs
     Route::prefix('rooms/')->group(function () {
         Route::post('', [RoomController::class, 'store'])->middleware('CheckAdmin');
@@ -188,5 +188,4 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 
-// 1|bqlZJkfZZNjN472g9cVsGg5vdqPbwQbWgtg0Qqpu65ed1872
-// 3|Us7pmaXUA7Yge6HiYEsqIQLpQFKGjxFjEO3nZ6fi37d66629
+// 1|fPJrWGHHVVfZmbCiEhtCvskiGfUNINth1SeoXByf5046b603

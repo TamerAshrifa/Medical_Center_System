@@ -14,7 +14,7 @@ class RoomToAdminResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
+        $returned = [
             'id' => $this->id,
             'name' => $this->name,
             'monthly_rent' => $this->monthly_rent,
@@ -24,5 +24,15 @@ class RoomToAdminResource extends JsonResource
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];
+
+        if ($this->whenloaded('doctor') && $this->doctor)
+            $returned['doctor'] = [
+                'doctor_id' => $this->doctor->id,
+                'user_id' => $this->doctor->user_id,
+                'fullname' => $this->doctor->user->first_name . ' ' . $this->doctor->user->last_name,
+                'photo' => $this->doctor->user->photo,
+            ];
+
+        return $returned;
     }
 }

@@ -13,10 +13,10 @@ use App\Http\Resources\User\UserToAdminResource;
 use App\Http\Resources\User\UserToDoctorResource;
 use App\Http\Resources\User\UserToPatientResource;
 use App\Models\Otp;
+use App\Models\User;
 use App\Services\OtpService;
 use App\Services\AuthService;
 use App\DTOs\User\UserDTO;
-// use Laravel\Sanctum\PersonalAccessToken;
 
 /**
  * @group Authentication APIs
@@ -42,6 +42,8 @@ class AuthController extends Controller
                 return new UserToDoctorResource($record);
             case UserRoleEnum::PATIENT:
                 return new UserToPatientResource($record);
+            case null:
+                return new UserToPatientResource($record);
         }
     }
 
@@ -58,12 +60,12 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
         $userData = $request->validated();
-        if (isset($userData['photo']))
+        if (isset($userData['photo'])) {
             $userData['photo'] = $userData['photo']->store('user_photos', 'public');
+            $userData['photo'] = 'storage/' . $userData['photo'];
+        }
 
         $response = $this->userService->register(UserDTO::fromRequest($userData));
-
-        $response->data['user'] = $this->resource($response->data['user']);
 
         return $this->jsonResponse($response);
     }
@@ -89,19 +91,16 @@ class AuthController extends Controller
             return $this->jsonResponse($response);
 
         $response->data['user'] = $this->resource($response->data['user']);
-
         if ($isForgetOtp)
             return response()->json([
                 'did_succeed' => $response->did_succeed,
                 'message' => $response->message,
-                // 'user_id' => PersonalAccessToken::findToken($response->data)->tokenable->id,
                 'reset_token_and_user' => $response->data,
             ], $response->statusCode);
 
         return response()->json([
             'did_succeed' => $response->did_succeed,
             'message' => $response->message,
-            // 'user_id' => PersonalAccessToken::findToken($response->data)->tokenable->id,
             'token_and_user' => $response->data,
         ], $response->statusCode);
     }
@@ -148,7 +147,6 @@ class AuthController extends Controller
         return response()->json([
             'did_succeed' => $response->did_succeed,
             'message' => $response->message,
-            // 'user_id' => PersonalAccessToken::findToken($response->data)->tokenable->id,
             'token_and_user' => $response->data,
         ], $response->statusCode);
     }

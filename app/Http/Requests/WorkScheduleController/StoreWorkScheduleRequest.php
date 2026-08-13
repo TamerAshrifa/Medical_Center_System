@@ -5,7 +5,6 @@ namespace App\Http\Requests\WorkScheduleController;
 use App\Enums\UserRoleEnum;
 use App\Models\Appointment;
 use App\Repositories\Interfaces\SchedulingRepositoryInterface;
-use App\Repositories\SchedulingRepository;
 use Carbon\Carbon;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Contracts\Validation\Validator;
@@ -158,9 +157,11 @@ class StoreWorkScheduleRequest extends FormRequest
 
 
     }
-    public function withValidator(Validator $validator, SchedulingRepositoryInterface $schedulingRepository): void
+    public function withValidator(Validator $validator): void
     {
+        $schedulingRepository = app(SchedulingRepositoryInterface::class);
         $validator->after(function (Validator $validator) use ($schedulingRepository) {
+
             $user = Auth::user();
 
             $this->handleGeneralValidation($validator, $user, $schedulingRepository);

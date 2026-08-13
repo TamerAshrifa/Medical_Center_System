@@ -58,7 +58,7 @@ class UnavailabilityService extends Service
     {
         $doctorFullName = $this->doctorRepository->fullname($makerId);
         foreach ($emailsToApologizeToByDoctor as $email)
-            Mail::to($email)->send(new DoctorApologizeToPatientsMail(
+            Mail::to($email)->queue(new DoctorApologizeToPatientsMail(
                 $unavailabilityStartDate,
                 $unavailabilityEndDate,
                 $doctorFullName
@@ -67,10 +67,10 @@ class UnavailabilityService extends Service
     private function sendEmailsByMedicalCenter($emailsToApologizeTo, $unavailabilityStartDate, $unavailabilityEndDate)
     {
         foreach ($emailsToApologizeTo as $email)
-            Mail::to($email)->send(new MedicalCenterApologizeToPatientsMail($unavailabilityStartDate, $unavailabilityEndDate));
+            Mail::to($email)->queue(new MedicalCenterApologizeToPatientsMail($unavailabilityStartDate, $unavailabilityEndDate));
         $doctorsEmailsToApologizeTo = $this->doctorRepository->allDoctorsEmails();
         foreach ($doctorsEmailsToApologizeTo as $email)
-            Mail::to($email)->send(new MedicalCenterApologizeToDoctorsMail($unavailabilityStartDate, $unavailabilityEndDate));
+            Mail::to($email)->queue(new MedicalCenterApologizeToDoctorsMail($unavailabilityStartDate, $unavailabilityEndDate));
     }
     public function create(UnavailabilityDTO $dto, int $makerId): Response
     {

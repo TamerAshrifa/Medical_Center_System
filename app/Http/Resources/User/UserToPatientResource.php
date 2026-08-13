@@ -14,7 +14,7 @@ class UserToPatientResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
+        $toReturn = [
             'id' => $this->id,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
@@ -26,5 +26,12 @@ class UserToPatientResource extends JsonResource
             'username' => $this->username,
             'role' => $this->role,
         ];
+
+        if ($this->whenLoaded($this->role->value)) {
+            $roleRecordField = $this->role->value . '_id';
+            $toReturn["$roleRecordField"] = $this->{$this->role->value}->id;
+        }
+
+        return $toReturn;
     }
 }

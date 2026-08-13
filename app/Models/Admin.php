@@ -41,6 +41,10 @@ class Admin extends Model
     {
         return $this->hasMany(Doctor::class, 'added_by_admin_id');
     }
+    public function addedMonthlyReports()
+    {
+        return $this->hasMany(MonthlyReport::class, 'made_by_admin_id');
+    }
 
     public function addedMedicalCenterWorkSchedules()
     {

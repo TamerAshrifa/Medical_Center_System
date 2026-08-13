@@ -407,10 +407,13 @@ Only admins are allowed to use this API.</a>
                                 <a href="#admin-apis-PUTapi-admins-u--id-">Activate an admin</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="admin-apis-POSTapi-admins-m-m">
-                                <a href="#admin-apis-POSTapi-admins-m-m">Monthly report of the medical center</a>
+                                <a href="#admin-apis-POSTapi-admins-m-m">Request a monthly report of the medical center</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="admin-apis-POSTapi-admins--user_id-">
                                 <a href="#admin-apis-POSTapi-admins--user_id-">Add New admin</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="admin-apis-GETapi-admins-PMRs-m">
+                                <a href="#admin-apis-GETapi-admins-PMRs-m">Paginate monthly reports of the medical center</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -451,7 +454,7 @@ Only admins are allowed to use this API.</a>
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: August 2, 2026</li>
+        <li>Last updated: August 13, 2026</li>
     </ul>
 </div>
 
@@ -509,7 +512,7 @@ acounts for them in the appropriate table and permissions; After an admin makes,
     --form "gender="\
     --form "username=mqeopfuudtdsufvyv"\
     --form "password_confirmation=consequatur"\
-    --form "photo=@C:\Users\USER\AppData\Local\Temp\php451C.tmp" </code></pre></div>
+    --form "photo=@C:\Users\USER\AppData\Local\Temp\phpFF61.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -732,7 +735,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php451C.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\phpFF61.tmp</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>password_confirmation</code></b>&nbsp;&nbsp;
@@ -1500,10 +1503,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "email=russel.bert@example.net"\
     --form "password=dl4m{o,+"\
     --form "phone=qamniihfqcoynlazg"\
-    --form "date_of_birth=2020-11-28"\
+    --form "date_of_birth=2020-12-09"\
     --form "gender=1"\
     --form "username=mqeopfuudtdsufvyv"\
-    --form "photo=@C:\Users\USER\AppData\Local\Temp\php47DC.tmp" </code></pre></div>
+    --form "photo=@C:\Users\USER\AppData\Local\Temp\phpFF91.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -1523,7 +1526,7 @@ body.append('last_name', 'eop');
 body.append('email', 'russel.bert@example.net');
 body.append('password', 'dl4m{o,+');
 body.append('phone', 'qamniihfqcoynlazg');
-body.append('date_of_birth', '2020-11-28');
+body.append('date_of_birth', '2020-12-09');
 body.append('gender', '1');
 body.append('username', 'mqeopfuudtdsufvyv');
 body.append('photo', document.querySelector('input[name="photo"]').files[0]);
@@ -1689,10 +1692,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date_of_birth"                data-endpoint="POSTapi-users"
-               value="2020-11-28"
+               value="2020-12-09"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date before <code>2026-08-02</code>. Example: <code>2020-11-28</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date before <code>2026-08-13</code>. Example: <code>2020-12-09</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -1738,7 +1741,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php47DC.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\phpFF91.tmp</code></p>
         </div>
         </form>
 
@@ -2230,10 +2233,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "first_name=vmq"\
     --form "last_name=eop"\
     --form "phone=fuudtdsufvyvddqam"\
-    --form "date_of_birth=2026-08-02"\
+    --form "date_of_birth=2026-08-13"\
     --form "gender="\
     --form "username=niihfqcoynlazghdt"\
-    --form "photo=@C:\Users\USER\AppData\Local\Temp\php4E36.tmp" </code></pre></div>
+    --form "photo=@C:\Users\USER\AppData\Local\Temp\phpFFE0.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -2251,7 +2254,7 @@ const body = new FormData();
 body.append('first_name', 'vmq');
 body.append('last_name', 'eop');
 body.append('phone', 'fuudtdsufvyvddqam');
-body.append('date_of_birth', '2026-08-02');
+body.append('date_of_birth', '2026-08-13');
 body.append('gender', '');
 body.append('username', 'niihfqcoynlazghdt');
 body.append('photo', document.querySelector('input[name="photo"]').files[0]);
@@ -2406,10 +2409,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date_of_birth"                data-endpoint="PUTapi-users--id-"
-               value="2026-08-02"
+               value="2026-08-13"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Example: <code>2026-08-02</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Example: <code>2026-08-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>gender</code></b>&nbsp;&nbsp;
@@ -2455,7 +2458,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\php4E36.tmp</code></p>
+<p>Must be an image. Must not be greater than 2048 kilobytes. Example: <code>C:\Users\USER\AppData\Local\Temp\phpFFE0.tmp</code></p>
         </div>
         </form>
 
@@ -6314,12 +6317,12 @@ and the admin can create work schedules for medical center.</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"effective_from_date\": \"2107-09-01\",
+    \"effective_from_date\": \"2107-09-12\",
     \"days\": [
         {
             \"weekday_id\": 2,
-            \"start_time\": \"17:02\",
-            \"end_time\": \"17:02\"
+            \"start_time\": \"16:08\",
+            \"end_time\": \"16:08\"
         }
     ]
 }"
@@ -6338,12 +6341,12 @@ const headers = {
 };
 
 let body = {
-    "effective_from_date": "2107-09-01",
+    "effective_from_date": "2107-09-12",
     "days": [
         {
             "weekday_id": 2,
-            "start_time": "17:02",
-            "end_time": "17:02"
+            "start_time": "16:08",
+            "end_time": "16:08"
         }
     ]
 };
@@ -6449,10 +6452,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="effective_from_date"                data-endpoint="POSTapi-schedules"
-               value="2107-09-01"
+               value="2107-09-12"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after <code>2026-08-02</code>. Example: <code>2107-09-01</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after <code>2026-08-13</code>. Example: <code>2107-09-12</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
         <details>
@@ -6483,10 +6486,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="days.0.start_time"                data-endpoint="POSTapi-schedules"
-               value="17:02"
+               value="16:08"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>H:i</code>. Example: <code>17:02</code></p>
+<p>Must be a valid date in the format <code>H:i</code>. Example: <code>16:08</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>end_time</code></b>&nbsp;&nbsp;
@@ -6495,10 +6498,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="days.0.end_time"                data-endpoint="POSTapi-schedules"
-               value="17:02"
+               value="16:08"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>H:i</code>. Example: <code>17:02</code></p>
+<p>Must be a valid date in the format <code>H:i</code>. Example: <code>16:08</code></p>
                     </div>
                                     </details>
         </div>
@@ -7176,7 +7179,7 @@ View all available times to book with a specific doctor</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"date_of_day\": \"2107-09-01\"
+    \"date_of_day\": \"2107-09-12\"
 }"
 </code></pre></div>
 
@@ -7193,7 +7196,7 @@ const headers = {
 };
 
 let body = {
-    "date_of_day": "2107-09-01"
+    "date_of_day": "2107-09-12"
 };
 
 fetch(url, {
@@ -7310,10 +7313,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date_of_day"                data-endpoint="POSTapi-appointments--doctor_id-"
-               value="2107-09-01"
+               value="2107-09-12"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-08-02</code>. Example: <code>2107-09-01</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-08-13</code>. Example: <code>2107-09-12</code></p>
         </div>
         </form>
 
@@ -7339,7 +7342,7 @@ the date of day he wanna book in</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"datetime\": \"2107-09-01\"
+    \"datetime\": \"2107-09-12\"
 }"
 </code></pre></div>
 
@@ -7356,7 +7359,7 @@ const headers = {
 };
 
 let body = {
-    "datetime": "2107-09-01"
+    "datetime": "2107-09-12"
 };
 
 fetch(url, {
@@ -7473,10 +7476,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="datetime"                data-endpoint="POSTapi-appointments-s--doctor_id-"
-               value="2107-09-01"
+               value="2107-09-12"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-08-02 17:02</code>. Example: <code>2107-09-01</code></p>
+<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-08-13 16:08</code>. Example: <code>2107-09-12</code></p>
         </div>
         </form>
 
@@ -8479,7 +8482,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"actual_time\": \"2107-09-01\",
+    \"actual_time\": \"2107-09-12\",
     \"medical_diagnosis\": \"mqeopfuudtdsufvyvddqa\",
     \"prescription\": \"mniihfqcoynlazghdtqtq\",
     \"notes\": \"xbajwbpilpmufinllwloa\",
@@ -8500,7 +8503,7 @@ const headers = {
 };
 
 let body = {
-    "actual_time": "2107-09-01",
+    "actual_time": "2107-09-12",
     "medical_diagnosis": "mqeopfuudtdsufvyvddqa",
     "prescription": "mniihfqcoynlazghdtqtq",
     "notes": "xbajwbpilpmufinllwloa",
@@ -8621,10 +8624,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="actual_time"                data-endpoint="POSTapi-appointments-aA--id-"
-               value="2107-09-01"
+               value="2107-09-12"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-08-02 00:00:00</code>. Example: <code>2107-09-01</code></p>
+<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-08-13 00:00:00</code>. Example: <code>2107-09-12</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>medical_diagnosis</code></b>&nbsp;&nbsp;
@@ -11129,7 +11132,7 @@ Everyone in the system is allowed to use this API</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"datetime\": \"2107-09-01\"
+    \"datetime\": \"2107-09-12\"
 }"
 </code></pre></div>
 
@@ -11146,7 +11149,7 @@ const headers = {
 };
 
 let body = {
-    "datetime": "2107-09-01"
+    "datetime": "2107-09-12"
 };
 
 fetch(url, {
@@ -11263,10 +11266,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="datetime"                data-endpoint="POSTapi-transfer--transfer_id-"
-               value="2107-09-01"
+               value="2107-09-12"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-08-02 17:02</code>. Example: <code>2107-09-01</code></p>
+<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-08-13 16:08</code>. Example: <code>2107-09-12</code></p>
         </div>
         </form>
 
@@ -11291,7 +11294,7 @@ Everyone in the system is allowed to use this API</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"datetime\": \"2107-09-01\"
+    \"datetime\": \"2107-09-12\"
 }"
 </code></pre></div>
 
@@ -11308,7 +11311,7 @@ const headers = {
 };
 
 let body = {
-    "datetime": "2107-09-01"
+    "datetime": "2107-09-12"
 };
 
 fetch(url, {
@@ -11425,10 +11428,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="datetime"                data-endpoint="POSTapi-transfer-ch--transfer_id-"
-               value="2107-09-01"
+               value="2107-09-12"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-08-02 17:02</code>. Example: <code>2107-09-01</code></p>
+<p>Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-08-13 16:08</code>. Example: <code>2107-09-12</code></p>
         </div>
         </form>
 
@@ -12465,8 +12468,8 @@ and the admin can create unavailability for medical center.</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"from_date\": \"2107-09-01\",
-    \"to_date\": \"2107-09-01\",
+    \"from_date\": \"2107-09-12\",
+    \"to_date\": \"2107-09-12\",
     \"reason_type\": \"other\",
     \"justification\": \"consequatur\"
 }"
@@ -12485,8 +12488,8 @@ const headers = {
 };
 
 let body = {
-    "from_date": "2107-09-01",
-    "to_date": "2107-09-01",
+    "from_date": "2107-09-12",
+    "to_date": "2107-09-12",
     "reason_type": "other",
     "justification": "consequatur"
 };
@@ -12609,10 +12612,10 @@ and for if the admin is creating an unavailability for a doctor, then the app as
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="POSTapi-unavailability-maker_id"
-               value="2107-09-01"
+               value="2107-09-12"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-08-02 00:00:00</code>. Example: <code>2107-09-01</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-08-13 00:00:00</code>. Example: <code>2107-09-12</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -12621,10 +12624,10 @@ and for if the admin is creating an unavailability for a doctor, then the app as
  &nbsp;
                 <input type="text" style="display: none"
                               name="to_date"                data-endpoint="POSTapi-unavailability-maker_id"
-               value="2107-09-01"
+               value="2107-09-12"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>from_date</code>. Example: <code>2107-09-01</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>from_date</code>. Example: <code>2107-09-12</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>reason_type</code></b>&nbsp;&nbsp;
@@ -13587,7 +13590,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
-                    <h2 id="admin-apis-POSTapi-admins-m-m">Monthly report of the medical center</h2>
+                    <h2 id="admin-apis-POSTapi-admins-m-m">Request a monthly report of the medical center</h2>
 
 <p>
 <small class="badge badge-darkred">requires authentication</small>
@@ -13608,7 +13611,7 @@ date_of_month is the date of the month for which to generate the report</p>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"date_of_month\": \"2107-08-31\"
+    \"date_of_month\": \"2107-09-09\"
 }"
 </code></pre></div>
 
@@ -13625,7 +13628,7 @@ const headers = {
 };
 
 let body = {
-    "date_of_month": "2107-08-31"
+    "date_of_month": "2107-09-09"
 };
 
 fetch(url, {
@@ -13729,10 +13732,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date_of_month"                data-endpoint="POSTapi-admins-m-m"
-               value="2107-08-31"
+               value="2107-09-09"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m</code>. Must be a date before or equal to <code>2026-08</code>. Must be a date after or equal to <code>2026-08</code>. Example: <code>2107-08-31</code></p>
+<p>Must be a valid date in the format <code>Y-m</code>. Must be a date before or equal to <code>2026-08</code>. Must be a date after or equal to <code>2026-08</code>. Example: <code>2107-09-09</code></p>
         </div>
         </form>
 
@@ -13876,6 +13879,152 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
+                    <h2 id="admin-apis-GETapi-admins-PMRs-m">Paginate monthly reports of the medical center</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<h3>For: Web</h3>
+<p>Only admins are allowed to use this API.</p>
+
+<span id="example-requests-GETapi-admins-PMRs-m">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://127.0.0.1:8000/api/admins/PMRs/m" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://127.0.0.1:8000/api/admins/PMRs/m"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-admins-PMRs-m">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;did_succeed&quot;: false,
+    &quot;message&quot;: {
+        &quot;base_message&quot;: &quot;Unauthenticated; A valid token is required&quot;
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-admins-PMRs-m" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-admins-PMRs-m"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-admins-PMRs-m"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-admins-PMRs-m" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-admins-PMRs-m">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-admins-PMRs-m" data-method="GET"
+      data-path="api/admins/PMRs/m"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-admins-PMRs-m', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-admins-PMRs-m"
+                    onclick="tryItOut('GETapi-admins-PMRs-m');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-admins-PMRs-m"
+                    onclick="cancelTryOut('GETapi-admins-PMRs-m');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-admins-PMRs-m"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/admins/PMRs/m</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-admins-PMRs-m"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-admins-PMRs-m"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-admins-PMRs-m"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
                 <h1 id="doctor-speciality-apis">Doctor_Speciality APIs</h1>
 
     
@@ -13901,8 +14050,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"speciality_id\": 17,
-    \"experience_starting_date\": \"2026-08-02\",
-    \"view_experience\": false
+    \"experience_starting_date\": \"2026-08-13\",
+    \"view_experience\": true
 }"
 </code></pre></div>
 
@@ -13920,8 +14069,8 @@ const headers = {
 
 let body = {
     "speciality_id": 17,
-    "experience_starting_date": "2026-08-02",
-    "view_experience": false
+    "experience_starting_date": "2026-08-13",
+    "view_experience": true
 };
 
 fetch(url, {
@@ -14037,10 +14186,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="experience_starting_date"                data-endpoint="POSTapi-dSpecialities"
-               value="2026-08-02"
+               value="2026-08-13"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Example: <code>2026-08-02</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Example: <code>2026-08-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>view_experience</code></b>&nbsp;&nbsp;
@@ -14062,7 +14211,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
         </form>
 
@@ -14738,7 +14887,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"experience_starting_date\": \"2026-08-02\",
+    \"experience_starting_date\": \"2026-08-13\",
     \"view_experience\": false
 }"
 </code></pre></div>
@@ -14756,7 +14905,7 @@ const headers = {
 };
 
 let body = {
-    "experience_starting_date": "2026-08-02",
+    "experience_starting_date": "2026-08-13",
     "view_experience": false
 };
 
@@ -14874,10 +15023,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="experience_starting_date"                data-endpoint="PUTapi-dSpecialities--id-"
-               value="2026-08-02"
+               value="2026-08-13"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d</code>. Example: <code>2026-08-02</code></p>
+<p>Must be a valid date in the format <code>Y-m-d</code>. Example: <code>2026-08-13</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>view_experience</code></b>&nbsp;&nbsp;

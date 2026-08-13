@@ -10,21 +10,16 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class MedicalCenterApologizeToPatientsMail extends Mailable implements ShouldQueue
+class MonthlyReportMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      */
-
-    public string $startDate;
-    public string $endDate;
-
-    public function __construct(string $startDate, string $endDate)
+    public function __construct()
     {
-        $this->startDate = $startDate;
-        $this->endDate = $endDate;
+        //
     }
 
     /**
@@ -33,7 +28,7 @@ class MedicalCenterApologizeToPatientsMail extends Mailable implements ShouldQue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Medical Center Apologize',
+            subject: 'Monthly Report Email',
         );
     }
 
@@ -43,13 +38,12 @@ class MedicalCenterApologizeToPatientsMail extends Mailable implements ShouldQue
     public function content(): Content
     {
         return new Content(
-            view: 'MedicalCenterApologizeToPatients',
+            view: 'MonthlyReport',
         );
     }
-
     public function build()
     {
-        return $this->subject('Medical Center Apologize')->view('MedicalCenterApologizeToPatients');
+        return $this->subject('Monthly Report Email')->view('MonthlyReport');
     }
 
     /**

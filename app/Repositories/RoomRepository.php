@@ -13,7 +13,13 @@ class RoomRepository extends Repository implements RoomRepositoryInterface
     }
     public function paginate(int $perPage = 10)
     {
-        return Room::orderBy('created_at', 'desc')->paginate($perPage);
+        return Room::query()
+            ->with([
+                'doctor:id,user_id,room_id',
+                'doctor.user:id,first_name,last_name,photo',
+            ])
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage);
     }
     public function findWithAdmin(int $id, bool $failIfNotExists = true): Room
     {
@@ -28,9 +34,13 @@ class RoomRepository extends Repository implements RoomRepositoryInterface
     }
     public function find(int $id, bool $failIfNotExists = true): Room
     {
+        $room = Room::query()->with([
+            'doctor:id,user_id,room_id',
+            'doctor.user:id,first_name,last_name,photo',
+        ]);
         return $failIfNotExists ?
-            Room::findOrFail($id) :
-            Room::find($id);
+            $room->findOrFail($id) :
+            $room->find($id);
     }
     public function delete(Room $room): bool
     {

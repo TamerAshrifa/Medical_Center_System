@@ -21,7 +21,7 @@ class DoctorSeeder extends Seeder
         for ($i = 8; $i <= 17; $i++) {
             Doctor::create([
                 'user_id' => $i,
-                'room_id' => $i - 7,
+                'room_id' => $i - 6,
                 'added_by_admin_id' => 1,
                 'appointment_duration' => 15,
             ]);

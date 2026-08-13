@@ -41,7 +41,7 @@ class OtpService extends Service
                         'expires_at' => Carbon::now()->addMinutes(10),
                     ]
                 );
-                Mail::to($email)->send(new SendOtpMail($otpCode));
+                Mail::to($email)->queue(new SendOtpMail($otpCode));
 
                 return new Response(
                     true,
@@ -64,6 +64,7 @@ class OtpService extends Service
         }
         $user->email_verified_at = now();
         $user->save();
+        $user->load($user->role->value . ':id,user_id');
 
         $otpRecord->delete();
         return new Response(
@@ -80,7 +81,7 @@ class OtpService extends Service
         $message = $user->role == null ?
             'OTP-Code verified successfully, now please complete your registration by filling the required patient data' :
             'OTP-Code verified successfully, you are now logged in';
-
+        $user->load($user->role->value . ':id,user_id');
         $otpRecord->delete();
         return new Response(
             true,

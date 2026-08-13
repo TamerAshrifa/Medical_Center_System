@@ -68,7 +68,7 @@ class TransferService extends Service
     public function create(TransferDTO $dto): Response
     {
         $this->transferRepository->create($dto);
-        Mail::to(Patient::findOrFail($dto->patient_id)->user->email)->send(new TransferToPatientMail());
+        Mail::to(Patient::findOrFail($dto->patient_id)->user->email)->queue(new TransferToPatientMail());
 
         return new Response(
             true,
@@ -88,7 +88,7 @@ class TransferService extends Service
             $this->transferRepository->assignAppointment($createdAppointmentId, $transferId);
 
             Mail::to(Doctor::findOrFail($dto->doctor_id)->user->email)
-                ->send($changeAppointment ? new TransferToDoctorAppointmentChangedMail() : new TransferToDoctorMail());
+                ->queue($changeAppointment ? new TransferToDoctorAppointmentChangedMail() : new TransferToDoctorMail());
 
             return new Response(
                 true,

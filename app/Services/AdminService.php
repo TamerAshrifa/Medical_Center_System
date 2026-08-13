@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Enums\UserRoleEnum;
 use App\GeneralClasses\Response;
+use App\Models\MonthlyReport;
 use App\Repositories\Interfaces\AdminRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use DB;
@@ -89,15 +90,39 @@ class AdminService extends Service
         );
     }
 
-
-    public function monthlyReport(string $dateOfMonth): Response
+    public function createMonthlyReport(string $dateOfMonth, int $idOfRequesterAdmin): Response
     {
+        $didSucceed = $this->adminRepository->monthlyReport($dateOfMonth, $idOfRequesterAdmin);
+
+        if (!$didSucceed) {
+            return new Response(
+                false,
+                Response::messageToArray('Monthly report generation failed, please try again'),
+                null,
+                500
+            );
+        }
+
         return new Response(
             true,
-            null,
-            $this->adminRepository->monthlyReport($dateOfMonth),
+            Response::messageToArray('Monthly report is being generated, you will be notified when it is ready'),
         );
     }
+    public function paginateMonthlyReports()
+    {
+        $records = MonthlyReport::query()
+            ->with([
+                'madeByAdmin:id,user_id',
+                'madeByAdmin.user:id,first_name,last_name',
+            ])
+            ->orderByDesc('created_at')
+            ->paginate($this->perPage);
 
+        return new Response(
+            true,
+            $this->paginationMessage($records),
+            $records->items(),
+        );
+    }
 
 }

@@ -5,6 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
+
     /**
      * Run the migrations.
      */
@@ -12,9 +13,9 @@ return new class extends Migration {
     {
         Schema::create('exception_logs', function (Blueprint $table) {
             $table->id();
-            $table->string('error_message');
-            $table->string('file')->nullable();
-            $table->string('line')->nullable();
+            $table->longText('error_message');
+            $table->longText('file')->nullable();
+            $table->longText('line')->nullable();
             $table->longText('track')->nullable();
             $table->timestamps();
         });

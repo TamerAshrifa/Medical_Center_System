@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\User;
 
+use App\Enums\UserRoleEnum;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,7 +19,9 @@ class UserToAdminResource extends JsonResource
         $emailVerifiedAt = $this->email_verified_at ?
             $this->email_verified_at->format('Y-m-d H:i:s') :
             null;
-        return [
+
+
+        $toReturn = [
             'id' => $this->id,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
@@ -33,5 +36,12 @@ class UserToAdminResource extends JsonResource
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];
+
+        if ($this->whenLoaded($this->role->value)) {
+            $roleRecordField = $this->role->value . '_id';
+            $toReturn["$roleRecordField"] = $this->{$this->role->value}->id;
+        }
+
+        return $toReturn;
     }
 }

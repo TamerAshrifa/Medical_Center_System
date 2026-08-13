@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRoleEnum;
 use App\Http\Requests\AdminController\MonthlyReportRequest;
 use App\Http\Resources\Admin\AdminToAdminResource;
+use App\Http\Resources\MonthlyReport\MonthlyReportToAdmin;
 use App\Services\AdminService;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,6 +18,17 @@ class AdminController extends Controller
         protected AdminService $adminService,
     ) {
     }
+
+    private function monthlyReportResource(&$recordOrCollection, bool $isCollection)
+    {
+        switch ($this->currentUserRole()) {
+            case UserRoleEnum::ADMIN:
+                if ($isCollection)
+                    return MonthlyReportToAdmin::collection($recordOrCollection);
+                return new MonthlyReportToAdmin($recordOrCollection);
+        }
+    }
+
 
     /**
      * Search for a admin
@@ -79,17 +92,32 @@ class AdminController extends Controller
     }
 
     /**
-     * Monthly report of the medical center
+     * Request a monthly report of the medical center
      * 
      * ###For: Web
      * Only admins are allowed to use this API. 
      * date_of_month is the date of the month for which to generate the report
      */
-    public function monthlyReport(MonthlyReportRequest $request)
+    public function requestMonthlyReport(MonthlyReportRequest $request)
     {
-        $response = $this->adminService->monthlyReport($request->validated()['date_of_month']);
-
+        $response = $this->adminService->createMonthlyReport(
+            $request->validated()['date_of_month'],
+            Auth::user()->admin->id
+        );
         return $this->jsonResponse($response);
     }
 
+    /**
+     * Paginate monthly reports of the medical center
+     * 
+     * ###For: Web
+     * Only admins are allowed to use this API.
+     */
+    public function paginateMonthlyReports()
+    {
+        $response = $this->adminService->paginateMonthlyReports();
+        if ($response->data)
+            $response->data = $this->monthlyReportResource($response->data, true);
+        return $this->jsonResponse($response);
+    }
 }

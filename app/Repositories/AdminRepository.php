@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Enums\UserRoleEnum;
+use App\Jobs\MonthlyReportJob;
 use App\Models\Admin;
 use App\Models\Appointment;
 use App\Models\Patient;
@@ -41,33 +42,9 @@ class AdminRepository extends Repository implements AdminRepositoryInterface
     {
         return Admin::where('id', $id)->update(['is_active' => true]) > 0;
     }
-    public function monthlyReport(string $dateOfMonth): array
+    public function monthlyReport(string $dateOfMonth, int $idOfRequesterAdmin): bool
     {
-        $dDateOfMonth = Carbon::parse($dateOfMonth);
-        $dDateOfMonth->startOfMonth();
-        $start = $dDateOfMonth->copy();
-        $dDateOfMonth->endOfMonth();
-        $end = $dDateOfMonth->copy();
-
-        return [
-            'new_patients_count' => Patient::whereBetween('created_at', [$start, $end])->count(),
-            'appointments_count' => $appointmentsCount = Appointment::whereBetween('datetime', [$start, $end])->count(),
-            'visits_count' => $visitsCount = Visit::whereBetween('actual_time', [$start, $end])->count(),
-            'visits_to_appointments_rate' => $appointmentsCount > 0 ? ($visitsCount / $appointmentsCount) * 100 . '%' : '0%',
-            'peak_hours' => Appointment::selectRaw('HOUR(datetime) as hour, COUNT(*) as total_appointments_at_that_hour')
-                ->whereBetween('datetime', [$start, $end])
-                ->groupBy('hour')
-                ->orderByDesc('total_appointments_at_that_hour')
-                ->limit(3)
-                ->get(),
-            'busy_days' => Appointment::selectRaw('DATE(datetime) as day, COUNT(*) as total_appointments_at_that_day')
-                ->whereBetween('datetime', [$start, $end])
-                ->groupBy('day')
-                ->orderByDesc('total_appointments_at_that_day')
-                ->limit(3)
-                ->get(),
-            'transfers_count' => Transfer::whereBetween('created_at', [$start, $end])->count(),
-            'complaints_count' => PatientComplaint::whereBetween('created_at', [$start, $end])->count(),
-        ];
+        MonthlyReportJob::dispatch($dateOfMonth, $idOfRequesterAdmin);
+        return true;
     }
 }

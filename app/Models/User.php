@@ -45,4 +45,12 @@ class User extends Authenticatable
         return $this->hasOne(Doctor::class, 'user_id');
     }
 
+    public static function arrayToUser($userArray): User
+    {
+        $user = new User();
+        $user->fill($userArray);
+        return $user;
+    }
+
+
 }

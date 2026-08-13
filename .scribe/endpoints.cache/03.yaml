@@ -171,7 +171,7 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Monthly report of the medical center'
+      title: 'Request a monthly report of the medical center'
       description: |-
         ###For: Web
         Only admins are allowed to use this API.
@@ -192,14 +192,14 @@ endpoints:
         name: date_of_month
         description: 'Must be a valid date in the format <code>Y-m</code>. Must be a date before or equal to <code>2026-08</code>. Must be a date after or equal to <code>2026-08</code>.'
         required: true
-        example: '2107-08-31'
+        example: '2107-09-09'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      date_of_month: '2107-08-31'
+      date_of_month: '2107-09-09'
     fileParameters: []
     responses: []
     responseFields: []
@@ -251,6 +251,52 @@ endpoints:
     cleanBodyParameters: []
     fileParameters: []
     responses: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/admins/PMRs/m
+    metadata:
+      custom: []
+      groupName: 'Admin APIs'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Paginate monthly reports of the medical center'
+      description: |-
+        ###For: Web
+        Only admins are allowed to use this API.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"did_succeed":false,"message":{"base_message":"Unauthenticated; A valid token is required"}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
     responseFields: []
     auth:
       - headers
