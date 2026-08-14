@@ -177,7 +177,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Unavailability APIs
     Route::prefix('unavailability/')->group(function () {
-        Route::post('maker_id', [UnavailabilityController::class, 'store'])->middleware(['CheckDoctor', 'StoreUnavailabilityMiddleware']);
+        Route::post('{maker_id}', [UnavailabilityController::class, 'store'])->middleware(['CheckDoctor', 'StoreUnavailabilityMiddleware']);
         Route::get('{with_passed}', [UnavailabilityController::class, 'paginateDoctorsUnavailabilities'])
             ->where('with_passed', '0|1|true|false')->middleware(['CheckAdmin']);
         Route::get('{with_passed}/{doctor_id}', [UnavailabilityController::class, 'paginateDoctorUnavailabilities'])
