@@ -21,6 +21,7 @@ class AppointmentToDoctorResource extends JsonResource
             'patient_id' => $this->patient_id,
             'patient_fullname' => $this->patient->user->first_name . ' ' .
                 $this->patient->user->last_name,
+            'doctor_id' => $this->doctor_id,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];

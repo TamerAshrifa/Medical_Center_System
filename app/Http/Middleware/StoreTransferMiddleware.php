@@ -19,7 +19,7 @@ class StoreTransferMiddleware
         $refferingDoctorId = Auth::user()->doctor->id;
         if ($refferingDoctorId == $request->route('receiving_doctor_id')) {
             return response()->json([
-                'did_succeed' => false->value,
+                'did_succeed' => false,
                 'message' => [
                     'base_message' => 'Doctor can\'t transfer a patient to itself (To the same reffering doctor)'
                 ],
