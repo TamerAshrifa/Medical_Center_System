@@ -43,16 +43,16 @@ endpoints:
       date_of_day:
         custom: []
         name: date_of_day
-        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-08-13</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-08-14</code>.'
         required: true
-        example: '2107-09-12'
+        example: '2107-09-13'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      date_of_day: '2107-09-12'
+      date_of_day: '2107-09-13'
     fileParameters: []
     responses: []
     responseFields: []
@@ -106,16 +106,16 @@ endpoints:
       datetime:
         custom: []
         name: datetime
-        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-08-13 16:08</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-08-14 20:20</code>.'
         required: true
-        example: '2107-09-12'
+        example: '2107-09-13'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      datetime: '2107-09-12'
+      datetime: '2107-09-13'
     fileParameters: []
     responses: []
     responseFields: []
@@ -560,9 +560,9 @@ endpoints:
       actual_time:
         custom: []
         name: actual_time
-        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-08-13 00:00:00</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d H:i</code>. Must be a date after or equal to <code>2026-08-14 00:00:00</code>.'
         required: true
-        example: '2107-09-12'
+        example: '2107-09-13'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -613,7 +613,7 @@ endpoints:
         nullable: true
         deprecated: false
     cleanBodyParameters:
-      actual_time: '2107-09-12'
+      actual_time: '2107-09-13'
       medical_diagnosis: mqeopfuudtdsufvyvddqa
       prescription: mniihfqcoynlazghdtqtq
       notes: xbajwbpilpmufinllwloa

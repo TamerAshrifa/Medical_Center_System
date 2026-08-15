@@ -192,14 +192,14 @@ endpoints:
         name: date_of_month
         description: 'Must be a valid date in the format <code>Y-m</code>. Must be a date before or equal to <code>2026-08</code>. Must be a date after or equal to <code>2026-08</code>.'
         required: true
-        example: '2107-09-09'
+        example: '2107-09-10'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters:
-      date_of_month: '2107-09-09'
+      date_of_month: '2107-09-10'
     fileParameters: []
     responses: []
     responseFields: []

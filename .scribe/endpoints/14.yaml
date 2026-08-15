@@ -5,7 +5,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/unavailability/maker_id
+    uri: 'api/unavailability/{maker_id}'
     metadata:
       custom: []
       groupName: 'Unavailability APIs'
@@ -49,9 +49,9 @@ endpoints:
       from_date:
         custom: []
         name: from_date
-        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-08-13 00:00:00</code>.'
+        description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>2026-08-14 00:00:00</code>.'
         required: true
-        example: '2107-09-12'
+        example: '2107-09-13'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -62,7 +62,7 @@ endpoints:
         name: to_date
         description: 'Must be a valid date in the format <code>Y-m-d</code>. Must be a date after or equal to <code>from_date</code>.'
         required: true
-        example: '2107-09-12'
+        example: '2107-09-13'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -73,7 +73,7 @@ endpoints:
         name: reason_type
         description: ''
         required: true
-        example: other
+        example: vacation
         type: string
         enumValues:
           - vacation
@@ -93,9 +93,9 @@ endpoints:
         nullable: true
         deprecated: false
     cleanBodyParameters:
-      from_date: '2107-09-12'
-      to_date: '2107-09-12'
-      reason_type: other
+      from_date: '2107-09-13'
+      to_date: '2107-09-13'
+      reason_type: vacation
       justification: consequatur
     fileParameters: []
     responses: []
@@ -150,8 +150,8 @@ endpoints:
     responses:
       -
         custom: []
-        status: 404
-        content: '{"did_succeed":false,"message":{"base_message":"Not found"}}'
+        status: 405
+        content: '{"did_succeed":false,"message":{"base_message":"HTTP request method not allowed, The GET method is not supported for route api\/unavailability\/17. Supported methods: POST."}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
