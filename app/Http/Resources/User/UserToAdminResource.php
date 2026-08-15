@@ -37,7 +37,7 @@ class UserToAdminResource extends JsonResource
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];
 
-        if ($this->whenLoaded($this->role->value)) {
+        if ($this->role && $this->whenLoaded($this->role->value)) {
             $roleRecordField = $this->role->value . '_id';
             $toReturn["$roleRecordField"] = $this->{$this->role->value}->id;
         }
